@@ -1,11 +1,16 @@
 /*
  * Control Surface reference — DISCIPLINE Liquid Glass Input.
- * Same material as the frozen Button reference, expressed for a Control Surface
- * (Grammar §2): readability first, the glass recedes, material present but far
- * more discreet than a button. A field is a RECESSED surface (you write into
- * it), so the light is inverted vs the raised button: the top inner wall is
- * shadowed, the lower inner wall is lit. Violet is minimal — it appears only on
- * focus, as the field catching the brand light. Isolated dev reference.
+ *
+ * Same material as the frozen Button: the field renders the shared
+ * <GlassSurface/> optical layers (.ds-glass__*). This file does NOT redefine the
+ * material — it only re-tunes the existing layers, scoped to `.ci-field`, to
+ * express a RECESSED Control Surface (Grammar §2): readability first, the glass
+ * recedes, but the material stays clearly perceptible — a machined, slightly
+ * encased glass surface. A field is written INTO, so the light is inverted vs a
+ * raised button (top inner wall shadowed, lower wall lit) and transmission is
+ * higher so dark backgrounds read as glass, not paint. The violet caustic is off
+ * at rest and rises on focus — brand light caught INSIDE the material, not an
+ * outline. Isolated dev reference; the library material is untouched.
  */
 
 .ci-field {
@@ -14,76 +19,57 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-3);
-  height: 44px;
+  height: 48px;
   padding: 0 var(--ds-space-4); /* 16px */
-  border-radius: var(--ds-radius-sm); /* 12px */
-
-  /* Refraction, subtle (Control Surface: lower than a button). */
-  backdrop-filter: blur(var(--ds-glass-blur))
-    saturate(var(--ds-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--ds-glass-blur))
-    saturate(var(--ds-glass-saturation));
-
-  /* High transmission so the content reads — the glass recedes. */
-  background: var(--ds-glass-thin);
-
-  /* Recessed well: top inner wall shadowed, lower inner wall lit. */
-  box-shadow:
-    inset 0 1px 2px var(--ds-glass-inner-shadow),
-    inset 0 -1px 0 var(--ds-glass-inner-highlight);
-
-  transition:
-    box-shadow var(--ds-dur-fast) var(--ds-ease-standard),
-    background var(--ds-dur-fast) var(--ds-ease-standard);
+  border-radius: var(--ds-radius-md); /* 20px */
 }
 
-/* Fine machined rim — present but quiet (revealed top-left, fading). */
-.ci-field__edge {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: var(--ds-glass-edge-width);
-  pointer-events: none;
-  opacity: 0.6;
+/* Recessed well: lift the contact shadow off the surface so the field reads as
+ * carved into the canvas rather than floating above it. */
+.ci-field .ds-glass__shadow {
+  box-shadow: var(--ds-glass-shadow-contact);
+}
+
+/* Internal volume — INVERTED vs the raised button: the top inner wall is
+ * shadowed and the body is highly transmissive, so the canvas (and dark panels)
+ * read straight through the glass. This is what makes it an encased well. */
+.ci-field .ds-glass__volume {
   background: linear-gradient(
-    135deg,
-    var(--ds-glass-edge-light) 0%,
-    var(--ds-glass-edge-dim) 45%,
-    transparent 75%
+    180deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.08) 100%
   );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
+  box-shadow:
+    inset 0 2px 5px var(--ds-glass-inner-shadow),
+    inset 0 1px 1px var(--ds-glass-inner-shadow),
+    inset 0 -1px 1px var(--ds-glass-inner-highlight);
 }
 
-/* Brand light caught only when the field is active (focus). Minimal, upper-left. */
-.ci-field__focus {
-  position: absolute;
-  inset: auto;
-  top: -60%;
-  left: -10%;
-  width: 55%;
-  height: 180%;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(
-    closest-side,
-    var(--ds-glass-capture) 0%,
-    var(--ds-glass-capture-falloff) 78%
-  );
-  filter: blur(10px);
+/* Incident gloss — quiet (a control does not glint like a button). */
+.ci-field .ds-glass__incident {
+  opacity: 0.45;
+}
+
+/* Specular glint — barely there. */
+.ci-field .ds-glass__specular {
+  opacity: 0.22;
+}
+
+/* Machined edge — present but discreet, defines the rim of the well. */
+.ci-field .ds-glass__edge {
+  opacity: 0.65;
+}
+
+/* Violet caustic — off at rest; it is the field's brand light, only when active. */
+.ci-field .ds-glass__violet {
   opacity: 0;
   transition: opacity var(--ds-dur-standard) var(--ds-ease-standard);
 }
 
+/* Content sits above every optical layer. */
 .ci-field__input {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   flex: 1;
   min-width: 0;
   border: 0;
@@ -99,30 +85,34 @@
 
 .ci-field__icon {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   display: inline-flex;
   color: var(--ds-color-text-tertiary);
 }
 
 /* States ---------------------------------------------------------------- */
+
+/* Focus — the well catches the brand light from inside, plus the focus ring. */
 .ci-field:focus-within,
 .ci-field--focus {
-  background: var(--ds-glass-regular);
   box-shadow:
-    inset 0 1px 2px var(--ds-glass-inner-shadow),
-    inset 0 -1px 0 var(--ds-glass-inner-highlight),
     var(--ds-focus-ring-halo),
     0 0 0 var(--ds-focus-ring-width) var(--ds-focus-ring-color);
+  border-radius: var(--ds-radius-md);
 }
-.ci-field:focus-within .ci-field__focus,
-.ci-field--focus .ci-field__focus {
+.ci-field:focus-within .ds-glass__violet,
+.ci-field--focus .ds-glass__violet {
   opacity: 0.7;
 }
 
-.ci-field--error {
-  box-shadow:
-    inset 0 1px 2px var(--ds-glass-inner-shadow),
-    0 0 0 var(--ds-glass-edge-width) var(--ds-color-error);
+/* Error — the rim turns to the error colour; the well is unchanged. */
+.ci-field--error .ds-glass__edge {
+  opacity: 1;
+  background: linear-gradient(
+    135deg,
+    var(--ds-color-error) 0%,
+    var(--ds-color-error) 100%
+  );
 }
 
 .ci-field--disabled {

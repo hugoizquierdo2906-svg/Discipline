@@ -1,9 +1,15 @@
+import { GlassSurface } from '@/components/ui/glass-surface'
+
 import './input.css'
 
 /**
  * InputReference — the single Control Surface reference (isolated dev component).
- * Same glass material as the frozen Button, expressed as a recessed, discreet
- * field where readability comes first. Not wired into the library yet.
+ * Built from the SAME optical layers as the frozen Button (it renders the shared
+ * <GlassSurface/>), expressed as a recessed, discreet field: high transmission so
+ * content reads, inverted light (encastré), and the button's violet caustic shown
+ * only on focus — light caught inside the material, not an outline. The recessed
+ * Control Surface expression lives in input.css, scoped to `.ci-field`; the
+ * library material is not modified.
  */
 export function InputReference({
   label,
@@ -27,7 +33,7 @@ export function InputReference({
 }) {
   const helpId = `${id}-help`
   const fieldClass = [
-    'ci-field',
+    'ci-field ds-glass',
     state === 'focus' && 'ci-field--focus',
     (error || state === 'error') && 'ci-field--error',
     state === 'disabled' && 'ci-field--disabled',
@@ -41,8 +47,7 @@ export function InputReference({
         {label}
       </label>
       <div className={fieldClass}>
-        <span className="ci-field__edge" aria-hidden />
-        <span className="ci-field__focus" aria-hidden />
+        <GlassSurface />
         {leadingIcon && (
           <span className="ci-field__icon" aria-hidden>
             {leadingIcon}
