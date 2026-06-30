@@ -148,6 +148,23 @@ Propose a Constitution-compliant alternative before continuing.
 
 ---
 
+## PHASE WORKFLOW (OFFICIAL)
+
+Every phase follows these stages, in order:
+
+```
+Préparation → Validation → Implémentation → Audit technique → Validation visuelle ⭐ → Verrouillage
+```
+
+- A phase is **never** locked on technical green alone.
+- **Validation visuelle** is a mandatory gate for any UI-bearing phase: produce
+  visual proof (captures, and for material/design changes a dedicated visual
+  proof) and obtain **explicit visual validation** from the project owner before
+  locking.
+- If visual validation fails, the phase reopens at Implémentation.
+
+---
+
 ## GIT WORKFLOW (OFFICIAL)
 
 - La branche de développement officielle est `main`.

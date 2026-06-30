@@ -4,8 +4,15 @@
 > Updated at the close of each phase.
 
 **Last updated:** 2026-06-30
-**Current phase:** Phase 03 — Component Library (Level 1 Primitives) — complete
+**Current phase:** Phase 03 — Component Library (Level 1 Primitives) — REOPENED (Liquid Glass redesign, pending visual validation)
 **Next phase:** Phase 04 — Component Library (Level 2 Glass & Composite) — not started
+
+> Phase 03 passed the technical audit but **failed visual validation**: the
+> primitives (notably buttons) read as generic Tailwind, not the DISCIPLINE
+> Liquid Glass material. A material redesign is planned in
+> `docs/PHASE_03_GLASS_REDESIGN_PLAN.md` (analysis + layer decomposition +
+> reproduction method, no code yet). Per the new workflow, the phase can only be
+> locked after **explicit visual validation**.
 
 ---
 
@@ -31,7 +38,7 @@ Canonical hierarchy: Constitution → Master Context → Rulebook → Canonical 
 |---|---|---|
 | 01 | Repository & Toolchain Bootstrap | 🔒 Locked (complete) |
 | 02 | Design Token System | 🔒 Locked (complete) |
-| 03 | Component Library — Level 1 Primitives | ✅ Complete |
+| 03 | Component Library — Level 1 Primitives | 🔄 Reopened — Liquid Glass redesign (pending visual validation) |
 | 04 | Component Library — Level 2 Glass & Composite | ⏳ Not started |
 | 05–44 | (see DISCIPLINE_BUILD_PLAN.md) | ⏳ Not started |
 
