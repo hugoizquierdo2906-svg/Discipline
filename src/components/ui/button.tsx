@@ -84,6 +84,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(buttonVariants({ variant, size }), className)}
+        data-glass-role="micro"
         data-glass-variant={variant}
         data-glass-intent={variant === 'primary' ? 'primary' : undefined}
         disabled={disabled ?? loading}

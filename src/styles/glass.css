@@ -226,3 +226,61 @@
     transition-duration: 0.01ms;
   }
 }
+
+/* =====================================================================
+ * MICRO SURFACE — intensity calibration (Budget: low depth, concentrated
+ * light). Scoped to [data-glass-role='micro']; the base material is unchanged
+ * so other roles inherit the reference untouched.
+ * =================================================================== */
+
+/* Tighter cast shadow: micro controls sit close to the surface, not floating. */
+[data-glass-role='micro'] .ds-glass__shadow {
+  box-shadow: var(--ds-shadow-1);
+}
+[data-glass-role='micro']:hover .ds-glass__shadow {
+  box-shadow: var(--ds-shadow-2), var(--ds-glass-glow);
+}
+[data-glass-role='micro']:active .ds-glass__shadow {
+  box-shadow: var(--ds-glass-shadow-contact);
+}
+
+/* Concentrate the captured violet: smaller and less blurred = trapped light,
+   not a diffuse wash. (Position stays upper-left / asymmetric.) */
+[data-glass-role='micro'] .ds-glass__violet {
+  top: -10%;
+  left: -4%;
+  width: 60%;
+  height: 92%;
+  filter: blur(4px);
+}
+
+/* Slightly more transmission on the primary glass so it reads as glass on the
+   light canvas, not a white button (lowers fill presence, not the material). */
+[data-glass-role='micro'][data-glass-intent='primary'] .ds-glass__core {
+  opacity: 0.8;
+}
+
+/* Hierarchy of presence: Primary > Secondary > Outline > Ghost. */
+[data-glass-role='micro'][data-glass-variant='secondary'] .ds-glass__shadow {
+  box-shadow: var(--ds-shadow-1);
+}
+[data-glass-role='micro'][data-glass-variant='outline'] .ds-glass__shadow {
+  box-shadow: none;
+}
+[data-glass-role='micro'][data-glass-variant='outline'] .ds-glass__specular,
+[data-glass-role='micro'][data-glass-variant='outline'] .ds-glass__tir {
+  opacity: 0;
+}
+/* Ghost stays nearly invisible at rest (already handled by the variant rules). */
+
+/* IconButton (quiet): must not compete with a primary CTA — less violet,
+   less glow, less depth. */
+[data-glass-quiet][data-glass-intent='primary'] .ds-glass__violet {
+  opacity: 0.55;
+}
+[data-glass-quiet] .ds-glass__shadow {
+  box-shadow: var(--ds-glass-shadow-contact);
+}
+[data-glass-quiet]:hover .ds-glass__shadow {
+  box-shadow: var(--ds-shadow-1);
+}
