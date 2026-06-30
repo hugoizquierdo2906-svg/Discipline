@@ -71,10 +71,18 @@
 >   one light. Finding F1 (the Micro Surface had two competing geometries — the
 >   pill "balloon" vs the embedded capsule) was resolved by RE-SETTLING the Button
 >   **geometry only** (material/optical layers unchanged): one machined horizontal
->   capsule at all sizes (`rounded-[14/18/22px]`, accessible heights kept). Icon
->   buttons stay circular. The dev card's `.btn-embedded` (a competing 38px
->   geometry) was removed so it uses the canonical Micro. There is now ONE Micro
->   geometry everywhere.
+>   capsule at all sizes. Icon buttons stay circular. The dev card's
+>   `.btn-embedded` (a competing 38px geometry) was removed so it uses the
+>   canonical Micro. There is now ONE Micro geometry everywhere.
+>   - **Re-balanced (owner feedback):** the final Micro geometry is a horizontal
+>     **rounded rectangle** (Apple / Linear) — comfortable height, width well
+>     above height, corners largely rounded but NOT spherical ends
+>     (`rounded-[12/14/16px]`), not a thin pill or balloon.
+>   - **Optical refinements kept:** the validated glass-read improvements (radial
+>     top reflection, three-zone volume, internal-reflection/TIR line, livelier
+>     Fresnel) live in `src/styles/micro.css` scoped to `.ds-micro` (Button,
+>     IconButton, LinkButton). The shared `glass.css` and every other role are
+>     untouched — no promotion of the other roles yet.
 > - **PHASE CHANGE — generalization, not invention.** Every remaining component
 >   must derive from exactly one of the five frozen references; no sixth language,
 >   no new material, no new optical recipe. Before each implementation, state

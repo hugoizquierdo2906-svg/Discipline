@@ -7,7 +7,7 @@ const c = await b.newContext({
 })
 const p = await c.newPage()
 await p.goto('http://localhost:3000/dev/card', { waitUntil: 'networkidle' })
-await p.locator('.btn-embedded').first().waitFor()
+await p.locator('.cd-card__footer').first().waitFor()
 const btn = p.locator('section').nth(1).locator('.cd-card__footer').first()
 await btn.scrollIntoViewIfNeeded()
 await p.waitForTimeout(400)

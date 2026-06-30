@@ -16,7 +16,7 @@ import { Spinner } from './spinner'
  */
 export const buttonVariants = cva(
   [
-    'ds-glass relative inline-flex items-center justify-center gap-2 whitespace-nowrap',
+    'ds-glass ds-micro relative inline-flex items-center justify-center gap-2 whitespace-nowrap',
     'font-semibold outline-none select-none transition-transform duration-fast ease-standard',
     'disabled:pointer-events-none disabled:opacity-40',
     'active:scale-[0.98] motion-reduce:active:scale-100',
@@ -30,14 +30,15 @@ export const buttonVariants = cva(
         outline: 'text-text',
         destructive: 'text-text-on-accent',
       },
-      // The single Micro Surface geometry: a machined horizontal capsule —
-      // wider than tall, strongly rounded corners (NOT a full pill / balloon),
-      // at accessible heights. Radius scales with the size so the capsule
-      // tension is identical alone or nested (Card, Modal, Toolbar, Navbar).
+      // The single Micro Surface geometry: a horizontal rounded rectangle —
+      // clearly wider than tall, a comfortable height (not a thin capsule),
+      // corners largely rounded but NOT spherical ends (Apple / Linear, not a
+      // pill or a balloon). Reads identically alone or nested (Card, Modal,
+      // Toolbar, Navbar). Heights/paddings kept accessible.
       size: {
-        sm: 'h-9 px-4 text-body-sm rounded-[14px]',
-        md: 'h-11 px-5 text-body rounded-[18px]',
-        lg: 'h-14 px-6 text-body-lg rounded-[22px]',
+        sm: 'h-9 px-4 text-body-sm rounded-[12px]',
+        md: 'h-11 px-5 text-body rounded-[14px]',
+        lg: 'h-14 px-6 text-body-lg rounded-[16px]',
       },
     },
     defaultVariants: { variant: 'primary', size: 'md' },
