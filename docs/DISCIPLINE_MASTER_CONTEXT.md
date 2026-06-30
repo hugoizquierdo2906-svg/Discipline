@@ -1,3 +1,7 @@
+> This document is governed by DISCIPLINE_CONSTITUTION.md.
+>
+> Whenever a conflict exists between this document and the Constitution, the Constitution prevails.
+
 # DISCIPLINE MASTER CONTEXT
 
 This document is an automatically merged master context generated from the project documentation.

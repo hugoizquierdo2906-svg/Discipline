@@ -4,8 +4,24 @@
 > Updated at the close of each phase.
 
 **Last updated:** 2026-06-30
-**Current phase:** Phase 02 — complete
-**Next phase:** Phase 03 — Component Library (Level 1 Primitives) — not started
+**Current phase:** Phase 03 — Component Library (Level 1 Primitives) — in progress
+**Next phase:** Phase 04 — Component Library (Level 2 Glass & Composite) — not started
+
+---
+
+## Governance — DISCIPLINE Constitution
+
+- **`docs/DISCIPLINE_CONSTITUTION.md` is now the supreme reference of the project**
+  — the highest canonical authority, above all other documents.
+- **All future canonical documents must remain compatible with the Constitution.**
+  In any conflict between canonical documents, the Constitution prevails.
+- **Every future phase must begin with a Constitution Check** (see
+  `docs/DISCIPLINE_PROMPT.md` → "Constitution Check (Mandatory)" and `CLAUDE.md`):
+  verify the work reinforces understanding and autonomy, avoids unnecessary
+  complexity, and that no more Constitution-faithful alternative exists.
+
+Canonical hierarchy: Constitution → Master Context → Rulebook → Canonical Tokens
+→ Component Library → Build Plan.
 
 ---
 

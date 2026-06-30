@@ -129,6 +129,25 @@ Explain important decisions briefly when useful.
 
 ---
 
+## Constitution Check (Mandatory)
+
+Before any implementation, explicitly verify:
+
+- Does this phase reinforce understanding?
+- Does it reinforce autonomy?
+- Does it introduce unnecessary complexity?
+- Is there a solution more faithful to the Constitution?
+
+If any answer is negative:
+
+Stop the implementation.
+
+Explain the conflict.
+
+Propose a Constitution-compliant alternative before continuing.
+
+---
+
 ## GIT WORKFLOW (OFFICIAL)
 
 - La branche de développement officielle est `main`.

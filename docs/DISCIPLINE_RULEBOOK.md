@@ -1,3 +1,9 @@
+> This Rulebook defines the creative and interaction rules of DISCIPLINE.
+>
+> It is governed by DISCIPLINE_CONSTITUTION.md.
+>
+> If any rule conflicts with the Constitution, the Constitution prevails.
+
 # DISCIPLINE RULEBOOK
 Generated from project documentation.
 

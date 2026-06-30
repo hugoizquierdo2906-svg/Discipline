@@ -1,5 +1,7 @@
 # DISCIPLINE — BUILD PLAN
 
+> Every implementation phase must comply with DISCIPLINE_CONSTITUTION.md before being considered complete.
+
 > **Document status:** Draft v1.0 · Source of truth for development sequencing.
 > **Scope:** Full lifecycle from empty repository to production deployment.
 > **Reading order:** Each phase lists its own dependencies. Never start a phase before its listed dependencies are complete.
