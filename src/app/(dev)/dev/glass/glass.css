@@ -1,0 +1,165 @@
+/*
+ * Primary reference button — DISCIPLINE Liquid Glass material.
+ * Implements docs/DISCIPLINE_GLASS_MATERIAL.md by composing the canonical
+ * --ds-glass-* material sub-tokens. Isolated dev reference; no library file.
+ * The eight physical layers are built bottom→front: cast shadow, refractive
+ * body, fill, violet capture, inner shadow/highlight, edge light, specular.
+ */
+
+.gbp {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 var(--ds-space-6); /* 32px */
+  border: 0;
+  border-radius: var(--ds-radius-pill);
+  cursor: pointer;
+
+  /* Type */
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-body);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text); /* dark #111 label, canonical §12.3 */
+
+  /* Layer 2 — refractive body (transmission + diffusion + saturation lift) */
+  backdrop-filter: blur(var(--ds-glass-blur))
+    saturate(var(--ds-glass-saturation)) brightness(var(--ds-glass-brightness));
+  -webkit-backdrop-filter: blur(var(--ds-glass-blur))
+    saturate(var(--ds-glass-saturation)) brightness(var(--ds-glass-brightness));
+
+  /* Layer 3 fill (curved surface) + Layer 4 violet capture (asymmetric,
+     upper-left, never centered, never a full ring, fading into clarity). */
+  background:
+    radial-gradient(
+      135% 150% at 30% -20%,
+      var(--ds-glass-capture-rim) 0%,
+      var(--ds-glass-capture) 24%,
+      var(--ds-glass-capture-falloff) 62%
+    ),
+    linear-gradient(
+      180deg,
+      var(--ds-glass-fill-top) 0%,
+      var(--ds-glass-fill-bottom) 100%
+    );
+
+  /* Layers 1 (cast) + 5 (inner shadow) + 6 (inner highlight) in one stack */
+  box-shadow:
+    var(--ds-glass-shadow-contact),
+    var(--ds-glass-shadow-ambient),
+    inset 0 1px 0 var(--ds-glass-inner-highlight),
+    inset 0 -2px 4px var(--ds-glass-inner-shadow);
+
+  transition:
+    transform var(--ds-dur-fast) var(--ds-ease-standard),
+    box-shadow var(--ds-dur-fast) var(--ds-ease-standard);
+}
+
+.gbp__label {
+  position: relative;
+  z-index: 1;
+}
+
+/* Layer 7 — luminous machined edge (1px gradient ring, bright top-left → dim) */
+.gbp::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--ds-glass-edge-width);
+  background: linear-gradient(
+    135deg,
+    var(--ds-glass-edge-light) 0%,
+    var(--ds-glass-edge-dim) 55%,
+    var(--ds-glass-edge-light) 100%
+  );
+  /* show only the 1px border band */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Layer 8 — specular glint: small, soft, asymmetric (left of center, near top) */
+.gbp::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 14%;
+  width: 42%;
+  height: 45%;
+  border-radius: var(--ds-radius-pill);
+  background: radial-gradient(
+    60% 100% at 50% 0%,
+    var(--ds-glass-specular) 0%,
+    transparent 70%
+  );
+  opacity: var(--ds-glass-specular-opacity);
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Interaction — the glass meets the light, never changes color */
+.gbp:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    var(--ds-glass-shadow-contact),
+    var(--ds-glass-shadow-hover),
+    var(--ds-glass-glow),
+    inset 0 1px 0 var(--ds-glass-inner-highlight),
+    inset 0 -2px 4px var(--ds-glass-inner-shadow);
+}
+
+.gbp:active {
+  transform: scale(0.98);
+  box-shadow:
+    var(--ds-glass-shadow-contact),
+    var(--ds-glass-shadow-ambient),
+    var(--ds-glass-glow),
+    inset 0 1px 3px var(--ds-glass-inner-shadow);
+}
+
+.gbp:focus-visible {
+  outline: var(--ds-focus-ring-width) solid var(--ds-focus-ring-color);
+  outline-offset: var(--ds-focus-ring-offset);
+  box-shadow:
+    var(--ds-focus-ring-halo),
+    var(--ds-glass-shadow-contact),
+    var(--ds-glass-shadow-ambient),
+    inset 0 1px 0 var(--ds-glass-inner-highlight),
+    inset 0 -2px 4px var(--ds-glass-inner-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gbp {
+    transition-duration: 0.01ms;
+  }
+  .gbp:active {
+    transform: none;
+  }
+}
+
+/* --- Proof page backgrounds (dev only; decorative, not design tokens) --- */
+.proof-light {
+  background: var(--ds-color-bg);
+}
+.proof-dark {
+  background-image: radial-gradient(
+    120% 120% at 75% 20%,
+    #2b2466 0%,
+    #15123a 45%,
+    #0a0820 100%
+  );
+}
+.proof-cap-dark {
+  color: rgba(255, 255, 255, 0.6);
+}

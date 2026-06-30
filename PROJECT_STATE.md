@@ -9,10 +9,15 @@
 
 > Phase 03 passed the technical audit but **failed visual validation**: the
 > primitives (notably buttons) read as generic Tailwind, not the DISCIPLINE
-> Liquid Glass material. A material redesign is planned in
-> `docs/PHASE_03_GLASS_REDESIGN_PLAN.md` (analysis + layer decomposition +
-> reproduction method, no code yet). Per the new workflow, the phase can only be
-> locked after **explicit visual validation**.
+> Liquid Glass material. Material spec: `docs/DISCIPLINE_GLASS_MATERIAL.md`
+> (validated). Additive glass material sub-tokens encoded in canonical §2 +
+> `tokens.css` (first-approximation values, visual calibration only).
+>
+> **Current step:** a single **Primary reference button** is built in isolation
+> at `/dev/glass` (`src/app/(dev)/dev/glass/`) — no library component touched.
+> Captures on light + dark in `docs/phase-03-screenshots/glass-*.png`.
+> **Awaiting explicit visual validation** before generalizing the material to all
+> primitives. Once validated, this button is the absolute material reference.
 
 ---
 

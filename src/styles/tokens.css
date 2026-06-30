@@ -290,3 +290,48 @@
     --ds-text-h3: 40px;
   }
 }
+
+/* =====================================================================
+ * GLASS MATERIAL (Phase 03 redesign)
+ * ---------------------------------------------------------------------
+ * Additive material sub-tokens implementing docs/DISCIPLINE_GLASS_MATERIAL.md.
+ * Physical properties of ONE optical material, composed by components — never
+ * component values. Existing --ds-glass-thin/regular/thick/border/highlight are
+ * untouched. Values are a FIRST APPROXIMATION; tuned by visual validation only.
+ * =================================================================== */
+:root {
+  /* Optics / refraction */
+  --ds-glass-blur: 16px;
+  --ds-glass-saturation: 1.4;
+  --ds-glass-brightness: 1.05;
+  --ds-glass-refraction: 1.5px;
+  --ds-glass-distortion: 0;
+
+  /* Fill — near-colorless surface gradient */
+  --ds-glass-fill-top: rgba(255, 255, 255, 0.55);
+  --ds-glass-fill-bottom: rgba(255, 255, 255, 0.3);
+
+  /* Accent — the violet light captured inside the glass (primary intent only) */
+  --ds-glass-capture: rgba(139, 124, 255, 0.22);
+  --ds-glass-capture-rim: rgba(139, 124, 255, 0.38);
+  --ds-glass-capture-falloff: rgba(139, 124, 255, 0);
+
+  /* Edge — thin luminous machined contour */
+  --ds-glass-edge-light: rgba(255, 255, 255, 0.92);
+  --ds-glass-edge-dim: rgba(255, 255, 255, 0.18);
+  --ds-glass-edge-width: 1px;
+
+  /* Inner light */
+  --ds-glass-inner-highlight: rgba(255, 255, 255, 0.65);
+  --ds-glass-inner-shadow: rgba(16, 16, 16, 0.12);
+
+  /* Specular glint */
+  --ds-glass-specular: rgba(255, 255, 255, 0.8);
+  --ds-glass-specular-opacity: 0.5;
+
+  /* Depth — neutral diffuse shadows + very faint accent halo */
+  --ds-glass-shadow-contact: 0 1px 1px rgba(16, 16, 16, 0.06);
+  --ds-glass-shadow-ambient: 0 8px 24px rgba(16, 16, 16, 0.12);
+  --ds-glass-shadow-hover: 0 14px 36px rgba(16, 16, 16, 0.16);
+  --ds-glass-glow: 0 6px 20px rgba(139, 124, 255, 0.16);
+}

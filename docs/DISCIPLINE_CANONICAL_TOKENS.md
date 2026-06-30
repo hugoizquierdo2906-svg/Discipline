@@ -124,6 +124,43 @@ Trois paliers d'opacité pour réconcilier identité translucide et contraste de
 - **Pas de texte de lecture sur verre nu** au-dessus d'une image/vidéo : poser le texte sur une plaque opaque (`--ds-color-surface` ou `--ds-color-surface-raised`) ou utiliser `--ds-glass-thick` au-dessus du canvas contrôlé.
 - Valeurs de blur uniquement issues de l'échelle §5 (jamais de blur arbitraire).
 
+### 2.1 Matériau verre — sous-tokens (additif)
+
+> **Spécification du matériau : `docs/DISCIPLINE_GLASS_MATERIAL.md`.** Ces sous-tokens
+> encodent les **propriétés physiques** d'un matériau optique unique, composé à
+> l'identique par tous les composants verre (jamais des valeurs de composant). Les
+> tokens §2 ci-dessus (`thin/regular/thick/border/highlight`) restent inchangés.
+> **Valeurs = première approximation**, calibrées par **validation visuelle** sur
+> le bouton Primary de référence (voir §12.3). Non figées tant que la référence
+> n'est pas validée.
+
+| Token | Valeur (approx.) | Rôle |
+|---|---|---|
+| `--ds-glass-blur` | `16px` | Flou de réfraction du matériau (contrôles). |
+| `--ds-glass-saturation` | `1.4` | `saturate()` de la lumière transmise. |
+| `--ds-glass-brightness` | `1.05` | `brightness()` — lift léger sur canvas clair. |
+| `--ds-glass-refraction` | `1.5px` | Décalage de réfraction au bord. |
+| `--ds-glass-distortion` | `0` | Déplacement SVG réservé (off par défaut). |
+| `--ds-glass-fill-top` | `rgba(255,255,255,0.55)` | Stop haut du dégradé de surface (lumineux). |
+| `--ds-glass-fill-bottom` | `rgba(255,255,255,0.30)` | Stop bas (ombré). |
+| `--ds-glass-capture` | `rgba(139,124,255,0.22)` | Lumière violette captée dans le verre (primary). |
+| `--ds-glass-capture-rim` | `rgba(139,124,255,0.38)` | Violet concentré sur le rim haut/interne. |
+| `--ds-glass-capture-falloff` | `rgba(139,124,255,0)` | Dissolution du violet vers la clarté. |
+| `--ds-glass-edge-light` | `rgba(255,255,255,0.92)` | Stop clair du bord usiné (face lumière). |
+| `--ds-glass-edge-dim` | `rgba(255,255,255,0.18)` | Stop sombre du bord. |
+| `--ds-glass-edge-width` | `1px` | Épaisseur du contour. |
+| `--ds-glass-inner-highlight` | `rgba(255,255,255,0.65)` | Rebord interne haut éclairé (inset). |
+| `--ds-glass-inner-shadow` | `rgba(16,16,16,0.12)` | Paroi interne basse, épaisseur (inset). |
+| `--ds-glass-specular` | `rgba(255,255,255,0.80)` | Couleur du glint spéculaire. |
+| `--ds-glass-specular-opacity` | `0.5` | Intensité du glint. |
+| `--ds-glass-shadow-contact` | `0 1px 1px rgba(16,16,16,0.06)` | Ombre de contact (ancrage). |
+| `--ds-glass-shadow-ambient` | `0 8px 24px rgba(16,16,16,0.12)` | Ombre diffuse (flottement). |
+| `--ds-glass-shadow-hover` | `0 14px 36px rgba(16,16,16,0.16)` | Flottement élevé (hover). |
+| `--ds-glass-glow` | `0 6px 20px rgba(139,124,255,0.16)` | Halo accent **très** discret (hover/active, primary). |
+
+> Paliers d'épaisseur (`button/control/card/nav/modal`) = ratios du même matériau ;
+> ils seront formalisés lors de la généralisation, après validation de la référence.
+
 ---
 
 ## 3. Typographie
