@@ -74,10 +74,16 @@
 >   capsule at all sizes. Icon buttons stay circular. The dev card's
 >   `.btn-embedded` (a competing 38px geometry) was removed so it uses the
 >   canonical Micro. There is now ONE Micro geometry everywhere.
->   - **Re-balanced (owner feedback):** the final Micro geometry is a horizontal
->     **rounded rectangle** (Apple / Linear) — comfortable height, width well
->     above height, corners largely rounded but NOT spherical ends
->     (`rounded-[12/14/16px]`), not a thin pill or balloon.
+>   - **Re-balanced (owner feedback):** the final Micro geometry is a LOW, WIDE
+>     action button (Apple / Linear / Stripe) — reduced height (`h-8/h-10/h-12`),
+>     generous horizontal padding (`px-5/px-7/px-8`) for a taut horizontal
+>     silhouette ~2.8–3.5× wider than tall, corners largely rounded but NOT
+>     spherical (`rounded-[12/14/16px]`). It must read instantly as an action,
+>     never as a small card.
+>   - **DS principle (binding):** *a Card invites you to read; a Button invites
+>     you to click.* Same material language, but proportions must communicate
+>     that difference immediately — a Button is low and wide; a Card is a calm
+>     plane that lets content breathe.
 >   - **Optical refinements kept:** the validated glass-read improvements (radial
 >     top reflection, three-zone volume, internal-reflection/TIR line, livelier
 >     Fresnel) live in `src/styles/micro.css` scoped to `.ds-micro` (Button,

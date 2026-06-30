@@ -30,15 +30,15 @@ export const buttonVariants = cva(
         outline: 'text-text',
         destructive: 'text-text-on-accent',
       },
-      // The single Micro Surface geometry: a horizontal rounded rectangle —
-      // clearly wider than tall, a comfortable height (not a thin capsule),
-      // corners largely rounded but NOT spherical ends (Apple / Linear, not a
-      // pill or a balloon). Reads identically alone or nested (Card, Modal,
-      // Toolbar, Navbar). Heights/paddings kept accessible.
+      // The single Micro Surface geometry: a LOW, WIDE action button (Apple /
+      // Linear / Stripe). Reduced height + generous horizontal padding give a
+      // taut horizontal silhouette ~2.8–3.5× wider than tall; corners largely
+      // rounded but NOT spherical (no pill). It must read instantly as an action
+      // control, never as a small card. Material/optics are unchanged.
       size: {
-        sm: 'h-9 px-4 text-body-sm rounded-[12px]',
-        md: 'h-11 px-5 text-body rounded-[14px]',
-        lg: 'h-14 px-6 text-body-lg rounded-[16px]',
+        sm: 'h-8 px-5 text-body-sm rounded-[12px]',
+        md: 'h-10 px-7 text-body rounded-[14px]',
+        lg: 'h-12 px-8 text-body-lg rounded-[16px]',
       },
     },
     defaultVariants: { variant: 'primary', size: 'md' },
