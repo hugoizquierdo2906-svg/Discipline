@@ -28,7 +28,7 @@ export const buttonVariants = cva(
         secondary: 'text-text',
         ghost: 'text-accent-accessible',
         outline: 'text-text',
-        destructive: 'text-error',
+        destructive: 'text-text-on-accent',
       },
       size: {
         sm: 'h-9 px-4 text-body-sm',
@@ -84,7 +84,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(buttonVariants({ variant, size }), className)}
-        data-glass-role="micro"
         data-glass-variant={variant}
         data-glass-intent={variant === 'primary' ? 'primary' : undefined}
         disabled={disabled ?? loading}

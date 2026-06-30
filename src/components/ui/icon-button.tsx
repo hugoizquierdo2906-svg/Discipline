@@ -46,8 +46,6 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           iconButtonSize({ size }),
           className,
         )}
-        data-glass-role="micro"
-        data-glass-quiet=""
         data-glass-variant={variant}
         data-glass-intent={variant === 'primary' ? 'primary' : undefined}
         {...props}
