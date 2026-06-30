@@ -114,7 +114,7 @@ project's styling infrastructure so every visual value derives from a token.
 | Tailwind | `tailwindcss` v3.4.19 (config-file approach) + `postcss` + `autoprefixer` |
 | Font | Geist + Geist Mono via the official `geist` package (self-hosted `next/font`) |
 | Token source of truth | `src/styles/tokens.css` (CSS vars); `src/lib/tokens.ts` mirrors the subset needed by Framer Motion / GSAP |
-| Raw-value lint | ESLint `no-restricted-syntax` forbids raw hex + `rgb/hsl(...)` literals outside whitelisted token files (`tailwind.config.ts`, `src/lib/tokens.ts`) |
+| Raw-value lint | ESLint `no-restricted-syntax` forbids raw hex, `rgb/hsl(...)`, **and standalone `px`/`ms` literals** outside whitelisted token files (`tailwind.config.ts`, `src/lib/tokens.ts`) |
 
 ### Delivered
 
@@ -144,7 +144,8 @@ project's styling infrastructure so every visual value derives from a token.
 
 ### Notes / deferrals
 
-- Carried-over Phase 01 raw-color ESLint rule: **implemented** (colors first, as planned).
+- Carried-over Phase 01 raw-color ESLint rule: **implemented**, then extended
+  (per Phase 02 plan item 11) to also flag standalone raw `px`/`ms` literals.
 - `tokens.css` ↔ `lib/tokens.ts` sync is currently maintained by hand; an automated
   drift-check script is a candidate for a later hardening pass.
 - `backdrop-filter` cross-browser fallback handled at component level (Phase 04).

@@ -46,6 +46,11 @@ const eslintConfig = [
           message:
             'Raw color function is forbidden. Use a design token via a Tailwind utility or CSS var.',
         },
+        {
+          selector: 'Literal[value=/^-?[0-9]+(?:\\.[0-9]+)?(?:px|ms)$/]',
+          message:
+            'Raw px/ms value is forbidden. Use a spacing/radius/motion design token via a Tailwind utility or CSS var (see docs/DISCIPLINE_CANONICAL_TOKENS.md).',
+        },
       ],
       // Import hygiene: consistent, grouped, alphabetized imports.
       'import/order': [
