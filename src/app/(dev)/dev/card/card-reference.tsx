@@ -37,7 +37,10 @@ export function CardReference({
         <p className="cd-card__body">{body}</p>
         {cta && (
           <div className="cd-card__footer">
-            <Button variant={intent === 'primary' ? 'primary' : 'secondary'}>
+            <Button
+              variant={intent === 'primary' ? 'primary' : 'secondary'}
+              className="btn-embedded"
+            >
               {cta}
             </Button>
           </div>
