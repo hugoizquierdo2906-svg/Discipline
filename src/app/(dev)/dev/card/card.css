@@ -176,36 +176,32 @@
   background: linear-gradient(
     180deg,
     var(--ds-glass-fill-top) 0%,
-    var(--ds-glass-fill-top) 12%,
-    /* TOP FACE — a held bright plateau */ var(--ds-glass-fill-bottom) 30%,
-    /* shoulder into the body */ rgba(255, 255, 255, 0.09) 50%,
-    rgba(255, 255, 255, 0.09) 64%,
-    /* CORE — held dark transmissive plateau */ rgba(255, 255, 255, 0.32) 84%,
-    /* BOTTOM FACE — refraction catch, almost a separate surface */
-    var(--ds-glass-fill-bottom) 100% /* settle to the shadowed lower lip */
+    var(--ds-glass-fill-bottom) 34%,
+    rgba(255, 255, 255, 0.16) 62%,
+    rgba(255, 255, 255, 0.24) 86%,
+    var(--ds-glass-fill-bottom) 100%
   );
   box-shadow:
     inset 0 1px 0 var(--ds-glass-inner-highlight),
-    inset 0 -7px 11px var(--ds-glass-inner-shadow),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.62);
+    inset 0 -5px 9px var(--ds-glass-inner-shadow),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.55);
 }
 
-/* Incident light — a COMPRESSED arc: a very bright core at the top edge that
-   falls off fast, then almost nothing. The steep extinction is what reads as a
-   strongly curved surface (not a gentle wash). Screen-blended, light only. */
+/* Incident light — the principal reflection is an ARC that hugs the rounded top
+   and fades as the glass curves away (radial, not a flat band), so it reads as
+   light born from the geometry rather than painted on. The top face captures
+   more light without lifting the overall brightness. Screen-blended, light only. */
 .cd-card .btn-embedded .ds-glass__incident {
   background: radial-gradient(
-    150% 100% at 50% -40%,
+    140% 92% at 50% -30%,
     var(--ds-glass-inner-highlight) 0%,
-    rgba(255, 255, 255, 0.3) 17%,
-    rgba(255, 255, 255, 0.06) 33%,
-    transparent 48%
+    rgba(255, 255, 255, 0.22) 34%,
+    transparent 60%
   );
 }
 
-/* Specular — a single compressed highlight: a tight, very bright core riding
-   the top curvature, then a rapid drop to almost nothing. Same peak (no extra
-   brightness), only a steeper falloff. */
+/* Specular — a single continuous, uneven sweep riding the top curvature,
+   stronger near the light and tapering along the capsule, never a uniform patch. */
 .cd-card .btn-embedded .ds-glass__specular {
   inset: auto;
   top: 1px;
@@ -214,14 +210,13 @@
   height: 44%;
   border-radius: 50%;
   background: radial-gradient(
-    58% 100% at 40% 0%,
+    70% 100% at 42% 0%,
     var(--ds-glass-specular) 0%,
-    rgba(255, 255, 255, 0.42) 13%,
-    rgba(255, 255, 255, 0.08) 31%,
-    transparent 50%
+    rgba(255, 255, 255, 0.26) 38%,
+    transparent 72%
   );
-  opacity: 0.55;
-  filter: blur(1.5px);
+  opacity: 0.5;
+  filter: blur(2px);
 }
 
 /* Fresnel edge — livelier exactly where the light hits (top-left): a near-white
