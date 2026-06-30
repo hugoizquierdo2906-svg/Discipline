@@ -5,6 +5,7 @@
  */
 @import '../styles/tokens.css';
 @import '../styles/typography.css';
+@import '../styles/glass.css';
 
 @tailwind base;
 @tailwind components;

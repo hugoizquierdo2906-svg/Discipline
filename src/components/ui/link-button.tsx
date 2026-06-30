@@ -4,6 +4,7 @@ import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 
 import { buttonVariants } from './button'
+import { GlassSurface } from './glass-surface'
 
 export interface LinkButtonProps
   extends
@@ -14,23 +15,36 @@ export interface LinkButtonProps
 }
 
 /**
- * LinkButton — an anchor styled as a Button. Use for navigation (real hrefs);
- * use Button for actions. Shares the exact visual language via buttonVariants.
+ * LinkButton — an anchor wearing the same glass material as Button. Use for
+ * navigation (real hrefs); use Button for actions.
  */
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
   function LinkButton(
-    { className, variant, size, leadingIcon, trailingIcon, children, ...props },
+    {
+      className,
+      variant = 'primary',
+      size,
+      leadingIcon,
+      trailingIcon,
+      children,
+      ...props
+    },
     ref,
   ) {
     return (
       <a
         ref={ref}
         className={cn(buttonVariants({ variant, size }), className)}
+        data-glass-variant={variant}
+        data-glass-intent={variant === 'primary' ? 'primary' : undefined}
         {...props}
       >
-        {leadingIcon}
-        {children}
-        {trailingIcon}
+        <GlassSurface />
+        <span className="relative z-10 inline-flex items-center gap-2">
+          {leadingIcon}
+          {children}
+          {trailingIcon}
+        </span>
       </a>
     )
   },

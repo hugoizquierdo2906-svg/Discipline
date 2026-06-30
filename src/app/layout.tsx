@@ -2,6 +2,8 @@ import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import type { Metadata } from 'next'
 
+import { GlassFilter } from '@/components/ui/glass-surface'
+
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -14,7 +16,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <GlassFilter />
+        {children}
+      </body>
     </html>
   )
 }

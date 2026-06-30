@@ -1,0 +1,228 @@
+/*
+ * DISCIPLINE Liquid Glass — shared material implementation.
+ * ---------------------------------------------------------------------------
+ * The material is defined ONCE here and composed by every glass component
+ * (the Construction rule). It is a faithful promotion of the frozen Primary
+ * reference button (docs/DISCIPLINE_GLASS_*.md). Components must converge to it;
+ * they never redefine the material. Colors/opacities come from --ds-glass-*
+ * tokens. The displacement filter (#ds-glass-refract) is defined once in the
+ * root layout.
+ *
+ * Usage: a consumer element carries `.ds-glass` (+ optional data-glass-variant /
+ * data-glass-intent), renders <GlassSurface/> as its first children, then its
+ * own content on top.
+ */
+
+.ds-glass {
+  position: relative;
+  isolation: isolate;
+}
+
+.ds-glass__shadow,
+.ds-glass__body,
+.ds-glass__edge,
+.ds-glass__core,
+.ds-glass__bottomface,
+.ds-glass__topface,
+.ds-glass__violet,
+.ds-glass__tir,
+.ds-glass__specular {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* 1. Cast shadow (ambient float + contact anchor) */
+.ds-glass__shadow {
+  z-index: 0;
+  box-shadow: var(--ds-glass-shadow-contact), var(--ds-glass-shadow-ambient);
+  transition: box-shadow var(--ds-dur-fast) var(--ds-ease-standard);
+}
+
+/* 2. Refractive body — displaces + diffuses + re-saturates the background.
+   Clips the inner layers so captured light stays inside the volume. */
+.ds-glass__body {
+  z-index: 1;
+  overflow: hidden;
+  backdrop-filter: url(#ds-glass-refract) blur(var(--ds-glass-blur))
+    saturate(var(--ds-glass-saturation)) brightness(var(--ds-glass-brightness));
+  -webkit-backdrop-filter: blur(var(--ds-glass-blur))
+    saturate(var(--ds-glass-saturation)) brightness(var(--ds-glass-brightness));
+  box-shadow:
+    inset 0 1px 0 var(--ds-glass-inner-highlight),
+    inset 0 0 0 0.5px var(--ds-glass-edge-dim);
+}
+
+/* 3. Core transmission (near-colorless body) */
+.ds-glass__core {
+  background: linear-gradient(
+    180deg,
+    var(--ds-glass-fill-top) 0%,
+    var(--ds-glass-fill-bottom) 100%
+  );
+}
+
+/* 4a. Bottom face (denser, occluded light) */
+.ds-glass__bottomface {
+  top: 52%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--ds-glass-inner-shadow) 140%
+  );
+}
+
+/* 4b. Top face — convex lit gloss (domes the surface) */
+.ds-glass__topface {
+  bottom: 46%;
+  background: radial-gradient(
+    120% 180% at 42% -60%,
+    var(--ds-glass-inner-highlight) 0%,
+    transparent 64%
+  );
+  mix-blend-mode: screen;
+}
+
+/* 5. Violet caustic — light trapped in the core (primary intent only) */
+.ds-glass__violet {
+  inset: auto;
+  top: -18%;
+  left: -12%;
+  width: 88%;
+  height: 116%;
+  border-radius: 60% 55% 58% 62%;
+  background: radial-gradient(
+    78% 64% at 38% 34%,
+    var(--ds-glass-capture-rim) 0%,
+    var(--ds-glass-capture) 42%,
+    var(--ds-glass-capture-falloff) 76%
+  );
+  filter: blur(6px);
+  opacity: 0;
+  transition:
+    transform var(--ds-dur-fast) var(--ds-ease-standard),
+    opacity var(--ds-dur-fast) var(--ds-ease-standard);
+}
+
+/* 6. Internal-reflection (TIR) line — the bright glass underline */
+.ds-glass__tir {
+  inset: auto;
+  left: 12%;
+  right: 12%;
+  bottom: 2px;
+  height: 1.5px;
+  border-radius: var(--ds-radius-pill);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--ds-glass-edge-light) 50%,
+    transparent 100%
+  );
+  opacity: 0.7;
+}
+
+/* 7. Specular glint — small, crisp, convex, left of centre */
+.ds-glass__specular {
+  inset: auto;
+  top: 2px;
+  left: 20%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--ds-glass-specular) 0%,
+    transparent 72%
+  );
+  opacity: var(--ds-glass-specular-opacity);
+  filter: blur(0.6px);
+}
+
+/* 8. Fresnel edge — bright machined rim with tension (bright → break → dark) */
+.ds-glass__edge {
+  z-index: 2;
+  padding: var(--ds-glass-edge-width);
+  background: linear-gradient(
+    125deg,
+    var(--ds-glass-edge-light) 0%,
+    var(--ds-glass-edge-light) 14%,
+    var(--ds-glass-edge-dim) 34%,
+    var(--ds-glass-edge-dim) 50%,
+    var(--ds-glass-edge-light) 70%,
+    var(--ds-glass-edge-dim) 88%,
+    var(--ds-glass-edge-light) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* ── Intent: primary surfaces hold the violet caustic ─────────────────── */
+.ds-glass[data-glass-intent='primary'] .ds-glass__violet {
+  opacity: 1;
+}
+
+/* ── Variant expressions (Micro Surface budget) ───────────────────────── */
+/* Secondary: clear glass, no violet (default core). */
+
+/* Ghost: minimal — no body fill / shadow / edge at rest; material on hover. */
+.ds-glass[data-glass-variant='ghost'] .ds-glass__shadow,
+.ds-glass[data-glass-variant='ghost'] .ds-glass__core,
+.ds-glass[data-glass-variant='ghost'] .ds-glass__topface,
+.ds-glass[data-glass-variant='ghost'] .ds-glass__tir,
+.ds-glass[data-glass-variant='ghost'] .ds-glass__specular,
+.ds-glass[data-glass-variant='ghost'] .ds-glass__edge {
+  opacity: 0;
+  transition: opacity var(--ds-dur-fast) var(--ds-ease-standard);
+}
+.ds-glass[data-glass-variant='ghost']:hover .ds-glass__core,
+.ds-glass[data-glass-variant='ghost']:hover .ds-glass__edge,
+.ds-glass[data-glass-variant='ghost']:hover .ds-glass__topface {
+  opacity: 1;
+}
+
+/* Outline: transparent core, edge carries the read. */
+.ds-glass[data-glass-variant='outline'] .ds-glass__core,
+.ds-glass[data-glass-variant='outline'] .ds-glass__topface {
+  opacity: 0;
+}
+
+/* Destructive: solid error fill so the white label holds AA (semantic surface);
+   the glass edge/specular still read on top. */
+.ds-glass[data-glass-variant='destructive'] .ds-glass__core {
+  background: linear-gradient(
+    180deg,
+    var(--ds-color-error) 0%,
+    var(--ds-color-error) 100%
+  );
+}
+
+/* ── Interaction (shared) ─────────────────────────────────────────────── */
+.ds-glass:hover .ds-glass__shadow {
+  box-shadow:
+    var(--ds-glass-shadow-contact), var(--ds-glass-shadow-hover),
+    var(--ds-glass-glow);
+}
+.ds-glass[data-glass-intent='primary']:hover .ds-glass__violet {
+  transform: translate(2%, -3%);
+}
+.ds-glass:active .ds-glass__shadow {
+  box-shadow: var(--ds-glass-shadow-contact), var(--ds-glass-glow);
+}
+.ds-glass[data-glass-intent='primary']:active .ds-glass__violet {
+  transform: translate(0, 2%);
+  opacity: 0.88;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-glass__shadow,
+  .ds-glass__violet {
+    transition-duration: 0.01ms;
+  }
+}

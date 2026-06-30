@@ -4,11 +4,12 @@ import { forwardRef } from 'react'
 import { cn } from '@/lib/cn'
 
 import { buttonVariants } from './button'
+import { GlassSurface } from './glass-surface'
 
 /**
- * IconButton — square, icon-only Button. An accessible `label` is REQUIRED
- * (sets aria-label); a Tooltip should wrap it at the call site for sighted users.
- * Sizes keep a ≥44px touch target (canonical §11) via min size on sm.
+ * IconButton — square, icon-only Micro Surface. Composes the same glass material
+ * as Button. An accessible `label` is REQUIRED (aria-label); wrap with a Tooltip
+ * at the call site. Keeps a ≥44px touch target on sm (canonical §11).
  */
 const iconButtonSize = cva('aspect-square p-0', {
   variants: {
@@ -26,7 +27,6 @@ export interface IconButtonProps
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children'>,
     Pick<VariantProps<typeof buttonVariants>, 'variant'>,
     VariantProps<typeof iconButtonSize> {
-  /** Required accessible name for the icon-only control. */
   label: string
   icon: React.ReactNode
 }
@@ -46,9 +46,12 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           iconButtonSize({ size }),
           className,
         )}
+        data-glass-variant={variant}
+        data-glass-intent={variant === 'primary' ? 'primary' : undefined}
         {...props}
       >
-        {icon}
+        <GlassSurface />
+        <span className="relative z-10 inline-flex">{icon}</span>
       </button>
     )
   },
