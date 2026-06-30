@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Phase 03 — Component Library (Level 1 Primitives).** 28 generic,
+  token-driven, accessible primitives in `src/components/ui` built on Radix UI +
+  class-variance-authority, with a `cn()` class-merge utility:
+  - Buttons (Button/IconButton/LinkButton), form inputs (Input, Textarea,
+    Select, Checkbox, RadioGroup, Switch, Slider, DatePicker, FileInput),
+    display (Badge, Avatar, Icon, Spinner, Skeleton, Separator), typography
+    (Heading, Text, Label, Code), feedback (Alert, Progress, Tooltip).
+  - Dev-only `/dev/components` showcase (404 in production) covering all states.
+  - `scripts/visual-check.mjs` — Playwright screenshots (1440/1024/390) and an
+    axe-core accessibility scan (0 violations).
+  - `docs/PHASE_03_DESIGN_REVIEW.md` with captures, responsive and a11y checks,
+    and Rulebook justification.
+- **DISCIPLINE Constitution.** `docs/DISCIPLINE_CONSTITUTION.md` established as
+  the supreme canonical authority, wired into the canon and the workflow.
+
 - **Phase 02 — Design Token System.** Full translation of
   `DISCIPLINE_CANONICAL_TOKENS.md` into the styling infrastructure:
   - `src/styles/tokens.css` (all token groups + responsive overrides) and

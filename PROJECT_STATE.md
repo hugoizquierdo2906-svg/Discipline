@@ -4,7 +4,7 @@
 > Updated at the close of each phase.
 
 **Last updated:** 2026-06-30
-**Current phase:** Phase 03 — Component Library (Level 1 Primitives) — in progress
+**Current phase:** Phase 03 — Component Library (Level 1 Primitives) — complete
 **Next phase:** Phase 04 — Component Library (Level 2 Glass & Composite) — not started
 
 ---
@@ -31,8 +31,18 @@ Canonical hierarchy: Constitution → Master Context → Rulebook → Canonical 
 |---|---|---|
 | 01 | Repository & Toolchain Bootstrap | 🔒 Locked (complete) |
 | 02 | Design Token System | 🔒 Locked (complete) |
-| 03 | Component Library — Level 1 Primitives | ⏳ Not started |
-| 04–44 | (see DISCIPLINE_BUILD_PLAN.md) | ⏳ Not started |
+| 03 | Component Library — Level 1 Primitives | ✅ Complete |
+| 04 | Component Library — Level 2 Glass & Composite | ⏳ Not started |
+| 05–44 | (see DISCIPLINE_BUILD_PLAN.md) | ⏳ Not started |
+
+### Governance backlog (deferred, to resolve in a dedicated documentation revision)
+
+- **Documentary contradictions vs the Constitution** (recorded, not corrected):
+  streaks / leaderboards / gamification, countdowns / urgency, motivational and
+  conversion-centric language across Master Context, Rulebook, and Build Plan.
+- **Badge §12.9 deviation** (Phase 03): semantic badges use a white raised
+  surface + semantic border instead of the pale tint, because solid-on-tint at
+  12px fell just under WCAG AA. See `docs/PHASE_03_DESIGN_REVIEW.md` §6.
 
 > **Phase Lock Rule.** A validated phase is locked: no changes to a previous
 > phase are permitted except for a bug fix, a security flaw, a blocking
@@ -120,6 +130,51 @@ Canonical hierarchy: Constitution → Master Context → Rulebook → Canonical 
 
   Applies to `pnpm build`, `pnpm lint`, `pnpm type-check`, and any equivalent
   validation command. Reports must be verifiable, not assertions.
+
+---
+
+## Phase 03 — Component Library: Level 1 Primitives ✅
+
+**Objective:** Generic, stateless, token-driven UI primitives composed by every
+higher-level component. Accessibility baked in from this level.
+
+### Frozen technical decisions
+
+| Decision | Value |
+|---|---|
+| Primitive base | Radix UI + `class-variance-authority` + `cn()` (token-authored; no Shadcn CLI) |
+| Icons | `lucide-react` |
+| DatePicker | `react-day-picker` in a Radix Popover |
+| Class merge | `cn()` uses `extendTailwindMerge` registering the DISCIPLINE font-size scale (prevents size/color collisions) |
+| Captures & a11y | Playwright (pre-installed Chromium) + `@axe-core/playwright` via `scripts/visual-check.mjs` |
+
+### Delivered
+
+- 28 primitives in `src/components/ui/` (+ `index.ts` barrel): Button, IconButton,
+  LinkButton, Input, Textarea, Select (+ NativeSelect), Checkbox, RadioGroup,
+  Switch, Slider, DatePicker, FileInput, Badge, Avatar, Icon, Spinner, Skeleton,
+  Separator, Heading, Text, Label, Code, Alert, Progress, Tooltip.
+- `src/lib/cn.ts` class-merge utility.
+- `/dev/components` showcase (dev-only, 404 in production) — every primitive, all states.
+- `scripts/visual-check.mjs` — screenshots (1440/1024/390) + axe-core scan.
+- `docs/PHASE_03_DESIGN_REVIEW.md` + `docs/phase-03-screenshots/`.
+
+### Validation results (evidence)
+
+| Criterion | Result |
+|---|---|
+| `pnpm lint` | ✅ exit 0 |
+| `pnpm type-check` | ✅ exit 0 |
+| `pnpm format:check` | ✅ exit 0 |
+| `pnpm build` | ✅ exit 0 (~27.5 s) |
+| axe-core `/dev/components` | ✅ 0 violations |
+| `/dev/components` prod guard | ✅ HTTP 404 in production |
+
+### Notes
+
+- Two a11y issues found and fixed pre-closure: Progress accessible name, and a
+  tailwind-merge size/color collision (fixed in `cn.ts`, hardening all components).
+- Badge §12.9 deviation recorded in the governance backlog (accessibility-first).
 
 ---
 

@@ -39,6 +39,16 @@ Exigences transverses, intégrées **dès ce niveau** (jamais rétro-ajoutées) 
 dans tous ses états, le build passe sans erreur, et le scan axe-core ne relève
 **aucune violation**.
 
+### Règles d'implémentation (verrouillées pour cette phase)
+1. **Primitives génériques uniquement** — jamais de composant métier
+   (`WorkoutCard`, `MealCard`… restent hors périmètre, Phase 29).
+2. **Toute personnalisation passe par les Design Tokens et les variants CVA** —
+   aucune valeur en dur, aucune dérivation visuelle hors tokens/variants.
+3. **Démonstration exhaustive** — chaque primitive est présentée dans
+   `/dev/components` avec **tous ses états**.
+4. **API documentée** — chaque primitive expose une API documentée
+   (props, variants, accessibilité, dépendances) — voir `docs/PHASE_03_API.md`.
+
 ---
 
 ## 2. Composants qui seront créés
