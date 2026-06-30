@@ -18,9 +18,9 @@ import './modal.css'
 export function ModalReference() {
   return (
     <>
-      <div className="im-scrim" aria-hidden />
+      <div className="ds-scrim" aria-hidden />
       <div
-        className="im-modal ds-glass"
+        className="ds-immersive ds-glass"
         role="dialog"
         aria-modal="true"
         aria-labelledby="im-title"

@@ -17,7 +17,7 @@ const context = await browser.newContext({
 })
 const page = await context.newPage()
 await page.goto(`${BASE}/dev/card-contexts`, { waitUntil: 'networkidle' })
-await page.locator('.cd-card').first().waitFor()
+await page.locator('.ds-card').first().waitFor()
 await page.waitForTimeout(900) // let the video paint a frame
 
 const labels = ['ctx-white', 'ctx-gradient', 'ctx-image', 'ctx-video', 'ctx-ui']

@@ -14,7 +14,7 @@ const p = await c.newPage()
 await p.goto('http://localhost:3000/dev/calibration', {
   waitUntil: 'networkidle',
 })
-await p.locator('.im-modal').first().waitFor()
+await p.locator('.ds-immersive').first().waitFor()
 await p.waitForTimeout(500)
 const labels = ['calib-media', 'calib-gradient']
 const secs = await p.locator('section.calib').all()

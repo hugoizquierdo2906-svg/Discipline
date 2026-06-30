@@ -11,7 +11,7 @@ const c = await b.newContext({
 })
 const p = await c.newPage()
 await p.goto('http://localhost:3000/dev/modal', { waitUntil: 'networkidle' })
-await p.locator('.im-modal').waitFor()
+await p.locator('.ds-immersive').waitFor()
 await p.waitForTimeout(500)
 await p.screenshot({ path: `${OUT}/modal-scene.png` })
 console.log('done')

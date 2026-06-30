@@ -1,16 +1,14 @@
 import { Button } from '@/components/ui/button'
-import { GlassSurface } from '@/components/ui/glass-surface'
+import { GlassCard } from '@/components/ui/glass-card'
 
 import './card.css'
 
 /**
- * CardReference — the single Structural Surface reference (isolated dev
- * component). Built from the SAME optical layers as the frozen Button (it
- * renders the shared <GlassSurface/>), re-tuned to the "card" thickness tier:
- * a thick, calm lens with high refraction and depth, a quiet rim, a diffuse
- * sheen, and content breathing through. Neutral by default; `intent='primary'`
- * folds a low, diffuse violet into the core. The Structural expression lives in
- * card.css, scoped to `.cd-card`; the library material is not modified.
+ * CardReference — the single Structural Surface reference (isolated dev page).
+ * It now composes the library <GlassCard/> (first official consumer of the
+ * frozen `.ds-card` role), so the reference and the component are the same code
+ * by construction — proving the promotion is faithful. Only the content layout
+ * (`.cd-card__*`) lives in card.css.
  */
 export function CardReference({
   intent = 'neutral',
@@ -26,11 +24,7 @@ export function CardReference({
   cta?: string
 }) {
   return (
-    <div
-      className="cd-card ds-glass"
-      data-glass-intent={intent === 'primary' ? 'primary' : undefined}
-    >
-      <GlassSurface />
+    <GlassCard intent={intent}>
       <div className="cd-card__content">
         {eyebrow && <span className="cd-card__eyebrow">{eyebrow}</span>}
         <h3 className="cd-card__title">{title}</h3>
@@ -43,6 +37,6 @@ export function CardReference({
           </div>
         )}
       </div>
-    </div>
+    </GlassCard>
   )
 }

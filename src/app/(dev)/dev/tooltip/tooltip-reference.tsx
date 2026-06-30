@@ -16,7 +16,7 @@ import './tooltip.css'
  */
 export function TooltipReference({ label }: { label: string }) {
   return (
-    <span className="fl-tip ds-glass" role="tooltip">
+    <span className="ds-floating ds-glass" role="tooltip">
       <GlassSurface />
       <span className="fl-tip__arrow" aria-hidden />
       <span className="fl-tip__label">{label}</span>

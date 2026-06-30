@@ -24,7 +24,7 @@ export const metadata = { robots: { index: false, follow: false } }
 function NestedCluster() {
   return (
     <div className="calib__cluster">
-      <div className="cd-card ds-glass" style={{ width: 340 }}>
+      <div className="ds-card ds-glass" style={{ width: 340 }}>
         <GlassSurface />
         <div className="cd-card__content">
           <span className="calib__rolelabel calib__cardlabel">
@@ -32,7 +32,7 @@ function NestedCluster() {
           </span>
           <Input placeholder="Control · Input" aria-label="Control input" />
           <div className="calib__btnwrap">
-            <span className="fl-tip ds-glass calib__tip" role="tooltip">
+            <span className="ds-floating ds-glass calib__tip" role="tooltip">
               <GlassSurface />
               <span className="fl-tip__arrow" aria-hidden />
               <span className="fl-tip__label">Floating · Tooltip</span>
@@ -43,8 +43,12 @@ function NestedCluster() {
       </div>
 
       <div className="calib__modalframe">
-        <div className="im-scrim" aria-hidden />
-        <div className="im-modal ds-glass" role="group" aria-label="Immersive">
+        <div className="ds-scrim" aria-hidden />
+        <div
+          className="ds-immersive ds-glass"
+          role="group"
+          aria-label="Immersive"
+        >
           <GlassSurface />
           <div className="im-modal__content">
             <span className="calib__rolelabel">Immersive · Modal</span>

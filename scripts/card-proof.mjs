@@ -17,7 +17,7 @@ const context = await browser.newContext({
 })
 const page = await context.newPage()
 await page.goto(`${BASE}/dev/card`, { waitUntil: 'networkidle' })
-await page.locator('.cd-card').first().waitFor()
+await page.locator('.ds-card').first().waitFor()
 await page.waitForTimeout(400)
 
 const sections = await page.locator('section').all()

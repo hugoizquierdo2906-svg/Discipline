@@ -17,7 +17,7 @@ const context = await browser.newContext({
 })
 const page = await context.newPage()
 await page.goto(`${BASE}/dev/tooltip`, { waitUntil: 'networkidle' })
-await page.locator('.fl-tip').first().waitFor()
+await page.locator('.ds-floating').first().waitFor()
 await page.waitForTimeout(400)
 
 const labels = ['tooltip-light', 'tooltip-media']
