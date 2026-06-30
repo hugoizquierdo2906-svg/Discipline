@@ -5,6 +5,8 @@ import { forwardRef, useState, type DragEvent } from 'react'
 
 import { cn } from '@/lib/cn'
 
+import { ControlSurface, controlStateClass } from './control-surface'
+
 export interface FileInputProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'type'
@@ -16,9 +18,12 @@ export interface FileInputProps extends Omit<
 }
 
 /**
- * FileInput — drag-and-drop zone plus click-to-browse. The visible dropzone is
- * a label wrapping a visually-hidden native input, so it stays fully keyboard
- * and screen-reader accessible.
+ * FileInput — drag-and-drop zone plus click-to-browse, as a Control Surface
+ * (Grammar §2). The dropzone is the shared Liquid Glass well (same material as
+ * Input), expressed at a larger, centered geometry; the icon + labels sit on the
+ * z-3 plane. While a file is dragged over it the control reads as active (the
+ * violet caustic rises). The label wraps a visually-hidden native input, so it
+ * stays fully keyboard and screen-reader accessible.
  */
 export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
   function FileInput(
@@ -43,19 +48,25 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
         onDragLeave={() => setDragging(false)}
         onDrop={handleDrop}
         className={cn(
-          'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-8 text-center',
-          'transition-colors duration-fast ease-standard focus-within:border-accent-accessible',
-          dragging
-            ? 'border-accent bg-accent-subtle'
-            : 'border-border-strong bg-surface',
-          disabled && 'cursor-not-allowed opacity-40',
+          'ds-glass ds-control relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md p-8 text-center',
+          controlStateClass({ focus: dragging, disabled }),
+          disabled && 'cursor-not-allowed',
           className,
         )}
       >
-        <Upload size={24} className="text-text-tertiary" aria-hidden />
-        <span className="text-body-sm font-medium text-text">{label}</span>
+        <ControlSurface />
+        <Upload
+          size={24}
+          className="relative z-[3] text-text-tertiary"
+          aria-hidden
+        />
+        <span className="relative z-[3] text-body-sm font-medium text-text">
+          {label}
+        </span>
         {hint && (
-          <span className="text-caption text-text-tertiary">{hint}</span>
+          <span className="relative z-[3] text-caption text-text-tertiary">
+            {hint}
+          </span>
         )}
         <input
           ref={ref}

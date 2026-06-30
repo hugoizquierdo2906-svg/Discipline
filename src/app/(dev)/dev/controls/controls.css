@@ -1,0 +1,25 @@
+/* Control Surface family proof — dev only; decorative backgrounds, not tokens. */
+.proof-light {
+  background: var(--ds-color-bg);
+}
+.proof-dark {
+  background-image: radial-gradient(
+    120% 120% at 75% 20%,
+    #2b2466 0%,
+    #15123a 45%,
+    #0a0820 100%
+  );
+}
+.proof-cap-dark {
+  color: rgba(255, 255, 255, 0.6);
+}
+.proof-label {
+  color: var(--ds-color-text);
+}
+/* On the dark panel, lift label/helper text so the proof stays readable. */
+.proof-dark :is(label, .proof-label) {
+  color: rgba(255, 255, 255, 0.9);
+}
+.proof-dark .text-text-tertiary {
+  color: rgba(255, 255, 255, 0.55);
+}

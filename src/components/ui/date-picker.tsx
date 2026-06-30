@@ -9,6 +9,12 @@ import 'react-day-picker/style.css'
 
 import { cn } from '@/lib/cn'
 
+import {
+  ControlSurface,
+  controlHostClass,
+  controlStateClass,
+} from './control-surface'
+
 export interface DatePickerProps {
   value?: Date
   onChange?: (date: Date | undefined) => void
@@ -20,8 +26,10 @@ export interface DatePickerProps {
 
 /**
  * DatePicker — accessible calendar (react-day-picker) inside a Radix Popover.
- * The trigger matches the Input field language; the calendar accent is mapped
- * to the Brand accent token via react-day-picker's CSS variables.
+ * The trigger is a Control Surface (Grammar §2): it renders the shared Liquid
+ * Glass optical layers as a recessed well, identical to Input, with the value +
+ * calendar icon on the z-3 plane. The violet caustic rises while the popover is
+ * open or the trigger is focused. The calendar panel stays a raised surface.
  */
 export function DatePicker({
   value,
@@ -37,14 +45,22 @@ export function DatePicker({
         aria-label={label}
         disabled={disabled}
         className={cn(
-          'flex h-11 w-full items-center justify-between gap-2 rounded-sm border border-border bg-surface px-4',
-          'text-body text-text focus:border-accent-accessible disabled:cursor-not-allowed disabled:opacity-40',
+          controlHostClass,
+          'w-full justify-between',
+          'text-body text-text disabled:cursor-not-allowed',
+          controlStateClass({ disabled }),
         )}
       >
-        <span className={cn(!value && 'text-text-tertiary')}>
+        <ControlSurface />
+        <span
+          className={cn(
+            'relative z-[3] truncate',
+            !value && 'text-text-tertiary',
+          )}
+        >
           {value ? value.toLocaleDateString() : placeholder}
         </span>
-        <Calendar size={18} className="text-text-tertiary" />
+        <Calendar size={18} className="relative z-[3] text-text-tertiary" />
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content

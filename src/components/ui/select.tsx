@@ -4,10 +4,19 @@ import { forwardRef } from 'react'
 
 import { cn } from '@/lib/cn'
 
+import {
+  ControlSurface,
+  controlHostClass,
+  controlStateClass,
+} from './control-surface'
+
 /**
- * Select — custom, accessible dropdown built on Radix Select. For very simple
- * cases a NativeSelect is exported below. Trigger matches the Input field
- * language (canonical §12.5); the content panel uses a raised surface + shadow-3.
+ * Select — accessible dropdown on Radix Select. The trigger is a Control Surface
+ * (Grammar §2): it renders the shared Liquid Glass optical layers as a recessed
+ * well, identical to Input, with the value + chevron on the z-3 plane. The
+ * violet caustic rises while the menu is open or the trigger is focused. The
+ * content panel stays a raised surface (Structural, handled later). A simpler
+ * NativeSelect is exported below.
  */
 export const Select = SelectPrimitive.Root
 export const SelectValue = SelectPrimitive.Value
@@ -16,20 +25,25 @@ export const SelectGroup = SelectPrimitive.Group
 export const SelectTrigger = forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(function SelectTrigger({ className, children, ...props }, ref) {
+>(function SelectTrigger({ className, children, disabled, ...props }, ref) {
   return (
     <SelectPrimitive.Trigger
       ref={ref}
+      disabled={disabled}
       className={cn(
-        'flex h-11 w-full items-center justify-between gap-2 rounded-sm border border-border bg-surface px-4',
-        'text-body text-text data-[placeholder]:text-text-tertiary',
-        'focus:border-accent-accessible disabled:cursor-not-allowed disabled:opacity-40',
+        controlHostClass,
+        'w-full justify-between',
+        'text-body text-text data-[placeholder]:text-text-tertiary disabled:cursor-not-allowed',
+        controlStateClass({ disabled }),
         className,
       )}
       {...props}
     >
-      {children}
-      <SelectPrimitive.Icon>
+      <ControlSurface />
+      <span className="relative z-[3] min-w-0 flex-1 truncate text-left">
+        {children}
+      </span>
+      <SelectPrimitive.Icon className="relative z-[3]">
         <ChevronDown size={18} className="text-text-tertiary" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
@@ -88,19 +102,31 @@ export const SelectItem = forwardRef<
 
 export type NativeSelectProps = React.SelectHTMLAttributes<HTMLSelectElement>
 
-/** NativeSelect — minimal token-styled native <select> for simple forms. */
+/** NativeSelect — token-styled native <select> as a Control Surface. The native
+ * element sits transparent on the z-3 plane over the shared glass layers. */
 export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
-  function NativeSelect({ className, ...props }, ref) {
+  function NativeSelect({ className, disabled, ...props }, ref) {
     return (
-      <select
-        ref={ref}
+      <div
         className={cn(
-          'h-11 rounded-sm border border-border bg-surface px-4 text-body text-text outline-none',
-          'focus:border-accent-accessible disabled:cursor-not-allowed disabled:opacity-40',
-          className,
+          controlHostClass,
+          'w-full',
+          controlStateClass({ disabled }),
         )}
-        {...props}
-      />
+      >
+        <ControlSurface />
+        <select
+          ref={ref}
+          disabled={disabled}
+          className={cn(
+            'relative z-[3] min-w-0 flex-1 appearance-none bg-transparent text-body text-text outline-none',
+            'disabled:cursor-not-allowed',
+            className,
+          )}
+          {...props}
+        />
+        <ChevronDown size={18} className="relative z-[3] text-text-tertiary" />
+      </div>
     )
   },
 )

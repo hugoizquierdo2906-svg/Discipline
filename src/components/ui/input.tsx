@@ -2,6 +2,13 @@ import { forwardRef, useId } from 'react'
 
 import { cn } from '@/lib/cn'
 
+import {
+  ControlSurface,
+  controlAdornmentClass,
+  controlFieldClass,
+  controlHostClass,
+  controlStateClass,
+} from './control-surface'
 import { Label } from './label'
 
 export interface InputProps extends Omit<
@@ -20,9 +27,11 @@ export interface InputProps extends Omit<
 }
 
 /**
- * Input — text/email/password/number field. Canonical §12.5: 44px height,
- * radius-sm, body (16px) to avoid iOS zoom, accent-accessible focus border +
- * the global focus ring. Error never relies on color alone (message + icon-ready).
+ * Input — text/email/password/number field. Control Surface (Grammar §2): it
+ * renders the shared Liquid Glass optical layers as a recessed, high-transmission
+ * well (the validated /dev/input reference), with content on the z-3 plane. The
+ * violet caustic rises only on focus — brand light caught inside the material.
+ * 16px text avoids iOS zoom; error never relies on color alone (message + rim).
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
@@ -37,6 +46,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     id,
     value,
     maxLength,
+    disabled,
     ...props
   },
   ref,
@@ -56,29 +66,26 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       )}
       <div
         className={cn(
-          'flex h-11 items-center gap-2 rounded-sm border bg-surface px-4',
-          'focus-within:border-accent-accessible',
-          error ? 'border-error' : 'border-border',
+          controlHostClass,
+          controlStateClass({ error: Boolean(error), disabled }),
         )}
       >
-        {prefix && <span className="text-text-tertiary">{prefix}</span>}
+        <ControlSurface />
+        {prefix && <span className={controlAdornmentClass}>{prefix}</span>}
         <input
           ref={ref}
           id={inputId}
           value={value}
           maxLength={maxLength}
+          disabled={disabled}
           aria-invalid={error ? true : undefined}
           aria-describedby={
             cn(error && errorId, helperText && helpId) || undefined
           }
-          className={cn(
-            'min-w-0 flex-1 bg-transparent text-body text-text outline-none',
-            'placeholder:text-text-tertiary disabled:cursor-not-allowed disabled:opacity-40',
-            className,
-          )}
+          className={cn(controlFieldClass, className)}
           {...props}
         />
-        {suffix && <span className="text-text-tertiary">{suffix}</span>}
+        {suffix && <span className={controlAdornmentClass}>{suffix}</span>}
       </div>
       <div className="flex items-center justify-between gap-2">
         {error ? (

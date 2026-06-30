@@ -18,8 +18,19 @@
 >   well-balanced on light and dark backgrounds. **Do not modify it. Do not
 >   iterate on it. Do not try to perfect it further.** It is the visual quality
 >   bar every other component must reach.
+> - **The Control Surface reference (Input) is visually VALIDATED and FROZEN.**
+>   It is the official reference of the **Control Surface** role (Grammar §2),
+>   built from the SAME optical layers as the button, re-tuned into a recessed,
+>   high-transmission well (violet caught inside the material on focus, not an
+>   outline). Promoted to the shared `.ds-control` role class in `glass.css`.
+> - **The whole Control Surface family is generalized to that reference:** Input,
+>   Textarea, SearchInput, Select (+ NativeSelect), DatePicker, FileInput all
+>   render `<GlassSurface/>` inside a `.ds-glass .ds-control` host (shared
+>   `control-surface.tsx`), adapting geometry/interaction only — one identical
+>   material language. Family proof at `/dev/controls` (light + dark, axe 0).
+> - **Next role:** Structural Surface, starting with the reference **Card**.
 > - **Next work:** redesign the other components one by one to this quality
->   (Input → Card → Modal …), converging to this reference — never re-touching it.
+>   (Card → Modal …), converging to these references — never re-touching them.
 > - **All components converge to the reference, never the reverse.** If a
 >   component needs adaptation, adapt the component to the material.
 > - **The glass theory is frozen:** Material, Construction, Grammar, Budget, Tests

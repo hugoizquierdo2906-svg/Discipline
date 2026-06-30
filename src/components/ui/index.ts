@@ -17,6 +17,7 @@ export { Label } from './label'
 export { LinkButton } from './link-button'
 export { Progress } from './progress'
 export { RadioGroup, RadioItem } from './radio-group'
+export { SearchInput } from './search-input'
 export {
   NativeSelect,
   Select,

@@ -168,6 +168,92 @@
   );
 }
 
+/* ──────────────────────────────────────────────────────────────────────
+ * Control Surface role (Grammar §2) — Input · Textarea · Select · DatePicker
+ * · Search · FileInput.
+ *
+ * The SAME material as the Micro Surface button, re-tuned into a recessed,
+ * high-transmission well: readability first, the glass recedes, the violet
+ * caustic is OFF at rest and rises only when the control is active (focus /
+ * open) as brand light caught INSIDE the material — never an outline. Frozen
+ * from the validated /dev/input reference. This is the material expression
+ * only; geometry (height, radius, padding) belongs to each component.
+ * ────────────────────────────────────────────────────────────────────── */
+
+/* Recessed well: drop the ambient float — the field is carved into the canvas. */
+.ds-control .ds-glass__shadow {
+  box-shadow: var(--ds-glass-shadow-contact);
+}
+
+/* Internal volume — INVERTED vs the raised button (top inner wall shadowed,
+   base lit) and highly transmissive, so dark panels read as glass, not paint. */
+.ds-control .ds-glass__volume {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  box-shadow:
+    inset 0 2px 5px var(--ds-glass-inner-shadow),
+    inset 0 1px 1px var(--ds-glass-inner-shadow),
+    inset 0 -1px 1px var(--ds-glass-inner-highlight);
+}
+
+/* Incident gloss and specular glint — quiet (a control does not glint). */
+.ds-control .ds-glass__incident {
+  opacity: 0.45;
+}
+.ds-control .ds-glass__specular {
+  opacity: 0.22;
+}
+
+/* Machined edge — present but discreet; it defines the rim of the well. */
+.ds-control .ds-glass__edge {
+  opacity: 0.65;
+}
+
+/* Violet caustic — off at rest; it is the control's brand light, only on focus. */
+.ds-control .ds-glass__violet {
+  opacity: 0;
+  transition: opacity var(--ds-dur-standard) var(--ds-ease-standard);
+}
+
+/* Controls do not lift or glow on hover/press — they are surfaces written into. */
+.ds-control:hover .ds-glass__shadow,
+.ds-control:active .ds-glass__shadow {
+  box-shadow: var(--ds-glass-shadow-contact);
+}
+
+/* Active — focus for inputs, focus/open for Select & DatePicker triggers: the
+   well catches the brand light from inside, plus the focus ring. */
+.ds-control:focus-within,
+.ds-control[data-state='open'],
+.ds-control.ds-control--focus {
+  box-shadow:
+    var(--ds-focus-ring-halo),
+    0 0 0 var(--ds-focus-ring-width) var(--ds-focus-ring-color);
+}
+.ds-control:focus-within .ds-glass__violet,
+.ds-control[data-state='open'] .ds-glass__violet,
+.ds-control.ds-control--focus .ds-glass__violet {
+  opacity: 0.7;
+}
+
+/* Error — the machined rim turns to the error colour; the well is unchanged. */
+.ds-control.ds-control--error .ds-glass__edge {
+  opacity: 1;
+  background: linear-gradient(
+    135deg,
+    var(--ds-color-error) 0%,
+    var(--ds-color-error) 100%
+  );
+}
+
+/* Disabled — recede the whole control. */
+.ds-control.ds-control--disabled {
+  opacity: var(--ds-opacity-disabled);
+}
+
 /* ── Interaction (shared) ─────────────────────────────────────────────── */
 .ds-glass:hover .ds-glass__shadow {
   box-shadow:
