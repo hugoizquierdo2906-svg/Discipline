@@ -53,13 +53,25 @@
 >     - ✅ Control Surface → **Input family**
 >     - ✅ Structural Surface → **Card**
 >     - ✅ Floating Surface → **Tooltip**
-> - **Next role (Grammar order):** **Immersive Surface** — reference component
->   **Modal** (Grammar §5 mapping; Build Plan Phase 04 Overlay & Floating). Build
->   ONE isolated reference (scrim + thickest-tier glass volume), then generalize
->   to Dialog / Drawer / Sheet / Overlay after validation.
-> - **Next work:** Immersive is the last role; after it, the five-role material
->   language is complete and the library generalizes role by role to these
->   frozen references — never re-touching them.
+> - **The Immersive Surface reference (Modal) is visually VALIDATED and FROZEN.**
+>   It is the official reference of the **Immersive Surface** role (Grammar §2):
+>   the thickest "modal" tier — heaviest volume + lens, deepest faces and cast
+>   shadow, quiet rim, diffuse sheen, a legibility floor for AA text, and the
+>   role-specific scrim that dims + blurs the background. Scoped to `.im-modal`.
+> - **The FIVE founding roles are now COMPLETE and FROZEN** — the physical
+>   language is finished. They do not reopen except for a functional bug, an
+>   accessibility issue, or an objective technical defect:
+>     - ✅ Micro Surface → **Button**
+>     - ✅ Control Surface → **Input family**
+>     - ✅ Structural Surface → **Card**
+>     - ✅ Floating Surface → **Tooltip**
+>     - ✅ Immersive Surface → **Modal**
+> - **PHASE CHANGE — generalization, not invention.** Every remaining component
+>   must derive from exactly one of the five frozen references; no sixth language,
+>   no new material, no new optical recipe. Before each implementation, state
+>   explicitly: which reference it derives from, which optical layers are reused,
+>   which magnitudes change and why. A component that seems to need a new material
+>   is first treated as a design error to be disproven.
 > - **All components converge to the reference, never the reverse.** If a
 >   component needs adaptation, adapt the component to the material.
 > - **The glass theory is frozen:** Material, Construction, Grammar, Budget, Tests
