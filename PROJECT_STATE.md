@@ -28,9 +28,24 @@
 >   render `<GlassSurface/>` inside a `.ds-glass .ds-control` host (shared
 >   `control-surface.tsx`), adapting geometry/interaction only — one identical
 >   material language. Family proof at `/dev/controls` (light + dark, axe 0).
-> - **Next role:** Structural Surface, starting with the reference **Card**.
-> - **Next work:** redesign the other components one by one to this quality
->   (Card → Modal …), converging to these references — never re-touching them.
+> - **The Structural Surface reference (Card) is visually VALIDATED and FROZEN.**
+>   It is the official reference of the **Structural Surface** role (Grammar §2):
+>   the "card" thickness tier of the shared material — high refraction + depth,
+>   quiet rim, diffuse sheen, content breathing through. An **Embedded Micro
+>   Surface** expression (a machined horizontal capsule for buttons inside a
+>   Card, same optical material) lives scoped to `.cd-card .btn-embedded` in the
+>   dev reference; it is not yet a DS-wide rule.
+> - **Three founding roles are now FROZEN — they do not reopen** except for a
+>   functional bug, an accessibility issue, or an objective technical defect.
+>   Future components converge to them; they never converge to future components:
+>     - ✅ Micro Surface → **Button**
+>     - ✅ Control Surface → **Input family**
+>     - ✅ Structural Surface → **Card**
+> - **Next role (Grammar order):** **Floating Surface** — reference component
+>   **Tooltip** (Grammar §6 worked example). Build ONE isolated reference, then
+>   generalize to Popover / DropdownMenu / ContextMenu / Toast after validation.
+> - **Next work:** redesign the remaining roles one by one to this quality
+>   (Floating → Immersive), converging to these references — never re-touching them.
 > - **All components converge to the reference, never the reverse.** If a
 >   component needs adaptation, adapt the component to the material.
 > - **The glass theory is frozen:** Material, Construction, Grammar, Budget, Tests
