@@ -38,3 +38,6 @@ pnpm-debug.log*
 
 # Vercel (configured in a later phase)
 .vercel
+
+# Local dev server log
+.devlog
