@@ -129,6 +129,20 @@ Explain important decisions briefly when useful.
 
 ---
 
+## GIT WORKFLOW (OFFICIAL)
+
+- La branche de développement officielle est `main`.
+- Toutes les phases sont développées sur `main`.
+- Une branche temporaire ne peut être créée que sur demande explicite.
+- Une Pull Request ne peut être créée que sur demande explicite.
+- À la fin de chaque phase :
+  - Commit
+  - Push
+  - Mise à jour de `PROJECT_STATE.md`
+  - Rapport de fin de phase
+
+---
+
 ## FINAL PRINCIPLE
 
 If several solutions are possible, choose the one that is:
