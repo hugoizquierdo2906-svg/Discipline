@@ -1,0 +1,180 @@
+/*
+ * Structural Surface reference — DISCIPLINE Liquid Glass Card.
+ *
+ * Same material as the frozen Button: the card renders the shared <GlassSurface/>
+ * optical layers (.ds-glass__*). This file does NOT redefine the material — it
+ * re-tunes the existing layers, scoped to `.cd-card`, for the Structural tier
+ * (Construction §7 "card" thickness; Grammar §2 Structural; Budget §3):
+ *
+ *   ★★★★ Refraction  — a thick lens; the background bends and blurs through it.
+ *   ★★★★ Volume/Depth — three readable faces + a broad, soft cast shadow.
+ *   ★★★  Transmission — content breathes through; the plane is calm, not opaque.
+ *   ★★   Fresnel      — the rim stays QUIET (a bright edge at this scale shouts).
+ *   ★★   Specular     — one diffuse, broad sheen, never a tight glint.
+ *   ★    Violet       — off for a neutral card; low + diffuse on primary intent.
+ *
+ * Isolated dev reference; the library material is untouched. Geometry (padding,
+ * radius) lives here too because this is a single reference, not a generalization.
+ */
+
+.cd-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--ds-radius-lg); /* 28px — honest size */
+  padding: var(--ds-space-6); /* 32px */
+}
+
+/* Depth — a broad, soft float + a close contact anchor (honest large mass). */
+.cd-card .ds-glass__shadow {
+  box-shadow:
+    0 2px 4px rgba(16, 16, 16, 0.05),
+    0 28px 64px rgba(16, 16, 16, 0.22);
+}
+
+/* Refraction — a thicker lens than a button: more blur, gentle re-saturation. */
+.cd-card .ds-glass__body {
+  backdrop-filter: blur(30px) saturate(1.5) brightness(1.04);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5) brightness(1.04);
+}
+
+/* Volume — three readable faces (lit top → calm core → lifted bottom), at
+   medium-high transmission so content shows through the plane. */
+.cd-card .ds-glass__volume {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.1) 48%,
+    rgba(255, 255, 255, 0.16) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 var(--ds-glass-inner-highlight),
+    inset 0 -16px 28px rgba(16, 16, 16, 0.05);
+}
+
+/* Incident light — soft and broad across the top face (diffuse, not a strip). */
+.cd-card .ds-glass__incident {
+  opacity: 0.5;
+  background: linear-gradient(
+    180deg,
+    var(--ds-glass-inner-highlight) 0%,
+    transparent 55%
+  );
+}
+
+/* Specular — a single broad, soft sheen near the top-left; never a tight glint. */
+.cd-card .ds-glass__specular {
+  inset: auto;
+  top: 0;
+  left: 6%;
+  width: 62%;
+  height: 58%;
+  border-radius: 50%;
+  background: radial-gradient(
+    60% 100% at 38% 0%,
+    var(--ds-glass-specular) 0%,
+    transparent 70%
+  );
+  opacity: 0.16;
+  filter: blur(10px);
+}
+
+/* Fresnel edge — QUIET at this scale: a faint machined rim, not a bright line. */
+.cd-card .ds-glass__edge {
+  opacity: 0.4;
+}
+
+/* Violet — none on a neutral card; on primary intent a LOW, DIFFUSE inner glow
+   (light folded in the core), never a fill or a ring. */
+.cd-card .ds-glass__violet {
+  opacity: 0;
+}
+.cd-card[data-glass-intent='primary'] .ds-glass__violet {
+  inset: auto;
+  top: -28%;
+  left: -6%;
+  width: 64%;
+  height: 130%;
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(30px);
+}
+
+/* Structural planes are calm — no hover lift/glow on the reference card. */
+.cd-card:hover .ds-glass__shadow,
+.cd-card:active .ds-glass__shadow {
+  box-shadow:
+    0 2px 4px rgba(16, 16, 16, 0.05),
+    0 28px 64px rgba(16, 16, 16, 0.22);
+}
+
+/* Content plane — above every optical layer (edge is z-2). */
+.cd-card__content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+}
+.cd-card__eyebrow {
+  font-size: var(--ds-text-caption);
+  font-weight: var(--ds-font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-color-accent-accessible);
+}
+.cd-card__title {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-h4);
+  font-weight: var(--ds-font-weight-semibold);
+  line-height: var(--ds-leading-h4);
+  color: var(--ds-color-text);
+}
+.cd-card__body {
+  font-size: var(--ds-text-body);
+  line-height: var(--ds-leading-body);
+  color: var(--ds-color-text-secondary);
+}
+.cd-card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding-top: var(--ds-space-2);
+}
+
+/* --- Proof page backgrounds (dev only; decorative, not design tokens) ----- */
+.proof-light {
+  background: var(--ds-color-bg);
+}
+/* A rich, busy panel so refraction + transmission are visible through the glass. */
+.proof-media {
+  background-color: #15123a;
+  background-image:
+    radial-gradient(
+      40% 50% at 18% 22%,
+      rgba(124, 92, 255, 0.55),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 55% at 82% 28%,
+      rgba(255, 92, 168, 0.45),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 60% at 60% 88%,
+      rgba(64, 196, 255, 0.4),
+      transparent 72%
+    ),
+    linear-gradient(135deg, #1b1646 0%, #0a0820 100%);
+}
+.proof-cap {
+  color: var(--ds-color-text-tertiary);
+}
+.proof-cap-media {
+  color: rgba(255, 255, 255, 0.6);
+}
+.proof-media .cd-card__title {
+  color: rgba(255, 255, 255, 0.96);
+}
+.proof-media .cd-card__body {
+  color: rgba(255, 255, 255, 0.7);
+}
