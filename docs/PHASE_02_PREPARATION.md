@@ -128,11 +128,10 @@ Tous les groupes de `DISCIPLINE_CANONICAL_TOKENS.md` sont matérialisés :
 
 | Paquet | Rôle | Remarque |
 |---|---|---|
-| `tailwindcss` | Framework utilitaire | Version à trancher (§6) |
-| `postcss` | Pipeline CSS | Requis par Tailwind |
-| `autoprefixer` | Préfixes vendeurs | (selon version Tailwind) |
-| `@tailwindcss/postcss` | Plugin PostCSS Tailwind | **uniquement si Tailwind v4** |
-| `geist` | Police Geist + Geist Mono optimisée pour `next/font` | Paquet officiel Vercel |
+| `tailwindcss` (v3.4) | Framework utilitaire | **Décision validée** |
+| `postcss` | Pipeline CSS | Requis par Tailwind v3 |
+| `autoprefixer` | Préfixes vendeurs | Requis par Tailwind v3 |
+| `geist` | Police Geist + Geist Mono optimisée pour `next/font` | **Décision validée** — paquet officiel Vercel |
 
 Toutes les versions seront **épinglées exactement** (règle Phase 01, `save-exact`).
 
@@ -151,10 +150,13 @@ Toutes les versions seront **épinglées exactement** (règle Phase 01, `save-ex
 | `backdrop-filter` (verre) non rendu sur certains navigateurs | Hors périmètre strict des tokens, mais prévoir `@supports` ; validé en Phase 04 |
 | Règle ESLint « valeurs brutes » trop agressive (faux positifs sur les fichiers de tokens eux-mêmes) | Whitelister `tokens.css` et `tailwind.config.ts` ; commencer par les couleurs, étendre ensuite |
 
-### Décision à trancher avant implémentation
+### Décisions tranchées (validées)
 
-1. **Version de Tailwind** : **v3.4 (recommandé, fidèle au plan)** ou v4 (CSS-first).
-2. **Source de la police Geist** : paquet officiel `geist` (recommandé) ou `next/font/google`.
+1. **Version de Tailwind → `tailwindcss` v3.4** (config-file, `tailwind.config.ts`
+   avec mapping token→utilitaire explicite). Implique `postcss` + `autoprefixer`
+   (et **non** `@tailwindcss/postcss`).
+2. **Source de la police Geist → paquet officiel `geist`** (self-host, Geist +
+   Geist Mono via `next/font`, zéro requête externe).
 
 ---
 
@@ -215,4 +217,4 @@ affirmation sera accompagnée de sa preuve : commande + exit code (+ durée pour
 ---
 
 > **En attente de validation explicite avant tout démarrage de l'implémentation.**
-> Deux décisions requièrent ton arbitrage (§6) : **version de Tailwind** et **source de Geist**.
+> Décisions techniques **tranchées** : Tailwind **v3.4** + paquet **`geist`** (§6).
