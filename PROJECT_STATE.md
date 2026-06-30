@@ -13,10 +13,15 @@
 
 | # | Phase | Status |
 |---|---|---|
-| 01 | Repository & Toolchain Bootstrap | ✅ Complete |
-| 02 | Design Token System | ✅ Complete |
+| 01 | Repository & Toolchain Bootstrap | 🔒 Locked (complete) |
+| 02 | Design Token System | 🔒 Locked (complete) |
 | 03 | Component Library — Level 1 Primitives | ⏳ Not started |
 | 04–44 | (see DISCIPLINE_BUILD_PLAN.md) | ⏳ Not started |
+
+> **Phase Lock Rule.** A validated phase is locked: no changes to a previous
+> phase are permitted except for a bug fix, a security flaw, a blocking
+> incompatibility, or an explicit request from the project owner. All functional
+> evolution happens in the current phase. (Full rule in `docs/DISCIPLINE_PROMPT.md`.)
 
 ---
 

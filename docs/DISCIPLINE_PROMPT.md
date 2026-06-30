@@ -143,6 +143,21 @@ Explain important decisions briefly when useful.
 
 ---
 
+## PHASE LOCK RULE
+
+Une phase validée est considérée comme verrouillée.
+
+Aucune modification d'une phase précédente n'est autorisée sauf :
+
+- correction d'un bug ;
+- faille de sécurité ;
+- incompatibilité bloquante ;
+- demande explicite de ma part.
+
+Toute évolution fonctionnelle doit être réalisée dans la phase courante.
+
+---
+
 ## FINAL PRINCIPLE
 
 If several solutions are possible, choose the one that is:
