@@ -41,11 +41,25 @@
 >     - ✅ Micro Surface → **Button**
 >     - ✅ Control Surface → **Input family**
 >     - ✅ Structural Surface → **Card**
-> - **Next role (Grammar order):** **Floating Surface** — reference component
->   **Tooltip** (Grammar §6 worked example). Build ONE isolated reference, then
->   generalize to Popover / DropdownMenu / ContextMenu / Toast after validation.
-> - **Next work:** redesign the remaining roles one by one to this quality
->   (Floating → Immersive), converging to these references — never re-touching them.
+> - **The Floating Surface reference (Tooltip) is visually VALIDATED and FROZEN.**
+>   It is the official reference of the **Floating Surface** role (Grammar §2):
+>   the thinnest, transient pane — almost no volume, low refraction, medium
+>   transmission, a medium Fresnel rim carrying the read, a quick specular, a
+>   light detaching shadow, an arrow tail; neutral (no violet). Scoped to
+>   `.fl-tip` in the dev reference.
+> - **Four founding roles are now FROZEN — they do not reopen** except for a
+>   functional bug, an accessibility issue, or an objective technical defect:
+>     - ✅ Micro Surface → **Button**
+>     - ✅ Control Surface → **Input family**
+>     - ✅ Structural Surface → **Card**
+>     - ✅ Floating Surface → **Tooltip**
+> - **Next role (Grammar order):** **Immersive Surface** — reference component
+>   **Modal** (Grammar §5 mapping; Build Plan Phase 04 Overlay & Floating). Build
+>   ONE isolated reference (scrim + thickest-tier glass volume), then generalize
+>   to Dialog / Drawer / Sheet / Overlay after validation.
+> - **Next work:** Immersive is the last role; after it, the five-role material
+>   language is complete and the library generalizes role by role to these
+>   frozen references — never re-touching them.
 > - **All components converge to the reference, never the reverse.** If a
 >   component needs adaptation, adapt the component to the material.
 > - **The glass theory is frozen:** Material, Construction, Grammar, Budget, Tests
