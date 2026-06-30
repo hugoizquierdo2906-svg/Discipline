@@ -260,14 +260,16 @@ Produites en fin d'implémentation et regroupées dans `docs/PHASE_03_DESIGN_REV
    IconButton, champs, Badge, Tooltip — mapping « règle Rulebook → décision »,
    en explicitant les résolutions de conflits (§5) où les tokens canoniques priment.
 
-### Décisions soumises à validation (§10)
-1. **Approche primitives** : Radix + `class-variance-authority` + `cn()` (pattern Shadcn,
-   **mais authored sur nos tokens**, sans couleurs brutes). *Recommandé* vs Shadcn CLI brut.
-2. **DatePicker** : `react-day-picker`. *Recommandé.*
-3. **Outillage captures/a11y** : Playwright (préinstallé) + `@axe-core/playwright`,
-   utilisés comme scripts de validation (pas la suite de tests Phase 39). *Recommandé.*
+### Décisions tranchées (validées)
+1. **Approche primitives → Radix + `class-variance-authority` + `cn()`** (pattern
+   Shadcn, **authored sur nos tokens**, sans couleurs brutes). Pas de Shadcn CLI brut.
+2. **DatePicker → `react-day-picker`** (calendrier accessible, stylé via tokens).
+3. **Outillage captures/a11y → Playwright (préinstallé) + `@axe-core/playwright`**,
+   utilisés uniquement comme scripts de validation (la suite de tests complète reste
+   en Phase 39-40).
 
 ---
 
 > **En attente de validation explicite avant tout démarrage de l'implémentation.**
-> Trois décisions (§10) requièrent ton arbitrage.
+> Décisions techniques **tranchées** (§10) : Radix + cva + cn() · react-day-picker ·
+> Playwright + @axe-core/playwright.
