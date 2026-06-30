@@ -4,8 +4,8 @@
 > Updated at the close of each phase.
 
 **Last updated:** 2026-06-30
-**Current phase:** Phase 01 — complete
-**Next phase:** Phase 02 — Design Token System (not started)
+**Current phase:** Phase 02 — complete
+**Next phase:** Phase 03 — Component Library (Level 1 Primitives) — not started
 
 ---
 
@@ -14,8 +14,9 @@
 | # | Phase | Status |
 |---|---|---|
 | 01 | Repository & Toolchain Bootstrap | ✅ Complete |
-| 02 | Design Token System | ⏳ Not started |
-| 03–44 | (see DISCIPLINE_BUILD_PLAN.md) | ⏳ Not started |
+| 02 | Design Token System | ✅ Complete |
+| 03 | Component Library — Level 1 Primitives | ⏳ Not started |
+| 04–44 | (see DISCIPLINE_BUILD_PLAN.md) | ⏳ Not started |
 
 ---
 
@@ -98,3 +99,52 @@
 
   Applies to `pnpm build`, `pnpm lint`, `pnpm type-check`, and any equivalent
   validation command. Reports must be verifiable, not assertions.
+
+---
+
+## Phase 02 — Design Token System ✅
+
+**Objective:** Translate `DISCIPLINE_CANONICAL_TOKENS.md` (v1.1.0) into the
+project's styling infrastructure so every visual value derives from a token.
+
+### Frozen technical decisions
+
+| Decision | Value |
+|---|---|
+| Tailwind | `tailwindcss` v3.4.19 (config-file approach) + `postcss` + `autoprefixer` |
+| Font | Geist + Geist Mono via the official `geist` package (self-hosted `next/font`) |
+| Token source of truth | `src/styles/tokens.css` (CSS vars); `src/lib/tokens.ts` mirrors the subset needed by Framer Motion / GSAP |
+| Raw-value lint | ESLint `no-restricted-syntax` forbids raw hex + `rgb/hsl(...)` literals outside whitelisted token files (`tailwind.config.ts`, `src/lib/tokens.ts`) |
+
+### Delivered
+
+- `src/styles/tokens.css` — all canonical token groups (§1–§11) incl. responsive
+  overrides for semantic spacing (§4.1) and display/heading type (§3.3).
+- `src/styles/typography.css` — base type defaults, mono helper, reading measure.
+- `src/lib/tokens.ts` — TS mirror (durations, easings, spring, breakpoints, z-index).
+- `tailwind.config.ts` — every token mapped to a utility (colors, type, spacing,
+  radii, shadows, blur, motion, z-index, breakpoints); safelist for the dev preview.
+- `postcss.config.mjs` — Tailwind v3 + Autoprefixer pipeline.
+- `src/app/globals.css` — imports tokens + typography + Tailwind layers; global
+  focus-visible ring (§1.8) and `prefers-reduced-motion` handling (§8.4).
+- `src/app/layout.tsx` — Geist/Geist Mono wired via `next/font` variables.
+- `src/app/(dev)/dev/tokens/page.tsx` — dev-only visual verification surface.
+- `eslint.config.mjs` — raw-color rule (carried over from Phase 01).
+
+### Validation results (evidence)
+
+| Criterion | Result |
+|---|---|
+| `pnpm lint` | ✅ exit 0 |
+| `pnpm type-check` | ✅ exit 0 |
+| `pnpm format:check` | ✅ exit 0 |
+| `pnpm build` | ✅ exit 0 (~18.5 s) |
+| `/dev/tokens` renders | ✅ HTTP 200, content present |
+| ESLint raw-color rule (negative test) | ✅ flags `'#8B7CFF'` with the expected error |
+
+### Notes / deferrals
+
+- Carried-over Phase 01 raw-color ESLint rule: **implemented** (colors first, as planned).
+- `tokens.css` ↔ `lib/tokens.ts` sync is currently maintained by hand; an automated
+  drift-check script is a candidate for a later hardening pass.
+- `backdrop-filter` cross-browser fallback handled at component level (Phase 04).

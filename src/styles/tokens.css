@@ -1,0 +1,292 @@
+/*
+ * DISCIPLINE — Design Tokens (CSS custom properties)
+ * ---------------------------------------------------------------------------
+ * SOURCE OF TRUTH: docs/DISCIPLINE_CANONICAL_TOKENS.md (v1.1.0).
+ * This file is a 1:1 translation of that specification. No value here may be
+ * invented or altered: if a number is wrong, fix the canonical doc first,
+ * then propagate. No literal hex/px/ms is allowed elsewhere in the codebase —
+ * everything references a token defined below.
+ * ---------------------------------------------------------------------------
+ */
+
+:root {
+  /* ===================================================================
+   * 1. COLORS
+   * =================================================================== */
+
+  /* 1.1 Backgrounds & surfaces */
+  --ds-color-bg: #fafaf8;
+  --ds-color-surface: #f3f3f1;
+  --ds-color-surface-raised: #ffffff;
+
+  /* 1.2 Text (all AA-verified on --ds-color-bg) */
+  --ds-color-text: #111111;
+  --ds-color-text-secondary: #5a5a5a;
+  --ds-color-text-tertiary: #6e6e6e;
+  --ds-color-text-disabled: #9b9b9b;
+  --ds-color-text-on-accent: #ffffff;
+
+  /* 1.3 Violet accent (Brand + Accessible) */
+  --ds-color-accent: #8b7cff;
+  --ds-color-accent-accessible: #6c5ce7;
+  --ds-color-accent-subtle: #f1eefe;
+  --ds-color-accent-contrast: #ffffff;
+
+  /* 1.4 Semantic (functional statuses) */
+  --ds-color-success: #15803d;
+  --ds-color-success-tint: rgba(21, 128, 61, 0.08);
+  --ds-color-success-border: rgba(21, 128, 61, 0.2);
+  --ds-color-warning: #b45309;
+  --ds-color-warning-tint: rgba(180, 83, 9, 0.08);
+  --ds-color-warning-border: rgba(180, 83, 9, 0.2);
+  --ds-color-error: #b91c1c;
+  --ds-color-error-tint: rgba(185, 28, 28, 0.08);
+  --ds-color-error-border: rgba(185, 28, 28, 0.2);
+  --ds-color-info: #6c5ce7;
+  --ds-color-info-tint: rgba(108, 92, 231, 0.08);
+  --ds-color-info-border: rgba(108, 92, 231, 0.2);
+
+  /* 1.5 Borders & dividers (alpha-black) */
+  --ds-color-border: rgba(17, 17, 17, 0.08);
+  --ds-color-divider: rgba(17, 17, 17, 0.12);
+  --ds-color-border-strong: rgba(17, 17, 17, 0.18);
+
+  /* 1.6 Non-textual light grey */
+  --ds-color-neutral-light: #8e8e8e;
+
+  /* 1.7 States (overlays) */
+  --ds-state-hover: rgba(17, 17, 17, 0.04);
+  --ds-state-hover-accent: rgba(139, 124, 255, 0.1);
+  --ds-state-pressed: rgba(17, 17, 17, 0.08);
+  --ds-state-selected: var(--ds-color-accent-subtle);
+  --ds-opacity-disabled: 0.4;
+
+  /* 1.8 Focus (non-negotiable accessibility) */
+  --ds-focus-ring-color: #6c5ce7;
+  --ds-focus-ring-width: 2px;
+  --ds-focus-ring-offset: 2px;
+  --ds-focus-ring-halo: 0 0 0 2px #ffffff;
+
+  /* ===================================================================
+   * 2. GLASS (Liquid Glass)
+   * =================================================================== */
+  --ds-glass-thin: rgba(255, 255, 255, 0.4);
+  --ds-glass-regular: rgba(255, 255, 255, 0.56);
+  --ds-glass-thick: rgba(255, 255, 255, 0.8);
+  --ds-glass-border: rgba(255, 255, 255, 0.68);
+  --ds-glass-highlight: rgba(255, 255, 255, 0.5);
+
+  /* ===================================================================
+   * 3. TYPOGRAPHY
+   * =================================================================== */
+
+  /* 3.1 Families & weights.
+   * Geist is self-hosted via next/font (the `geist` package), which exposes the
+   * generated family through --font-geist-sans / --font-geist-mono on <html>.
+   * Fallbacks match the canonical spec. */
+  --ds-font-sans:
+    var(--font-geist-sans), 'Inter', system-ui, -apple-system, sans-serif;
+  --ds-font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --ds-font-weight-regular: 400;
+  --ds-font-weight-medium: 500;
+  --ds-font-weight-semibold: 600;
+
+  /* 3.2 Type scale — sizes (responsive values overridden below, §3.3) */
+  --ds-text-display-1: 120px;
+  --ds-text-display-2: 96px;
+  --ds-text-display-3: 72px;
+  --ds-text-h1: 56px;
+  --ds-text-h2: 48px;
+  --ds-text-h3: 40px;
+  --ds-text-h4: 32px;
+  --ds-text-h5: 24px;
+  --ds-text-body-lg: 18px;
+  --ds-text-body: 16px;
+  --ds-text-body-sm: 14px;
+  --ds-text-caption: 12px;
+
+  /* Line-heights */
+  --ds-leading-display-1: 1;
+  --ds-leading-display-2: 1.02;
+  --ds-leading-display-3: 1.04;
+  --ds-leading-h1: 1.06;
+  --ds-leading-h2: 1.1;
+  --ds-leading-h3: 1.12;
+  --ds-leading-h4: 1.18;
+  --ds-leading-h5: 1.25;
+  --ds-leading-body-lg: 1.55;
+  --ds-leading-body: 1.55;
+  --ds-leading-body-sm: 1.5;
+  --ds-leading-caption: 1.4;
+
+  /* Letter-spacing (tracking) */
+  --ds-tracking-display-1: -0.03em;
+  --ds-tracking-display-2: -0.03em;
+  --ds-tracking-display-3: -0.02em;
+  --ds-tracking-h1: -0.02em;
+  --ds-tracking-h2: -0.02em;
+  --ds-tracking-h3: -0.01em;
+  --ds-tracking-h4: -0.01em;
+  --ds-tracking-h5: 0;
+  --ds-tracking-body: 0;
+  --ds-tracking-caption: 0.01em;
+
+  /* 3.4 Reading measure */
+  --ds-measure: 68ch;
+
+  /* ===================================================================
+   * 4. SPACING (base 8px, sub-step 4px)
+   * =================================================================== */
+  --ds-space-0: 0;
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-5: 24px;
+  --ds-space-6: 32px;
+  --ds-space-7: 40px;
+  --ds-space-8: 48px;
+  --ds-space-9: 64px;
+  --ds-space-10: 80px;
+  --ds-space-11: 96px;
+  --ds-space-12: 128px;
+
+  /* 4.1 Semantic spacing (responsive — mobile-first defaults, §4.1) */
+  --ds-space-section-y: 80px;
+  --ds-space-hero-y: 120px;
+  --ds-space-grid-gutter: 16px;
+
+  /* ===================================================================
+   * 5. RADII
+   * =================================================================== */
+  --ds-radius-xs: 8px;
+  --ds-radius-sm: 12px;
+  --ds-radius-md: 20px;
+  --ds-radius-lg: 28px;
+  --ds-radius-xl: 36px;
+  --ds-radius-pill: 999px;
+
+  /* ===================================================================
+   * 6. SHADOWS (soft, multi-layer, alpha-black #101010)
+   * =================================================================== */
+  --ds-shadow-1:
+    0 1px 2px rgba(16, 16, 16, 0.04), 0 1px 1px rgba(16, 16, 16, 0.03);
+  --ds-shadow-2:
+    0 4px 12px rgba(16, 16, 16, 0.06), 0 1px 2px rgba(16, 16, 16, 0.04);
+  --ds-shadow-3:
+    0 12px 32px rgba(16, 16, 16, 0.1), 0 2px 6px rgba(16, 16, 16, 0.05);
+  --ds-shadow-4:
+    0 24px 64px rgba(16, 16, 16, 0.14), 0 4px 12px rgba(16, 16, 16, 0.06);
+  --ds-shadow-contact: 0 1px 1px rgba(16, 16, 16, 0.05);
+  --ds-shadow-ambient: 0 32px 80px rgba(16, 16, 16, 0.08);
+  --ds-shadow-accent-glow:
+    0 0 0 1px rgba(139, 124, 255, 0.3), 0 8px 24px rgba(139, 124, 255, 0.18);
+
+  /* ===================================================================
+   * 7. BLUR
+   * =================================================================== */
+  --ds-blur-0: 0px;
+  --ds-blur-1: 8px;
+  --ds-blur-2: 16px;
+  --ds-blur-3: 24px;
+  --ds-blur-glass: 32px;
+  --ds-blur-5: 40px;
+  --ds-blur-6: 48px;
+
+  /* ===================================================================
+   * 8. MOTION
+   * =================================================================== */
+
+  /* 8.1 Durations */
+  --ds-dur-instant: 100ms;
+  --ds-dur-fast: 160ms;
+  --ds-dur-standard: 240ms;
+  --ds-dur-slow: 320ms;
+  --ds-dur-page: 480ms;
+  --ds-dur-scene: 720ms;
+  --ds-dur-hero: 1200ms;
+
+  /* 8.2 Easings */
+  --ds-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ds-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ds-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ds-ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* ===================================================================
+   * 9. Z-INDEX
+   * =================================================================== */
+  --ds-z-base: 0;
+  --ds-z-media: 10;
+  --ds-z-glass: 20;
+  --ds-z-floating: 30;
+  --ds-z-controls: 40;
+  --ds-z-nav: 50;
+  --ds-z-dropdown: 60;
+  --ds-z-overlay: 90;
+  --ds-z-modal: 100;
+  --ds-z-toast: 110;
+  --ds-z-tooltip: 120;
+
+  /* ===================================================================
+   * 10. BREAKPOINTS / GRID / CONTAINER
+   * (breakpoint values are documented here; media queries below and in
+   *  tailwind.config.ts consume the literal widths.)
+   * =================================================================== */
+  --ds-bp-sm: 390px;
+  --ds-bp-md: 768px;
+  --ds-bp-lg: 1024px;
+  --ds-bp-xl: 1440px;
+  --ds-bp-2xl: 1920px;
+  --ds-container-max: 1600px;
+  --ds-grid-columns-desktop: 12;
+  --ds-grid-columns-tablet: 8;
+  --ds-grid-columns-mobile: 4;
+
+  /* ===================================================================
+   * 11. TOUCH TARGETS & MINIMUM SIZES
+   * =================================================================== */
+  --ds-target-min: 44px;
+  --ds-border-hairline: 1px;
+}
+
+/* =====================================================================
+ * RESPONSIVE OVERRIDES
+ * Semantic spacing (§4.1) and display/heading type sizes (§3.3) shift by
+ * breakpoint. Defaults above are mobile; tablet (md) and desktop (lg) below.
+ * ===================================================================== */
+
+/* Tablet — md (≥ 768px) */
+@media (min-width: 768px) {
+  :root {
+    /* §4.1 semantic spacing */
+    --ds-space-section-y: 112px;
+    --ds-space-hero-y: 160px;
+    --ds-space-grid-gutter: 24px;
+
+    /* §3.3 responsive type */
+    --ds-text-display-1: 80px;
+    --ds-text-display-2: 64px;
+    --ds-text-display-3: 56px;
+    --ds-text-h1: 44px;
+    --ds-text-h2: 36px;
+    --ds-text-h3: 32px;
+  }
+}
+
+/* Desktop — lg (≥ 1024px) */
+@media (min-width: 1024px) {
+  :root {
+    /* §4.1 semantic spacing */
+    --ds-space-section-y: 160px;
+    --ds-space-hero-y: 220px;
+    --ds-space-grid-gutter: 32px;
+
+    /* §3.3 responsive type — full desktop scale */
+    --ds-text-display-1: 120px;
+    --ds-text-display-2: 96px;
+    --ds-text-display-3: 72px;
+    --ds-text-h1: 56px;
+    --ds-text-h2: 48px;
+    --ds-text-h3: 40px;
+  }
+}

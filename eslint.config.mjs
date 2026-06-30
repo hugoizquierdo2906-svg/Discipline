@@ -30,6 +30,23 @@ const eslintConfig = [
     rules: {
       // Strict typing posture for the whole project.
       '@typescript-eslint/no-explicit-any': 'error',
+      // Design-system discipline (Phase 02): no raw color literals in code.
+      // Colors must come from design tokens (src/styles/tokens.css) consumed
+      // via Tailwind utilities or CSS vars. Token files are whitelisted below.
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            'Literal[value=/^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/]',
+          message:
+            'Raw hex color is forbidden. Use a design token (see docs/DISCIPLINE_CANONICAL_TOKENS.md) via a Tailwind utility or CSS var.',
+        },
+        {
+          selector: 'Literal[value=/^(?:rgb|rgba|hsl|hsla)\\(/]',
+          message:
+            'Raw color function is forbidden. Use a design token via a Tailwind utility or CSS var.',
+        },
+      ],
       // Import hygiene: consistent, grouped, alphabetized imports.
       'import/order': [
         'error',
@@ -48,6 +65,13 @@ const eslintConfig = [
       ],
     },
   }),
+  {
+    // Token files are the single allowed home for literal design values.
+    files: ['tailwind.config.ts', 'src/lib/tokens.ts'],
+    rules: {
+      'no-restricted-syntax': 'off',
+    },
+  },
   {
     ignores: [
       'node_modules/**',
