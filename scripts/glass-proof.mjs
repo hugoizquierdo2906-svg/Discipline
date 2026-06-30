@@ -18,14 +18,14 @@ const context = await browser.newContext({
 })
 const page = await context.newPage()
 await page.goto(`${BASE}${ROUTE}`, { waitUntil: 'networkidle' })
-await page.locator('.gbp').first().waitFor()
+await page.locator('.gb').first().waitFor()
 await page.waitForTimeout(400)
 
 await page.screenshot({ path: `${OUT}/glass-fullpage.png`, fullPage: true })
 console.log(`screenshot: ${OUT}/glass-fullpage.png`)
 
 // Tight crops around each button (button bbox + generous padding).
-const buttons = await page.locator('.gbp').all()
+const buttons = await page.locator('.gb').all()
 const labels = ['glass-light', 'glass-dark']
 for (let i = 0; i < buttons.length; i++) {
   const box = await buttons[i].boundingBox()
