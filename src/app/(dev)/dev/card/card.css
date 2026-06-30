@@ -152,22 +152,15 @@
  * Structural Surface. Scoped to `.cd-card` for now — not yet a DS-wide rule.
  * ────────────────────────────────────────────────────────────────────── */
 
-/* Less spherical ends: a tense rounded capsule instead of a full pill. */
+/* A horizontal capsule — clearly wider than tall, lower height, strongly
+   rounded corners: a taut, elegant Apple-like silhouette, not a cushion. ONLY
+   proportions and geometry change here; the optical layers, refraction and
+   light are the frozen material, untouched. */
 .cd-card .btn-embedded {
-  border-radius: 14px;
-}
-
-/* Flatter top + more contained volume. The lit top face is shorter and holds,
-   and the lower inner wall is tightened, so the body reads taut rather than
-   convex/puffed. Same fill tokens, same light — only the volume is redistributed. */
-.cd-card .btn-embedded .ds-glass__volume {
-  background: linear-gradient(
-    180deg,
-    var(--ds-glass-fill-top) 0%,
-    var(--ds-glass-fill-bottom) 52%,
-    var(--ds-glass-fill-bottom) 100%
-  );
-  box-shadow: inset 0 -1px 2px var(--ds-glass-inner-shadow);
+  height: 38px; /* lower than the default 44px — a flatter capsule */
+  padding-left: var(--ds-space-6); /* 32px — width well above height */
+  padding-right: var(--ds-space-6);
+  border-radius: 16px; /* strongly rounded corners on a short, wide capsule */
 }
 
 /* --- Proof page backgrounds (dev only; decorative, not design tokens) ----- */
