@@ -37,9 +37,9 @@ export const buttonVariants = cva(
       // a thin machined sliver of glass laid on the surface, never a cushion.
       // Material/optics are unchanged.
       size: {
-        sm: 'h-[26px] px-5 text-body-sm rounded-[8px]',
-        md: 'h-[30px] px-7 text-body rounded-[10px]',
-        lg: 'h-[38px] px-8 text-body-lg rounded-[12px]',
+        sm: 'h-[26px] px-7 text-body-sm rounded-[8px]',
+        md: 'h-[30px] px-10 text-body rounded-[10px]',
+        lg: 'h-[38px] px-12 text-body-lg rounded-[12px]',
       },
     },
     defaultVariants: { variant: 'primary', size: 'md' },
