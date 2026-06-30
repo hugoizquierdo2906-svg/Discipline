@@ -13,11 +13,19 @@
 > (validated). Additive glass material sub-tokens encoded in canonical §2 +
 > `tokens.css` (first-approximation values, visual calibration only).
 >
-> **Current step:** a single **Primary reference button** is built in isolation
-> at `/dev/glass` (`src/app/(dev)/dev/glass/`) — no library component touched.
-> Captures on light + dark in `docs/phase-03-screenshots/glass-*.png`.
-> **Awaiting explicit visual validation** before generalizing the material to all
-> primitives. Once validated, this button is the absolute material reference.
+> **Glass specification chain (complete — documentation phase closed):**
+> Constitution → Canonical Tokens (§2 material sub-tokens) →
+> `DISCIPLINE_GLASS_MATERIAL.md` → `..._REVERSE_ENGINEERING.md` →
+> `..._CONSTRUCTION.md` → `..._GRAMMAR.md` → `..._BUDGET.md` → `..._TESTS.md` →
+> Component Library. No further glass theory documents — next work is product.
+>
+> **Current step:** a single **Primary reference button** exists in isolation at
+> `/dev/glass` (`src/app/(dev)/dev/glass/`) as a first material attempt; the
+> reverse-engineering identified the gaps (displacement refraction, Fresnel rim,
+> TIR line, crisp specular, convex thickness, violet caustic). **Next action (on
+> go-ahead): re-implement that one button to the Construction model + Budget +
+> Tests, validate it visually, then generalize role by role per the Grammar.**
+> No library component is touched until the reference is visually validated.
 
 ---
 
