@@ -1,0 +1,144 @@
+/*
+ * Floating Surface reference — DISCIPLINE Liquid Glass Tooltip.
+ *
+ * Same material as the frozen Button: the tooltip renders the shared
+ * <GlassSurface/> optical layers (.ds-glass__*). This file does NOT redefine the
+ * material — it re-tunes the existing layers, scoped to `.fl-tip`, for the
+ * Floating role (Grammar §2 Floating; Budget §3; Construction §7 thinnest tier):
+ *
+ *   ★★★  Transmission — it floats over content; you read the surface beneath.
+ *   ★★★  Fresnel      — the rim carries the read (there is almost no volume).
+ *   ★★   Specular     — a quick, small glint — fast light, it is transient.
+ *   ★★   Refraction   — low; a thin pane, not a thick lens.
+ *   ★    Volume/Depth  — almost none; a light detaching shadow, not anchored mass.
+ *   ★    Violet       — none (neutral, transient).
+ *
+ * Isolated dev reference; the library material and the three frozen roles
+ * (Button, Input, Card) are untouched. Geometry lives here (single reference).
+ */
+
+.fl-tip {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--ds-radius-sm); /* 12px — small, transient pane */
+  padding: var(--ds-space-2) var(--ds-space-3); /* 8px 12px */
+}
+
+/* Depth — a light detaching float so it reads above content, not the anchored
+   mass of a card. */
+.fl-tip .ds-glass__shadow {
+  box-shadow:
+    0 1px 1px rgba(16, 16, 16, 0.06),
+    0 10px 24px rgba(16, 16, 16, 0.2);
+}
+
+/* Refraction — LOW: a thin pane, less blur than the thicker tiers. */
+.fl-tip .ds-glass__body {
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+}
+
+/* Volume — almost none: a thin, near-uniform body at medium transmission, with
+   just a hairline lit top. No three-face thickness here. */
+.fl-tip .ds-glass__volume {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  box-shadow: inset 0 1px 0 var(--ds-glass-inner-highlight);
+}
+
+/* Incident — a quick, soft top light (fast response, not a deep wash). */
+.fl-tip .ds-glass__incident {
+  opacity: 0.4;
+  background: linear-gradient(
+    180deg,
+    var(--ds-glass-inner-highlight) 0%,
+    transparent 42%
+  );
+}
+
+/* Specular — a small, quick glint near the top (fast light). */
+.fl-tip .ds-glass__specular {
+  opacity: 0.4;
+}
+
+/* Fresnel — MEDIUM: the rim carries the read because there is almost no volume. */
+.fl-tip .ds-glass__edge {
+  opacity: 0.85;
+}
+
+/* Violet — none on a neutral floating pane. */
+.fl-tip .ds-glass__violet {
+  opacity: 0;
+}
+
+/* Arrow / tail — a small rotated square that continues the same material (fill +
+   machined rim) down to the anchor. Bottom-centered for a top-placed tooltip. */
+.fl-tip__arrow {
+  position: absolute;
+  z-index: 0;
+  bottom: -4px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 2px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  box-shadow:
+    inset 1px 1px 0 var(--ds-glass-edge-dim),
+    2px 2px 6px rgba(16, 16, 16, 0.16);
+}
+
+/* Content plane — above every optical layer (edge is z-2). */
+.fl-tip__label {
+  position: relative;
+  z-index: 3;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-body-sm);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-leading-body);
+  color: var(--ds-color-text);
+  white-space: nowrap;
+}
+
+/* --- Proof page backgrounds (dev only; decorative, not design tokens) ----- */
+.proof-light {
+  background: var(--ds-color-bg);
+}
+.proof-media {
+  background-color: #15123a;
+  background-image:
+    radial-gradient(
+      40% 50% at 18% 22%,
+      rgba(124, 92, 255, 0.55),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 55% at 82% 28%,
+      rgba(255, 92, 168, 0.45),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 60% at 60% 88%,
+      rgba(64, 196, 255, 0.4),
+      transparent 72%
+    ),
+    linear-gradient(135deg, #1b1646 0%, #0a0820 100%);
+}
+.proof-cap {
+  color: var(--ds-color-text-tertiary);
+}
+.proof-cap-media {
+  color: rgba(255, 255, 255, 0.6);
+}
+.proof-media .fl-tip__label {
+  color: rgba(255, 255, 255, 0.96);
+}
