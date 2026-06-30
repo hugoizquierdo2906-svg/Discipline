@@ -28,7 +28,7 @@ export const buttonVariants = cva(
         secondary: 'text-text',
         ghost: 'text-accent-accessible',
         outline: 'text-text',
-        destructive: 'text-text-on-accent',
+        destructive: 'text-error',
       },
       size: {
         sm: 'h-9 px-4 text-body-sm',
