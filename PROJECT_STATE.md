@@ -66,6 +66,15 @@
 >     - ✅ Structural Surface → **Card**
 >     - ✅ Floating Surface → **Tooltip**
 >     - ✅ Immersive Surface → **Modal**
+> - **Cross-role calibration (in progress, before promotion).** A `/dev/calibration`
+>   scene shows the five references coexisting/nested on shared backgrounds under
+>   one light. Finding F1 (the Micro Surface had two competing geometries — the
+>   pill "balloon" vs the embedded capsule) was resolved by RE-SETTLING the Button
+>   **geometry only** (material/optical layers unchanged): one machined horizontal
+>   capsule at all sizes (`rounded-[14/18/22px]`, accessible heights kept). Icon
+>   buttons stay circular. The dev card's `.btn-embedded` (a competing 38px
+>   geometry) was removed so it uses the canonical Micro. There is now ONE Micro
+>   geometry everywhere.
 > - **PHASE CHANGE — generalization, not invention.** Every remaining component
 >   must derive from exactly one of the five frozen references; no sixth language,
 >   no new material, no new optical recipe. Before each implementation, state

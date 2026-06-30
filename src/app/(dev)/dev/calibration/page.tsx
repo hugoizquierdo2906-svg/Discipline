@@ -37,9 +37,7 @@ function NestedCluster() {
               <span className="fl-tip__arrow" aria-hidden />
               <span className="fl-tip__label">Floating · Tooltip</span>
             </span>
-            <Button variant="primary" className="btn-embedded">
-              Micro · Button
-            </Button>
+            <Button variant="primary">Micro · Button</Button>
           </div>
         </div>
       </div>
