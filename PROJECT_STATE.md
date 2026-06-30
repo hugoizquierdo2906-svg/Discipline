@@ -4,8 +4,49 @@
 > Updated at the close of each phase.
 
 **Last updated:** 2026-06-30
-**Current phase:** Phase 03 — Component Library (Level 1 Primitives) — material reference VALIDATED; converging primitives to it
-**Next phase:** Phase 04 — Component Library (Level 2 Glass & Composite) — not started
+**Current phase:** Phase 04 — Component Library (Level 2 Glass & Composite) — the five Material Roles are FROZEN and promoted to `glass.css`; library generalization has begun (GlassCard built).
+**Next phase:** continue Phase 04 generalization (Structural family next), then Phase 05.
+
+> ### ✅ Validated today — the material language is locked
+> - **All FIVE Material Roles are DEFINITIVELY FROZEN** (reopen only for an
+>   objective bug / accessibility / technical defect):
+>   | Role | Reference | Shared class |
+>   |---|---|---|
+>   | Micro Surface | **Button** | `.ds-micro` (micro.css) |
+>   | Control Surface | **Input family** | `.ds-control` (glass.css) |
+>   | Structural Surface | **Card** | `.ds-card` (glass.css) |
+>   | Floating Surface | **Tooltip** | `.ds-floating` (glass.css) |
+>   | Immersive Surface | **Modal** | `.ds-immersive` + `.ds-scrim` (glass.css) |
+> - **Cross-role calibration: PASSED.** `/dev/calibration` shows the five roles
+>   coexisting/nested under one light; they read as one family with a coherent
+>   physical hierarchy. F1 (Micro had two competing geometries) resolved; F2/F3
+>   were a scene artifact / a usage rule (no material change).
+> - **FINAL Button geometry — FROZEN by the owner:** a thin elongated glass blade
+>   — `h-[26/30/38px]`, `px-7/px-10/px-12`, `rounded-[8/10/12px]`, ~4.5–5:1 on a
+>   medium label. Optical refinements kept in `.ds-micro` (radial top reflection,
+>   three-zone volume, internal-reflection/TIR line, livelier Fresnel). Icon
+>   buttons stay circular. There is ONE Micro geometry everywhere.
+> - **Roles promoted to `glass.css` — pure extraction (zero pixel change to the
+>   surfaces).** `.ds-card`, `.ds-floating`, `.ds-immersive` + `.ds-scrim` were
+>   moved verbatim from the `/dev` references; the references now consume the
+>   shared classes (single definition, no drift). `.ds-control` and `.ds-micro`
+>   were already shared.
+> - **CSS scoping corrected (leak-free).** Container roles scope their layer
+>   overrides to their OWN GlassSurface via the direct-child path
+>   (`> .ds-glass__body > …`), so a Card/Modal's material never bleeds onto nested
+>   glass. This removed a pre-existing dev-only leak: nested Buttons now render the
+>   frozen Micro material, identical to standalone Buttons. (`.ds-immersive` keeps
+>   `z-index:2` above `.ds-scrim`.)
+> - **DS principle (binding):** *a Card invites you to read; a Button invites you
+>   to click.* Same material, distinct proportions (a Button is low and wide; a
+>   Card is a calm plane).
+> - **Generalization status (Phase 04):** **GlassCard** is built — the first
+>   official consumer of `.ds-card`; the CardReference composes it (reference ==
+>   component by construction). **Next:** the rest of the Structural family
+>   (StatCard, ChartWrapper, EmptyState, ErrorState, Navbar, Sidebar, Footer,
+>   FloatingCard…), then Floating (Popover, DropdownMenu, ContextMenu, Toast),
+>   then Immersive (Drawer, Sheet, ConfirmationDialog), each derived from its
+>   frozen role — no new material, no new optical recipe.
 
 > ### Liquid Glass — frozen reference & working rules (permanent)
 > - **The Primary reference button is visually VALIDATED and FROZEN.** It is the
@@ -31,10 +72,10 @@
 > - **The Structural Surface reference (Card) is visually VALIDATED and FROZEN.**
 >   It is the official reference of the **Structural Surface** role (Grammar §2):
 >   the "card" thickness tier of the shared material — high refraction + depth,
->   quiet rim, diffuse sheen, content breathing through. An **Embedded Micro
->   Surface** expression (a machined horizontal capsule for buttons inside a
->   Card, same optical material) lives scoped to `.cd-card .btn-embedded` in the
->   dev reference; it is not yet a DS-wide rule.
+>   quiet rim, diffuse sheen, content breathing through. (An exploratory
+>   `.btn-embedded` capsule was later REMOVED during calibration once the single
+>   canonical Micro geometry was frozen — buttons inside a Card now use the
+>   canonical Micro.) Promoted to the shared `.ds-card` role class in `glass.css`.
 > - **Three founding roles are now FROZEN — they do not reopen** except for a
 >   functional bug, an accessibility issue, or an objective technical defect.
 >   Future components converge to them; they never converge to future components:
@@ -66,9 +107,10 @@
 >     - ✅ Structural Surface → **Card**
 >     - ✅ Floating Surface → **Tooltip**
 >     - ✅ Immersive Surface → **Modal**
-> - **Cross-role calibration (in progress, before promotion).** A `/dev/calibration`
->   scene shows the five references coexisting/nested on shared backgrounds under
->   one light. Finding F1 (the Micro Surface had two competing geometries — the
+> - **Cross-role calibration (PASSED — see the validated-today summary above).** A
+>   `/dev/calibration` scene shows the five references coexisting/nested on shared
+>   backgrounds under one light. Finding F1 (the Micro Surface had two competing
+>   geometries — the
 >   pill "balloon" vs the embedded capsule) was resolved by RE-SETTLING the Button
 >   **geometry only** (material/optical layers unchanged): one machined horizontal
 >   capsule at all sizes. Icon buttons stay circular. The dev card's
@@ -98,8 +140,8 @@
 >   - **Optical refinements kept:** the validated glass-read improvements (radial
 >     top reflection, three-zone volume, internal-reflection/TIR line, livelier
 >     Fresnel) live in `src/styles/micro.css` scoped to `.ds-micro` (Button,
->     IconButton, LinkButton). The shared `glass.css` and every other role are
->     untouched — no promotion of the other roles yet.
+>     IconButton, LinkButton). (Update: the other roles have since been promoted
+>     to `glass.css` too — see the validated-today summary above.)
 > - **PHASE CHANGE — generalization, not invention.** Every remaining component
 >   must derive from exactly one of the five frozen references; no sixth language,
 >   no new material, no new optical recipe. Before each implementation, state
@@ -161,7 +203,7 @@ Canonical hierarchy: Constitution → Master Context → Rulebook → Canonical 
 | 01 | Repository & Toolchain Bootstrap | 🔒 Locked (complete) |
 | 02 | Design Token System | 🔒 Locked (complete) |
 | 03 | Component Library — Level 1 Primitives | 🔄 Converging to the validated glass reference |
-| 04 | Component Library — Level 2 Glass & Composite | ⏳ Not started |
+| 04 | Component Library — Level 2 Glass & Composite | 🔄 In progress — 5 roles frozen & promoted to `glass.css`; GlassCard built |
 | 05–44 | (see DISCIPLINE_BUILD_PLAN.md) | ⏳ Not started |
 
 ### Governance backlog (deferred, to resolve in a dedicated documentation revision)
