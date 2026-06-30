@@ -1,4 +1,5 @@
 import { mkdirSync } from 'node:fs'
+
 import { chromium } from '@playwright/test'
 const OUT = 'docs/phase-04-screenshots'
 const EXEC = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'

@@ -1,0 +1,126 @@
+/*
+ * Cross-role calibration — dev only. Places the FIVE frozen references together,
+ * nested, on shared backgrounds under one light, to verify they read as one
+ * material family with a coherent physical hierarchy before any promotion.
+ * Reuses the scoped reference styles (.cd-card, .btn-embedded, .fl-tip,
+ * .im-modal, .im-scrim) imported from their dev folders — nothing is redefined.
+ */
+
+.calib {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  min-height: 100vh;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-8);
+  padding: var(--ds-space-8) var(--ds-space-6);
+}
+.calib__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Shared backgrounds. */
+.calib-media {
+  background-color: #15123a;
+  background-image:
+    radial-gradient(
+      40% 50% at 18% 22%,
+      rgba(124, 92, 255, 0.55),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 55% at 82% 28%,
+      rgba(255, 92, 168, 0.45),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 60% at 60% 88%,
+      rgba(64, 196, 255, 0.4),
+      transparent 72%
+    ),
+    linear-gradient(135deg, #1b1646 0%, #0a0820 100%);
+}
+.calib-gradient {
+  background-image: linear-gradient(
+    135deg,
+    #f4f1ff 0%,
+    #eef4ff 50%,
+    #fdeef6 100%
+  );
+}
+
+.calib__caption {
+  position: absolute;
+  top: var(--ds-space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-size: var(--ds-text-caption);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.calib-media .calib__caption {
+  color: rgba(255, 255, 255, 0.6);
+}
+.calib-gradient .calib__caption {
+  color: var(--ds-color-text-tertiary);
+}
+
+/* A nested cluster: a Structural Card holding a Control input and a Micro button,
+   with a Floating tooltip above the button — four roles coexisting. */
+.calib__cluster {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-7);
+}
+.calib__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+}
+.calib__btnwrap {
+  position: relative;
+  display: inline-flex;
+}
+.calib__tip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* The Immersive modal shown in its honest condition (a contained scrim) so its
+   glass is judged over a dimmed background, side by side with the others. */
+.calib__modalframe {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 460px;
+  height: 340px;
+  border-radius: var(--ds-radius-xl);
+  overflow: hidden;
+}
+.calib__rolelabel {
+  font-size: var(--ds-text-caption);
+  font-weight: var(--ds-font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ds-color-accent-accessible);
+}
+.calib-media .calib__cardlabel {
+  color: rgba(255, 255, 255, 0.92);
+}
