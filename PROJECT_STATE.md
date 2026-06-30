@@ -4,8 +4,22 @@
 > Updated at the close of each phase.
 
 **Last updated:** 2026-06-30
-**Current phase:** Phase 03 — Component Library (Level 1 Primitives) — REOPENED (Liquid Glass redesign, pending visual validation)
+**Current phase:** Phase 03 — Component Library (Level 1 Primitives) — material reference VALIDATED; converging primitives to it
 **Next phase:** Phase 04 — Component Library (Level 2 Glass & Composite) — not started
+
+> ### Liquid Glass — frozen reference & working rules (permanent)
+> - **The Primary reference button is visually VALIDATED and FROZEN.** It is the
+>   official DISCIPLINE material reference and may not change except on an
+>   explicit request for a material evolution.
+> - **All components converge to the reference, never the reverse.** If a
+>   component needs adaptation, adapt the component to the material.
+> - **The glass theory is frozen:** Material, Construction, Grammar, Budget, Tests
+>   do not change except on explicit request. **No new glass theory documents.**
+>   All improvement happens in implementation.
+> - **Work cycle:** Référence validée → Déclinaison → Validation → Phase suivante.
+>   We are out of research and back on the Build Plan.
+> - **Reporting:** never self-mark a test PASS/FAIL. Present a technical analysis
+>   and state "validation visuelle requise." Final validation belongs to the owner.
 
 > Phase 03 passed the technical audit but **failed visual validation**: the
 > primitives (notably buttons) read as generic Tailwind, not the DISCIPLINE
@@ -51,7 +65,7 @@ Canonical hierarchy: Constitution → Master Context → Rulebook → Canonical 
 |---|---|---|
 | 01 | Repository & Toolchain Bootstrap | 🔒 Locked (complete) |
 | 02 | Design Token System | 🔒 Locked (complete) |
-| 03 | Component Library — Level 1 Primitives | 🔄 Reopened — Liquid Glass redesign (pending visual validation) |
+| 03 | Component Library — Level 1 Primitives | 🔄 Converging to the validated glass reference |
 | 04 | Component Library — Level 2 Glass & Composite | ⏳ Not started |
 | 05–44 | (see DISCIPLINE_BUILD_PLAN.md) | ⏳ Not started |
 

@@ -163,6 +163,20 @@ Préparation → Validation → Implémentation → Audit technique → Validati
   locking.
 - If visual validation fails, the phase reopens at Implémentation.
 
+### Liquid Glass (frozen reference)
+
+- The **Primary reference button** is the frozen material reference. Every glass
+  component **converges to it**; never adapt the material to a component.
+- The glass theory (Material, Construction, Grammar, Budget, Tests) is **frozen**;
+  do not create new glass theory documents. Improve in implementation only.
+- Glass work cycle: **Référence validée → Déclinaison → Validation → Phase suivante.**
+
+### Reporting of tests
+
+- Never self-declare a test result as `PASS` or `FAIL`. Present a
+  **technical analysis** and write **"validation visuelle requise."** The final
+  validation always belongs to the project owner.
+
 ---
 
 ## GIT WORKFLOW (OFFICIAL)
