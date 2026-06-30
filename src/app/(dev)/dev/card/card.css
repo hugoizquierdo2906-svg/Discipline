@@ -166,45 +166,57 @@
   border-radius: 16px; /* strongly rounded corners on a short, wide capsule */
 }
 
-/* Internal volume — three readable depth zones instead of a single fade:
-   a lit TOP FACE, a darker transmissive CORE, then a lifted BOTTOM FACE. The
-   box-shadows machine the thickness: a crisp top inner highlight, a deeper
-   internal shadow, and a fine internal-reflection (TIR) line where light
-   catches the lower inner wall. Same fill/shadow tokens — only redistributed. */
+/* Internal volume — a NON-LINEAR descent so depth comes from variation, not a
+   flat fade: a lit top face yields gradually to a darker transmissive core, then
+   a gentle refraction catch lifts the bottom face before it settles. The
+   box-shadows machine the thickness — a crisp top inner highlight, a deeper
+   internal shadow, and a fine internal-reflection (TIR) line on the lower wall.
+   Same fill/shadow tokens; no brighter face, just better-described volume. */
 .cd-card .btn-embedded .ds-glass__volume {
   background: linear-gradient(
     180deg,
     var(--ds-glass-fill-top) 0%,
-    var(--ds-glass-fill-bottom) 44%,
-    rgba(255, 255, 255, 0.18) 60%,
+    var(--ds-glass-fill-bottom) 34%,
+    rgba(255, 255, 255, 0.16) 62%,
+    rgba(255, 255, 255, 0.24) 86%,
     var(--ds-glass-fill-bottom) 100%
   );
   box-shadow:
     inset 0 1px 0 var(--ds-glass-inner-highlight),
-    inset 0 -4px 7px var(--ds-glass-inner-shadow),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.5);
+    inset 0 -5px 9px var(--ds-glass-inner-shadow),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.55);
 }
 
-/* Incident light — the principal reflection on the top face reads as a clearer,
-   tighter band rather than a soft wash (still screen-blended, still light only). */
+/* Incident light — the principal reflection is an ARC that hugs the rounded top
+   and fades as the glass curves away (radial, not a flat band), so it reads as
+   light born from the geometry rather than painted on. The top face captures
+   more light without lifting the overall brightness. Screen-blended, light only. */
 .cd-card .btn-embedded .ds-glass__incident {
-  background: linear-gradient(
-    180deg,
+  background: radial-gradient(
+    140% 92% at 50% -30%,
     var(--ds-glass-inner-highlight) 0%,
-    rgba(255, 255, 255, 0.2) 30%,
-    transparent 48%
+    rgba(255, 255, 255, 0.22) 34%,
+    transparent 60%
   );
 }
 
-/* Specular — make the top glint a touch larger and crisper so the principal
-   highlight is legible as a reflection on a hard surface (no glow, just light). */
+/* Specular — a single continuous, uneven sweep riding the top curvature,
+   stronger near the light and tapering along the capsule, never a uniform patch. */
 .cd-card .btn-embedded .ds-glass__specular {
-  top: 2px;
-  left: 10%;
-  width: 50%;
-  height: 46%;
-  opacity: 0.62;
-  filter: blur(1px);
+  inset: auto;
+  top: 1px;
+  left: 13%;
+  width: 64%;
+  height: 44%;
+  border-radius: 50%;
+  background: radial-gradient(
+    70% 100% at 42% 0%,
+    var(--ds-glass-specular) 0%,
+    rgba(255, 255, 255, 0.26) 38%,
+    transparent 72%
+  );
+  opacity: 0.5;
+  filter: blur(2px);
 }
 
 /* Fresnel edge — livelier exactly where the light hits (top-left): a near-white
