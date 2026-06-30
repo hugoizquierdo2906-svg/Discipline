@@ -24,12 +24,16 @@ Cette phase n'a **aucune valeur produit** (rien de visible pour l'utilisateur fi
 | `.gitignore` | Exclut `.env*`, `node_modules`, `.next`, résultats Playwright, rapports de couverture |
 | `.env.example` | Toutes les clés requises listées (valeurs vides / placeholders) |
 | `tsconfig.json` | `strict: true`, alias `@/` → `src/`, interdiction de `any` |
-| `next.config.ts` | Bundle analyzer, domaines d'images Cloudflare R2, en-têtes de sécurité |
+| `.editorconfig` | Règles d'édition partagées (charset, fins de ligne, indentation) inter-éditeurs |
+| `.vscode/settings.json` | Réglages d'éditeur partagés (format on save, ESLint, etc.) |
+| `.vscode/extensions.json` | Extensions VS Code recommandées au projet |
+| `next.config.ts` | Domaines d'images Cloudflare R2, en-têtes de sécurité (Bundle Analyzer **reporté** à une phase ultérieure) |
 | Config ESLint (`.eslintrc.*` ou `eslint.config.*`) | `eslint-config-next`, `@typescript-eslint/recommended`, `jsx-a11y`, `import`, règle interdisant les couleurs brutes hors des fichiers de tokens |
 | Config Prettier (`.prettierrc*`) | Single quotes, pas de point-virgule, virgules finales |
 | Config `lint-staged` | Lint + type-check sur les fichiers en staging |
 | Hook Husky `pre-commit` (`.husky/pre-commit`) | Déclenche lint-staged au commit |
 | Workflow CI (`.github/workflows/ci.yml`) | install → lint → type-check → build, sur chaque push et PR |
+| `.npmrc` | Verrouillage de l'`engine` (Node/pnpm) et options pnpm |
 | `README.md` | Documente install, dev, build, tests |
 | `CHANGELOG.md` | Initialisé |
 
@@ -86,29 +90,29 @@ Cette phase n'a **aucune valeur produit** (rien de visible pour l'utilisateur fi
 - `lint-staged`
 
 **Sécurité secrets (CI)**
-- `gitleaks` ou `git-secrets` (scan dans la CI)
+- `gitleaks` (scan dans la CI, via action GitHub — pas de dépendance npm)
 
-**Analyse de bundle (dev)**
-- `@next/bundle-analyzer`
-
+> **Reporté à une phase ultérieure :** `@next/bundle-analyzer` (analyse de bundle) → rattaché à la Phase 37 (Performance).
+>
 > Tailwind, Shadcn, Prisma, Stripe, Framer Motion, etc. ne sont **pas** installés en Phase 01 — ils appartiennent aux phases ultérieures. Le `create-next-app` peut toutefois amorcer Tailwind (utilisé en Phase 02).
 
 ---
 
 ## 5. Versions des outils choisies et pourquoi
 
-| Outil | Choix | Raison |
+| Outil | Version exacte figée | Raison |
 |---|---|---|
-| **Node.js** | LTS, figé via `.nvmrc` | Reproductibilité ; une seule version partagée entre devs et CI évite les écarts de build |
-| **pnpm** | Gestionnaire de paquets | Installations déterministes, store global efficace, lockfile strict ; imposé par le plan |
-| **Next.js** | 15.x | Version cible du projet (App Router, Server Actions, Metadata API) |
-| **React** | 18 / 19+ | Aligné sur Next 15 ; Server Components |
+| **Node.js** | `22.22.2` | Ligne LTS 22 ; figée via `.nvmrc` + `package.json#engines` + `.npmrc` pour une seule version partagée devs/CI |
+| **pnpm** | `10.33.0` | Figée via `package.json#packageManager` + `engines` ; installations déterministes, lockfile strict |
+| **Next.js** | `15.5.19` | Version cible (App Router, Server Actions, Metadata API), épinglée exactement |
+| **React** | `19.2.7` | Aligné sur Next 15 ; Server Components ; `react` et `react-dom` épinglés à l'identique |
+| **React DOM** | `19.2.7` | Doit correspondre exactement à `react` |
 | **TypeScript** | strict | `strict: true` + interdiction de `any` : sécurité de typage exigée sur tout le projet |
 | **ESLint** | next + ts + jsx-a11y + import | Qualité, accessibilité dès le départ, ordre des imports cohérent |
 | **Prettier** | single quotes, no semicolons, trailing commas | Style figé pour un diff propre et homogène |
 | **Husky + lint-staged** | pre-commit | Empêche le code non conforme d'être committé |
 
-**Décision de fond sur le versioning :** dépendances de production **épinglées à des versions exactes** (pas de `^`/`~`) pour garantir des builds identiques.
+**Décision de fond sur le versioning :** dépendances **épinglées à des versions exactes** (pas de `^`/`~`) pour garantir des builds identiques. Les quatre versions ci-dessus (Node, pnpm, Next, React) sont **figées exactement** conformément aux ajustements validés.
 
 ---
 
@@ -116,8 +120,9 @@ Cette phase n'a **aucune valeur produit** (rien de visible pour l'utilisateur fi
 
 Ces choix deviennent contraignants pour toutes les phases suivantes :
 
-1. **Gestionnaire de paquets : pnpm** (lockfile committé, déterminisme).
-2. **Version de Node figée** via `.nvmrc` + matrice CI.
+1. **Gestionnaire de paquets : pnpm `10.33.0`** (lockfile committé, déterminisme, `packageManager` figé).
+2. **Version de Node figée à `22.22.2`** via `.nvmrc` + `engines` + CI.
+   - **Next.js figé à `15.5.19`**, **React / React-DOM figés à `19.2.7`**.
 3. **TypeScript strict** : `strict: true`, `any` interdit.
 4. **Alias de chemin** : `@/` → `src/`.
 5. **Architecture de dossiers** : séparation `components/ui` (L1) · `components/shared` (L2) · `features/*` · `server/` (serveur uniquement) · `lib/` · `styles/` · `types/` · `hooks/`.
@@ -125,9 +130,11 @@ Ces choix deviennent contraignants pour toutes les phases suivantes :
 7. **Versions de production épinglées** (pas de plages).
 8. **`--no-verify` interdit** sur les commits (les hooks ne se contournent pas).
 9. **CI obligatoire** : install → lint → type-check → build sur chaque push/PR.
-10. **Vercel** comme plateforme de déploiement, previews activées sur toutes les branches.
-11. **Secrets jamais committés** : `.gitignore` + scan CI.
-12. **Structure `public/`** alignée sur `DISCIPLINE_MEDIA_MAP.md`.
+10. **Secrets jamais committés** : `.gitignore` + scan CI.
+11. **Structure `public/`** alignée sur `DISCIPLINE_MEDIA_MAP.md`.
+12. **Réglages d'éditeur partagés** : `.editorconfig` + `.vscode/` (settings + extensions recommandées).
+
+> **Reporté à une phase ultérieure :** la **configuration Vercel** (lien du projet, previews) n'est plus dans le périmètre de la Phase 01 — elle sera traitée lors d'une phase de déploiement dédiée (cf. Phase 43).
 
 ---
 
@@ -154,9 +161,11 @@ La Phase 01 est considérée comme **terminée** uniquement si **tous** ces crit
 - [ ] `pnpm dev` démarre le serveur de dev sur le port 3000 sans erreur.
 - [ ] `pnpm build` se termine avec **zéro** erreur TypeScript et **zéro** erreur ESLint.
 - [ ] `pnpm lint` sort avec le code 0.
-- [ ] Un commit de test déclenche le workflow CI et celui-ci passe au **vert**.
-- [ ] Le déploiement preview Vercel est **en ligne** pour le commit initial.
+- [ ] Le workflow CI est défini et passe au **vert** (install → lint → type-check → build).
 - [ ] **Aucun** fichier `.env` contenant de vrais secrets n'est committé.
+- [ ] `.editorconfig` et `.vscode/` (settings + extensions) présents.
+
+> **Reporté :** la validation « preview Vercel en ligne » est déplacée vers la phase de déploiement (Phase 43).
 
 ---
 
@@ -171,10 +180,12 @@ La Phase 01 est considérée comme **terminée** uniquement si **tous** ces crit
 7. Créer le squelette `public/` selon la media map
 8. Écrire `.env.example` avec toutes les clés
 9. Configurer `next.config.ts` (en-têtes de sécurité)
-10. Écrire le workflow GitHub Actions
-11. Lier Vercel et tester le premier preview
+10. Ajouter `.editorconfig` et `.vscode/` (settings + extensions)
+11. Écrire le workflow GitHub Actions
 12. Écrire le README et initialiser le CHANGELOG
-13. Commit + push — confirmer CI verte et preview Vercel en ligne
+13. Commit + push — confirmer la CI verte
+
+> Reportés à une phase ultérieure : configuration Vercel (Phase 43), Bundle Analyzer (Phase 37).
 
 ---
 

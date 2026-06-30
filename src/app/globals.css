@@ -1,0 +1,17 @@
+/*
+ * Global stylesheet — Phase 01 placeholder.
+ * The design token system (CSS custom properties, Tailwind mapping)
+ * is introduced in Phase 02 per DISCIPLINE_CANONICAL_TOKENS.md.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
