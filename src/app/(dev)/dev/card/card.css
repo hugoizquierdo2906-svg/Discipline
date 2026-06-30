@@ -144,12 +144,15 @@
 /* ──────────────────────────────────────────────────────────────────────
  * Embedded Micro Surface — buttons placed INSIDE a reference Card.
  *
- * Exactly the same optical material as the frozen reference button: light
- * (incident + specular), Fresnel edge, violet caustic and refraction body are
- * all left untouched. Only the CAPSULE GEOMETRY and the VOLUME DISTRIBUTION
- * change, so the button stops reading as an inflated balloon and instead reads
- * as a machined, contained, polished glass piece naturally set into the
- * Structural Surface. Scoped to `.cd-card` for now — not yet a DS-wide rule.
+ * Two things are tuned here, both scoped to `.cd-card .btn-embedded` so the
+ * frozen reference button and the shared material (glass.css) stay untouched:
+ *   1. GEOMETRY — a taut horizontal capsule (below).
+ *   2. OPTICAL EXPRESSION — the light describes the glass volume more credibly,
+ *      closer to the Apple Liquid Glass read: a more readable top reflection,
+ *      three distinct depth zones (top face · core · bottom face), an
+ *      internal-reflection line catching the lower wall, and a livelier Fresnel
+ *      where the light hits. No glow, no violet, no new layer — the same
+ *      optical model, lit to express thickness. Not yet a DS-wide rule.
  * ────────────────────────────────────────────────────────────────────── */
 
 /* A horizontal capsule — clearly wider than tall, lower height, strongly
@@ -161,6 +164,59 @@
   padding-left: var(--ds-space-6); /* 32px — width well above height */
   padding-right: var(--ds-space-6);
   border-radius: 16px; /* strongly rounded corners on a short, wide capsule */
+}
+
+/* Internal volume — three readable depth zones instead of a single fade:
+   a lit TOP FACE, a darker transmissive CORE, then a lifted BOTTOM FACE. The
+   box-shadows machine the thickness: a crisp top inner highlight, a deeper
+   internal shadow, and a fine internal-reflection (TIR) line where light
+   catches the lower inner wall. Same fill/shadow tokens — only redistributed. */
+.cd-card .btn-embedded .ds-glass__volume {
+  background: linear-gradient(
+    180deg,
+    var(--ds-glass-fill-top) 0%,
+    var(--ds-glass-fill-bottom) 44%,
+    rgba(255, 255, 255, 0.18) 60%,
+    var(--ds-glass-fill-bottom) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 var(--ds-glass-inner-highlight),
+    inset 0 -4px 7px var(--ds-glass-inner-shadow),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Incident light — the principal reflection on the top face reads as a clearer,
+   tighter band rather than a soft wash (still screen-blended, still light only). */
+.cd-card .btn-embedded .ds-glass__incident {
+  background: linear-gradient(
+    180deg,
+    var(--ds-glass-inner-highlight) 0%,
+    rgba(255, 255, 255, 0.2) 30%,
+    transparent 48%
+  );
+}
+
+/* Specular — make the top glint a touch larger and crisper so the principal
+   highlight is legible as a reflection on a hard surface (no glow, just light). */
+.cd-card .btn-embedded .ds-glass__specular {
+  top: 2px;
+  left: 10%;
+  width: 50%;
+  height: 46%;
+  opacity: 0.62;
+  filter: blur(1px);
+}
+
+/* Fresnel edge — livelier exactly where the light hits (top-left): a near-white
+   strike that decays around the rim, reading as a machined bevel catching light. */
+.cd-card .btn-embedded .ds-glass__edge {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    var(--ds-glass-edge-light) 14%,
+    var(--ds-glass-edge-dim) 50%,
+    var(--ds-glass-edge-light) 100%
+  );
 }
 
 /* --- Proof page backgrounds (dev only; decorative, not design tokens) ----- */
