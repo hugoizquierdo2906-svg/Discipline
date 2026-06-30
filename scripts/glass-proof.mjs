@@ -25,9 +25,17 @@ await page.screenshot({ path: `${OUT}/glass-fullpage.png`, fullPage: true })
 console.log(`screenshot: ${OUT}/glass-fullpage.png`)
 
 // Tight crops around each button (button bbox + generous padding).
+// DOM order: light-labeled, light-blind, dark-labeled, dark-blind, silhouette.
 const buttons = await page.locator('.gb').all()
-const labels = ['glass-light', 'glass-dark']
+const labels = [
+  'glass-light',
+  'glass-light-blind',
+  'glass-dark',
+  'glass-dark-blind',
+  'glass-silhouette',
+]
 for (let i = 0; i < buttons.length; i++) {
+  if (!labels[i]) continue
   const box = await buttons[i].boundingBox()
   if (!box) continue
   const pad = 80
