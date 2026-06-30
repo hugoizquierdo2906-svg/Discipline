@@ -72,6 +72,29 @@
 
 ### Notes / deferrals
 
+- **ESLint "no raw color values" rule deferred to Phase 02.** The Phase 01
+  plan lists an ESLint rule forbidding raw color values outside the token
+  files. It was intentionally **not** implemented in Phase 01 because the
+  token files (`src/styles/tokens.css`) do not exist until Phase 02 — such a
+  rule would have no target. It is carried as the **first item of Phase 02**
+  (see `DISCIPLINE_BUILD_PLAN.md` → Phase 02 deliverables / implementation order).
 - `next lint` is deprecated in Next 15.5; the `lint` script uses the ESLint CLI directly against the flat config.
 - Cloudflare R2 image `remotePatterns` left empty until Phase 35.
 - CSP intentionally minimal until third-party origins are known (later phases).
+
+---
+
+## Working agreements (apply from Phase 02 onward)
+
+- **Evidence-backed reporting.** Every claim about a command's outcome must be
+  accompanied by objective proof: the command run, its exit code, and (for
+  builds) its duration. Example — instead of "Build OK", report:
+
+  ```
+  ✓ pnpm build
+  Exit code: 0
+  Duration: 6.3 s
+  ```
+
+  Applies to `pnpm build`, `pnpm lint`, `pnpm type-check`, and any equivalent
+  validation command. Reports must be verifiable, not assertions.

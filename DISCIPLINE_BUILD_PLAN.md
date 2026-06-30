@@ -155,6 +155,7 @@ Translate `DISCIPLINE_CANONICAL_TOKENS.md` into the project's styling infrastruc
 - Tailwind CSS installed (already included by Next.js default setup)
 
 ### Deliverables
+- **[Carried over from Phase 01]** ESLint rule forbidding raw color values (hardcoded hex/rgb/hsl) outside the token files. Deferred from Phase 01 because no token files existed yet; it is the **first item of this phase** so the rule has a valid whitelist target (`src/styles/tokens.css`, `tailwind.config.ts`).
 - `src/styles/tokens.css` — CSS custom properties for all token categories:
   - Color palette (background, surface, text, accent, accent-accessible, semantic states)
   - Typography scale (display-1 through caption, all responsive breakpoints)
@@ -199,17 +200,18 @@ Translate `DISCIPLINE_CANONICAL_TOKENS.md` into the project's styling infrastruc
 | Responsive token values not applied at correct breakpoints | Explicitly test all breakpoints (390px, 768px, 1024px, 1440px, 1920px) |
 
 ### Implementation order
-1. Install Geist font and configure in root layout
-2. Create `src/styles/tokens.css` — start with color tokens
-3. Add typography scale tokens
-4. Add spacing, radius, blur, shadow tokens
-5. Add motion and z-index tokens
-6. Update `src/styles/globals.css` to import tokens and set base typographic defaults
-7. Update `tailwind.config.ts` — map each token category to Tailwind extensions
-8. Create `src/lib/tokens.ts` for Framer Motion / GSAP usage
-9. Create development `/dev/tokens` page to visually verify all tokens
-10. Add ESLint / Stylelint rule against raw values
-11. Verify build passes and all tokens render correctly
+1. **[Carried over from Phase 01]** Create the token files first (`src/styles/tokens.css`, `tailwind.config.ts`), then add the ESLint rule forbidding raw color values outside them. (Token files must exist before the rule, otherwise it has no whitelist target.)
+2. Install Geist font and configure in root layout
+3. Populate `src/styles/tokens.css` — start with color tokens
+4. Add typography scale tokens
+5. Add spacing, radius, blur, shadow tokens
+6. Add motion and z-index tokens
+7. Update `src/styles/globals.css` to import tokens and set base typographic defaults
+8. Update `tailwind.config.ts` — map each token category to Tailwind extensions
+9. Create `src/lib/tokens.ts` for Framer Motion / GSAP usage
+10. Create development `/dev/tokens` page to visually verify all tokens
+11. Extend the ESLint / Stylelint rule to also flag raw spacing (px) and duration (ms) values outside the token files
+12. Verify build passes and all tokens render correctly
 
 ---
 
