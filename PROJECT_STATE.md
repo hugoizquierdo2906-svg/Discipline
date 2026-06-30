@@ -11,11 +11,12 @@
 > - **The Primary reference button is visually VALIDATED and FROZEN.** It is the
 >   official DISCIPLINE material reference and may not change except on an
 >   explicit request for a material evolution.
-> - **The Button family is FROZEN** at the faithful reference material (the
->   later Micro-Surface calibration and finish-pass were reverted at the owner's
->   request — they degraded the rendering). No further iteration on the button.
->   Next: apply the material to the next component (Input), then Card / Modal,
->   where the real material adjustments will surface.
+> - **The Button family is FROZEN** at the **"optical layers" reference material**
+>   (commit 0046902 look): softer, more natural violet; simpler machined edge; no
+>   displacement filter or edge-tension. The later construction-model finish,
+>   Micro-Surface calibration and finish-pass were all reverted at the owner's
+>   request. No further iteration on the button. Next: apply this material to the
+>   next component (Input), then Card / Modal.
 > - **All components converge to the reference, never the reverse.** If a
 >   component needs adaptation, adapt the component to the material.
 > - **The glass theory is frozen:** Material, Construction, Grammar, Budget, Tests

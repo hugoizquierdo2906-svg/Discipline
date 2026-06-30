@@ -1,24 +1,23 @@
 /**
  * GlassSurface — the shared DISCIPLINE Liquid Glass material, rendered as the
- * frozen stack of optical layers from the Primary reference button. Components
- * place this as the first child of their interactive element (which carries the
- * `.ds-glass` class + optional data-glass-variant / data-glass-intent), then
- * render their own content on top. The material is never redefined per
- * component — every glass primitive composes THIS (Construction rule).
+ * frozen stack of optical layers from the Primary reference button (the
+ * "optical layers" reference). Components place this as the first child of their
+ * interactive element (which carries `.ds-glass` + optional data-glass-variant /
+ * data-glass-intent), then render their own content on top. The material is
+ * never redefined per component (Construction rule).
  *
- * Decorative only: aria-hidden. The displacement filter (#ds-glass-refract) is
- * defined once in the root layout.
+ * Layers (back → front): cast shadow · refractive body · internal volume ·
+ * incident light · violet caustic (reflection) · specular · machined edge.
+ * Decorative only: aria-hidden.
  */
 export function GlassSurface() {
   return (
     <>
       <span className="ds-glass__shadow" aria-hidden />
       <span className="ds-glass__body" aria-hidden>
-        <span className="ds-glass__core" />
-        <span className="ds-glass__bottomface" />
-        <span className="ds-glass__topface" />
+        <span className="ds-glass__volume" />
+        <span className="ds-glass__incident" />
         <span className="ds-glass__violet" />
-        <span className="ds-glass__tir" />
         <span className="ds-glass__specular" />
       </span>
       <span className="ds-glass__edge" aria-hidden />
@@ -26,7 +25,8 @@ export function GlassSurface() {
   )
 }
 
-/** The refraction displacement filter — render once at the app root. */
+/** Kept for compatibility (root layout). The optical-layers material does not
+ * use a displacement filter, so this renders an inert, harmless definition. */
 export function GlassFilter() {
   return (
     <svg
@@ -42,20 +42,7 @@ export function GlassFilter() {
         width="140%"
         height="140%"
       >
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.012 0.02"
-          numOctaves={2}
-          seed={7}
-          result="noise"
-        />
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="noise"
-          scale={8}
-          xChannelSelector="R"
-          yChannelSelector="G"
-        />
+        <feGaussianBlur in="SourceGraphic" stdDeviation="0" />
       </filter>
     </svg>
   )
