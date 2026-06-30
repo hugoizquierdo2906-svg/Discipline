@@ -84,6 +84,17 @@
 >     you to click.* Same material language, but proportions must communicate
 >     that difference immediately — a Button is low and wide; a Card is a calm
 >     plane that lets content breathe.
+>   - **FINAL canonical Button geometry — DEFINITIVELY FROZEN by the owner:** a
+>     thin elongated glass blade — `h-[26/30/38px]`, `px-7/px-10/px-12`,
+>     `rounded-[8/10/12px]`, ~4.5–5:1 on a medium label. Geometry, material,
+>     optical layers and proportions are now locked; future buttons derive from
+>     this reference, never reinterpret it. Reopen only for an objective bug.
+> - **Cross-role calibration outcome:** the only real finding (F1, Micro had two
+>   competing geometries) is resolved and the Micro geometry is frozen. F2 (modal
+>   "grey" over a contained scrim) is a calibration-scene artifact; F3 (a Control
+>   nested in a Structural over a very vivid background slightly over-brightens)
+>   is handled by a usage rule (avoid stacking two backdrop-filters on the
+>   brightest area). The five roles read as one family with a coherent hierarchy.
 >   - **Optical refinements kept:** the validated glass-read improvements (radial
 >     top reflection, three-zone volume, internal-reflection/TIR line, livelier
 >     Fresnel) live in `src/styles/micro.css` scoped to `.ds-micro` (Button,
