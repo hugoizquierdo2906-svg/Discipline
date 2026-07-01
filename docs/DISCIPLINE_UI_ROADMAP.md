@@ -48,7 +48,7 @@ Controls you read and fill (maximum legibility; the glass recedes).
 | `Textarea` | **FROZEN** | Multiline sibling of Input (same parent `ControlSurface`, material verbatim). Production API: label · description · helperText · error · success · required · maxLength · showCharacterCount · autoResize (minRows/maxRows → grow then scroll) · disabled · readOnly. Proof: `/dev/textarea`. Visually validated + frozen 2026-07-01. |
 | `Select` / `NativeSelect` (+ parts) | Built | Control family. |
 | `DatePicker` | Built | Control family. |
-| `SearchInput` | Built · **visual validation PASS** | Search **specialization of Input** (GlassSurface → .ds-control → ControlSurface → Input → SearchInput): renders `<Input>` + search affordances only. API: label · description · helperText · error · success · clearable · loading · shortcut · debounce · onSearch · onClear · disabled · readOnly; Escape clears; `role="search"`. Proof: `/dev/search-input`. Not yet frozen — awaiting explicit owner freeze. |
+| `SearchInput` | **FROZEN** | Search **specialization of Input** (GlassSurface → .ds-control → ControlSurface → Input → SearchInput): renders `<Input>` + search affordances only. API: label · description · helperText · error · success · clearable · loading · shortcut · debounce · onSearch · onClear · disabled · readOnly; Escape clears; `role="search"`. Proof: `/dev/search-input`. Visually validated + frozen 2026-07-01 (quieter ⌘K chip + softer clear button). |
 | `FileInput` | Built | Control family. |
 
 ## Structural Surface — `.ds-card`

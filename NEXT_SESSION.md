@@ -10,7 +10,7 @@
 - Micro Surface → Button
 - Control Surface → **Input (GELÉ)** — rôle fixé par la Grammar §2/§5 (Control, PAS
   Micro) ; référence `/dev/input` validée. Famille Control généralisée :
-  **Textarea (GELÉ)**, Select, DatePicker, Search, FileInput.
+  **Textarea (GELÉ)**, **SearchInput (GELÉ)**, Select, DatePicker, FileInput.
 - **Textarea — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
   verre/blur/ombre/Fresnel recréé). Diffère seulement par la géométrie (multiligne,
@@ -18,8 +18,9 @@
   (check sémantique, pas de changement de verre) · required · maxLength ·
   showCharacterCount · autoResize (minRows/maxRows → grandit puis scrolle) ·
   disabled · readOnly. Focus = `.ds-control:focus-within`. Preuve : `/dev/textarea`.
-- **SearchInput — Control Surface, spécialisation de Input (validation visuelle PASS ;
-  pas encore gelé).** Contrairement à Textarea (frère de Input), SearchInput dérive
+- **SearchInput — Control Surface, spécialisation de Input. GELÉ (validé visuellement
+  2026-07-01).** Plus de redesign sauf bug objectif.
+  Contrairement à Textarea (frère de Input), SearchInput dérive
   DE Input : GlassSurface → .ds-control → ControlSurface → Input → SearchInput. Rend
   `<Input>` + affordances de recherche seulement (loupe en prefix, cluster
   clear/loading/shortcut en suffix). Aucun verre recréé. API : label · description ·

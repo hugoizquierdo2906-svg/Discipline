@@ -187,8 +187,9 @@
 >     bug.
 >   - **Full library roadmap (status of every component):
 >     `docs/DISCIPLINE_UI_ROADMAP.md`.**
->   - **SearchInput — Control Surface, search SPECIALIZATION of Input (visual
->     validation PASS, 2026-07-01; not yet frozen).** Unlike Textarea (Input's
+>   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
+>     (visually validated 2026-07-01).** No redesign again unless an objective bug
+>     appears. Unlike Textarea (Input's
 >     sibling), SearchInput derives FROM Input: GlassSurface → .ds-control →
 >     ControlSurface → Input → SearchInput. It renders `<Input>` and adds ONLY search
 >     affordances into Input's prefix/suffix slots — a muted leading magnifier and a
