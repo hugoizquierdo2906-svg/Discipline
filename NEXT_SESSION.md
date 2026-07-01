@@ -8,7 +8,7 @@
 - Micro Surface → Button
 - Control Surface → Input (famille généralisée)
 - Structural Surface → Card
-- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar (GELÉ)**
+- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar (GELÉ)** · **BottomNav**
 - Floating Surface → Tooltip
 - Immersive Surface → Modal
 - Calibration transversale (les 5 rôles = une seule famille cohérente)
@@ -92,10 +92,22 @@
 
 ## PROCHAINE SESSION
 
-Continuer la famille Structural / navigation (dérivée de GlassCard / GlassPanel) :
+Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
 
-1. BottomNav     (← GlassPanel : bande basse mobile)
-2. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
+1. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
+
+- **BottomNav** — contrepartie mobile de Navbar, spécialisation directe de GlassPanel
+  (aucun saut de hiérarchie ; ne compose jamais GlassSurface). Matériau 100% hérité,
+  inchangé. BottomNav = géométrie + interaction seules : bande basse (`h-16`, items
+  répartis équitablement, `px-2`), safe-area (`pb-[env(safe-area-inset-bottom)]`),
+  `variant` géométrique `floating` (défaut) / `attached` (`rounded-none`) / `inset`
+  (`rounded-t-none`), logique d'état actif. Padding hôte neutralisé (`p-0`) →
+  verre bord à bord ; placement (`fixed bottom-0`) délégué au consommateur (A1). API
+  composable : `BottomNav.Item` (icône + label optionnel + badge, `active` →
+  `aria-current`, `asChild`, cible tactile ≥44px, `focus-visible`, `truncate`) et
+  `BottomNav.Group`. Preuve : `/dev/bottom-nav`. Géométrie validée, matériau hérité,
+  responsive validé, safe-area supporté, production-ready. À geler sur demande du
+  owner (comme Navbar/Footer/Sidebar).
 
 Sidebar est officiellement GELÉ (comme Button/Navbar/Footer/FloatingCard).
 

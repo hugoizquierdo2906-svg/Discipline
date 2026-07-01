@@ -4,6 +4,7 @@
 export { Alert } from './alert'
 export { Avatar } from './avatar'
 export { Badge } from './badge'
+export { BottomNav } from './bottom-nav'
 export { Button, buttonVariants } from './button'
 export { Checkbox } from './checkbox'
 export { Code } from './code'

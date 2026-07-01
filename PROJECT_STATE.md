@@ -157,7 +157,26 @@
 >     hierarchy, elegant slim compact mode. (The `/dev/sidebar` demo box height was
 >     bumped 420→620px so the taller rhythm has room to show both nav groups without
 >     scrolling — a proof-page adjustment only, not a component change.)
->   - **Next:** BottomNav, then StatCard /
+>   - **BottomNav** — the mobile counterpart of Navbar, a DIRECT specialization of
+>     GlassPanel (GlassSurface → .ds-card → GlassCard → GlassPanel → BottomNav; no
+>     hierarchy jump, never composes GlassSurface, never recreates a glass layer;
+>     audited — the only glass/material tokens in bottom-nav.tsx are in its
+>     docstring). Material 100% inherited from GlassPanel, UNCHANGED. BottomNav owns
+>     ONLY geometry + interaction: bottom-bar geometry (fixed `h-16` height, evenly
+>     distributed items, `px-2`), device safe-area padding
+>     (`pb-[env(safe-area-inset-bottom)]` so it clears the home indicator), a
+>     geometry-only `variant` (`floating` default / `attached` `rounded-none` /
+>     `inset` `rounded-t-none`), and active-state logic. Host padding neutralized
+>     (`p-0`) so the glass is edge-to-edge; placement (`fixed inset-x-0 bottom-0`)
+>     stays with the consumer (Invariant A1). Open compound API: `BottomNav.Item`
+>     (icon + optional label + optional badge, `active`→`aria-current="page"`,
+>     `asChild` for router links, ≥44px touch target via `min-h-target-min`,
+>     `focus-visible` ring, `truncate` for long labels) and `BottomNav.Group` (even
+>     distribution). Mobile-primary but coherent at desktop width. Proof page:
+>     `/dev/bottom-nav`. Reads as the mobile Navbar — same glass, geometry/orientation
+>     the only difference; **geometry validated, material inherited, responsive
+>     validated, safe-area supported, production-ready.**
+>   - **Next:** StatCard /
 >     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
 >     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,
 >     ConfirmationDialog) — each derived from its frozen role, no new optical recipe.
