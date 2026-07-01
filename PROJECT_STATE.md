@@ -117,9 +117,16 @@
 >     `Footer.Columns` / `Footer.Column` / `Footer.Bottom`, responsive (desktop row →
 >     tablet grid → mobile stack). Proof page: `/dev/footer`. Proves the Structural
 >     role can generate complete page architecture (Navbar + Footer) by derivation.
->   - **Sidebar** — the vertical counterpart of Navbar, a DIRECT specialization of
->     GlassPanel (GlassSurface → .ds-card → GlassCard → GlassPanel → Sidebar; no
->     hierarchy jump, never composes GlassSurface, never recreates a glass layer).
+>   - **Sidebar — FROZEN (official Structural navigation rail, 2026-07-01).** Treat
+>     like Button / Navbar / Footer / FloatingCard: no redesign; changes only for an
+>     objective bug. Production-ready — geometry validated, material validated,
+>     inheritance validated, responsive validated, compact mode validated, hierarchy
+>     validated. Role: Structural. Parent: GlassPanel. Inheritance: GlassSurface →
+>     .ds-card → GlassCard → GlassPanel → Sidebar. The vertical counterpart of
+>     Navbar, a DIRECT specialization of
+>     GlassPanel (no
+>     hierarchy jump, never composes GlassSurface, never recreates a glass layer;
+>     audited — the only glass/material tokens in sidebar.tsx are in its docstring).
 >     Material 100% inherited from GlassPanel, UNCHANGED. Sidebar owns ONLY
 >     geometry: width is its own intrinsic dimension (**264px expanded / 64px
 >     collapsed**, narrow enough to read as a rail, not a vertical Card) via the

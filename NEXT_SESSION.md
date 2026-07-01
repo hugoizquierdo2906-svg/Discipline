@@ -8,7 +8,7 @@
 - Micro Surface → Button
 - Control Surface → Input (famille généralisée)
 - Structural Surface → Card
-- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar**
+- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar (GELÉ)**
 - Floating Surface → Tooltip
 - Immersive Surface → Modal
 - Calibration transversale (les 5 rôles = une seule famille cohérente)
@@ -58,7 +58,11 @@
   interne. Rayon via `variant` géométrique : `floating` (défaut) / `attached`
   (`rounded-none`) / `inset` (`rounded-b-none`). API composable : `Footer.Brand /
   .Columns / .Column / .Bottom`. Preuve : `/dev/footer`.
-- **Sidebar** — équivalent vertical de Navbar, spécialisation directe de GlassPanel
+- **Sidebar — GELÉ (rail de navigation Structural officiel)** — production-ready :
+  géométrie / matériau / héritage / responsive / mode compact / hiérarchie tous
+  validés. Rôle : Structural. Parent : GlassPanel. Héritage : GlassSurface →
+  .ds-card → GlassCard → GlassPanel → Sidebar. Plus de redesign sauf bug objectif.
+  Équivalent vertical de Navbar, spécialisation directe de GlassPanel
   (aucun saut de hiérarchie). Matériau 100% hérité, inchangé. Sidebar = géométrie
   seule : largeur propre (**264px déplié / 64px replié** via `collapsed`, qui pose
   aussi `data-collapsed`), hauteur adaptable (`h-full`, le consommateur décide la
@@ -93,8 +97,7 @@ Continuer la famille Structural / navigation (dérivée de GlassCard / GlassPane
 1. BottomNav     (← GlassPanel : bande basse mobile)
 2. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 
-Sidebar est prêt visuellement et architecturalement ; geler officiellement sur
-demande explicite du owner (comme Button/Navbar/Footer).
+Sidebar est officiellement GELÉ (comme Button/Navbar/Footer/FloatingCard).
 
 Note : `MobileMenu` reste à construire ; la Navbar est déjà prévue pour l'accueillir
 (Content masqué sous `md`, Actions conserve la place du futur hamburger).
