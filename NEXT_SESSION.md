@@ -11,7 +11,7 @@
 - Control Surface → **Input (GELÉ)** — rôle fixé par la Grammar §2/§5 (Control, PAS
   Micro) ; référence `/dev/input` validée. Famille Control généralisée :
   **Textarea (GELÉ)**, **SearchInput (GELÉ)**, **Select (GELÉ)**,
-  **DatePicker (build, non gelé)**, FileInput.
+  **DatePicker (GELÉ)**, FileInput.
 - **Select — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (PAS dérivé de Input ; Input et Select
   sont frères) :
@@ -31,9 +31,9 @@
   `Select.Item`. Chevron pivote à l'ouverture ; menu = surface raised token
   (pas de verre), feuille flottante suspendue (`shadow-4` + `sideOffset 8`), ligne
   sélectionnée quasi-blanche (✓ violet + `font-medium`). Preuve : `/dev/select`.
-- **DatePicker — champ Control Surface + calendrier Floating Surface. BUILD (validation
-  visuelle PASS 2026-07-01 ; PAS encore gelé).** Deux rôles, deux matériaux, aucun
-  mélange :
+- **DatePicker — champ Control Surface + calendrier Floating Surface. GELÉ (validé
+  visuellement 2026-07-01).** Plus de redesign sauf bug objectif. Deux rôles, deux
+  matériaux, aucun mélange :
 
   ```text
   DatePicker — champ           Calendrier (overlay)
@@ -158,11 +158,11 @@
 
 ## PROCHAINE SESSION
 
-1. **Geler DatePicker** sur validation visuelle explicite du propriétaire (fond clair
-   + fond média fournis). Puis, la famille Control étant quasi complète, **FileInput**
-   (dernier membre Control) OU généraliser le rôle **Floating** : `Popover` /
-   `DropdownMenu` — désormais triviaux, ils composent le helper **FloatingSurface**
-   déjà validé par le calendrier du DatePicker.
+1. Famille Control quasi complète (Input · Textarea · SearchInput · Select · DatePicker
+   GELÉS). Prochains membres de rôle : **FileInput** (dernier membre Control) OU
+   généraliser le rôle **Floating** : `Popover` / `DropdownMenu` — désormais triviaux,
+   ils composent le helper **FloatingSurface** déjà validé par le calendrier du
+   DatePicker.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 

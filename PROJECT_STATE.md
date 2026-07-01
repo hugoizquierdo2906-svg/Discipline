@@ -217,9 +217,9 @@
 >     `gap-0.5`). Field untouched. The old composable exports (SelectTrigger/Content/
 >     Value/Group/Item) were removed; the two dev usages migrated to `<Select options>`.
 >     Proof: `/dev/select` (family + all states + open menu). `'use client'`.
->   - **DatePicker — Control Surface field + Floating Surface calendar. Built
->     (visual validation PASS 2026-07-01; NOT frozen).** Two roles, two materials,
->     no mixing:
+>   - **DatePicker — Control Surface field + Floating Surface calendar. FROZEN
+>     (visually validated 2026-07-01).** No redesign again unless an objective bug
+>     appears. Two roles, two materials, no mixing:
 >     ```text
 >     DatePicker — field
 >     Role:        Control Surface
@@ -248,7 +248,7 @@
 >     medium date) · onChange · name (hidden ISO input). ARIA: combobox trigger →
 >     dialog overlay → grid/gridcell (aria-expanded/controls/selected). Proof:
 >     `/dev/date-picker` (family + all states + min/max + locales + formats + open
->     calendar). `'use client'`. Awaiting explicit freeze.
+>     calendar). `'use client'`.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
