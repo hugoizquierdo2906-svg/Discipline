@@ -93,6 +93,23 @@
 >     generic flex clusters, no business assumptions; Content collapses below `md`
 >     for a later mobile menu. Proof: `/dev/navbar` (GlassPanel vs Navbar on light +
 >     rich panels) confirms identical material — geometry is the sole difference.
+>   - **Footer — the second major page container (after Navbar).** A DIRECT
+>     specialization of GlassPanel (GlassSurface → .ds-card → GlassCard → GlassPanel
+>     → Footer; no hierarchy jump, never composes GlassSurface, never recreates a
+>     glass layer). Material is 100% inherited from GlassPanel — transmission,
+>     refraction, blur, Fresnel, internal reflections, incident, specular, edge and
+>     shadow all UNCHANGED (no footer glass recipe / blur / border / gradient /
+>     optical layer). Footer owns ONLY layout: a calm full-width vertical column
+>     (brand, nav columns, legal, copyright, optional newsletter/social) with
+>     generous breathing space; host padding neutralized (`p-0`) so the glass is
+>     edge-to-edge, the inner column carries responsive padding
+>     (`px-6 py-12 md:px-8 md:py-16 lg:px-12`). Radius via geometry-only `variant`:
+>     `floating` (Structural default, the rounded plane), `attached` (`rounded-none`,
+>     flush edge), `inset` (`rounded-b-none`, rises from the page bottom) — placement
+>     stays with the consumer (Invariant A1). Open compound API: `Footer.Brand` /
+>     `Footer.Columns` / `Footer.Column` / `Footer.Bottom`, responsive (desktop row →
+>     tablet grid → mobile stack). Proof page: `/dev/footer`. Proves the Structural
+>     role can generate complete page architecture (Navbar + Footer) by derivation.
 >   - **Next:** Sidebar, BottomNav, then StatCard /
 >     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
 >     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,

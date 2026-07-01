@@ -8,7 +8,7 @@
 - Micro Surface → Button
 - Control Surface → Input (famille généralisée)
 - Structural Surface → Card
-- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)**
+- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer**
 - Floating Surface → Tooltip
 - Immersive Surface → Modal
 - Calibration transversale (les 5 rôles = une seule famille cohérente)
@@ -46,6 +46,15 @@
   consommateur (A1). API composable ouverte : `Navbar.Brand / .Content / .Actions`,
   sans hypothèse métier ; Content se replie sous `md`. Preuve : `/dev/navbar`
   (GlassPanel vs Navbar, fond clair + riche) — matériau identique, géométrie seule.
+- **Footer** — 2e grand conteneur de page (après Navbar), spécialisation directe de
+  GlassPanel (aucun saut de hiérarchie ; ne compose jamais GlassSurface). Matériau
+  100% hérité (transmission/réfraction/blur/Fresnel/reflets/incident/specular/edge/
+  ombre inchangés). Footer = layout seul : colonne verticale calme pleine largeur
+  (brand, colonnes de nav, legal, copyright, newsletter/social optionnels), padding
+  hôte neutralisé (`p-0`) → verre bord à bord, padding responsive sur la colonne
+  interne. Rayon via `variant` géométrique : `floating` (défaut) / `attached`
+  (`rounded-none`) / `inset` (`rounded-b-none`). API composable : `Footer.Brand /
+  .Columns / .Column / .Bottom`. Preuve : `/dev/footer`.
 
 ## EN COURS
 - Phase 04 — généralisation de la librairie par dérivation des cinq rôles gelés.
@@ -56,8 +65,7 @@ Continuer la famille Structural / navigation (dérivée de GlassCard / GlassPane
 
 1. Sidebar       (← GlassCard/Panel : rail vertical)
 2. BottomNav     (← GlassPanel : bande basse mobile)
-3. Footer        (← GlassPanel : bande basse pleine largeur)
-4. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
+3. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 
 Note : `MobileMenu` reste à construire ; la Navbar est déjà prévue pour l'accueillir
 (Content masqué sous `md`, Actions conserve la place du futur hamburger).
