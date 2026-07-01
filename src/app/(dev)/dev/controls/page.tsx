@@ -10,10 +10,6 @@ import {
   Input,
   SearchInput,
   Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Textarea,
 } from '@/components/ui'
 
@@ -44,16 +40,15 @@ function Family() {
       </div>
       <div className="flex flex-col gap-2">
         <span className="proof-label text-body-sm font-medium">Select</span>
-        <Select>
-          <SelectTrigger aria-label="Choose a plan">
-            <SelectValue placeholder="Choose a plan" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="strength">Strength</SelectItem>
-            <SelectItem value="hybrid">Hybrid</SelectItem>
-            <SelectItem value="endurance">Endurance</SelectItem>
-          </SelectContent>
-        </Select>
+        <Select
+          aria-label="Choose a plan"
+          placeholder="Choose a plan"
+          options={[
+            { value: 'strength', label: 'Strength' },
+            { value: 'hybrid', label: 'Hybrid' },
+            { value: 'endurance', label: 'Endurance' },
+          ]}
+        />
       </div>
       <div className="flex flex-col gap-2">
         <span className="proof-label text-body-sm font-medium">Date</span>

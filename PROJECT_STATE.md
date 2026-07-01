@@ -187,6 +187,25 @@
 >     bug.
 >   - **Full library roadmap (status of every component):
 >     `docs/DISCIPLINE_UI_ROADMAP.md`.**
+>   - **Select — Control Surface, SIBLING of Input (visual validation PASS,
+>     2026-07-01; NOT frozen).** Descends from GlassSurface → .ds-control →
+>     ControlSurface → Select (NOT derived from Input — Input and Select are
+>     siblings). The closed trigger composes the SAME `controlHostClass` +
+>     `<ControlSurface/>` as Input, so a closed Select is visually indistinguishable
+>     from Input/Textarea/SearchInput (audited: select.tsx has no backdrop/blur/
+>     box-shadow/optical layer — material only from ControlSurface). On Radix Select.
+>     Owns only interaction: open/close, selected value, placeholder, options,
+>     keyboard nav, states, a11y, chevron rotate-on-open (`duration-fast`). Field API:
+>     label · description · placeholder · helperText · error (frozen
+>     `.ds-control--error` rim) · success (token check) · required · disabled ·
+>     readOnly (static full-opacity field) · loading (Spinner replaces chevron) ·
+>     value · defaultValue · onValueChange · options[] (value/label/icon/description/
+>     disabled) or `Select.Item` children. Menu = token raised surface
+>     (`bg-surface-raised shadow-3`, popper-aligned, viewport-capped, scroll
+>     buttons) — not glass. The old composable exports (SelectTrigger/Content/Value/
+>     Group/Item) were removed; the two dev usages migrated to `<Select options>`.
+>     Proof: `/dev/select` (family + all states + open menu). `'use client'`.
+>     Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

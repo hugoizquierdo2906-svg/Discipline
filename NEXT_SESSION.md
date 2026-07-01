@@ -10,7 +10,19 @@
 - Micro Surface → Button
 - Control Surface → **Input (GELÉ)** — rôle fixé par la Grammar §2/§5 (Control, PAS
   Micro) ; référence `/dev/input` validée. Famille Control généralisée :
-  **Textarea (GELÉ)**, **SearchInput (GELÉ)**, Select, DatePicker, FileInput.
+  **Textarea (GELÉ)**, **SearchInput (GELÉ)**, **Select (build, non gelé)**,
+  DatePicker, FileInput.
+- **Select — Control Surface, frère de Input (validation visuelle PASS ; pas encore
+  gelé).** Descend de GlassSurface → .ds-control → ControlSurface → Select (PAS dérivé
+  de Input ; Input et Select sont frères). Le trigger fermé compose le même
+  `controlHostClass` + `<ControlSurface/>` que Input → indiscernable de
+  Input/Textarea/SearchInput fermé (aucun verre/blur/backdrop recréé). Sur Radix
+  Select. API champ : label · description · placeholder · helperText · error ·
+  success · required · disabled · readOnly · loading · value · defaultValue ·
+  onValueChange · options[] (icône/description/disabled) ou enfants `Select.Item` ;
+  chevron pivote à l'ouverture ; menu = surface raised token (pas de verre). Anciens
+  exports composables retirés, 2 pages dev migrées. Preuve : `/dev/select`. À geler
+  sur validation explicite.
 - **Textarea — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
   verre/blur/ombre/Fresnel recréé). Diffère seulement par la géométrie (multiligne,

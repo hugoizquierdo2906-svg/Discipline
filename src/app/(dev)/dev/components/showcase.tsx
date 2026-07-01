@@ -22,10 +22,6 @@ import {
   RadioGroup,
   RadioItem,
   Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Separator,
   Skeleton,
   Slider,
@@ -151,16 +147,15 @@ export function Showcase() {
 
         <Block title="Select">
           <div className="w-64">
-            <Select>
-              <SelectTrigger aria-label="Goal">
-                <SelectValue placeholder="Select a goal" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="loss">Weight loss</SelectItem>
-                <SelectItem value="gain">Muscle gain</SelectItem>
-                <SelectItem value="perf">Performance</SelectItem>
-              </SelectContent>
-            </Select>
+            <Select
+              aria-label="Goal"
+              placeholder="Select a goal"
+              options={[
+                { value: 'loss', label: 'Weight loss' },
+                { value: 'gain', label: 'Muscle gain' },
+                { value: 'perf', label: 'Performance' },
+              ]}
+            />
           </div>
         </Block>
 

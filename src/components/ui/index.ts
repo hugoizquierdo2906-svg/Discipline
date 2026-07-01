@@ -24,15 +24,7 @@ export { Navbar } from './navbar'
 export { Progress } from './progress'
 export { RadioGroup, RadioItem } from './radio-group'
 export { SearchInput } from './search-input'
-export {
-  NativeSelect,
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './select'
+export { NativeSelect, Select } from './select'
 export { Separator } from './separator'
 export { Sidebar } from './sidebar'
 export { Skeleton } from './skeleton'
