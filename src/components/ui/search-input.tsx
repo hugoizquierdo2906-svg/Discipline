@@ -134,16 +134,16 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         aria-label="Clear search"
         disabled={disabled}
         className={cn(
-          'inline-flex h-8 w-8 items-center justify-center rounded-pill text-text-tertiary',
-          'outline-none transition-transform duration-fast ease-standard hover:text-text',
-          'focus-visible:ring-2 focus-visible:ring-accent-accessible',
+          'inline-flex h-8 w-8 items-center justify-center rounded-pill text-text-tertiary opacity-80',
+          'outline-none transition-transform duration-fast ease-standard hover:text-text hover:opacity-100',
+          'focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accent-accessible',
           'active:scale-90 motion-reduce:active:scale-100 disabled:pointer-events-none',
         )}
       >
         <Icon icon={X} size="sm" aria-hidden />
       </button>
     ) : shortcut && !hasValue ? (
-      <kbd className="pointer-events-none hidden select-none items-center rounded-sm border border-border bg-surface px-1.5 text-caption font-medium text-text-tertiary sm:inline-flex">
+      <kbd className="pointer-events-none hidden h-5 select-none items-center rounded-[3px] border border-border bg-surface px-1 text-[11px] font-medium text-text-tertiary opacity-70 sm:inline-flex">
         {shortcut}
       </kbd>
     ) : null
