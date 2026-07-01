@@ -30,16 +30,19 @@ export const buttonVariants = cva(
         outline: 'text-text',
         destructive: 'text-text-on-accent',
       },
-      // The single Micro Surface geometry: a premium, tactile action button
-      // (Apple / Linear / Stripe). Enough vertical mass to read as a moulded
-      // glass PIECE (never a thin strip), a balanced ~2.5–3.5:1 ratio so the
-      // visual weight sits in the centre (stable, not stretched), and corners
-      // generously rounded at ~⅓ of the height — clearly a softened rectangle,
-      // never a semicircle / pill / capsule. Material/optics are unchanged.
+      // The single Micro Surface geometry: a COMPACT, dense action piece
+      // (Apple / Linear / Stripe). There is NO target aspect ratio — the width
+      // is dictated only by the content. The horizontal padding is restrained
+      // (close to the vertical rhythm) so the glass hugs the label instead of
+      // extending into empty "wings"; combined with a solid height, the visual
+      // weight concentrates in the centre (dense, stable, never stretched).
+      // Corners rounded at ~⅓ of the height — a machined rectangle, never a
+      // pill. A short "OK" and a long "Start your journey" stay the same family
+      // (same height, padding, radius). Material/optics are unchanged.
       size: {
-        sm: 'h-[32px] px-6 text-body-sm rounded-[10px]',
-        md: 'h-[36px] px-8 text-body rounded-[12px]',
-        lg: 'h-[44px] px-10 text-body-lg rounded-[14px]',
+        sm: 'h-[30px] px-4 text-body-sm rounded-[9px]',
+        md: 'h-[36px] px-5 text-body rounded-[11px]',
+        lg: 'h-[44px] px-6 text-body-lg rounded-[13px]',
       },
     },
     defaultVariants: { variant: 'primary', size: 'md' },

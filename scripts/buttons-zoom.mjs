@@ -39,21 +39,25 @@ const png = await p.evaluate(async (d) => {
   const w = img.width,
     h = img.height,
     gap = 48
-  const cw = w + Math.round(w * 0.5) + Math.round(w * 0.25) + gap * 4
-  const ch = h + 80
+  const cw = w * 2 + Math.round(w * 0.5) + Math.round(w * 0.25) + gap * 5
+  const ch = h + 90
   const c = document.createElement('canvas')
   c.width = cw
   c.height = ch
   const x = c.getContext('2d')
-  x.fillStyle = '#f7f6f3'
+  x.fillStyle = 'whitesmoke'
   x.fillRect(0, 0, cw, ch)
   let cx = gap
   for (const s of [1, 0.5, 0.25]) {
     const sw = Math.round(w * s),
       sh = Math.round(h * s)
-    x.drawImage(img, cx, 40 + (h - sh) / 2, sw, sh)
+    x.drawImage(img, cx, 45 + (h - sh) / 2, sw, sh)
     cx += sw + gap
   }
+  // silhouette: same button, blurred so text is unreadable
+  x.filter = 'blur(7px)'
+  x.drawImage(img, cx, 45, w, h)
+  x.filter = 'none'
   return c.toDataURL('image/png').split(',')[1]
 }, data)
 writeFileSync(`${OUT}/buttons-zoom.png`, Buffer.from(png, 'base64'))
