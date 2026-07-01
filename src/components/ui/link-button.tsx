@@ -36,7 +36,6 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
         ref={ref}
         className={cn(buttonVariants({ variant, size }), className)}
         data-glass-variant={variant}
-        data-glass-intent={variant === 'primary' ? 'primary' : undefined}
         {...props}
       >
         <GlassSurface />

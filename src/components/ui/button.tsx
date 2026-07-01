@@ -23,26 +23,27 @@ export const buttonVariants = cva(
   ],
   {
     variants: {
+      // All variants share the SAME neutral glass. Primary is distinguished only
+      // by a light SIGNATURE — a very discreet pastel-violet outer bloom (ambient
+      // light energy, not a fill, not a hard ring, not a CSS border). The violet
+      // never paints the body. Neutral variants carry no bloom.
       variant: {
-        primary: 'text-text',
+        primary: 'text-text shadow-[0_2px_18px_rgba(139,124,255,0.22)]',
         secondary: 'text-text',
         ghost: 'text-accent-accessible',
         outline: 'text-text',
         destructive: 'text-text-on-accent',
       },
-      // The single Micro Surface geometry: a COMPACT, dense action piece
-      // (Apple / Linear / Stripe). There is NO target aspect ratio — the width
-      // is dictated only by the content. The horizontal padding is restrained
-      // (close to the vertical rhythm) so the glass hugs the label instead of
-      // extending into empty "wings"; combined with a solid height, the visual
-      // weight concentrates in the centre (dense, stable, never stretched).
-      // Corners rounded at ~⅓ of the height — a machined rectangle, never a
-      // pill. A short "OK" and a long "Start your journey" stay the same family
-      // (same height, padding, radius). Material/optics are unchanged.
+      // The single Micro Surface geometry: a premium lens / capsule silhouette.
+      // Radius = half the height so the ends are perfectly tensed (no perceptible
+      // angle, a continuous organic contour), yet driven by real values — never a
+      // literal 9999px pill. Compact horizontal padding keeps the width dictated
+      // by content. The silhouette alone reads as a piece of glass to press.
+      // Material/optics are unchanged.
       size: {
-        sm: 'h-[34px] px-4 text-body-sm rounded-[8px]',
-        md: 'h-[40px] px-5 text-body rounded-[10px]',
-        lg: 'h-[48px] px-6 text-body-lg rounded-[12px]',
+        sm: 'h-[34px] px-4 text-body-sm rounded-[17px]',
+        md: 'h-[40px] px-5 text-body rounded-[20px]',
+        lg: 'h-[48px] px-6 text-body-lg rounded-[24px]',
       },
     },
     defaultVariants: { variant: 'primary', size: 'md' },
@@ -94,7 +95,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={cn(buttonVariants({ variant, size }), className)}
         data-glass-variant={variant}
-        data-glass-intent={variant === 'primary' ? 'primary' : undefined}
         disabled={disabled ?? loading}
         aria-busy={loading || undefined}
         {...props}

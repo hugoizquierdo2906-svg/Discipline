@@ -49,7 +49,6 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           className,
         )}
         data-glass-variant={variant}
-        data-glass-intent={variant === 'primary' ? 'primary' : undefined}
         {...props}
       >
         <GlassSurface />
