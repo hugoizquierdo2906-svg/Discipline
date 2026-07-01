@@ -45,7 +45,7 @@ Controls you read and fill (maximum legibility; the glass recedes).
 | Component | Status | Notes |
 |---|---|---|
 | `Input` | **FROZEN** | The official Control reference (`/dev/input`). Role fixed by Grammar §2/§5 — not Micro. |
-| `Textarea` | Built | Control family (multi-line). |
+| `Textarea` | Built · **visual validation PASS** | Multiline sibling of Input (same parent `ControlSurface`, material verbatim). Production API: label · description · helperText · error · success · required · maxLength · showCharacterCount · autoResize (minRows/maxRows → grow then scroll) · disabled · readOnly. Proof: `/dev/textarea`. Not yet frozen — awaiting explicit owner freeze. |
 | `Select` / `NativeSelect` (+ parts) | Built | Control family. |
 | `DatePicker` | Built | Control family. |
 | `SearchInput` | Built | Control family. |

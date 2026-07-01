@@ -187,6 +187,20 @@
 >     bug.
 >   - **Full library roadmap (status of every component):
 >     `docs/DISCIPLINE_UI_ROADMAP.md`.**
+>   - **Textarea — Control Surface, production API (visual validation PASS,
+>     2026-07-01; not yet frozen).** A SIBLING of Input (not a bigger Input): both
+>     derive from GlassSurface → .ds-control → ControlSurface and share its material
+>     VERBATIM (no glass/blur/shadow/Fresnel/optical layer recreated — audited).
+>     Textarea differs only by geometry (taller, top-aligned, multiline spacing,
+>     resize) and multiline interaction. API: label · description · helperText ·
+>     error (turns the frozen `.ds-control--error` rim) · success (semantic token
+>     check, never a glass change) · required · maxLength · showCharacterCount ·
+>     autoResize (grows between minRows/maxRows then scrolls internally — never
+>     infinite) · disabled · readOnly. Focus reuses `.ds-control:focus-within` (the
+>     violet rises); caret + selection left to shared defaults exactly like Input;
+>     16px body avoids iOS zoom with an editorial multiline line-height. Proof:
+>     `/dev/textarea` (all states + Input↔Textarea sibling comparison on neutral +
+>     rich backgrounds). `'use client'` (autoResize hooks). Awaiting explicit freeze.
 >   - **Input — FROZEN (Control Surface).** Conflict resolved (2026-07-01): a task
 >     proposed rebuilding Input as a Micro Surface (`.ds-micro`, Button proportions);
 >     flagged as a violation — the Grammar §2/§5 fixes Input to **Control**, and Input

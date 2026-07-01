@@ -11,6 +11,14 @@
 - Control Surface → **Input (GELÉ)** — rôle fixé par la Grammar §2/§5 (Control, PAS
   Micro) ; référence `/dev/input` validée. Famille Control généralisée (Textarea,
   Select, DatePicker, Search, FileInput).
+- **Textarea — Control Surface, API production (validation visuelle PASS ; pas encore
+  gelé).** Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
+  verre/blur/ombre/Fresnel recréé). Diffère seulement par la géométrie (multiligne,
+  resize) + interaction. API : label · description · helperText · error · success
+  (check sémantique, pas de changement de verre) · required · maxLength ·
+  showCharacterCount · autoResize (minRows/maxRows → grandit puis scrolle) ·
+  disabled · readOnly. Focus = `.ds-control:focus-within`. Preuve : `/dev/textarea`.
+  À geler sur validation explicite du owner.
 - Structural Surface → Card
 - Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar (GELÉ)** · **BottomNav (GELÉ)**
 - Floating Surface → Tooltip
