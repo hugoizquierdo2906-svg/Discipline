@@ -8,6 +8,7 @@
 - Micro Surface → Button
 - Control Surface → Input (famille généralisée)
 - Structural Surface → Card
+- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)**
 - Floating Surface → Tooltip
 - Immersive Surface → Modal
 - Calibration transversale (les 5 rôles = une seule famille cohérente)
@@ -34,7 +35,9 @@
 - **FloatingCard** — Structural élevé, dérivation directe de GlassCard
   (`.ds-card` verbatim ; seul l'axe Depth change : `shadow-4` ajouté au niveau
   composant, jamais dans glass.css). Aucun nouveau matériau, aucune décision de layout.
-- **Navbar** — 1er composant de navigation, spécialisation directe de GlassPanel
+- **Navbar — GELÉ (référence Structural Navigation officielle)** — comme Button /
+  FloatingCard : plus de redesign, modification seulement pour un bug objectif.
+  1er composant de navigation, spécialisation directe de GlassPanel
   (aucun saut de hiérarchie). Matériau/lumière/optique/ombre = GlassPanel inchangé ;
   seule différence = géométrie (rangée de nav 56/64px, padding horizontal, flex,
   alignement, responsive ; `p-0` sur l'hôte → verre bord à bord). Rayon décidé par

@@ -73,10 +73,16 @@
 >     GlassCard. Reuses `.ds-card` verbatim; shifts ONE optical axis (Depth) via a
 >     deeper ambient cast shadow (`shadow-4`) added at the COMPONENT level, never in
 >     glass.css — the Button-halo pattern. No new material, no layout decision.
->   - **Navbar** — the first navigation component, a DIRECT specialization of
+>   - **Navbar — FROZEN (official Structural Navigation reference, 2026-07-01).**
+>     Treat like Button / FloatingCard: no redesign; changes only for an objective
+>     bug. The first navigation component, a DIRECT specialization of
 >     GlassPanel (GlassSurface → .ds-card → GlassCard → GlassPanel → Navbar; no
->     hierarchy jump). Material/light/optics/refraction/reflections/shadow all come
->     from GlassPanel UNCHANGED — Navbar adds nothing optical and NO new shadow. Its
+>     hierarchy jump — never bypasses GlassPanel). Material/light/optics/refraction/
+>     reflections/shadow all come from GlassPanel UNCHANGED — Navbar adds nothing
+>     optical and NO new shadow (audited: no navbar-specific glass recipe, blur,
+>     Fresnel or optical stack; material 100% inherited). Navbar owns ONLY geometry
+>     (spacing, internal layout, navigation distribution, alignment, radius, height).
+>     Its
 >     only difference is geometry: a navigation row (height 56/64px, horizontal
 >     padding, flex layout, vertical alignment, responsive) with the host padding
 >     neutralized (`p-0`) so the glass is edge-to-edge. Radius is Navbar's own
