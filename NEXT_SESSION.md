@@ -31,19 +31,33 @@
   toujours délégués au consommateur. Source : `docs/DISCIPLINE_COMPONENT_ARCHITECTURE.md`
   (référencé depuis la Grammar §7 et `CLAUDE.md`). Audit du 2026-07-01 : tous les
   composants de base passent (aucune violation).
+- **FloatingCard** — Structural élevé, dérivation directe de GlassCard
+  (`.ds-card` verbatim ; seul l'axe Depth change : `shadow-4` ajouté au niveau
+  composant, jamais dans glass.css). Aucun nouveau matériau, aucune décision de layout.
+- **Navbar** — 1er composant de navigation, spécialisation directe de GlassPanel
+  (aucun saut de hiérarchie). Matériau/lumière/optique/ombre = GlassPanel inchangé ;
+  seule différence = géométrie (rangée de nav 56/64px, padding horizontal, flex,
+  alignement, responsive ; `p-0` sur l'hôte → verre bord à bord). Rayon décidé par
+  Navbar : flottant (rayon Structural) par défaut, ou `attached` (`rounded-none`) —
+  les deux possibles, aucun imposé. Placement (sticky/fixed, scroll) délégué au
+  consommateur (A1). API composable ouverte : `Navbar.Brand / .Content / .Actions`,
+  sans hypothèse métier ; Content se replie sous `md`. Preuve : `/dev/navbar`
+  (GlassPanel vs Navbar, fond clair + riche) — matériau identique, géométrie seule.
 
 ## EN COURS
 - Phase 04 — généralisation de la librairie par dérivation des cinq rôles gelés.
 
 ## PROCHAINE SESSION
 
-Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
+Continuer la famille Structural / navigation (dérivée de GlassCard / GlassPanel) :
 
-1. FloatingCard  (← GlassCard : carte élevée, plus d'ombre/float)
-2. Navbar        (← GlassPanel : bande haute + transition de scroll)
-3. Sidebar       (← GlassCard/Panel : rail vertical)
-4. BottomNav     (← GlassPanel : bande basse mobile)
-5. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
+1. Sidebar       (← GlassCard/Panel : rail vertical)
+2. BottomNav     (← GlassPanel : bande basse mobile)
+3. Footer        (← GlassPanel : bande basse pleine largeur)
+4. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
+
+Note : `MobileMenu` reste à construire ; la Navbar est déjà prévue pour l'accueillir
+(Content masqué sous `md`, Actions conserve la place du futur hamburger).
 
 **Règles :** aucun changement du matériau n'est autorisé. Seules des dérivations
 des cinq rôles gelés sont permises (géométrie/interaction uniquement). Avant
