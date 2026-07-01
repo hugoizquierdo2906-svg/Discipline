@@ -17,19 +17,21 @@
   neutre + halo violet diffus, aucun aplat)
 - Promotion des rôles dans `glass.css` (`.ds-card`, `.ds-floating`, `.ds-immersive` + `.ds-scrim` ; `.ds-control` et `.ds-micro` déjà partagés) — extraction pure, scoping leak-free
 - GlassCard (1er consommateur de `.ds-card`)
+- **GlassPanel** — bande Structural pleine largeur, dérivation directe de GlassCard
+  (`.ds-card` verbatim ; seule la géométrie change : `w-full rounded-none py-12`)
 
 ## EN COURS
 - Phase 04 — généralisation de la librairie par dérivation des cinq rôles gelés.
 
 ## PROCHAINE SESSION
 
-Continuer la généralisation de la librairie (famille Structural, dérivée de GlassCard) :
+Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
 
-1. GlassPanel
-2. FloatingCard
-3. Navbar
-4. Sidebar
-5. BottomNav
+1. FloatingCard  (← GlassCard : carte élevée, plus d'ombre/float)
+2. Navbar        (← GlassPanel : bande haute + transition de scroll)
+3. Sidebar       (← GlassCard/Panel : rail vertical)
+4. BottomNav     (← GlassPanel : bande basse mobile)
+5. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 
 **Règles :** aucun changement du matériau n'est autorisé. Seules des dérivations
 des cinq rôles gelés sont permises (géométrie/interaction uniquement). Avant

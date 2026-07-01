@@ -47,13 +47,15 @@
 > - **DS principle (binding):** *a Card invites you to read; a Button invites you
 >   to click.* Same material, distinct proportions (a Button is low and wide; a
 >   Card is a calm plane).
-> - **Generalization status (Phase 04):** **GlassCard** is built — the first
->   official consumer of `.ds-card`; the CardReference composes it (reference ==
->   component by construction). **Next:** the rest of the Structural family
->   (StatCard, ChartWrapper, EmptyState, ErrorState, Navbar, Sidebar, Footer,
->   FloatingCard…), then Floating (Popover, DropdownMenu, ContextMenu, Toast),
->   then Immersive (Drawer, Sheet, ConfirmationDialog), each derived from its
->   frozen role — no new material, no new optical recipe.
+> - **Generalization status (Phase 04):** Structural family in progress.
+>   - **GlassCard** — first consumer of `.ds-card` (the CardReference composes it).
+>   - **GlassPanel** — full-width Structural band, a DIRECT derivation of GlassCard
+>     (reuses `.ds-card` verbatim; only geometry differs — `w-full rounded-none
+>     py-12`, full-bleed). No new material.
+>   - **Next:** FloatingCard, Navbar, Sidebar, BottomNav, then StatCard /
+>     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
+>     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,
+>     ConfirmationDialog) — each derived from its frozen role, no new optical recipe.
 
 > ### Liquid Glass — frozen reference & working rules (permanent)
 > - **The Primary reference button is visually VALIDATED and FROZEN.** It is the
