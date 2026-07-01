@@ -187,8 +187,15 @@
 >     bug.
 >   - **Full library roadmap (status of every component):
 >     `docs/DISCIPLINE_UI_ROADMAP.md`.**
->   - **Select — Control Surface, SIBLING of Input (visual validation PASS,
->     2026-07-01; NOT frozen).** Descends from GlassSurface → .ds-control →
+>   - **Select — Control Surface, SIBLING of Input. FROZEN (visually validated
+>     2026-07-01).** No redesign again unless an objective bug appears.
+>     ```text
+>     Select — FROZEN
+>     Role:        Control Surface
+>     Parent:      ControlSurface
+>     Inheritance: GlassSurface → .ds-control → ControlSurface → Select
+>     ```
+>     Descends from GlassSurface → .ds-control →
 >     ControlSurface → Select (NOT derived from Input — Input and Select are
 >     siblings). The closed trigger composes the SAME `controlHostClass` +
 >     `<ControlSurface/>` as Input, so a closed Select is visually indistinguishable
@@ -210,7 +217,6 @@
 >     `gap-0.5`). Field untouched. The old composable exports (SelectTrigger/Content/
 >     Value/Group/Item) were removed; the two dev usages migrated to `<Select options>`.
 >     Proof: `/dev/select` (family + all states + open menu). `'use client'`.
->     Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
