@@ -11,7 +11,10 @@
 - Floating Surface → Tooltip
 - Immersive Surface → Modal
 - Calibration transversale (les 5 rôles = une seule famille cohérente)
-- Géométrie finale du Button (lame de verre fine `h-[26/30/38px]` · `px-7/10/12` · `rounded-[8/10/12px]` · ~4,5–5:1)
+- **Button OFFICIELLEMENT GELÉ** — source de vérité unique : `docs/DISCIPLINE_BUTTON_REFERENCE.md`
+  (silhouette lens `h-[34/40/48px]` · `px-4/5/6` · `rounded-[17/20/24px]` = ½ hauteur ;
+  matériau `.ds-micro` = verre transmissif qui capte la scène ; Primary = verre
+  neutre + halo violet diffus, aucun aplat)
 - Promotion des rôles dans `glass.css` (`.ds-card`, `.ds-floating`, `.ds-immersive` + `.ds-scrim` ; `.ds-control` et `.ds-micro` déjà partagés) — extraction pure, scoping leak-free
 - GlassCard (1er consommateur de `.ds-card`)
 

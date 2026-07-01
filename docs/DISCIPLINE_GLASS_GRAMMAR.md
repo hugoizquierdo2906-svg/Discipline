@@ -132,6 +132,15 @@ Control Surface shows essentially none. In every case the violet stays light
 captured in the core — never a fill, ring, centered glow, or hue change
 (Invariants §11.7).
 
+> **Evolution (Micro Surface / Button, frozen).** The validated Button
+> reference no longer uses an internal violet caustic at all: **all button
+> variants share the same neutral glass**, and Primary is distinguished **only**
+> by a very discreet pastel-violet **outer light halo** (a soft bloom, not a
+> fill, not a ring, not a hue in the body). The violet remains *light, never
+> paint* and never a ring — consistent with Invariant §11.7. This is the
+> single source of truth for the Micro role; see
+> `docs/DISCIPLINE_BUTTON_REFERENCE.md`.
+
 ---
 
 ## 5. Component → Role mapping

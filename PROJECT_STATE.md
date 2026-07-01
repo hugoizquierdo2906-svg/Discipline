@@ -21,11 +21,18 @@
 >   coexisting/nested under one light; they read as one family with a coherent
 >   physical hierarchy. F1 (Micro had two competing geometries) resolved; F2/F3
 >   were a scene artifact / a usage rule (no material change).
-> - **FINAL Button geometry — FROZEN by the owner:** a thin elongated glass blade
->   — `h-[26/30/38px]`, `px-7/px-10/px-12`, `rounded-[8/10/12px]`, ~4.5–5:1 on a
->   medium label. Optical refinements kept in `.ds-micro` (radial top reflection,
->   three-zone volume, internal-reflection/TIR line, livelier Fresnel). Icon
->   buttons stay circular. There is ONE Micro geometry everywhere.
+> - **BUTTON OFFICIALLY VALIDATED & FROZEN — single source of truth:**
+>   `docs/DISCIPLINE_BUTTON_REFERENCE.md` (geometry, invariants, material,
+>   derivation, interactions, what may evolve, what is forbidden). Summary:
+>   - **Geometry** — a premium lens/capsule, **radius = ½ height**, width dictated
+>     by content: `h-[34/40/48px]` · `px-4/5/6` · `rounded-[17/20/24px]`. Icon
+>     buttons stay circular. ONE Micro geometry everywhere.
+>   - **Material** (`.ds-micro`) — reads as real glass: transmission + environment
+>     capture (`blur(16) saturate(1.7) brightness(1)`), three-zone volume with a
+>     legibility floor, concentrated reflections that slide over the glass.
+>   - **Primary** — **neutral glass** (no violet fill, no `data-glass-intent`),
+>     distinguished only by a discreet pastel-violet **outer light halo**
+>     (`shadow 0 2px 18px rgba(139,124,255,.22)`). Violet = light, never paint.
 > - **Roles promoted to `glass.css` — pure extraction (zero pixel change to the
 >   surfaces).** `.ds-card`, `.ds-floating`, `.ds-immersive` + `.ds-scrim` were
 >   moved verbatim from the `/dev` references; the references now consume the
@@ -116,21 +123,14 @@
 >   capsule at all sizes. Icon buttons stay circular. The dev card's
 >   `.btn-embedded` (a competing 38px geometry) was removed so it uses the
 >   canonical Micro. There is now ONE Micro geometry everywhere.
->   - **Re-balanced (owner feedback):** the final Micro geometry is a LOW, WIDE
->     action button (Apple / Linear / Stripe) — reduced height (`h-8/h-10/h-12`),
->     generous horizontal padding (`px-5/px-7/px-8`) for a taut horizontal
->     silhouette ~2.8–3.5× wider than tall, corners largely rounded but NOT
->     spherical (`rounded-[12/14/16px]`). It must read instantly as an action,
->     never as a small card.
 >   - **DS principle (binding):** *a Card invites you to read; a Button invites
 >     you to click.* Same material language, but proportions must communicate
->     that difference immediately — a Button is low and wide; a Card is a calm
->     plane that lets content breathe.
->   - **FINAL canonical Button geometry — DEFINITIVELY FROZEN by the owner:** a
->     thin elongated glass blade — `h-[26/30/38px]`, `px-7/px-10/px-12`,
->     `rounded-[8/10/12px]`, ~4.5–5:1 on a medium label. Geometry, material,
->     optical layers and proportions are now locked; future buttons derive from
->     this reference, never reinterpret it. Reopen only for an objective bug.
+>     that difference immediately.
+>   - The geometry then went through several owner-led calibration passes
+>     (rounded-rectangle → elongated blade → compact → …). Those intermediate
+>     values are **superseded**. The FINAL, definitively frozen Button (geometry,
+>     material, neutral-glass Primary + violet light halo) is documented in
+>     **`docs/DISCIPLINE_BUTTON_REFERENCE.md`** — the single source of truth.
 > - **Cross-role calibration outcome:** the only real finding (F1, Micro had two
 >   competing geometries) is resolved and the Micro geometry is frozen. F2 (modal
 >   "grey" over a contained scrim) is a calibration-scene artifact; F3 (a Control
