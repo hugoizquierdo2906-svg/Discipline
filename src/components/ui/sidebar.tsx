@@ -42,13 +42,23 @@ export interface SidebarProps extends GlassPanelProps {
  * — the consumer decides page height via `min-h-screen`/`sticky`/`fixed`, per
  * Invariant A1) with its padding neutralized (`p-0`); the inner column owns the
  * rail geometry and breathing space. Width is Sidebar's own intrinsic dimension
- * (the vertical equivalent of Navbar owning height): 272px expanded, 72px
- * collapsed, both driven by the `collapsed` prop.
+ * (the vertical equivalent of Navbar owning height): 264px expanded, 64px
+ * collapsed, both driven by the `collapsed` prop — narrow enough to read as a
+ * rail, not a vertical Card.
+ *
+ * Geometry-only rhythm (2026-07-01 refinement, no material/architecture change):
+ * a deliberately taller vertical gap (`gap-8`) separates Header / Content / Footer
+ * as distinct structural blocks, the Header carries its own trailing whitespace
+ * (`pb-2`) so it reads as an anchor rather than just the first list item, section
+ * groups inside Content get slightly more air (`gap-7`), and individual nav items
+ * within a section breathe a little more (`gap-1.5`). Horizontal insets are
+ * lighter than before (`px-2`/`px-1.5` collapsed) — less mass, more rail.
  *
  * Open compound API, no business assumptions: `Sidebar.Header` · `Sidebar.Content`
  * · `Sidebar.Section` · `Sidebar.Footer` are generic vertical clusters — place a
  * logo, nav items, grouped sections, or a user menu wherever they belong.
- * `Sidebar.Content` is the scrollable region.
+ * `Sidebar.Content` is the ONLY scrollable region — Header and Footer stay
+ * visually stable (`shrink-0`) regardless of navigation length.
  */
 const SidebarRoot = forwardRef<HTMLDivElement, SidebarProps>(function Sidebar(
   {
@@ -73,20 +83,27 @@ const SidebarRoot = forwardRef<HTMLDivElement, SidebarProps>(function Sidebar(
         // scrolling. This targets ONLY that wrapper (geometry, not material) so
         // Sidebar's internal flex column can actually stretch to the rail height.
         'h-full p-0 [&>div]:flex [&>div]:h-full [&>div]:min-h-0 [&>div]:flex-col',
-        collapsed ? 'w-[72px]' : 'w-[272px]',
+        collapsed ? 'w-[64px]' : 'w-[264px]',
         sidebarRadius[variant],
         className,
       )}
       {...props}
     >
-      <div className="flex h-full w-full flex-col gap-6 overflow-hidden px-3 py-6">
+      <div
+        className={cn(
+          'flex h-full w-full flex-col gap-8 overflow-hidden py-8',
+          collapsed ? 'px-1.5' : 'px-2',
+        )}
+      >
         {children}
       </div>
     </GlassPanel>
   )
 })
 
-/** Top cluster — logo / wordmark, or a workspace switcher. Shrinks to content. */
+/** Top cluster — logo / wordmark, or a workspace switcher. Shrinks to content.
+ * Carries its own trailing whitespace (`pb-2`, on top of the root's `gap-8`) so
+ * the brand reads as a deliberate anchor rather than the first list item. */
 const SidebarHeader = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -94,13 +111,14 @@ const SidebarHeader = forwardRef<
   return (
     <div
       ref={ref}
-      className={cn('flex shrink-0 items-center gap-2 px-2', className)}
+      className={cn('flex shrink-0 items-center gap-2 px-2 pb-2', className)}
       {...props}
     />
   )
 })
 
-/** The scrollable navigation region — fills the remaining rail height. */
+/** The scrollable navigation region — fills the remaining rail height. The ONLY
+ * part of Sidebar that scrolls; Header and Footer stay put (`shrink-0`). */
 const SidebarContent = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -109,7 +127,7 @@ const SidebarContent = forwardRef<
     <nav
       ref={ref as React.Ref<HTMLElement>}
       className={cn(
-        'flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto',
+        'flex min-h-0 flex-1 flex-col gap-7 overflow-y-auto',
         className,
       )}
       {...props}
@@ -125,7 +143,7 @@ const SidebarSection = forwardRef<
   return (
     <div
       ref={ref}
-      className={cn('flex flex-col gap-1', className)}
+      className={cn('flex flex-col gap-1.5', className)}
       {...props}
     />
   )

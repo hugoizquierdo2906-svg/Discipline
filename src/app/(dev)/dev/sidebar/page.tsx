@@ -102,7 +102,7 @@ function Scene({ bg }: { bg: 'proof-canvas' | 'proof-media' }) {
             </span>
           </GlassPanel>
         </div>
-        <div className="flex h-[420px] gap-6">
+        <div className="flex h-[620px] gap-6">
           <SidebarSample dark={dark} />
           <SidebarSample collapsed dark={dark} />
         </div>

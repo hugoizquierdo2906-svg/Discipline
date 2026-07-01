@@ -121,14 +121,15 @@
 >     GlassPanel (GlassSurface → .ds-card → GlassCard → GlassPanel → Sidebar; no
 >     hierarchy jump, never composes GlassSurface, never recreates a glass layer).
 >     Material 100% inherited from GlassPanel, UNCHANGED. Sidebar owns ONLY
->     geometry: width is its own intrinsic dimension (272px expanded / 72px
->     collapsed via the `collapsed` prop, which also sets `data-collapsed` for
->     children to respond to), height is adaptable (`h-full`, fills whatever the
->     consumer's container gives — placement stays with the consumer per Invariant
->     A1), internal vertical stack, scrollable nav region, and a geometry-only
->     `variant`: `floating` (Structural default) / `attached` (`rounded-none`).
->     Open compound API: `Sidebar.Header` / `Sidebar.Content` (scrollable) /
->     `Sidebar.Section` / `Sidebar.Footer`. Proof page: `/dev/sidebar`.
+>     geometry: width is its own intrinsic dimension (**264px expanded / 64px
+>     collapsed**, narrow enough to read as a rail, not a vertical Card) via the
+>     `collapsed` prop, which also sets `data-collapsed` for children to respond to;
+>     height is adaptable (`h-full`, fills whatever the consumer's container gives —
+>     placement stays with the consumer per Invariant A1); internal vertical stack;
+>     scrollable nav region; a geometry-only `variant`: `floating` (Structural
+>     default) / `attached` (`rounded-none`). Open compound API: `Sidebar.Header` /
+>     `Sidebar.Content` (scrollable) / `Sidebar.Section` / `Sidebar.Footer`. Proof
+>     page: `/dev/sidebar`.
 >     **Objective bug found and fixed during Phase 4 review:** GlassCard's content
 >     wrapper (`<div className="relative z-[3]">`) has no explicit height, so a
 >     percentage-height chain inside it was inert — tall Sidebar content overflowed
@@ -136,6 +137,19 @@
 >     `[&>div]:flex [&>div]:h-full [&>div]:min-h-0 [&>div]:flex-col` selector scoped
 >     to Sidebar's own className (geometry only; GlassCard/GlassPanel/glass.css
 >     untouched).
+>     **Geometry-only refinement (2026-07-01, "navigation rail, not a vertical
+>     Card"):** no material/architecture change. Narrowed both widths (272→264
+>     expanded, 72→64 collapsed); lighter horizontal insets (`px-2`/`px-1.5`
+>     collapsed, was `px-3`); a deliberately taller vertical gap (`gap-8`, was
+>     `gap-6`) separates Header/Content/Footer as distinct blocks; Header carries
+>     its own trailing whitespace (`pb-2`) so the brand reads as an anchor; section
+>     groups inside Content get more air (`gap-7`, was `gap-6`); nav items within a
+>     section breathe more (`gap-1.5`, was `gap-1`). Validated on the capture
+>     background and a rich panel: material identical to GlassPanel in both cases;
+>     the rail no longer reads as a Card — clear Header→Main→Progress→Footer
+>     hierarchy, elegant slim compact mode. (The `/dev/sidebar` demo box height was
+>     bumped 420→620px so the taller rhythm has room to show both nav groups without
+>     scrolling — a proof-page adjustment only, not a component change.)
 >   - **Next:** BottomNav, then StatCard /
 >     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
 >     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,

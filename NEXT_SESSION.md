@@ -60,9 +60,9 @@
   .Columns / .Column / .Bottom`. Preuve : `/dev/footer`.
 - **Sidebar** — équivalent vertical de Navbar, spécialisation directe de GlassPanel
   (aucun saut de hiérarchie). Matériau 100% hérité, inchangé. Sidebar = géométrie
-  seule : largeur propre (272px déplié / 72px replié via `collapsed`, qui pose aussi
-  `data-collapsed`), hauteur adaptable (`h-full`, le consommateur décide la hauteur
-  de page — A1), pile verticale interne, zone de nav scrollable, `variant`
+  seule : largeur propre (**264px déplié / 64px replié** via `collapsed`, qui pose
+  aussi `data-collapsed`), hauteur adaptable (`h-full`, le consommateur décide la
+  hauteur de page — A1), pile verticale interne, zone de nav scrollable, `variant`
   géométrique `floating` (défaut) / `attached`. API composable : `Sidebar.Header /
   .Content / .Section / .Footer`. Preuve : `/dev/sidebar`.
   **Bug objectif trouvé et corrigé (Phase 4) :** le wrapper de contenu de
@@ -71,6 +71,17 @@
   Sidebar débordait de la boîte de verre visible au lieu de scroller. Corrigé via un
   sélecteur `[&>div]:flex [&>div]:h-full [&>div]:min-h-0 [&>div]:flex-col` scopé au
   className de Sidebar (géométrie seule ; GlassCard/GlassPanel/glass.css intacts).
+  **Confirmé visuellement** sur fond de capture + fond riche (matériau identique à
+  GlassPanel des deux côtés).
+  **Raffinement géométrique (2026-07-01, "rail de navigation, pas une Card
+  verticale") :** aucun changement de matériau/architecture. Largeurs resserrées
+  (272→264 / 72→64), insets horizontaux plus légers (`px-2`/`px-1.5`, était `px-3`),
+  rythme vertical plus généreux (`gap-8`, était `gap-6`) séparant clairement
+  Header/Content/Footer, le Header porte son propre espace en pied (`pb-2`) pour
+  devenir un vrai point d'ancrage, groupes de sections plus aérés (`gap-7`, était
+  `gap-6`), items de nav plus confortables (`gap-1.5`, était `gap-1`). Validé
+  visuellement : ne se lit plus comme une Card, hiérarchie Header→Main→Progress→
+  Footer évidente, mode compact élégant.
 
 ## EN COURS
 - Phase 04 — généralisation de la librairie par dérivation des cinq rôles gelés.
@@ -82,11 +93,8 @@ Continuer la famille Structural / navigation (dérivée de GlassCard / GlassPane
 1. BottomNav     (← GlassPanel : bande basse mobile)
 2. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 
-Note : la capture visuelle finale de Sidebar (après le fix d'overflow) n'a pas pu
-être re-confirmée dans cette session — le serveur dev est resté instable
-(race `.next` persistante). Le fix est validé par type-check/lint/build et par
-l'analyse structurelle du DOM (GlassCard). À reconfirmer visuellement à la
-prochaine session avant de figer Sidebar.
+Sidebar est prêt visuellement et architecturalement ; geler officiellement sur
+demande explicite du owner (comme Button/Navbar/Footer).
 
 Note : `MobileMenu` reste à construire ; la Navbar est déjà prévue pour l'accueillir
 (Content masqué sous `md`, Actions conserve la place du futur hamburger).
