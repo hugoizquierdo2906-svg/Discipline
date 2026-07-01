@@ -62,8 +62,14 @@ function cnLike(...parts: Array<string | false | undefined>) {
   return parts.filter(Boolean).join(' ')
 }
 
-function Scene({ bg }: { bg: 'proof-light' | 'proof-media' }) {
+function Scene({ bg }: { bg: 'proof-light' | 'proof-media' | 'proof-canvas' }) {
   const dark = bg === 'proof-media'
+  const caption =
+    bg === 'proof-media'
+      ? 'Rich panel'
+      : bg === 'proof-canvas'
+        ? 'Capture background'
+        : 'Light canvas'
   return (
     <section
       className={`${bg} flex min-h-screen flex-col items-center justify-center gap-10 p-8`}
@@ -71,7 +77,7 @@ function Scene({ bg }: { bg: 'proof-light' | 'proof-media' }) {
       <p
         className={`${dark ? 'proof-cap-media' : 'proof-cap'} text-caption uppercase tracking-widest`}
       >
-        {dark ? 'Rich panel' : 'Light canvas'} — GlassPanel vs Navbar
+        {caption} — GlassPanel vs Navbar
       </p>
       <div className="flex w-full max-w-4xl flex-col gap-8">
         <GlassPanel className="py-6">
@@ -98,6 +104,7 @@ export default function NavbarPage() {
   return (
     <main>
       <h1 className="sr-only">Navbar proof</h1>
+      <Scene bg="proof-canvas" />
       <Scene bg="proof-light" />
       <Scene bg="proof-media" />
     </main>

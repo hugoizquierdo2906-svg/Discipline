@@ -22,7 +22,7 @@ await page.waitForTimeout(400)
 
 // Target the scene backgrounds by class — GlassPanel renders as <section> too,
 // so a bare `section` selector is ambiguous.
-for (const tone of ['light', 'media']) {
+for (const tone of ['canvas', 'light', 'media']) {
   const scene = page.locator(`section.proof-${tone}`)
   await scene.scrollIntoViewIfNeeded()
   await page.waitForTimeout(150)
