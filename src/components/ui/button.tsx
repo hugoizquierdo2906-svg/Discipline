@@ -30,16 +30,16 @@ export const buttonVariants = cva(
         outline: 'text-text',
         destructive: 'text-text-on-accent',
       },
-      // The single Micro Surface geometry: a THIN, WIDE action button (Apple /
-      // Linear / Stripe / macOS). A low height with generous horizontal padding
-      // gives a taut horizontal silhouette ~3.5–4× wider than tall; corners are
-      // ~30–35% of the height (never semicircular — not a pill). It must read as
-      // a thin machined sliver of glass laid on the surface, never a cushion.
-      // Material/optics are unchanged.
+      // The single Micro Surface geometry: a premium, tactile action button
+      // (Apple / Linear / Stripe). Enough vertical mass to read as a moulded
+      // glass PIECE (never a thin strip), a balanced ~2.5–3.5:1 ratio so the
+      // visual weight sits in the centre (stable, not stretched), and corners
+      // generously rounded at ~⅓ of the height — clearly a softened rectangle,
+      // never a semicircle / pill / capsule. Material/optics are unchanged.
       size: {
-        sm: 'h-[26px] px-7 text-body-sm rounded-[8px]',
-        md: 'h-[30px] px-10 text-body rounded-[10px]',
-        lg: 'h-[38px] px-12 text-body-lg rounded-[12px]',
+        sm: 'h-[32px] px-6 text-body-sm rounded-[10px]',
+        md: 'h-[36px] px-8 text-body rounded-[12px]',
+        lg: 'h-[44px] px-10 text-body-lg rounded-[14px]',
       },
     },
     defaultVariants: { variant: 'primary', size: 'md' },
