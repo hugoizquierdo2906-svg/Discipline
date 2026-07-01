@@ -9,16 +9,24 @@
 ### VALIDÉ (figé — ne plus rouvrir sauf bug objectif)
 - Micro Surface → Button
 - Control Surface → **Input (GELÉ)** — rôle fixé par la Grammar §2/§5 (Control, PAS
-  Micro) ; référence `/dev/input` validée. Famille Control généralisée (Textarea,
-  Select, DatePicker, Search, FileInput).
-- **Textarea — Control Surface, API production (validation visuelle PASS ; pas encore
-  gelé).** Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
+  Micro) ; référence `/dev/input` validée. Famille Control généralisée :
+  **Textarea (GELÉ)**, Select, DatePicker, Search, FileInput.
+- **Textarea — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
+  redesign sauf bug objectif. Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
   verre/blur/ombre/Fresnel recréé). Diffère seulement par la géométrie (multiligne,
   resize) + interaction. API : label · description · helperText · error · success
   (check sémantique, pas de changement de verre) · required · maxLength ·
   showCharacterCount · autoResize (minRows/maxRows → grandit puis scrolle) ·
   disabled · readOnly. Focus = `.ds-control:focus-within`. Preuve : `/dev/textarea`.
-  À geler sur validation explicite du owner.
+- **SearchInput — Control Surface, spécialisation de Input (validation visuelle PASS ;
+  pas encore gelé).** Contrairement à Textarea (frère de Input), SearchInput dérive
+  DE Input : GlassSurface → .ds-control → ControlSurface → Input → SearchInput. Rend
+  `<Input>` + affordances de recherche seulement (loupe en prefix, cluster
+  clear/loading/shortcut en suffix). Aucun verre recréé. API : label · description ·
+  helperText · error · success · clearable · loading · shortcut (⌘K) · debounce
+  (callback seul, texte jamais retardé) · onSearch · onClear · disabled · readOnly ;
+  Escape efface ; `role="search"`. Preuve : `/dev/search-input`. À geler sur
+  validation explicite du owner.
 - Structural Surface → Card
 - Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar (GELÉ)** · **BottomNav (GELÉ)**
 - Floating Surface → Tooltip

@@ -187,8 +187,23 @@
 >     bug.
 >   - **Full library roadmap (status of every component):
 >     `docs/DISCIPLINE_UI_ROADMAP.md`.**
->   - **Textarea — Control Surface, production API (visual validation PASS,
->     2026-07-01; not yet frozen).** A SIBLING of Input (not a bigger Input): both
+>   - **SearchInput — Control Surface, search SPECIALIZATION of Input (visual
+>     validation PASS, 2026-07-01; not yet frozen).** Unlike Textarea (Input's
+>     sibling), SearchInput derives FROM Input: GlassSurface → .ds-control →
+>     ControlSurface → Input → SearchInput. It renders `<Input>` and adds ONLY search
+>     affordances into Input's prefix/suffix slots — a muted leading magnifier and a
+>     trailing clear/loading/shortcut cluster — plus search behaviour. Recreates no
+>     glass/blur/shadow/Fresnel/optical layer (audited: only docstring mentions).
+>     API: label · description · helperText · error (Input's frozen `.ds-control--error`
+>     rim) · success (semantic token check) · clearable · loading (Spinner swaps the
+>     same slot, no geometry change) · shortcut (⌘K kbd chip, hidden while typing &
+>     on touch) · debounce (callback only — text never delayed) · onSearch · onClear ·
+>     disabled · readOnly. Escape clears; `role="search"`; clear button reuses the
+>     frozen Button interaction language (press-scale/focus-ring), no glass-on-glass.
+>     Proof: `/dev/search-input` (all states + Input→Textarea→SearchInput family on
+>     neutral + rich backgrounds). `'use client'`. Awaiting explicit freeze.
+>   - **Textarea — Control Surface, FROZEN (visually validated 2026-07-01).** No
+>     redesign again unless an objective bug appears. A SIBLING of Input (not a bigger Input): both
 >     derive from GlassSurface → .ds-control → ControlSurface and share its material
 >     VERBATIM (no glass/blur/shadow/Fresnel/optical layer recreated — audited).
 >     Textarea differs only by geometry (taller, top-aligned, multiline spacing,
