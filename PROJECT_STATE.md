@@ -93,7 +93,14 @@
 >     generic flex clusters, no business assumptions; Content collapses below `md`
 >     for a later mobile menu. Proof: `/dev/navbar` (GlassPanel vs Navbar on light +
 >     rich panels) confirms identical material — geometry is the sole difference.
->   - **Footer — the second major page container (after Navbar).** A DIRECT
+>   - **Footer — FROZEN (official Structural page footer, 2026-07-01).** Treat like
+>     Button / Navbar / FloatingCard: no redesign; changes only for an objective
+>     bug. Final visual validation PASS — on the capture background and a rich
+>     photographic panel the Footer's glass is IDENTICAL to GlassPanel (transmission,
+>     refraction, blur, Fresnel, internal reflections, incident, specular, edge,
+>     shadow all match); only layout/geometry differs. Responsive: desktop row,
+>     tablet grid, mobile 2-column stack — spacing coherent. The second major page
+>     container (after Navbar). A DIRECT
 >     specialization of GlassPanel (GlassSurface → .ds-card → GlassCard → GlassPanel
 >     → Footer; no hierarchy jump, never composes GlassSurface, never recreates a
 >     glass layer). Material is 100% inherited from GlassPanel — transmission,

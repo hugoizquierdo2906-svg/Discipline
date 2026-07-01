@@ -8,7 +8,7 @@
 - Micro Surface → Button
 - Control Surface → Input (famille généralisée)
 - Structural Surface → Card
-- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer**
+- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)**
 - Floating Surface → Tooltip
 - Immersive Surface → Modal
 - Calibration transversale (les 5 rôles = une seule famille cohérente)
@@ -46,7 +46,10 @@
   consommateur (A1). API composable ouverte : `Navbar.Brand / .Content / .Actions`,
   sans hypothèse métier ; Content se replie sous `md`. Preuve : `/dev/navbar`
   (GlassPanel vs Navbar, fond clair + riche) — matériau identique, géométrie seule.
-- **Footer** — 2e grand conteneur de page (après Navbar), spécialisation directe de
+- **Footer — GELÉ (footer Structural officiel)** — validation visuelle finale PASS
+  (matériau identique à GlassPanel sur fond clair + riche ; responsive cohérent
+  desktop/tablet/mobile). Plus de redesign sauf bug objectif. 2e grand conteneur de
+  page (après Navbar), spécialisation directe de
   GlassPanel (aucun saut de hiérarchie ; ne compose jamais GlassSurface). Matériau
   100% hérité (transmission/réfraction/blur/Fresnel/reflets/incident/specular/edge/
   ombre inchangés). Footer = layout seul : colonne verticale calme pleine largeur
