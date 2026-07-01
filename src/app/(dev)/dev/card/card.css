@@ -65,6 +65,17 @@
     ),
     linear-gradient(135deg, #1b1646 0%, #0a0820 100%);
 }
+/* Standard capture background — used by ALL proofs from now on. Drop the approved
+   texture at public/backgrounds/capture-bg.jpg; until then a soft grey field shows.
+   Light-toned, so it uses the same dark text as .proof-light. */
+.proof-canvas {
+  background-color: #ececef;
+  background-image: url('/backgrounds/capture-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .proof-cap {
   color: var(--ds-color-text-tertiary);
 }

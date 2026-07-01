@@ -59,6 +59,13 @@ Continuer la famille Structural / navigation (dérivée de GlassCard / GlassPane
 Note : `MobileMenu` reste à construire ; la Navbar est déjà prévue pour l'accueillir
 (Content masqué sous `md`, Actions conserve la place du futur hamburger).
 
+**Fond de capture standard (dès Sidebar).** Tous les proofs à venir utilisent le
+fond `.proof-canvas` (classe dans `card.css`) → `public/backgrounds/capture-bg.jpg`,
+une texture liquid-glass en niveaux de gris. Générateur reproductible :
+`node scripts/capture-bg-generate.mjs` (le fichier peut être remplacé par une image
+exacte à tout moment, même chemin). C'est un fond clair → texte foncé (comme
+`.proof-light`).
+
 **Règles :** aucun changement du matériau n'est autorisé. Seules des dérivations
 des cinq rôles gelés sont permises (géométrie/interaction uniquement). Avant
 chaque composant : déclarer de quel rôle il dérive, quelles couches optiques sont
