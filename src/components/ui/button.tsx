@@ -40,9 +40,9 @@ export const buttonVariants = cva(
       // pill. A short "OK" and a long "Start your journey" stay the same family
       // (same height, padding, radius). Material/optics are unchanged.
       size: {
-        sm: 'h-[30px] px-4 text-body-sm rounded-[9px]',
-        md: 'h-[36px] px-5 text-body rounded-[11px]',
-        lg: 'h-[44px] px-6 text-body-lg rounded-[13px]',
+        sm: 'h-[34px] px-4 text-body-sm rounded-[8px]',
+        md: 'h-[40px] px-5 text-body rounded-[10px]',
+        lg: 'h-[48px] px-6 text-body-lg rounded-[12px]',
       },
     },
     defaultVariants: { variant: 'primary', size: 'md' },
