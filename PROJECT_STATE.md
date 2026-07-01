@@ -59,6 +59,16 @@
 >     via className. No new material. *(Correction: dropped the imposed
 >     `rounded-none` — full-bleed is a layout decision that belongs to the consumer,
 >     not to the base Structural component.)*
+>   - **Architecture invariant frozen (from the GlassPanel correction):**
+>     **base components never make layout decisions** — they define only material
+>     role, behavior, semantics, and intrinsic geometry (incl. adaptable width and a
+>     default radius/padding); placement / full-bleed / alignment / page position /
+>     responsive-context are always delegated to the consumer. Formalized as
+>     **Invariant A1** in `docs/DISCIPLINE_COMPONENT_ARCHITECTURE.md` (cross-linked
+>     from the Grammar §7 and `CLAUDE.md`). **Audit (2026-07-01): all base
+>     components pass** — `w-full` defaults are adaptable width (not placement),
+>     the `absolute` uses are internal part-positioning; no other component imposes
+>     a `rounded-none`-style layout decision.
 >   - **Next:** FloatingCard, Navbar, Sidebar, BottomNav, then StatCard /
 >     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
 >     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,

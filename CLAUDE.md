@@ -22,6 +22,20 @@ Before every new implementation phase:
 
 In any conflict, the higher document prevails; the Constitution prevails over all.
 
+## Architecture invariants (frozen)
+
+Before building or modifying any component, read
+`docs/DISCIPLINE_COMPONENT_ARCHITECTURE.md`. These are frozen, library-wide rules
+that may be extended but never weakened. In particular:
+
+- **Invariant A1 — base components never make layout decisions.** A base component
+  defines only its material role, behavior, semantics, and intrinsic geometry
+  (including an adaptable width and a default radius/padding). It never decides
+  placement, full-bleed/edge-to-edge, alignment, page position, or any
+  context-specific/responsive layout. Every layout decision is delegated to the
+  consuming component. (`rounded-none`, `mx-auto`, `fixed inset-0`, page
+  width-caps → belong to the consumer, not the base component.)
+
 ## Working state
 
 Current build progress is tracked in PROJECT_STATE.md. Read it at the start of a session.

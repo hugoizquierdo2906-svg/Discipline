@@ -24,6 +24,13 @@
   mise en page (rayon / alignement / full-bleed / position). Les spécialisations
   géométriques sont **déléguées aux composants dérivés** (Navbar, Footer, Sidebar,
   BottomNav, sections marketing) via className.
+- **Invariant d'architecture GELÉ — A1 : un composant de base ne prend jamais de
+  décision de layout.** Il définit seulement son rôle matériel, son comportement,
+  sa sémantique et sa géométrie intrinsèque (largeur adaptable + rayon/padding par
+  défaut). Placement / full-bleed / alignement / position / responsive =
+  toujours délégués au consommateur. Source : `docs/DISCIPLINE_COMPONENT_ARCHITECTURE.md`
+  (référencé depuis la Grammar §7 et `CLAUDE.md`). Audit du 2026-07-01 : tous les
+  composants de base passent (aucune violation).
 
 ## EN COURS
 - Phase 04 — généralisation de la librairie par dérivation des cinq rôles gelés.

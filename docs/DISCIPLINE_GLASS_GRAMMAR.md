@@ -194,6 +194,12 @@ no role provides, the **role set** is revisited (here), not the component.
    glass as it (coherence test, Material §6c).
 6. New roles are added here, deliberately, only when a genuinely new optical
    family appears — never for one-off convenience.
+7. A component's **material** (this Grammar) and its **layout** are separate
+   concerns. A base component wears its role's material and defines its intrinsic
+   geometry, but **never makes a layout decision** (placement, full-bleed,
+   alignment, page position) — that is delegated to the consumer. This is a
+   frozen architecture invariant; see `docs/DISCIPLINE_COMPONENT_ARCHITECTURE.md`
+   (Invariant A1).
 
 ---
 
