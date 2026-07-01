@@ -1,65 +1,77 @@
 /*
- * Micro Surface — optical refinement, scoped to `.ds-micro` (Button, IconButton,
- * LinkButton). These are the glass-read improvements validated on the reference
- * button: a top reflection that follows the capsule curvature, three readable
- * depth zones (top face · transmissive core · lower face), an internal-reflection
- * (TIR) line catching the lower wall, and a livelier Fresnel where the light
- * strikes. The optical MODEL and order are unchanged (same <GlassSurface/> layers,
- * same light, same refraction/violet behaviour) — only the magnitudes of the
- * light/volume are tuned. Scoped to `.ds-micro` so no other role is affected; the
- * shared material in glass.css is untouched.
+ * Micro Surface — optical material, scoped to `.ds-micro` (Button, IconButton,
+ * LinkButton). Re-tuned so the button reads as a real piece of GLASS (not a white
+ * opaque layer): more transmission (the background lives inside the material),
+ * stronger environment capture (saturate up, no white-washing), a readable three-
+ * zone volume, and reflections that slide over the glass instead of veiling it.
+ * The optical MODEL, order, geometry, halo, outline and animations are unchanged
+ * (same <GlassSurface/> layers) — only the magnitudes of transmission / refraction
+ * / volume / reflection are tuned. Scoped to `.ds-micro`; glass.css and every
+ * other role are untouched. Note: true displacement would require the frozen
+ * GlassSurface SVG filter, so refraction is expressed through transmission +
+ * saturation + curved reflection, kept subtle (unnoticed at first, felt).
  */
 
-/* Internal volume — three readable depth zones (lit top face → darker
-   transmissive core → a lower face that recovers light by refraction), so depth
-   comes from variation, not a flat fade. */
+/* Refraction / environment capture — the background is transmitted more vividly
+   (saturate up) and NOT washed to white (neutral brightness), so the material
+   reacts to its scene: luminous on light, deeper on dark, tinted on colour. */
+.ds-micro .ds-glass__body {
+  backdrop-filter: blur(16px) saturate(1.7) brightness(1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.7) brightness(1);
+}
+
+/* Internal volume — three readable zones at higher transmission: a lit top face,
+   a transmissive core (the background shows through), and a lifted lower face.
+   The centre keeps a legibility floor so dark text always holds AA (Invariant
+   §11.10); the top edge and lower face open up so the glass reads. */
 .ds-micro .ds-glass__volume {
   background: linear-gradient(
     180deg,
-    var(--ds-glass-fill-top) 0%,
-    var(--ds-glass-fill-bottom) 34%,
-    rgba(255, 255, 255, 0.16) 62%,
-    rgba(255, 255, 255, 0.24) 86%,
-    var(--ds-glass-fill-bottom) 100%
+    rgba(255, 255, 255, 0.44) 0%,
+    rgba(255, 255, 255, 0.26) 30%,
+    rgba(255, 255, 255, 0.18) 58%,
+    rgba(255, 255, 255, 0.24) 84%,
+    rgba(255, 255, 255, 0.32) 100%
   );
   box-shadow:
     inset 0 1px 0 var(--ds-glass-inner-highlight),
     inset 0 -5px 9px var(--ds-glass-inner-shadow),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.55);
+    inset 0 -1px 0 rgba(255, 255, 255, 0.42);
 }
 
-/* Incident light — the principal reflection is an arc that hugs the rounded top
-   and fades as the glass curves away (radial, not a flat band). */
+/* Incident light — the principal reflection is a CONCENTRATED arc hugging the
+   rounded top, fading quickly so the glass stays visible below it (not a veil). */
 .ds-micro .ds-glass__incident {
   background: radial-gradient(
-    140% 92% at 50% -30%,
+    110% 78% at 50% -26%,
     var(--ds-glass-inner-highlight) 0%,
-    rgba(255, 255, 255, 0.22) 34%,
-    transparent 60%
+    rgba(255, 255, 255, 0.16) 30%,
+    transparent 52%
   );
 }
 
-/* Specular — a single continuous, uneven sweep riding the top curvature,
-   stronger near the light and tapering along the surface. */
+/* Specular — a single concentrated glint riding the top curvature; discreet
+   enough that the transmissive body reads through, never a white sheet. */
 .ds-micro .ds-glass__specular {
   inset: auto;
   top: 1px;
   left: 13%;
-  width: 64%;
-  height: 44%;
+  width: 60%;
+  height: 42%;
   border-radius: 50%;
   background: radial-gradient(
     70% 100% at 42% 0%,
     var(--ds-glass-specular) 0%,
-    rgba(255, 255, 255, 0.26) 38%,
+    rgba(255, 255, 255, 0.22) 38%,
     transparent 72%
   );
-  opacity: 0.5;
+  opacity: 0.42;
   filter: blur(2px);
 }
 
 /* Fresnel edge — livelier exactly where the light hits (top-left): a near-white
-   strike that decays around the rim, reading as a machined bevel catching light. */
+   strike that decays around the rim, reading as a machined bevel that EMERGES
+   from the material's reflection, not a drawn line. */
 .ds-micro .ds-glass__edge {
   background: linear-gradient(
     135deg,
