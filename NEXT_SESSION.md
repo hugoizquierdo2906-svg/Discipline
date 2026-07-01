@@ -106,8 +106,14 @@ Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
   composable : `BottomNav.Item` (icône + label optionnel + badge, `active` →
   `aria-current`, `asChild`, cible tactile ≥44px, `focus-visible`, `truncate`) et
   `BottomNav.Group`. Preuve : `/dev/bottom-nav`. Géométrie validée, matériau hérité,
-  responsive validé, safe-area supporté, production-ready. À geler sur demande du
-  owner (comme Navbar/Footer/Sidebar).
+  responsive validé, safe-area supporté, production-ready. **Validation visuelle
+  PASS (2026-07-01)** sur fond de capture + fond riche : matériau identique à
+  GlassPanel des deux côtés ; variants floating/attached/inset ne diffèrent que par
+  le rayon ; état actif (violet), items inactifs, équilibre icône+label, badge,
+  troncature des longs labels, desktop/tablet/mobile — tout lit correctement ; se
+  lit comme la navigation (contrepartie mobile de Navbar), pas une Card/Toolbar/CTA/
+  widget flottant. **Pas encore gelé** — à geler sur demande explicite du owner
+  (comme Navbar/Footer/Sidebar).
 
 Sidebar est officiellement GELÉ (comme Button/Navbar/Footer/FloatingCard).
 

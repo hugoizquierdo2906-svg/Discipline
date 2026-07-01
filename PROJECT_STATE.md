@@ -175,7 +175,14 @@
 >     distribution). Mobile-primary but coherent at desktop width. Proof page:
 >     `/dev/bottom-nav`. Reads as the mobile Navbar — same glass, geometry/orientation
 >     the only difference; **geometry validated, material inherited, responsive
->     validated, safe-area supported, production-ready.**
+>     validated, safe-area supported, production-ready. Visual validation PASS
+>     (2026-07-01):** on the capture background and a rich photographic panel the
+>     bar's glass is IDENTICAL to GlassPanel (transmission, refraction, blur, Fresnel,
+>     reflections, shadow all match); floating/attached/inset differ only in radius;
+>     active item (violet), inactive items, icon+label balance, badge, long-label
+>     truncation, and desktop/tablet/mobile all read correctly; reads as navigation
+>     (mobile counterpart of Navbar), not a Card/Toolbar/CTA/floating widget. NOT yet
+>     frozen — awaiting explicit owner freeze (like Navbar/Footer/Sidebar).
 >   - **Next:** StatCard /
 >     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
 >     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,
