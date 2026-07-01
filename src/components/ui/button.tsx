@@ -8,11 +8,15 @@ import { GlassSurface } from './glass-surface'
 import { Spinner } from './spinner'
 
 /**
- * Button — the signature Micro Surface control. Converged to the frozen
- * Liquid Glass material: the element carries `.ds-glass` and renders the shared
- * <GlassSurface/> stack; `buttonVariants` only encodes geometry + label color
- * (the material lives in src/styles/glass.css). Primary intent carries the
- * violet caustic. Canonical §12.3 (dark label on primary).
+ * Button — the FROZEN Micro Surface reference. The element carries
+ * `.ds-glass .ds-micro` and renders the shared <GlassSurface/> stack;
+ * `buttonVariants` encodes only geometry + label colour + the Primary halo. The
+ * material lives in src/styles/micro.css (`.ds-micro`) over the shared layers in
+ * src/styles/glass.css. All variants share the SAME neutral glass — Primary is
+ * distinguished only by a discreet pastel-violet outer light halo (never a fill
+ * or caustic in the body). IconButton and LinkButton reuse this exact
+ * implementation via `buttonVariants`. Single source of truth:
+ * docs/DISCIPLINE_BUTTON_REFERENCE.md.
  */
 export const buttonVariants = cva(
   [

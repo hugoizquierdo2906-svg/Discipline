@@ -1,9 +1,9 @@
 /*
  * Cross-role calibration — dev only. Places the FIVE frozen references together,
  * nested, on shared backgrounds under one light, to verify they read as one
- * material family with a coherent physical hierarchy before any promotion.
- * Reuses the scoped reference styles (.cd-card, .btn-embedded, .fl-tip,
- * .im-modal, .im-scrim) imported from their dev folders — nothing is redefined.
+ * material family with a coherent physical hierarchy. Reuses the promoted role
+ * classes (.ds-card, .ds-floating, .ds-immersive, .ds-scrim, .ds-micro) —
+ * nothing is redefined here.
  */
 
 .calib {
