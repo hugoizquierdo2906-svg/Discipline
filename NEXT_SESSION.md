@@ -17,8 +17,13 @@
   neutre + halo violet diffus, aucun aplat)
 - Promotion des rôles dans `glass.css` (`.ds-card`, `.ds-floating`, `.ds-immersive` + `.ds-scrim` ; `.ds-control` et `.ds-micro` déjà partagés) — extraction pure, scoping leak-free
 - GlassCard (1er consommateur de `.ds-card`)
-- **GlassPanel** — bande Structural pleine largeur, dérivation directe de GlassCard
-  (`.ds-card` verbatim ; seule la géométrie change : `w-full rounded-none py-12`)
+- **GlassPanel** — composant Structural générique, dérivation directe de GlassCard
+  (`.ds-card` verbatim ; conserve le rayon Structural par défaut). Il définit
+  seulement un panneau Structural (largeur adaptable, padding par défaut
+  `w-full px-6 py-12`, sémantique `<section>`) et n'impose AUCUNE décision de
+  mise en page (rayon / alignement / full-bleed / position). Les spécialisations
+  géométriques sont **déléguées aux composants dérivés** (Navbar, Footer, Sidebar,
+  BottomNav, sections marketing) via className.
 
 ## EN COURS
 - Phase 04 — généralisation de la librairie par dérivation des cinq rôles gelés.

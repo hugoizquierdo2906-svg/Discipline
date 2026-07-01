@@ -3,7 +3,7 @@
 > Living record of build progress against `DISCIPLINE_BUILD_PLAN.md`.
 > Updated at the close of each phase.
 
-**Last updated:** 2026-06-30
+**Last updated:** 2026-07-01
 **Current phase:** Phase 04 — Component Library (Level 2 Glass & Composite) — the five Material Roles are FROZEN and promoted to `glass.css`; library generalization has begun (GlassCard built).
 **Next phase:** continue Phase 04 generalization (Structural family next), then Phase 05.
 
@@ -49,9 +49,16 @@
 >   Card is a calm plane).
 > - **Generalization status (Phase 04):** Structural family in progress.
 >   - **GlassCard** — first consumer of `.ds-card` (the CardReference composes it).
->   - **GlassPanel** — full-width Structural band, a DIRECT derivation of GlassCard
->     (reuses `.ds-card` verbatim; only geometry differs — `w-full rounded-none
->     py-12`, full-bleed). No new material.
+>   - **GlassPanel** — the generic large Structural Surface, a DIRECT derivation of
+>     GlassCard (reuses `.ds-card` verbatim; keeps the Structural default radius).
+>     It defines ONLY a Structural panel — adaptable width, a default panel padding
+>     (`w-full px-6 py-12`), `<section>` semantics — and imposes NO layout decision:
+>     it never decides its radius, alignment, full-bleed mode or position. Geometry
+>     specializations (full-bleed, corner radii, alignment) are DELEGATED to the
+>     derived components (Navbar, Footer, Sidebar, BottomNav, marketing sections)
+>     via className. No new material. *(Correction: dropped the imposed
+>     `rounded-none` — full-bleed is a layout decision that belongs to the consumer,
+>     not to the base Structural component.)*
 >   - **Next:** FloatingCard, Navbar, Sidebar, BottomNav, then StatCard /
 >     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
 >     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,
