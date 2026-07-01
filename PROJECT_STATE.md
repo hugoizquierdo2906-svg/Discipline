@@ -117,7 +117,26 @@
 >     `Footer.Columns` / `Footer.Column` / `Footer.Bottom`, responsive (desktop row →
 >     tablet grid → mobile stack). Proof page: `/dev/footer`. Proves the Structural
 >     role can generate complete page architecture (Navbar + Footer) by derivation.
->   - **Next:** Sidebar, BottomNav, then StatCard /
+>   - **Sidebar** — the vertical counterpart of Navbar, a DIRECT specialization of
+>     GlassPanel (GlassSurface → .ds-card → GlassCard → GlassPanel → Sidebar; no
+>     hierarchy jump, never composes GlassSurface, never recreates a glass layer).
+>     Material 100% inherited from GlassPanel, UNCHANGED. Sidebar owns ONLY
+>     geometry: width is its own intrinsic dimension (272px expanded / 72px
+>     collapsed via the `collapsed` prop, which also sets `data-collapsed` for
+>     children to respond to), height is adaptable (`h-full`, fills whatever the
+>     consumer's container gives — placement stays with the consumer per Invariant
+>     A1), internal vertical stack, scrollable nav region, and a geometry-only
+>     `variant`: `floating` (Structural default) / `attached` (`rounded-none`).
+>     Open compound API: `Sidebar.Header` / `Sidebar.Content` (scrollable) /
+>     `Sidebar.Section` / `Sidebar.Footer`. Proof page: `/dev/sidebar`.
+>     **Objective bug found and fixed during Phase 4 review:** GlassCard's content
+>     wrapper (`<div className="relative z-[3]">`) has no explicit height, so a
+>     percentage-height chain inside it was inert — tall Sidebar content overflowed
+>     past the visible glass box instead of scrolling internally. Fixed with a
+>     `[&>div]:flex [&>div]:h-full [&>div]:min-h-0 [&>div]:flex-col` selector scoped
+>     to Sidebar's own className (geometry only; GlassCard/GlassPanel/glass.css
+>     untouched).
+>   - **Next:** BottomNav, then StatCard /
 >     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
 >     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,
 >     ConfirmationDialog) — each derived from its frozen role, no new optical recipe.

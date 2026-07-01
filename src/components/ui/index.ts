@@ -33,6 +33,7 @@ export {
   SelectValue,
 } from './select'
 export { Separator } from './separator'
+export { Sidebar } from './sidebar'
 export { Skeleton } from './skeleton'
 export { Slider } from './slider'
 export { Spinner } from './spinner'
