@@ -1,12 +1,16 @@
 # NEXT_SESSION
 
 > Reprise rapide. Détail complet dans `PROJECT_STATE.md`.
+> **Roadmap complète de la librairie (statut de chaque composant) :
+> `docs/DISCIPLINE_UI_ROADMAP.md`.**
 
 ## SESSION TERMINÉE
 
 ### VALIDÉ (figé — ne plus rouvrir sauf bug objectif)
 - Micro Surface → Button
-- Control Surface → Input (famille généralisée)
+- Control Surface → **Input (GELÉ)** — rôle fixé par la Grammar §2/§5 (Control, PAS
+  Micro) ; référence `/dev/input` validée. Famille Control généralisée (Textarea,
+  Select, DatePicker, Search, FileInput).
 - Structural Surface → Card
 - Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar (GELÉ)** · **BottomNav (GELÉ)**
 - Floating Surface → Tooltip

@@ -185,10 +185,18 @@
 >     **FROZEN (2026-07-01)** — treat like Navbar/Footer/Sidebar: no redesign; no
 >     geometry/spacing/height/radius/material change; changes only for an objective
 >     bug.
->   - **Next:** StatCard /
->     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
->     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,
->     ConfirmationDialog) — each derived from its frozen role, no new optical recipe.
+>   - **Full library roadmap (status of every component):
+>     `docs/DISCIPLINE_UI_ROADMAP.md`.**
+>   - **Input — FROZEN (Control Surface).** Conflict resolved (2026-07-01): a task
+>     proposed rebuilding Input as a Micro Surface (`.ds-micro`, Button proportions);
+>     flagged as a violation — the Grammar §2/§5 fixes Input to **Control**, and Input
+>     already exists/is validated. Owner chose to keep Input = Control, unchanged; no
+>     role/material/architecture change. Input is definitively frozen.
+>   - **Next (unimplemented role members, no new material):** Immersive → `Modal`/
+>     `Dialog` (promote the frozen `/dev/modal` reference into a reusable component),
+>     Floating → `Popover`/`DropdownMenu`/`Toast` (generalize the Tooltip reference),
+>     Structural → StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard).
+>     See the roadmap for the complete list.
 
 > ### Liquid Glass — frozen reference & working rules (permanent)
 > - **The Primary reference button is visually VALIDATED and FROZEN.** It is the
