@@ -11,7 +11,7 @@
 - Control Surface → **Input (GELÉ)** — rôle fixé par la Grammar §2/§5 (Control, PAS
   Micro) ; référence `/dev/input` validée. Famille Control généralisée :
   **Textarea (GELÉ)**, **SearchInput (GELÉ)**, **Select (GELÉ)**,
-  DatePicker, FileInput.
+  **DatePicker (build, non gelé)**, FileInput.
 - **Select — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (PAS dérivé de Input ; Input et Select
   sont frères) :
@@ -31,6 +31,31 @@
   `Select.Item`. Chevron pivote à l'ouverture ; menu = surface raised token
   (pas de verre), feuille flottante suspendue (`shadow-4` + `sideOffset 8`), ligne
   sélectionnée quasi-blanche (✓ violet + `font-medium`). Preuve : `/dev/select`.
+- **DatePicker — champ Control Surface + calendrier Floating Surface. BUILD (validation
+  visuelle PASS 2026-07-01 ; PAS encore gelé).** Deux rôles, deux matériaux, aucun
+  mélange :
+
+  ```text
+  DatePicker — champ           Calendrier (overlay)
+  Role:    Control Surface     Role:    Floating Surface
+  Parent:  ControlSurface      Base:    FloatingSurface
+  Hérit.:  GlassSurface        Hérit.:  GlassSurface
+           → .ds-control                → .ds-floating
+           → ControlSurface             → FloatingSurface
+           → DatePicker
+  ```
+
+  Le champ fermé compose le même `controlHostClass` + `<ControlSurface/>` que
+  Input/Select → indiscernable fermé (aucun verre/blur/backdrop recréé). Le calendrier
+  = Radix Popover dont le contenu compose le NOUVEAU helper réutilisable
+  **FloatingSurface** (`floating-surface.tsx`, miroir de ControlSurface) — 1er
+  consommateur du verre Floating, base des futurs Popover/DropdownMenu/Command Palette.
+  Grille/clavier/navigation/ARIA via react-day-picker 9 ; thème calendrier token-only
+  scopé `.ds-datepicker-calendar` (aucun matériau). Entrée overlay 150ms opacity +
+  translateY + léger scale, ease-out, sans rebond (respecte reduced-motion). API :
+  label · description · placeholder · helperText · error · success · required ·
+  disabled · readOnly · value · defaultValue · minDate · maxDate · locale · format ·
+  onChange · name. Preuve : `/dev/date-picker`. À geler sur validation explicite.
 - **Textarea — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
   verre/blur/ombre/Fresnel recréé). Diffère seulement par la géométrie (multiligne,
@@ -133,9 +158,13 @@
 
 ## PROCHAINE SESSION
 
-Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
-
-1. StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
+1. **Geler DatePicker** sur validation visuelle explicite du propriétaire (fond clair
+   + fond média fournis). Puis, la famille Control étant quasi complète, **FileInput**
+   (dernier membre Control) OU généraliser le rôle **Floating** : `Popover` /
+   `DropdownMenu` — désormais triviaux, ils composent le helper **FloatingSurface**
+   déjà validé par le calendrier du DatePicker.
+2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
+   StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 
 - **BottomNav** — contrepartie mobile de Navbar, spécialisation directe de GlassPanel
   (aucun saut de hiérarchie ; ne compose jamais GlassSurface). Matériau 100% hérité,

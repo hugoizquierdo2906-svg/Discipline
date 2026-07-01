@@ -1,0 +1,114 @@
+/**
+ * DatePicker calendar — token-only theming for react-day-picker, scoped to
+ * `.ds-datepicker-calendar` so nothing leaks. This styles ONLY the grid: layout,
+ * days, navigation, today / selected / hover / outside / disabled states. It
+ * creates NO glass, blur, backdrop, shadow or optical layer — the calendar's
+ * material comes entirely from the Floating Surface (`.ds-floating` + GlassSurface)
+ * that wraps it. All values are DISCIPLINE tokens.
+ */
+.ds-datepicker-calendar {
+  --rdp-accent-color: var(--ds-color-accent);
+  --rdp-accent-background-color: var(--ds-color-accent-subtle);
+  --rdp-day-width: 2.25rem;
+  --rdp-day-height: 2.25rem;
+  --rdp-day_button-width: 2.25rem;
+  --rdp-day_button-height: 2.25rem;
+  --rdp-day_button-border-radius: var(--ds-radius-sm);
+  --rdp-selected-border: none;
+  --rdp-disabled-opacity: 0.35;
+  --rdp-outside-opacity: 0.4;
+  --rdp-today-color: var(--ds-color-accent-accessible);
+  --rdp-weekday-opacity: 1;
+  --rdp-nav_button-width: 2rem;
+  --rdp-nav_button-height: 2rem;
+  margin: 0;
+  color: var(--ds-color-text);
+}
+
+/* Caption (month + year) and navigation. */
+.ds-datepicker-calendar .rdp-month_caption {
+  font-size: var(--ds-text-body-sm);
+  font-weight: 500;
+  color: var(--ds-color-text);
+  padding: 0 var(--ds-space-1) var(--ds-space-2);
+}
+.ds-datepicker-calendar .rdp-nav {
+  gap: var(--ds-space-1);
+}
+.ds-datepicker-calendar .rdp-button_previous,
+.ds-datepicker-calendar .rdp-button_next {
+  color: var(--ds-color-text-tertiary);
+  border-radius: var(--ds-radius-sm);
+  transition:
+    color var(--ds-dur-fast) var(--ds-ease-standard),
+    background-color var(--ds-dur-fast) var(--ds-ease-standard);
+}
+.ds-datepicker-calendar .rdp-button_previous:hover,
+.ds-datepicker-calendar .rdp-button_next:hover {
+  color: var(--ds-color-text);
+  background-color: var(--ds-color-accent-subtle);
+}
+
+/* Weekday header. */
+.ds-datepicker-calendar .rdp-weekday {
+  font-size: var(--ds-text-caption);
+  font-weight: 500;
+  color: var(--ds-color-text-tertiary);
+  text-transform: none;
+}
+
+/* Day cells. */
+.ds-datepicker-calendar .rdp-day_button {
+  font-size: var(--ds-text-body-sm);
+  color: var(--ds-color-text);
+  border: none;
+  transition:
+    background-color var(--ds-dur-fast) var(--ds-ease-standard),
+    color var(--ds-dur-fast) var(--ds-ease-standard);
+}
+.ds-datepicker-calendar .rdp-day_button:hover {
+  background-color: var(--ds-color-accent-subtle);
+}
+.ds-datepicker-calendar .rdp-today .rdp-day_button {
+  font-weight: 600;
+  color: var(--rdp-today-color);
+}
+.ds-datepicker-calendar .rdp-selected .rdp-day_button {
+  background-color: var(--ds-color-accent);
+  color: var(--ds-color-text-on-accent);
+  font-weight: 600;
+}
+.ds-datepicker-calendar .rdp-selected .rdp-day_button:hover {
+  background-color: var(--ds-color-accent);
+}
+.ds-datepicker-calendar .rdp-outside {
+  opacity: var(--rdp-outside-opacity);
+}
+.ds-datepicker-calendar .rdp-disabled {
+  opacity: var(--rdp-disabled-opacity);
+}
+.ds-datepicker-calendar .rdp-day_button:focus-visible {
+  outline: 2px solid var(--ds-color-accent-accessible);
+  outline-offset: 1px;
+}
+
+/* Overlay entrance — same quality as the future Popover: a short, calm rise
+ * (opacity + translateY + a very light scale, no bounce). 150ms, ease-out. */
+@keyframes ds-datepicker-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.ds-datepicker-content[data-state='open'] {
+  animation: ds-datepicker-in 150ms var(--ds-ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-datepicker-content[data-state='open'] {
+    animation: none;
+  }
+}

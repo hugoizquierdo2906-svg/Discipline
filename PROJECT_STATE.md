@@ -217,6 +217,38 @@
 >     `gap-0.5`). Field untouched. The old composable exports (SelectTrigger/Content/
 >     Value/Group/Item) were removed; the two dev usages migrated to `<Select options>`.
 >     Proof: `/dev/select` (family + all states + open menu). `'use client'`.
+>   - **DatePicker — Control Surface field + Floating Surface calendar. Built
+>     (visual validation PASS 2026-07-01; NOT frozen).** Two roles, two materials,
+>     no mixing:
+>     ```text
+>     DatePicker — field
+>     Role:        Control Surface
+>     Parent:      ControlSurface
+>     Inheritance: GlassSurface → .ds-control → ControlSurface → DatePicker
+>
+>     Calendar overlay
+>     Role:        Floating Surface
+>     Inheritance: GlassSurface → .ds-floating → FloatingSurface
+>     ```
+>     The closed FIELD composes the SAME `controlHostClass` + `<ControlSurface/>` as
+>     Input/Select → indistinguishable when closed (audited: date-picker.tsx has no
+>     blur/backdrop/box-shadow/optical layer — material only from ControlSurface +
+>     FloatingSurface). The CALENDAR is a Radix Popover whose content composes the
+>     NEW reusable **FloatingSurface** helper (`floating-surface.tsx`, mirrors
+>     ControlSurface: renders `.ds-floating` + GlassSurface) — the first production
+>     consumer of the Floating glass, and the base the future Popover/DropdownMenu/
+>     Command Palette will share. Grid/keyboard/nav/ARIA (react-day-picker 9); the
+>     field never embeds the grid. Field owns value/placeholder/open; calendar owns
+>     layout/grid/animation. Calendar theming is token-only, scoped to
+>     `.ds-datepicker-calendar` (date-picker.css) — no material. Overlay entrance:
+>     150ms opacity + translateY + slight scale, ease-out, no bounce (respects
+>     reduced-motion). API: label · description · placeholder · helperText · error ·
+>     success · required · disabled · readOnly · value · defaultValue · minDate ·
+>     maxDate · locale (date-fns) · format (date-fns pattern; defaults to the locale's
+>     medium date) · onChange · name (hidden ISO input). ARIA: combobox trigger →
+>     dialog overlay → grid/gridcell (aria-expanded/controls/selected). Proof:
+>     `/dev/date-picker` (family + all states + min/max + locales + formats + open
+>     calendar). `'use client'`. Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
