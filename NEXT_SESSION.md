@@ -8,7 +8,7 @@
 - Micro Surface → Button
 - Control Surface → Input (famille généralisée)
 - Structural Surface → Card
-- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar (GELÉ)** · **BottomNav**
+- Structural (généralisés) → GlassCard · GlassPanel · FloatingCard · **Navbar (GELÉ)** · **Footer (GELÉ)** · **Sidebar (GELÉ)** · **BottomNav (GELÉ)**
 - Floating Surface → Tooltip
 - Immersive Surface → Modal
 - Calibration transversale (les 5 rôles = une seule famille cohérente)
@@ -112,8 +112,9 @@ Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
   le rayon ; état actif (violet), items inactifs, équilibre icône+label, badge,
   troncature des longs labels, desktop/tablet/mobile — tout lit correctement ; se
   lit comme la navigation (contrepartie mobile de Navbar), pas une Card/Toolbar/CTA/
-  widget flottant. **Pas encore gelé** — à geler sur demande explicite du owner
-  (comme Navbar/Footer/Sidebar).
+  widget flottant. **GELÉ (2026-07-01)** — comme Navbar/Footer/Sidebar : plus de
+  redesign ; aucune modif géométrie/spacing/hauteur/radius/matériau ; évolution
+  seulement pour un bug objectif.
 
 Sidebar est officiellement GELÉ (comme Button/Navbar/Footer/FloatingCard).
 

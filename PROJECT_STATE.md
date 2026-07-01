@@ -181,8 +181,10 @@
 >     reflections, shadow all match); floating/attached/inset differ only in radius;
 >     active item (violet), inactive items, icon+label balance, badge, long-label
 >     truncation, and desktop/tablet/mobile all read correctly; reads as navigation
->     (mobile counterpart of Navbar), not a Card/Toolbar/CTA/floating widget. NOT yet
->     frozen — awaiting explicit owner freeze (like Navbar/Footer/Sidebar).
+>     (mobile counterpart of Navbar), not a Card/Toolbar/CTA/floating widget.
+>     **FROZEN (2026-07-01)** — treat like Navbar/Footer/Sidebar: no redesign; no
+>     geometry/spacing/height/radius/material change; changes only for an objective
+>     bug.
 >   - **Next:** StatCard /
 >     EmptyState / ErrorState / ChartWrapper (← GlassCard/Panel), then Floating
 >     (Popover, DropdownMenu, ContextMenu, Toast) and Immersive (Drawer, Sheet,
