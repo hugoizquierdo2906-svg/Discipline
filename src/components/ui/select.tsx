@@ -51,8 +51,10 @@ const SelectItem = forwardRef<
     <SelectPrimitive.Item
       ref={ref}
       className={cn(
-        'relative flex cursor-pointer select-none items-center gap-2 rounded-sm py-2 pl-8 pr-3 text-body-sm text-text outline-none',
-        'data-[highlighted]:bg-accent-subtle data-[state=checked]:font-medium',
+        'relative flex cursor-pointer select-none items-center gap-3 rounded-sm py-2.5 pl-8 pr-3 text-body-sm text-text outline-none',
+        // Violet as a signature, not a fill — a whisper of captured light on the
+        // highlighted/selected row (like the Button Primary halo), black text kept.
+        'data-[highlighted]:bg-accent-subtle/45 data-[state=checked]:font-medium',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-40',
         className,
       )}
@@ -66,10 +68,10 @@ const SelectItem = forwardRef<
       {icon != null && (
         <span className="inline-flex shrink-0 text-text-tertiary">{icon}</span>
       )}
-      <span className="min-w-0 flex-1">
+      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
         {description && (
-          <span className="block truncate text-caption text-text-tertiary">
+          <span className="truncate text-caption text-text-tertiary">
             {description}
           </span>
         )}
@@ -309,9 +311,12 @@ const SelectRoot = forwardRef<HTMLButtonElement, SelectProps>(function Select(
         <SelectPrimitive.Portal>
           <SelectPrimitive.Content
             position="popper"
-            sideOffset={6}
+            sideOffset={8}
             className={cn(
-              'z-dropdown overflow-hidden rounded-md border border-border bg-surface-raised shadow-3',
+              // Detail #1 — read the menu as a suspended, independent floating
+              // sheet: not more blur, not more glass; a stronger elevation
+              // shadow so the plane clearly hovers above the field.
+              'z-dropdown overflow-hidden rounded-md border border-border bg-surface-raised shadow-4',
               'w-[var(--radix-select-trigger-width)]',
               'max-h-[min(var(--radix-select-content-available-height),20rem)]',
             )}
@@ -319,7 +324,7 @@ const SelectRoot = forwardRef<HTMLButtonElement, SelectProps>(function Select(
             <SelectPrimitive.ScrollUpButton className="flex items-center justify-center py-1 text-text-tertiary">
               <Icon icon={ChevronUp} size="sm" aria-hidden />
             </SelectPrimitive.ScrollUpButton>
-            <SelectPrimitive.Viewport className="p-1">
+            <SelectPrimitive.Viewport className="p-1.5">
               {items}
             </SelectPrimitive.Viewport>
             <SelectPrimitive.ScrollDownButton className="flex items-center justify-center py-1 text-text-tertiary">

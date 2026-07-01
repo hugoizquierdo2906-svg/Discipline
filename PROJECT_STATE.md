@@ -201,9 +201,14 @@
 >     readOnly (static full-opacity field) · loading (Spinner replaces chevron) ·
 >     value · defaultValue · onValueChange · options[] (value/label/icon/description/
 >     disabled) or `Select.Item` children. Menu = token raised surface
->     (`bg-surface-raised shadow-3`, popper-aligned, viewport-capped, scroll
->     buttons) — not glass. The old composable exports (SelectTrigger/Content/Value/
->     Group/Item) were removed; the two dev usages migrated to `<Select options>`.
+>     (`bg-surface-raised shadow-4`, popper-aligned `sideOffset={8}`, viewport-capped,
+>     scroll buttons) — not glass. Dropdown-only polish pass (2026-07-01): reads as a
+>     suspended floating sheet (stronger `shadow-4` + `sideOffset 8`, no extra
+>     blur/glass); selected row is near-white with only the violet ✓ + `font-medium`
+>     (highlight a whisper `bg-accent-subtle/45`, not a fill — like the Button Primary
+>     halo); more air (viewport `p-1.5`, item `py-2.5`, `gap-3`, title↔description
+>     `gap-0.5`). Field untouched. The old composable exports (SelectTrigger/Content/
+>     Value/Group/Item) were removed; the two dev usages migrated to `<Select options>`.
 >     Proof: `/dev/select` (family + all states + open menu). `'use client'`.
 >     Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
