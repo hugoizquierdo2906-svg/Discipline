@@ -79,13 +79,12 @@
   (`defaultFiles`). Résumé de contraintes auto-dérivé (« PNG · up to 1.0 MB · max
   2 files ») — remplace l'ancien `hint` ; ancienne API `hint`/`onFiles` supprimée,
   2 consommateurs dev migrés. Preuve : `/dev/file-input`.
-- **ContextMenu — Floating Surface, DÉRIVE DU DROPDOWNMENU GELÉ. BUILD (PAS gelé —
-  validation visuelle du propriétaire en attente).**
+- **ContextMenu — Floating Surface, DÉRIVE DU DROPDOWNMENU GELÉ. GELÉ (validé
+  visuellement 2026-07-02).** Plus aucune évolution — bug objectif uniquement.
 
   ```text
   Floating
-  FloatingSurface → Popover (FROZEN) → DropdownMenu (FROZEN) → ContextMenu
-  Status: Built (non frozen)
+  FloatingSurface → Popover (FROZEN) → DropdownMenu (FROZEN) → ContextMenu (FROZEN)
   ```
 
   PAS un nouveau composant : le langage DropdownMenu avec un autre déclencheur.
@@ -95,8 +94,7 @@
   déclenchement : clic droit, touche menu / Shift+F10, long-press tactile,
   positionné au curseur (menu natif supprimé uniquement sur la zone). Contraintes
   Radix documentées : Root sans open/defaultOpen ; Content sans side/sideOffset
-  (ancré au curseur). Preuve : `/dev/context-menu`. À geler sur validation
-  explicite.
+  (ancré au curseur). Preuve : `/dev/context-menu`.
   **Fix de bug objectif appliqué au DropdownMenu GELÉ (clause de gel)** : colonne
   d'indicateur `pl-8` = 48px sur l'échelle DISCIPLINE (pas 32) → labels écrasés à
   2 caractères à côté des shortcuts en xs (visible dans la preuve gelée) →
@@ -256,10 +254,9 @@
 
 ## PROCHAINE SESSION
 
-1. **Geler ContextMenu** sur validation visuelle explicite du propriétaire. Puis
-   suite du rôle Floating : **UserMenu** (composition DropdownMenu + Avatar),
-   **Toast**. Ensuite : Immersive → `Modal` réutilisable depuis la référence
-   `/dev/modal`.
+1. ContextMenu est GELÉ. **HoverCard (en cours — dérive du Popover gelé, ouverture
+   au survol)**. Puis : **UserMenu** (composition DropdownMenu + Avatar), **Toast**.
+   Ensuite : Immersive → `Modal` réutilisable depuis la référence `/dev/modal`.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 

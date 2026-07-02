@@ -362,7 +362,8 @@
 >     reference; desktop/tablet/mobile + interactive captures (actions/checkbox/
 >     radio/long/collision/nested). `'use client'`.
 >   - **ContextMenu — Floating Surface, DERIVES FROM THE FROZEN DROPDOWNMENU.
->     Built (visual validation pending; NOT frozen).**
+>     FROZEN (visually validated 2026-07-02).** No functional, visual or
+>     architectural change again — objective bugs only.
 >     ```text
 >     Floating
 >     FloatingSurface
@@ -371,8 +372,7 @@
 >             ↓
 >     DropdownMenu (FROZEN)
 >             ↓
->     ContextMenu
->     Status: Built (non frozen)
+>     ContextMenu (FROZEN)
 >     ```
 >     NOT a new component — the DropdownMenu language with another trigger. Never
 >     restarts from Popover or FloatingSurface: composes the exported frozen menu
@@ -394,7 +394,7 @@
 >     ContextMenu), object zones (image · selected text · file with nested
 >     submenu · workspace with checkbox/radio), long scrollable menu, edge
 >     collision, touch path; desktop/tablet/mobile + interactive right-click
->     captures. `'use client'`. Awaiting explicit freeze.
+>     captures. `'use client'`.
 >     **Objective-bug fix applied to the FROZEN DropdownMenu (freeze clause,
 >     2026-07-02):** discovered while proving ContextMenu — (1) the indicator
 >     column `pl-8` is 48px on the DISCIPLINE spacing scale (space-8 = 48px, not
