@@ -54,7 +54,7 @@ const SelectItem = forwardRef<
         'relative flex cursor-pointer select-none items-center gap-3 rounded-sm py-2.5 pl-8 pr-3 text-body-sm text-text outline-none',
         // Violet as a signature, not a fill — a whisper of captured light on the
         // highlighted/selected row (like the Button Primary halo), black text kept.
-        'data-[highlighted]:bg-accent-subtle/45 data-[state=checked]:font-medium',
+        'data-[highlighted]:bg-[color-mix(in_srgb,var(--ds-color-accent-subtle)_45%,transparent)] data-[state=checked]:font-medium',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-40',
         className,
       )}

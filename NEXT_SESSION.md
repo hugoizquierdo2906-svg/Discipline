@@ -271,9 +271,16 @@
 
 ## PROCHAINE SESSION
 
-1. HoverCard est GELÉ. **Command Palette (en cours — rôle Immersive : nécessite la
-   promotion de la référence `/dev/modal` en composant `Modal` réutilisable, dont
-   la palette compose tout)**. Puis : UserMenu, Toast.
+1. **Geler CommandPalette (et Modal avec elle)** sur validation visuelle explicite
+   du propriétaire. Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
+   **Modal** (Radix Dialog, promu de la référence `/dev/modal`) + **CommandPalette**
+   (compose Modal + SearchInput gelé + langage menu gelé ; ⌘K, filtrage, clavier
+   complet, groupes, états). Bugs objectifs corrigés en route : `-translate-y-0`
+   invalide (échelle `--ds-space-0` sans unité → transform entier perdu) et les
+   modificateurs alpha (`bg-accent-subtle/45`, `bg-error/10`) JAMAIS générés
+   (couleurs var() sans `<alpha-value>`) → surbrillance des menus gelés
+   transparente depuis le début ; corrigé via `color-mix` token-only, preuves
+   recapturées. Puis : Dialog/ConfirmationDialog (← Modal), UserMenu, Toast.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 

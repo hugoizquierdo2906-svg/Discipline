@@ -1,0 +1,45 @@
+/**
+ * Immersive Surface — shared family geometry extensions (NOT material
+ * re-tuning: `.ds-immersive` and `.ds-scrim` in glass.css stay frozen and
+ * untouched). Owned by the ImmersiveSurface helper so every Immersive member
+ * (Modal · Dialog · Drawer · Command Palette) shares ONE entrance — components
+ * never declare their own.
+ *
+ * There was no frozen Immersive entrance (the /dev/modal reference is static);
+ * this is the family's first, built ONLY from system tokens: the same
+ * opacity + translateY + light scale recipe as the Floating base, at the
+ * standard duration (a bigger plane breathes a touch slower than a floating
+ * pane). Entrance-only (unmount on close), reduced-motion safe.
+ */
+@keyframes ds-immersive-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.ds-immersive-enter {
+  animation: ds-immersive-in var(--ds-dur-standard) var(--ds-ease-out);
+}
+
+@keyframes ds-scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.ds-scrim-enter {
+  animation: ds-scrim-in var(--ds-dur-standard) var(--ds-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-immersive-enter,
+  .ds-scrim-enter {
+    animation: none;
+  }
+}

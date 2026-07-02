@@ -53,7 +53,7 @@ export const dropdownMenuPaneClass = popoverPaneClass
  * visible in the frozen proof itself. 32px is the intended column.) */
 export const dropdownMenuItemClass = cn(
   'relative flex cursor-pointer select-none items-center gap-3 rounded-sm py-2.5 pl-6 pr-3 text-body-sm text-text outline-none',
-  'data-[highlighted]:bg-accent-subtle/45',
+  'data-[highlighted]:bg-[color-mix(in_srgb,var(--ds-color-accent-subtle)_45%,transparent)]',
   'data-[disabled]:pointer-events-none data-[disabled]:opacity-40',
 )
 const itemClass = dropdownMenuItemClass
@@ -122,7 +122,8 @@ const DropdownMenuItem = forwardRef<
       disabled={disabled || loading}
       className={cn(
         itemClass,
-        destructive && 'text-error data-[highlighted]:bg-error/10',
+        destructive &&
+          'text-error data-[highlighted]:bg-[color-mix(in_srgb,var(--ds-color-error)_10%,transparent)]',
         className,
       )}
       {...props}
@@ -237,7 +238,7 @@ const DropdownMenuSubTrigger = forwardRef<
       ref={ref}
       className={cn(
         itemClass,
-        'data-[state=open]:bg-accent-subtle/45',
+        'data-[state=open]:bg-[color-mix(in_srgb,var(--ds-color-accent-subtle)_45%,transparent)]',
         className,
       )}
       {...props}

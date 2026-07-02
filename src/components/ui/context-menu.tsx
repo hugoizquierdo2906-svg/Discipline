@@ -85,7 +85,8 @@ const ContextMenuItem = forwardRef<
       disabled={disabled || loading}
       className={cn(
         dropdownMenuItemClass,
-        destructive && 'text-error data-[highlighted]:bg-error/10',
+        destructive &&
+          'text-error data-[highlighted]:bg-[color-mix(in_srgb,var(--ds-color-error)_10%,transparent)]',
         className,
       )}
       {...props}
@@ -197,7 +198,7 @@ const ContextMenuSubTrigger = forwardRef<
       ref={ref}
       className={cn(
         dropdownMenuItemClass,
-        'data-[state=open]:bg-accent-subtle/45',
+        'data-[state=open]:bg-[color-mix(in_srgb,var(--ds-color-accent-subtle)_45%,transparent)]',
         className,
       )}
       {...props}

@@ -434,6 +434,52 @@
 >     delays 0/200/500 · 0/150/300, sides, aligns, arrow on/off, shared sizes,
 >     scrollable container, edge collision; desktop/tablet/mobile + real-hover
 >     captures incl. the pointer-bridge proof. `'use client'`.
+>   - **CommandPalette — Immersive Surface, COMPOSES the new Modal. Built
+>     (visual validation pending; NOT frozen).**
+>     ```text
+>     Immersive
+>     GlassSurface → .ds-immersive → ImmersiveSurface → Modal → CommandPalette
+>     Status: Built (non frozen)
+>     ```
+>     The spec's dependency (a reusable Modal) did not exist — only the /dev/modal
+>     reference. Following the FloatingSurface/DatePicker precedent, the base was
+>     built first: **ImmersiveSurface** (helper mirroring Control/Floating: frozen
+>     `.ds-immersive` + GlassSurface over the frozen `.ds-scrim`, plus the family
+>     entrance `ds-immersive-in`/`ds-scrim-in` in immersive-surface.css — the
+>     family had NO frozen entrance; token timings only, reduced-motion safe) and
+>     **Modal** (Radix Dialog: scrim + centered pane, focus trap, scroll lock,
+>     Escape, outside dismiss, inert background, portal, focus return, ARIA;
+>     compound `Modal` + Trigger/Content(paneClassName)/Title/Description/Close).
+>     CommandPalette recreates NOTHING (grep: no GlassSurface/FloatingSurface/
+>     ImmersiveSurface/blur/backdrop/shadow/rgba in code — it imports ONLY Modal,
+>     the FROZEN SearchInput, the frozen menu-language classes, Icon, Spinner).
+>     It owns ONLY: instant local filtering (label+description+keywords),
+>     keyboard navigation (↑↓ · Home/End · PageUp/PageDown ±8 · Enter · loop),
+>     groups with headings (Recent · Navigation · Actions · Settings · AI),
+>     empty/loading/disabled/selected states, ⌘K/Ctrl+K global hotkey, and the
+>     Escape sequence (clears the query first — SearchInput's Escape-to-clear —
+>     then closes). Items: icon · label · description · shortcut (right-aligned,
+>     never hard-coded) · badge · avatar slot · disabled · loading. Data-driven
+>     `groups` API (controlled/uncontrolled open + query) — async/streaming/AI
+>     sources later without breaking the contract; virtualization-compatible.
+>     Desktop: centered command band (top 16vh · 640px · inner scroll ≤ min(50vh,
+>     22rem)); mobile: fluid width. Proof: `/dev/command-palette` — idle groups,
+>     live filtering, keyboard selection, empty, loading, long scrollable list,
+>     rich panel, tablet, mobile. `'use client'`. Awaiting explicit freeze.
+>     **Objective bugs found while building (system-wide):**
+>     1. `-translate-y-0` produces `calc(0 * -1)` from the unitless
+>        `--ds-space-0: 0` → the WHOLE transform is invalid (the shell lost its X
+>        centering too). Fixed locally with `translate-y-[0px]`; noted as a scale
+>        hazard (any translate/space-0 utility).
+>     2. **Alpha modifiers on token colors never generated**: the Tailwind colors
+>        are `var(--ds-color-*)` strings without `<alpha-value>`, so utilities
+>        like `bg-accent-subtle/45` and `bg-error/10` were silently ABSENT from
+>        the CSS — the frozen Select/DropdownMenu/ContextMenu "whisper" highlight
+>        was transparent all along (hover/keyboard rows showed no tint). Fixed
+>        under the freeze clause with token-only `color-mix` arbitrary values
+>        (`bg-[color-mix(in_srgb,var(--ds-color-accent-subtle)_45%,transparent)]`,
+>        error 10% idem) in the shared menu classes + select.tsx; all menu proofs
+>        re-captured — the whisper is now actually visible.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
