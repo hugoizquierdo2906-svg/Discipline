@@ -518,6 +518,38 @@
 >     **Objective bug found: `duration: Infinity` mapped to MAX_SAFE_INTEGER
 >     fired IMMEDIATELY** — setTimeout is 32-bit; anything above 2^31-1 fires at
 >     once (the sticky toast vanished). Capped to 2^31-1 (~24.8 days).
+>   - **Checkbox — Micro Surface, audited + minimal rebuild. Built (visual
+>     validation pending; NOT frozen).**
+>     ```text
+>     Micro
+>     GlassSurface → Micro Surface (Button reference) → Checkbox
+>     Status: Built (non frozen)
+>     ```
+>     AUDIT: the existing Checkbox already used the validated small-control
+>     language (token box, accent fill, dark glyph — consistent with
+>     Switch/Radio) and the Grammar §2/§5 lists Checkbox as Micro; the Glass
+>     Budget (§3) explains why a 20px control spends near-zero presence (the
+>     full Micro glass lives on Button). VERDICT: keep the visual language,
+>     rebuild the minimum. Fixes: (1) indeterminate icon was chosen from the
+>     `checked` PROP → wrong for uncontrolled `defaultChecked="indeterminate"`;
+>     now data-state-driven (group-data variants). (2) No state motion (Switch
+>     had one) → fast color transition. (3) Label not dimmed when disabled.
+>     (4) Missing API. NEW `micro-control.tsx` — the shared expression of the
+>     small tactile Micro members (box · active fill · invalid rim), composed by
+>     Checkbox and by Radio/Switch on their next audit; the focus ring stays the
+>     GLOBAL `:focus-visible` (never redeclared). checkbox.tsx grep: zero
+>     GlassSurface/blur/backdrop/box-shadow/rgba/animation/transition/shadow
+>     strings. API: label · description · error (implies invalid) · helperText ·
+>     invalid · readOnly (focusable, never toggles — click swallowed) ·
+>     required (marker + native) · labelPosition left/right · controlled +
+>     uncontrolled incl. indeterminate + `CheckboxGroup` (fieldset/legend;
+>     label · description · error · helperText · required; disabled/invalid
+>     propagated via context). Backward compatible (old `label`/`checked`
+>     usages untouched). Proof: `/dev/checkbox` — all states, groups
+>     (multiple/error/disabled), nested settings with a mixed parent
+>     (indeterminate), permissions matrix, desktop/tablet/mobile + keyboard
+>     captures (focus ring on the mixed parent, Space → all checked).
+>     `'use client'`. Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

@@ -273,8 +273,13 @@
 
 1. Toast est GELÉ — **la famille Floating est complète et 100 % gelée**
    (Tooltip · Popover · DropdownMenu · ContextMenu · HoverCard · Toast).
-   **Checkbox (en cours — audit du composant Micro existant, rebuild minimal si
-   nécessaire, base canonique des futurs CheckboxGroup/TreeView/permissions)**.
+   **Checkbox : audité + rebuild minimal, Built non gelé — à geler sur validation
+   visuelle explicite.** Nouveau helper `micro-control.tsx` (expression partagée
+   des petits contrôles Micro — box token · fill accent · rim invalid ; focus =
+   ring global) ; fix objectif : icône indéterminée pilotée par la prop (cassée
+   en non-contrôlé) → data-state. API complète (description/error/helper/invalid/
+   readOnly/required/labelPosition) + CheckboxGroup (fieldset, contexte
+   disabled/invalid). Radio et Switch composeront micro-control.tsx à leur audit.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
