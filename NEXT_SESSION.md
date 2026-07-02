@@ -271,8 +271,9 @@
 
 ## PROCHAINE SESSION
 
-1. **Geler CommandPalette (et Modal avec elle)** sur validation visuelle explicite
-   du propriétaire. Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
+1. CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
+   validation dédiée, ex. Dialog). **Toast (en cours — dérive de FloatingSurface,
+   feedback transient)**. Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
    **Modal** (Radix Dialog, promu de la référence `/dev/modal`) + **CommandPalette**
    (compose Modal + SearchInput gelé + langage menu gelé ; ⌘K, filtrage, clavier
    complet, groupes, états). Bugs objectifs corrigés en route : `-translate-y-0`

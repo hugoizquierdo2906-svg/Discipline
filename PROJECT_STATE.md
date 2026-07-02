@@ -434,12 +434,14 @@
 >     delays 0/200/500 · 0/150/300, sides, aligns, arrow on/off, shared sizes,
 >     scrollable container, edge collision; desktop/tablet/mobile + real-hover
 >     captures incl. the pointer-bridge proof. `'use client'`.
->   - **CommandPalette — Immersive Surface, COMPOSES the new Modal. Built
->     (visual validation pending; NOT frozen).**
+>   - **CommandPalette — Immersive Surface, COMPOSES the new Modal. FROZEN
+>     (visually validated 2026-07-02).** No functional, visual or architectural
+>     change again — objective bugs only. (Modal itself remains Built — it will
+>     be frozen with its first dedicated validation, e.g. Dialog.)
 >     ```text
 >     Immersive
 >     GlassSurface → .ds-immersive → ImmersiveSurface → Modal → CommandPalette
->     Status: Built (non frozen)
+>     Status: FROZEN (Modal: Built)
 >     ```
 >     The spec's dependency (a reusable Modal) did not exist — only the /dev/modal
 >     reference. Following the FloatingSurface/DatePicker precedent, the base was
@@ -465,7 +467,7 @@
 >     Desktop: centered command band (top 16vh · 640px · inner scroll ≤ min(50vh,
 >     22rem)); mobile: fluid width. Proof: `/dev/command-palette` — idle groups,
 >     live filtering, keyboard selection, empty, loading, long scrollable list,
->     rich panel, tablet, mobile. `'use client'`. Awaiting explicit freeze.
+>     rich panel, tablet, mobile. `'use client'`.
 >     **Objective bugs found while building (system-wide):**
 >     1. `-translate-y-0` produces `calc(0 * -1)` from the unitless
 >        `--ds-space-0: 0` → the WHOLE transform is invalid (the shell lost its X
