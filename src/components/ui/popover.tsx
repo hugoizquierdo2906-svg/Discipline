@@ -69,6 +69,21 @@ const PopoverArrow = forwardRef<
   )
 })
 
+/** The FROZEN Popover pane recipe — host + entrance + lift + overlay plane +
+ * radius + the shared size scale. Floating members that DERIVE from Popover
+ * (DropdownMenu → ContextMenu / UserMenu / Command Palette) compose this exact
+ * recipe; padding stays per-member geometry. PURE EXTRACTION from
+ * PopoverContent (its output is unchanged) so the pane has one definition. */
+export function popoverPaneClass(size: FloatingSize = 'sm') {
+  return cn(
+    floatingHostClass,
+    floatingEnterClass,
+    floatingLiftClass,
+    'z-dropdown block rounded-md outline-none',
+    floatingSizeClass[size],
+  )
+}
+
 export interface PopoverContentProps extends React.ComponentPropsWithoutRef<
   typeof PopoverPrimitive.Content
 > {
@@ -111,14 +126,7 @@ const PopoverContent = forwardRef<
         collisionPadding={collisionPadding}
         arrowPadding={arrowPadding}
         forceMount={forceMount}
-        className={cn(
-          floatingHostClass,
-          floatingEnterClass,
-          floatingLiftClass,
-          'z-dropdown block rounded-md px-4 py-5 outline-none',
-          floatingSizeClass[size],
-          className,
-        )}
+        className={cn(popoverPaneClass(size), 'px-4 py-5', className)}
         {...props}
       >
         <FloatingSurface />

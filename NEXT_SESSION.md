@@ -79,6 +79,27 @@
   (`defaultFiles`). Résumé de contraintes auto-dérivé (« PNG · up to 1.0 MB · max
   2 files ») — remplace l'ancien `hint` ; ancienne API `hint`/`onFiles` supprimée,
   2 consommateurs dev migrés. Preuve : `/dev/file-input`.
+- **DropdownMenu — Floating Surface, DÉRIVE DU POPOVER GELÉ. BUILD (PAS gelé —
+  validation visuelle du propriétaire en attente).**
+
+  ```text
+  Floating
+  FloatingSurface → Popover (FROZEN) → DropdownMenu
+  Status: Built (non frozen)
+  ```
+
+  Ne repart jamais de FloatingSurface : le panneau EST le panneau Popover gelé via
+  `popoverPaneClass` (extraction pure de PopoverContent, sortie inchangée — même
+  verre, même lift, même entrée `ds-floating-enter`, même échelle ; menus = `xs`).
+  Grep : aucun GlassSurface/ds-floating/blur(/backdrop-filter/box-shadow/rgba/glass.
+  Sur Radix DropdownMenu. Ne possède QUE le langage menu : Item (icône · shortcut
+  aligné à droite jamais codé en dur · disabled · destructive · loading), Label,
+  Group, Separator, CheckboxItem, RadioGroup/RadioItem, Sub/SubTrigger/SubContent
+  (le sous-menu compose le MÊME panneau — matériau/animation/collision/flèche
+  hérités), Shortcut. Géométrie d'item = menu Select gelé verbatim (py-2.5 · gap-3 ·
+  colonne pl-8 · surbrillance `bg-accent-subtle/45`). Menus longs plafonnés à la
+  hauteur popper dispo + scroll. Preuve : `/dev/dropdown-menu`. À geler sur
+  validation explicite.
 - **Popover — Floating Surface, 1er membre Floating généralisé. GELÉ (validé
   visuellement 2026-07-02, après la passe craft 98/100).** Plus de redesign sauf
   bug objectif.
@@ -211,11 +232,11 @@
 
 ## PROCHAINE SESSION
 
-1. Popover est GELÉ — les deux rôles majeurs sont posés : **Control 100 % gelé**,
-   **Floating fondé** (base FloatingSurface + Popover gelé). Continuer le rôle
-   Floating : **DropdownMenu (en cours — dérive de Popover, jamais de
-   FloatingSurface directement)**, puis ContextMenu / UserMenu / Toast — ils
-   héritent du panneau, de l'entrée, du lift, de la flèche et de l'échelle de
+1. **Geler DropdownMenu** sur validation visuelle explicite du propriétaire. Puis
+   continuer le rôle Floating : **ContextMenu** (mêmes items, déclencheur clic
+   droit — dérive de la même paire gelée), **UserMenu** (composition
+   DropdownMenu + Avatar), **Toast**. Tous héritent du panneau Popover gelé
+   (`popoverPaneClass`), de l'entrée, du lift, de la flèche et de l'échelle de
    tailles sans rien réinventer.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)

@@ -323,6 +323,44 @@
 >     links/Close), disabled trigger, and the hierarchy Tooltip (reads) · Popover
 >     (converses) · Modal (takes over, contained ModalReference). Captured
 >     desktop/tablet/mobile + nested interaction. `'use client'`.
+>   - **DropdownMenu — Floating Surface, DERIVES FROM THE FROZEN POPOVER. Built
+>     (visual validation pending; NOT frozen).**
+>     ```text
+>     Floating
+>     FloatingSurface
+>             ↓
+>     Popover (FROZEN)
+>             ↓
+>     DropdownMenu
+>     Status: Built (non frozen)
+>     ```
+>     Never restarts from FloatingSurface: the pane IS the frozen Popover pane via
+>     `popoverPaneClass` — a PURE EXTRACTION from PopoverContent (its output is
+>     unchanged; same glass, same `ds-floating-lift`, same `ds-floating-enter`
+>     entrance, same size scale — menus default `xs`). Audited: dropdown-menu.tsx
+>     contains no GlassSurface/ds-floating/blur(/backdrop-filter/box-shadow/rgba/
+>     glass (only doc comments) — it imports ONLY FloatingSurface exports +
+>     `popoverPaneClass`. No new CSS file, no new animation. On Radix DropdownMenu
+>     (portal, positioning, collision, dismiss, focus, typeahead, full keyboard
+>     ↑↓←→/Home/End/Enter/Space/Escape/Tab + ARIA menu semantics). Owns ONLY the
+>     menu language: `Item` (icon · shortcut right-aligned never hard-coded ·
+>     disabled · destructive = text-error + error-tinted highlight · loading =
+>     Spinner + disabled), `Label`, `Group`, `Separator` (token h-px bg-border),
+>     `CheckboxItem` (checked/defaultChecked/onCheckedChange, violet ✓ indicator),
+>     `RadioGroup`/`RadioItem` (value/defaultValue/onValueChange, violet dot),
+>     `Sub`/`SubTrigger` (chevron)/`SubContent` (composes the SAME pane —
+>     material, animation, collision, arrow ALL inherited, zero duplication),
+>     `Shortcut`. Item geometry mirrors the frozen Select menu verbatim (py-2.5 ·
+>     gap-3 · pl-8 indicator column · `bg-accent-subtle/45` whisper highlight ·
+>     data-disabled opacity-40) — every menu in the system is one family. Root
+>     API: open/defaultOpen/onOpenChange/modal/dir; Content: side/align/offsets/
+>     collisionPadding/avoidCollisions/loop/size/arrow. Long menus cap to
+>     `--radix-dropdown-menu-content-available-height` (max 24rem) and scroll.
+>     Proof: `/dev/dropdown-menu` — trio (FloatingSurface · Popover ·
+>     DropdownMenu, one material three behaviors), full language, checkbox/radio,
+>     nested submenu, long scrollable, collision flip, hierarchy vs the Immersive
+>     reference; desktop/tablet/mobile + interactive captures (actions/checkbox/
+>     radio/long/collision/nested). `'use client'`. Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
