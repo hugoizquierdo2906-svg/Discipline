@@ -187,7 +187,11 @@ export function Showcase() {
             <DatePicker value={date} onChange={setDate} />
           </div>
           <div className="w-72">
-            <FileInput hint="PNG or WEBP, up to 10MB" />
+            <FileInput
+              aria-label="Upload a file"
+              accept=".png,.webp"
+              maxSize={10 * 1024 * 1024}
+            />
           </div>
         </Block>
 

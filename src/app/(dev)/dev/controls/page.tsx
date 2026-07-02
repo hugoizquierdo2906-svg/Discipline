@@ -55,7 +55,11 @@ function Family() {
         <DatePicker value={date} onChange={setDate} />
       </div>
       <Textarea label="Textarea" placeholder="Tell us about your goals…" />
-      <FileInput hint="PNG or WEBP, up to 10MB" />
+      <FileInput
+        aria-label="Upload a file"
+        accept=".png,.webp"
+        maxSize={10 * 1024 * 1024}
+      />
       <Input label="Error" defaultValue="bad" error="This value is invalid." />
     </div>
   )

@@ -249,6 +249,35 @@
 >     dialog overlay → grid/gridcell (aria-expanded/controls/selected). Proof:
 >     `/dev/date-picker` (family + all states + min/max + locales + formats + open
 >     calendar). `'use client'`.
+>   - **FileInput — Control Surface, SIBLING of Input. Built (visual validation
+>     PASS 2026-07-02 — desktop/tablet/mobile; NOT frozen).**
+>     ```text
+>     FileInput
+>     Role:        Control Surface
+>     Parent:      ControlSurface
+>     Inheritance: GlassSurface → .ds-control → ControlSurface → FileInput
+>     ```
+>     The well composes the SAME `.ds-glass .ds-control` + `<ControlSurface/>` as
+>     the family (Textarea precedent: same material, taller centered geometry) —
+>     audited: file-input.tsx has no blur/backdrop/box-shadow/optical layer/raw
+>     color; no new CSS file. Drag-over reuses the frozen `--focus` expression
+>     (the violet rises) — no new visual language, no glowing/animated borders.
+>     Owns ONLY interaction: click-to-browse (sr-only native input inside the
+>     label → `:focus-within` rises), drag & drop (depth-counted enter/leave, no
+>     flicker), paste, Escape clears drag state; validation accept (ext/mime/
+>     wildcard) + maxSize + maxFiles → `onReject` + inline rejection line + sr-only
+>     live announcements (add/remove/reject); previews (image object-URL thumb,
+>     video first-frame with icon fallback, PDF/generic icons); removal via the
+>     existing **IconButton** (ghost/sm); upload via the existing **Progress**
+>     primitive (`showProgress` + `progress`, "Uploading… n%" → "Uploaded").
+>     Controlled (`files`) + uncontrolled (`defaultFiles`); `name` posts via the
+>     native input. States: empty/hover/focus/dragging/uploading/uploaded/success/
+>     error/disabled/readOnly (static well, "n files", rows without remove).
+>     Constraint summary auto-derived from accept/maxSize/maxFiles ("PNG · up to
+>     1.0 MB · max 2 files") — replaces the old `hint` prop; old `hint`/`onFiles`
+>     API removed, both dev consumers migrated. Proof: `/dev/file-input`
+>     (family + states + previews + validation, desktop/tablet/mobile).
+>     `'use client'`. Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

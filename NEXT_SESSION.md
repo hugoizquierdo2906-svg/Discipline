@@ -11,7 +11,7 @@
 - Control Surface → **Input (GELÉ)** — rôle fixé par la Grammar §2/§5 (Control, PAS
   Micro) ; référence `/dev/input` validée. Famille Control généralisée :
   **Textarea (GELÉ)**, **SearchInput (GELÉ)**, **Select (GELÉ)**,
-  **DatePicker (GELÉ)**, FileInput.
+  **DatePicker (GELÉ)**, **FileInput (build, non gelé)**.
 - **Select — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (PAS dérivé de Input ; Input et Select
   sont frères) :
@@ -56,6 +56,30 @@
   label · description · placeholder · helperText · error · success · required ·
   disabled · readOnly · value · defaultValue · minDate · maxDate · locale · format ·
   onChange · name. Preuve : `/dev/date-picker`. À geler sur validation explicite.
+- **FileInput — Control Surface, frère de Input. BUILD (validation visuelle PASS
+  2026-07-02, desktop/tablette/mobile ; PAS encore gelé).**
+
+  ```text
+  FileInput
+  Role:        Control Surface
+  Parent:      ControlSurface
+  Héritage:    GlassSurface → .ds-control → ControlSurface → FileInput
+  ```
+
+  Le puits compose le même `.ds-glass .ds-control` + `<ControlSurface/>` que la
+  famille (précédent Textarea : même matériau, géométrie plus haute centrée) —
+  aucun verre/blur/ombre/bordure/focus recréé, aucun CSS nouveau. Le drag-over
+  réutilise l'expression `--focus` gelée (le violet monte) — aucun nouveau langage
+  visuel. Ne possède QUE l'interaction : browse (input natif sr-only →
+  `:focus-within`), drag & drop (compteur enter/leave anti-flicker), paste, Escape ;
+  validation accept/maxSize/maxFiles → `onReject` + ligne de rejet + annonces
+  sr-only aria-live ; aperçus (image object-URL, vidéo 1re frame avec repli icône,
+  PDF/générique icônes) ; suppression via **IconButton** existant ; upload via la
+  primitive **Progress** existante. Contrôlé (`files`) + non contrôlé
+  (`defaultFiles`). Résumé de contraintes auto-dérivé (« PNG · up to 1.0 MB · max
+  2 files ») — remplace l'ancien `hint` ; ancienne API `hint`/`onFiles` supprimée,
+  2 consommateurs dev migrés. Preuve : `/dev/file-input`. À geler sur validation
+  explicite.
 - **Textarea — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
   verre/blur/ombre/Fresnel recréé). Diffère seulement par la géométrie (multiligne,
@@ -158,11 +182,11 @@
 
 ## PROCHAINE SESSION
 
-1. Famille Control quasi complète (Input · Textarea · SearchInput · Select · DatePicker
-   GELÉS). Prochains membres de rôle : **FileInput** (dernier membre Control) OU
-   généraliser le rôle **Floating** : `Popover` / `DropdownMenu` — désormais triviaux,
-   ils composent le helper **FloatingSurface** déjà validé par le calendrier du
-   DatePicker.
+1. **Geler FileInput** sur validation visuelle explicite du propriétaire — c'était le
+   DERNIER membre Control : la famille sera alors 100 % gelée (Input · Textarea ·
+   SearchInput · Select · DatePicker · FileInput). Ensuite, généraliser le rôle
+   **Floating** : `Popover` / `DropdownMenu` — désormais triviaux, ils composent le
+   helper **FloatingSurface** déjà validé par le calendrier du DatePicker.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 
