@@ -84,6 +84,11 @@ export function popoverPaneClass(size: FloatingSize = 'sm') {
   )
 }
 
+/** The frozen Popover content padding (the craft-pass breathing room). PURE
+ * EXTRACTION — PopoverContent's output is unchanged; HoverCard reuses it so no
+ * derived pane re-declares padding. */
+export const popoverPanePaddingClass = 'px-4 py-5'
+
 export interface PopoverContentProps extends React.ComponentPropsWithoutRef<
   typeof PopoverPrimitive.Content
 > {
@@ -126,7 +131,11 @@ const PopoverContent = forwardRef<
         collisionPadding={collisionPadding}
         arrowPadding={arrowPadding}
         forceMount={forceMount}
-        className={cn(popoverPaneClass(size), 'px-4 py-5', className)}
+        className={cn(
+          popoverPaneClass(size),
+          popoverPanePaddingClass,
+          className,
+        )}
         {...props}
       >
         <FloatingSurface />

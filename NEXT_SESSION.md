@@ -79,6 +79,24 @@
   (`defaultFiles`). Résumé de contraintes auto-dérivé (« PNG · up to 1.0 MB · max
   2 files ») — remplace l'ancien `hint` ; ancienne API `hint`/`onFiles` supprimée,
   2 consommateurs dev migrés. Preuve : `/dev/file-input`.
+- **HoverCard — Floating Surface, DÉRIVE DU POPOVER GELÉ. BUILD (PAS gelé —
+  validation visuelle du propriétaire en attente).**
+
+  ```text
+  Floating
+  FloatingSurface → Popover (FROZEN) → HoverCard
+  Status: Built (non frozen)
+  ```
+
+  Une PREVIEW contextuelle (user · exercice · livre · workout) — jamais un menu.
+  Panneau = panneau Popover gelé VERBATIM (`popoverPaneClass` +
+  `popoverPanePaddingClass`, nouvelle extraction pure du `px-4 py-5` — sortie
+  Popover inchangée + flèche partagée + `ds-floating-enter` + échelle de tailles).
+  Grep : aucun matériau/animation/transition dans hover-card.tsx. Ne possède QUE
+  l'ouverture : intention de survol (`openDelay` 200 ms · `closeDelay` 150 ms par
+  défaut), pont de pointeur indulgent (zone de grâce Radix : Trigger→Content ne
+  ferme jamais ; contenu hover-interactif). Tactile : le trigger reste un lien
+  normal. Preuve : `/dev/hover-card`. À geler sur validation explicite.
 - **ContextMenu — Floating Surface, DÉRIVE DU DROPDOWNMENU GELÉ. GELÉ (validé
   visuellement 2026-07-02).** Plus aucune évolution — bug objectif uniquement.
 
@@ -254,9 +272,9 @@
 
 ## PROCHAINE SESSION
 
-1. ContextMenu est GELÉ. **HoverCard (en cours — dérive du Popover gelé, ouverture
-   au survol)**. Puis : **UserMenu** (composition DropdownMenu + Avatar), **Toast**.
-   Ensuite : Immersive → `Modal` réutilisable depuis la référence `/dev/modal`.
+1. **Geler HoverCard** sur validation visuelle explicite du propriétaire. Puis :
+   **UserMenu** (composition DropdownMenu + Avatar), **Toast**. Ensuite :
+   Immersive → `Modal` réutilisable depuis la référence `/dev/modal`.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 

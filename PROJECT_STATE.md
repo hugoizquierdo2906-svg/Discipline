@@ -406,6 +406,34 @@
 >     `p-0` on the pane (menus own their padding on the viewport, per A1).
 >     Both proofs re-captured: labels fully legible, no other change. The shared
 >     classes fix DropdownMenu and ContextMenu at once (single source of truth).
+>   - **HoverCard — Floating Surface, DERIVES FROM THE FROZEN POPOVER. Built
+>     (visual validation pending; NOT frozen).**
+>     ```text
+>     Floating
+>     GlassSurface → .ds-floating → FloatingSurface → Popover (FROZEN) → HoverCard
+>     Status: Built (non frozen)
+>     ```
+>     A small contextual PREVIEW (user · exercise · book · workout · session),
+>     never a menu. The pane is the frozen Popover pane VERBATIM: `popoverPaneClass`
+>     (glass · `ds-floating-lift` · `ds-floating-enter` · size scale) +
+>     `popoverPanePaddingClass` (new PURE EXTRACTION of the craft-pass `px-4 py-5`,
+>     PopoverContent output unchanged) + the shared Floating arrow. Audited:
+>     hover-card.tsx has no GlassSurface/backdrop-filter/blur/box-shadow/rgba/
+>     color/animation/transition/floating-CSS — only Popover + FloatingSurface
+>     exports. On Radix HoverCard. Owns ONLY how it opens: hover intent —
+>     `openDelay` (default 200ms: intent, not accident) · `closeDelay` (default
+>     150ms: forgiveness, no flicker) on the Root; forgiving pointer bridge
+>     (Radix grace area: Trigger→Content never closes the pane; the content is
+>     hover-interactive). Content: side/align/sideOffset/alignOffset/
+>     collisionPadding/avoidCollisions/sticky + `size` (shared scale) + `arrow`.
+>     Touch: the trigger does not open (hover is pointer-only by design) — the
+>     preview's subject must stay reachable through its normal link. Proof:
+>     `/dev/hover-card` — trio (FloatingSurface · Popover click · HoverCard
+>     hover), previews (user/exercise/book/workout with Avatar · Badge · image),
+>     delays 0/200/500 · 0/150/300, sides, aligns, arrow on/off, shared sizes,
+>     scrollable container, edge collision; desktop/tablet/mobile + real-hover
+>     captures incl. the pointer-bridge proof. `'use client'`. Awaiting explicit
+>     freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
