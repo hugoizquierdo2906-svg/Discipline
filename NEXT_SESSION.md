@@ -271,14 +271,12 @@
 
 ## PROCHAINE SESSION
 
-1. **Geler Toast** sur validation visuelle explicite du propriétaire (dernier
-   membre Floating prévu). CommandPalette est GELÉE (Modal reste Built — sera
-   gelé avec sa première validation dédiée, ex. Dialog). Toast : dérive
-   entièrement de FloatingSurface (file max 4 + overflow, 6 positions, variants,
-   action, progress via Progress, pause hover/focus, swipe, Escape/F8, update()
-   = motif promesse). Bug objectif corrigé : duration Infinity →
-   MAX_SAFE_INTEGER dépassait la limite 32 bits de setTimeout (fermeture
-   immédiate) → plafonné à 2^31-1. Ensuite : Dialog/ConfirmationDialog (← Modal),
+1. Toast est GELÉ — **la famille Floating est complète et 100 % gelée**
+   (Tooltip · Popover · DropdownMenu · ContextMenu · HoverCard · Toast).
+   **Checkbox (en cours — audit du composant Micro existant, rebuild minimal si
+   nécessaire, base canonique des futurs CheckboxGroup/TreeView/permissions)**.
+   CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
+   validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
    **Modal** (Radix Dialog, promu de la référence `/dev/modal`) + **CommandPalette**
    (compose Modal + SearchInput gelé + langage menu gelé ; ⌘K, filtrage, clavier

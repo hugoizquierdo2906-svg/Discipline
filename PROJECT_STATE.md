@@ -482,12 +482,14 @@
 >        (`bg-[color-mix(in_srgb,var(--ds-color-accent-subtle)_45%,transparent)]`,
 >        error 10% idem) in the shared menu classes + select.tsx; all menu proofs
 >        re-captured — the whisper is now actually visible.
->   - **Toast — Floating Surface, derives ENTIRELY from FloatingSurface. Built
->     (visual validation pending; NOT frozen).**
+>   - **Toast — Floating Surface, derives ENTIRELY from FloatingSurface. FROZEN
+>     (visually validated 2026-07-02).** No functional, visual or architectural
+>     change again — objective bugs only. The Floating family is COMPLETE and
+>     frozen: Tooltip · Popover · DropdownMenu · ContextMenu · HoverCard · Toast.
 >     ```text
 >     Floating
 >     GlassSurface → .ds-floating → FloatingSurface → Toast
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     The transient feedback surface: it communicates, never interrupts/asks/
 >     blocks. Pane = Floating base verbatim (floatingHostClass + FloatingSurface
@@ -512,7 +514,7 @@
 >     pattern (loading → success/error) with no extra API — + Toast +
 >     ToastViewport. Proof: /dev/toast — variants, action, long+sticky,
 >     progress, promise transition, queue ×6 (exactly 4 visible), top-center,
->     rich panel, mobile. 'use client'. Awaiting explicit freeze.
+>     rich panel, mobile. 'use client'.
 >     **Objective bug found: `duration: Infinity` mapped to MAX_SAFE_INTEGER
 >     fired IMMEDIATELY** — setTimeout is 32-bit; anything above 2^31-1 fires at
 >     once (the sticky toast vanished). Capped to 2^31-1 (~24.8 days).
