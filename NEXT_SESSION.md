@@ -79,13 +79,14 @@
   (`defaultFiles`). Résumé de contraintes auto-dérivé (« PNG · up to 1.0 MB · max
   2 files ») — remplace l'ancien `hint` ; ancienne API `hint`/`onFiles` supprimée,
   2 consommateurs dev migrés. Preuve : `/dev/file-input`.
-- **Popover — Floating Surface, 1er membre Floating généralisé. BUILD (PAS gelé —
-  validation visuelle du propriétaire en attente).**
+- **Popover — Floating Surface, 1er membre Floating généralisé. GELÉ (validé
+  visuellement 2026-07-02, après la passe craft 98/100).** Plus de redesign sauf
+  bug objectif.
 
   ```text
   Floating
   GlassSurface → .ds-floating → FloatingSurface → Popover
-  Status: Built (non frozen)
+  Status: FROZEN
   ```
 
   API composée headless sur Radix : `Popover` (open/defaultOpen/onOpenChange/modal)
@@ -107,7 +108,7 @@
   Matériau/blur/animation/collision/API intouchés. Preuve : `/dev/popover`
   (placements · flèche · collision · conteneur scrollable · modal/non-modal ·
   imbriqué · contenu long/interactif · échelle de tailles · hiérarchie
-  Tooltip/Popover/Modal ; desktop/tablette/mobile). À geler sur validation explicite.
+  Tooltip/Popover/Modal ; desktop/tablette/mobile).
 - **Textarea — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
   verre/blur/ombre/Fresnel recréé). Diffère seulement par la géométrie (multiligne,
@@ -210,10 +211,12 @@
 
 ## PROCHAINE SESSION
 
-1. **Geler Popover** sur validation visuelle explicite du propriétaire. Puis
-   continuer le rôle **Floating** : `DropdownMenu` / `ContextMenu` / `Toast` — ils
-   composent FloatingSurface + l'entrée (`ds-floating-enter`) + la flèche
-   (`ds-floating-arrow`) désormais partagées.
+1. Popover est GELÉ — les deux rôles majeurs sont posés : **Control 100 % gelé**,
+   **Floating fondé** (base FloatingSurface + Popover gelé). Continuer le rôle
+   Floating : **DropdownMenu (en cours — dérive de Popover, jamais de
+   FloatingSurface directement)**, puis ContextMenu / UserMenu / Toast — ils
+   héritent du panneau, de l'entrée, du lift, de la flèche et de l'échelle de
+   tailles sans rien réinventer.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 

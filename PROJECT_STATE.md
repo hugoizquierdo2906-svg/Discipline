@@ -280,12 +280,13 @@
 >     API removed, both dev consumers migrated. Proof: `/dev/file-input`
 >     (family + states + previews + validation, desktop/tablet/mobile).
 >     `'use client'`.
->   - **Popover — Floating Surface, first generalized Floating member. Built
->     (visual validation pending; NOT frozen).**
+>   - **Popover — Floating Surface, first generalized Floating member. FROZEN
+>     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
+>     again unless an objective bug appears.
 >     ```text
 >     Floating
 >     GlassSurface → .ds-floating → FloatingSurface → Popover
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     Headless compound API on Radix Popover: `Popover` (open · defaultOpen ·
 >     onOpenChange · modal) + `.Trigger` (asChild) / `.Anchor` / `.Content` /
@@ -321,8 +322,7 @@
 >     modal vs non-modal, nested (side-arrow), long + interactive content (form/
 >     links/Close), disabled trigger, and the hierarchy Tooltip (reads) · Popover
 >     (converses) · Modal (takes over, contained ModalReference). Captured
->     desktop/tablet/mobile + nested interaction. `'use client'`. Awaiting
->     explicit freeze.
+>     desktop/tablet/mobile + nested interaction. `'use client'`.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
