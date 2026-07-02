@@ -271,9 +271,15 @@
 
 ## PROCHAINE SESSION
 
-1. CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
-   validation dédiée, ex. Dialog). **Toast (en cours — dérive de FloatingSurface,
-   feedback transient)**. Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
+1. **Geler Toast** sur validation visuelle explicite du propriétaire (dernier
+   membre Floating prévu). CommandPalette est GELÉE (Modal reste Built — sera
+   gelé avec sa première validation dédiée, ex. Dialog). Toast : dérive
+   entièrement de FloatingSurface (file max 4 + overflow, 6 positions, variants,
+   action, progress via Progress, pause hover/focus, swipe, Escape/F8, update()
+   = motif promesse). Bug objectif corrigé : duration Infinity →
+   MAX_SAFE_INTEGER dépassait la limite 32 bits de setTimeout (fermeture
+   immédiate) → plafonné à 2^31-1. Ensuite : Dialog/ConfirmationDialog (← Modal),
+   UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
    **Modal** (Radix Dialog, promu de la référence `/dev/modal`) + **CommandPalette**
    (compose Modal + SearchInput gelé + langage menu gelé ; ⌘K, filtrage, clavier
    complet, groupes, états). Bugs objectifs corrigés en route : `-translate-y-0`

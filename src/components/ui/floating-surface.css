@@ -22,8 +22,16 @@
 .ds-floating-enter[data-state='open'] {
   animation: ds-floating-in 150ms var(--ds-ease-out);
 }
+/* Exit — the SAME keyframes, reversed (one motion language, no new recipe).
+ * Used by members that animate out while mounted (Toast). */
+.ds-floating-enter[data-state='closed'],
+.ds-floating-enter[data-swipe='end'] {
+  animation: ds-floating-in 150ms var(--ds-ease-out) reverse forwards;
+}
 @media (prefers-reduced-motion: reduce) {
-  .ds-floating-enter[data-state='open'] {
+  .ds-floating-enter[data-state='open'],
+  .ds-floating-enter[data-state='closed'],
+  .ds-floating-enter[data-swipe='end'] {
     animation: none;
   }
 }

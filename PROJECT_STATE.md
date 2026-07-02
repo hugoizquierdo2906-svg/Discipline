@@ -482,6 +482,40 @@
 >        (`bg-[color-mix(in_srgb,var(--ds-color-accent-subtle)_45%,transparent)]`,
 >        error 10% idem) in the shared menu classes + select.tsx; all menu proofs
 >        re-captured — the whisper is now actually visible.
+>   - **Toast — Floating Surface, derives ENTIRELY from FloatingSurface. Built
+>     (visual validation pending; NOT frozen).**
+>     ```text
+>     Floating
+>     GlassSurface → .ds-floating → FloatingSurface → Toast
+>     Status: Built (non frozen)
+>     ```
+>     The transient feedback surface: it communicates, never interrupts/asks/
+>     blocks. Pane = Floating base verbatim (floatingHostClass + FloatingSurface
+>     + ds-floating-lift + shared size scale, default sm); entrance =
+>     ds-floating-enter; EXIT = the SAME ds-floating-in keyframes with
+>     `animation-direction: reverse` (one motion language, declared once in
+>     floating-surface.css — zero new keyframes). Audited: toast.tsx has no
+>     GlassSurface/blur/backdrop/shadow/rgba/keyframes in code — imports only
+>     FloatingSurface exports + Icon/IconButton/Progress/Spinner. On Radix Toast:
+>     timers, pause on hover/focus/window-blur, swipe (direction follows the
+>     stack position), Escape on the focused toast, F8 to the viewport,
+>     aria-live (error = foreground/alert, others = background/status),
+>     reduced-motion safe. Toast owns ONLY: the queue (max 4 visible, overflow
+>     waits and mounts as slots free), duration (Infinity = capped sticky),
+>     dismiss (auto · manual × via the existing IconButton · swipe · Escape ·
+>     action click), 6 stack positions (default bottom-right), the optional
+>     remaining-time bar (the existing Progress primitive, JS-ticked at 100ms,
+>     paused/resumed with the Radix timer — no new animation), 6 variants
+>     (default/success/warning/error/loading/info — flat token icons), and an
+>     optional action. API: ToastProvider (position · duration · maxVisible ·
+>     size) + useToast() → toast()/update()/dismiss() — update() IS the promise
+>     pattern (loading → success/error) with no extra API — + Toast +
+>     ToastViewport. Proof: /dev/toast — variants, action, long+sticky,
+>     progress, promise transition, queue ×6 (exactly 4 visible), top-center,
+>     rich panel, mobile. 'use client'. Awaiting explicit freeze.
+>     **Objective bug found: `duration: Infinity` mapped to MAX_SAFE_INTEGER
+>     fired IMMEDIATELY** — setTimeout is 32-bit; anything above 2^31-1 fires at
+>     once (the sticky toast vanished). Capped to 2^31-1 (~24.8 days).
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

@@ -39,6 +39,7 @@ export { Spinner } from './spinner'
 export { Switch } from './switch'
 export { Text } from './text'
 export { Textarea } from './textarea'
+export { Toast, ToastProvider, ToastViewport, useToast } from './toast'
 export {
   Tooltip,
   TooltipContent,
