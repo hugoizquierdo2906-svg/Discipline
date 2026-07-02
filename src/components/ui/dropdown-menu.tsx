@@ -31,18 +31,44 @@ import { Spinner } from './spinner'
  * labels, groups, separators, checkbox/radio items, nested submenus (the
  * SubContent composes the SAME pane — material, animation, collision, arrow
  * inherited, zero duplication) and right-aligned shortcuts. Item geometry
- * mirrors the frozen Select menu (py-2.5 · gap-3 · pl-8 indicator column ·
- * whisper `bg-accent-subtle/45` highlight) so every menu in the system reads
- * as one family.
+ * mirrors the frozen Select menu (py-2.5 · gap-3 · a shared 32px indicator
+ * column · whisper `bg-accent-subtle/45` highlight) so every menu in the
+ * system reads as one family.
  */
 
-/** Plain action row. `pl-8` keeps the shared indicator column so mixed menus
- * (actions + checks) stay aligned, exactly like the frozen Select. */
-const itemClass = cn(
-  'relative flex cursor-pointer select-none items-center gap-3 rounded-sm py-2.5 pl-8 pr-3 text-body-sm text-text outline-none',
+/* ── The frozen menu language, exported for derivation ──────────────────────
+ * PURE EXTRACTION (rendered output unchanged): ContextMenu — and later
+ * UserMenu / CommandPalette — derive from DropdownMenu by composing these
+ * exact classes onto their own Radix primitives. They never restart from
+ * Popover or FloatingSurface. */
+
+/** The frozen DropdownMenu pane — IS the frozen Popover pane (the chain
+ * FloatingSurface → Popover → DropdownMenu, one definition). */
+export const dropdownMenuPaneClass = popoverPaneClass
+
+/** Plain action row. `pl-6` (32px: 8 + 16px indicator + 8) keeps the shared
+ * indicator column so mixed menus (actions + checks) stay aligned.
+ * (Objective-bug fix 2026-07-02: `pl-8` is 48px on the DISCIPLINE scale — with
+ * a right-aligned shortcut at the xs width it crushed labels to 2 characters,
+ * visible in the frozen proof itself. 32px is the intended column.) */
+export const dropdownMenuItemClass = cn(
+  'relative flex cursor-pointer select-none items-center gap-3 rounded-sm py-2.5 pl-6 pr-3 text-body-sm text-text outline-none',
   'data-[highlighted]:bg-accent-subtle/45',
   'data-[disabled]:pointer-events-none data-[disabled]:opacity-40',
 )
+const itemClass = dropdownMenuItemClass
+
+/** Section label row. */
+export const dropdownMenuLabelClass =
+  'px-3 py-1.5 text-caption font-medium text-text-tertiary'
+
+/** Separator line (token, flat content — not pane material). */
+export const dropdownMenuSeparatorClass = 'mx-1 my-1.5 h-px bg-border'
+
+/** Menu viewport geometry (padding + scroll); each primitive appends its own
+ * Radix available-height cap (the var name is primitive-specific and must be
+ * a literal for the Tailwind scanner). */
+export const menuViewportBaseClass = 'overflow-y-auto p-1.5'
 
 /** Right-aligned keyboard shortcut — never hard-coded, always a prop. */
 const DropdownMenuShortcut = forwardRef<
@@ -53,7 +79,7 @@ const DropdownMenuShortcut = forwardRef<
     <span
       ref={ref}
       className={cn(
-        'ml-auto shrink-0 pl-6 text-caption tracking-wide text-text-tertiary',
+        'ml-auto shrink-0 pl-4 text-caption tracking-wide text-text-tertiary',
         className,
       )}
       {...props}
@@ -174,10 +200,7 @@ const DropdownMenuLabel = forwardRef<
   return (
     <MenuPrimitive.Label
       ref={ref}
-      className={cn(
-        'px-3 py-1.5 text-caption font-medium text-text-tertiary',
-        className,
-      )}
+      className={cn(dropdownMenuLabelClass, className)}
       {...props}
     />
   )
@@ -190,7 +213,7 @@ const DropdownMenuSeparator = forwardRef<
   return (
     <MenuPrimitive.Separator
       ref={ref}
-      className={cn('mx-1 my-1.5 h-px bg-border', className)}
+      className={cn(dropdownMenuSeparatorClass, className)}
       {...props}
     />
   )
@@ -234,8 +257,10 @@ const DropdownMenuSubTrigger = forwardRef<
 })
 
 /** Shared inner scroller — caps long menus to the popper's available height. */
-const menuViewportClass =
-  'max-h-[min(var(--radix-dropdown-menu-content-available-height),24rem)] overflow-y-auto p-1.5'
+const menuViewportClass = cn(
+  menuViewportBaseClass,
+  'max-h-[min(var(--radix-dropdown-menu-content-available-height),24rem)]',
+)
 
 export interface DropdownMenuContentProps extends React.ComponentPropsWithoutRef<
   typeof MenuPrimitive.Content
@@ -267,7 +292,7 @@ const DropdownMenuContent = forwardRef<
         ref={ref}
         sideOffset={sideOffset}
         collisionPadding={collisionPadding}
-        className={cn(popoverPaneClass(size), className)}
+        className={cn(popoverPaneClass(size), 'p-0', className)}
         {...props}
       >
         <FloatingSurface />
@@ -305,7 +330,7 @@ const DropdownMenuSubContent = forwardRef<
         ref={ref}
         sideOffset={sideOffset}
         collisionPadding={8}
-        className={cn(popoverPaneClass(size), className)}
+        className={cn(popoverPaneClass(size), 'p-0', className)}
         {...props}
       >
         <FloatingSurface />

@@ -361,6 +361,51 @@
 >     nested submenu, long scrollable, collision flip, hierarchy vs the Immersive
 >     reference; desktop/tablet/mobile + interactive captures (actions/checkbox/
 >     radio/long/collision/nested). `'use client'`.
+>   - **ContextMenu — Floating Surface, DERIVES FROM THE FROZEN DROPDOWNMENU.
+>     Built (visual validation pending; NOT frozen).**
+>     ```text
+>     Floating
+>     FloatingSurface
+>             ↓
+>     Popover (FROZEN)
+>             ↓
+>     DropdownMenu (FROZEN)
+>             ↓
+>     ContextMenu
+>     Status: Built (non frozen)
+>     ```
+>     NOT a new component — the DropdownMenu language with another trigger. Never
+>     restarts from Popover or FloatingSurface: composes the exported frozen menu
+>     language verbatim (`dropdownMenuPaneClass` = the frozen Popover pane ·
+>     `dropdownMenuItemClass` · `dropdownMenuLabelClass` ·
+>     `dropdownMenuSeparatorClass` · `menuViewportBaseClass` · the `Shortcut`
+>     component reused as-is) onto Radix ContextMenu primitives. Audited:
+>     context-menu.tsx contains no GlassSurface/ds-floating/blur(/backdrop-filter/
+>     box-shadow/rgba/glass in code; no new CSS, no new animation, no new padding/
+>     radius. Owns ONLY the trigger: right-click, keyboard menu key / Shift+F10,
+>     touch long-press (Radix), positioned at the cursor; the native context menu
+>     is suppressed only on the trigger zone. Full menu language inherited: Item
+>     (icon/shortcut/disabled/destructive/loading), Label, Group, Separator,
+>     CheckboxItem, RadioGroup/RadioItem, Sub/SubTrigger/SubContent (same pane),
+>     Shortcut. Radix constraints (documented): Root has no open/defaultOpen (a
+>     context menu needs pointer coordinates); Content has no side/sideOffset/
+>     align (cursor-anchored); collision/alignOffset/loop fully supported. Proof:
+>     `/dev/context-menu` — chain trio (FloatingSurface · Popover · DropdownMenu ·
+>     ContextMenu), object zones (image · selected text · file with nested
+>     submenu · workspace with checkbox/radio), long scrollable menu, edge
+>     collision, touch path; desktop/tablet/mobile + interactive right-click
+>     captures. `'use client'`. Awaiting explicit freeze.
+>     **Objective-bug fix applied to the FROZEN DropdownMenu (freeze clause,
+>     2026-07-02):** discovered while proving ContextMenu — (1) the indicator
+>     column `pl-8` is 48px on the DISCIPLINE spacing scale (space-8 = 48px, not
+>     Tailwind's 32px); beside a right-aligned shortcut at the xs width it
+>     crushed labels to two characters, visible in the frozen DropdownMenu's own
+>     checkbox proof → `pl-6` (32px = 8 + 16 icon + 8, the intended column) and
+>     shortcut gap `pl-6`→`pl-4`; (2) menu panes kept the frozen `.ds-floating`
+>     host padding (8/12px) UNDER the inner viewport padding (double padding) →
+>     `p-0` on the pane (menus own their padding on the viewport, per A1).
+>     Both proofs re-captured: labels fully legible, no other change. The shared
+>     classes fix DropdownMenu and ContextMenu at once (single source of truth).
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
