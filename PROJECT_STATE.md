@@ -552,6 +552,33 @@
 >     (indeterminate), permissions matrix, desktop/tablet/mobile + keyboard
 >     captures (focus ring on the mixed parent, Space → all checked).
 >     `'use client'`.
+>   - **Radio — Micro Surface, on the FROZEN micro-control foundation. Built
+>     (visual validation pending; NOT frozen).**
+>     ```text
+>     Micro
+>     GlassSurface → Micro Surface → micro-control → Radio
+>     Status: Built (non frozen)
+>     ```
+>     EXACTLY the frozen Checkbox language — same 20px box, token border, accent
+>     active fill + dark glyph, motion, disabled dim, invalid rim, GLOBAL
+>     `:focus-visible` ring; the ONLY difference is the shape (○ circle, ● dot
+>     `bg-current` on the dark glyph plane). AUDIT: the pre-rebuild selected
+>     state was an accent dot on a white box — a second visual language vs the
+>     frozen fill; re-aligned. radio-group.tsx grep: zero GlassSurface/blur/
+>     backdrop/box-shadow/rgba/animation/transition/shadow/focus strings — it
+>     composes micro-control.tsx verbatim. On Radix RadioGroup: roving focus,
+>     Arrow keys move AND select (loop), Home/End, Space, Tab in/out, full ARIA,
+>     touch. API: Radio — label · description · invalid · labelPosition ·
+>     disabled; RadioGroup — label · description · error · helperText · invalid ·
+>     readOnly (value locked: controlled with no change handler, so clicks AND
+>     arrows are inert) · required (marker + native) · disabled · orientation
+>     (layout + arrow axis) · value/defaultValue/onValueChange/name;
+>     disabled/invalid/readOnly propagated via context. RadioItem kept as a
+>     back-compat alias (existing usages untouched). Proof: /dev/radio — states,
+>     Membership/Goal vertical groups, Frequency/Gender horizontal, permission +
+>     template selectors with descriptions, desktop/tablet/mobile + keyboard
+>     captures (focus on "4 days", ArrowRight ×2 → "6 days" selected).
+>     'use client'. Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
