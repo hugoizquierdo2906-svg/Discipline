@@ -518,12 +518,14 @@
 >     **Objective bug found: `duration: Infinity` mapped to MAX_SAFE_INTEGER
 >     fired IMMEDIATELY** — setTimeout is 32-bit; anything above 2^31-1 fires at
 >     once (the sticky toast vanished). Capped to 2^31-1 (~24.8 days).
->   - **Checkbox — Micro Surface, audited + minimal rebuild. Built (visual
->     validation pending; NOT frozen).**
+>   - **Checkbox — Micro Surface, audited + minimal rebuild. FROZEN (visually
+>     validated 2026-07-02).** No functional, visual or architectural change
+>     again — objective bugs only. micro-control.tsx is now the frozen shared
+>     foundation of the small Micro members.
 >     ```text
 >     Micro
 >     GlassSurface → Micro Surface (Button reference) → Checkbox
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     AUDIT: the existing Checkbox already used the validated small-control
 >     language (token box, accent fill, dark glyph — consistent with
@@ -549,7 +551,7 @@
 >     (multiple/error/disabled), nested settings with a mixed parent
 >     (indeterminate), permissions matrix, desktop/tablet/mobile + keyboard
 >     captures (focus ring on the mixed parent, Space → all checked).
->     `'use client'`. Awaiting explicit freeze.
+>     `'use client'`.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
