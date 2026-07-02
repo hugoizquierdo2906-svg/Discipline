@@ -280,6 +280,38 @@
 >     API removed, both dev consumers migrated. Proof: `/dev/file-input`
 >     (family + states + previews + validation, desktop/tablet/mobile).
 >     `'use client'`.
+>   - **Popover — Floating Surface, first generalized Floating member. Built
+>     (visual validation pending; NOT frozen).**
+>     ```text
+>     Floating
+>     GlassSurface → .ds-floating → FloatingSurface → Popover
+>     Status: Built (non frozen)
+>     ```
+>     Headless compound API on Radix Popover: `Popover` (open · defaultOpen ·
+>     onOpenChange · modal) + `.Trigger` (asChild) / `.Anchor` / `.Content` /
+>     `.Close` / `.Arrow`. Popover declares NO material (audited: popover.tsx has
+>     no backdrop-filter/blur/box-shadow/rgba/GlassSurface/ds-glass/ds-floating —
+>     only the FloatingSurface exports): the pane composes `floatingHostClass` +
+>     `<FloatingSurface/>`; the entrance is the shared Floating base animation
+>     (`ds-floating-enter`, 150ms opacity + translateY + light scale, system
+>     ease-out, reduced-motion safe); the arrow is the shared Floating tail
+>     (`ds-floating-arrow` — the frozen Tooltip-reference tail promoted VERBATIM
+>     into `floating-surface.css`, same material/rim/shadow, popper-rotated per
+>     side). Both now live with the FloatingSurface helper so DropdownMenu /
+>     ContextMenu / Command Palette / UserMenu inherit ONE entrance + ONE arrow.
+>     Popover owns only behavior: portal, side/align/sideOffset/alignOffset,
+>     collision flip+shift (`avoidCollisions`, `collisionPadding`), `sticky`,
+>     `hideWhenDetached`, `arrowPadding`, `forceMount`, focus scope (trap + scroll
+>     lock ONLY when `modal`), Escape/outside dismiss, focus return, full
+>     keyboard/ARIA (Radix). Default intrinsic geometry only (w-72 · rounded-md ·
+>     p-4) — layout via className (A1). Proof: `/dev/popover` — FloatingSurface
+>     pane beside a live Popover (only behavior differs), placements side×align,
+>     arrow/no-arrow, collision auto-flip at the panel edge, scrollable container,
+>     modal vs non-modal, nested (side-arrow), long + interactive content (form/
+>     links/Close), disabled trigger, and the hierarchy Tooltip (reads) · Popover
+>     (converses) · Modal (takes over, contained ModalReference). Captured
+>     desktop/tablet/mobile + nested interaction. `'use client'`. Awaiting
+>     explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

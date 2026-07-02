@@ -71,9 +71,9 @@ Transient glass that appears, informs, dismisses.
 
 | Component | Status | Notes |
 |---|---|---|
-| `FloatingSurface` (helper) | Built | Reusable Floating glass base (`floating-surface.tsx`), mirrors `ControlSurface`: renders `.ds-floating` + `<GlassSurface/>`, no new material. First consumer: the DatePicker calendar. Popover/DropdownMenu/ContextMenu/Command Palette compose it. |
+| `FloatingSurface` (helper) | Built | Reusable Floating glass base (`floating-surface.tsx`), mirrors `ControlSurface`: renders `.ds-floating` + `<GlassSurface/>`, no new material. Also owns the family geometry extensions (`floating-surface.css`): the shared entrance animation (`ds-floating-enter`) and the shared arrow/tail (`ds-floating-arrow`, promoted verbatim from the Tooltip reference). Consumers: DatePicker calendar, Popover; DropdownMenu/ContextMenu/Command Palette next. |
 | `Tooltip` | **FROZEN** | Floating reference (production Tooltip is the inverted §12.11 chip; the `.ds-floating` glass is validated in `/dev/tooltip`). |
-| `Popover` | Planned | ← Floating (compose `FloatingSurface`). |
+| `Popover` | Built (not frozen) | First generalized Floating member: GlassSurface → .ds-floating → FloatingSurface → **Popover**. Headless compound API on Radix (`Popover` + `.Trigger`/`.Anchor`/`.Content`/`.Close`/`.Arrow`); declares NO material — pane = `floatingHostClass` + `<FloatingSurface/>`, entrance = shared `ds-floating-enter` (150ms opacity/translateY/scale, system ease-out), arrow = shared `ds-floating-arrow` (Tooltip-reference tail, verbatim). Owns only behavior: portal, side/align/offsets, collision (flip+shift, `collisionPadding`), `sticky`, `hideWhenDetached`, `modal` (focus trap + scroll lock), Escape/outside dismiss, focus return, `forceMount`. Proof: `/dev/popover` (placements · arrow · collision · scrollable · modal/non-modal · nested · long/interactive · Tooltip/Popover/Modal hierarchy; desktop/tablet/mobile). |
 | `DropdownMenu` | Planned | ← Floating (compose `FloatingSurface`). |
 | `ContextMenu` | Planned | ← Floating. |
 | `Toast` | Planned | ← Floating. |

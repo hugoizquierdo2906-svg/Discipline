@@ -1,0 +1,50 @@
+/**
+ * Floating Surface — shared family geometry extensions (NOT material re-tuning:
+ * `.ds-floating` in glass.css stays frozen and untouched). Owned by the
+ * FloatingSurface helper so every Floating member (Popover · DropdownMenu ·
+ * ContextMenu · Command Palette) shares ONE entrance and ONE arrow — components
+ * never declare these themselves.
+ */
+
+/* Entrance — the Floating base animation: a short, calm rise (opacity +
+ * translateY + a very light scale, no bounce). 150ms, the system ease-out.
+ * CSS only; applied via Radix `data-state`. */
+@keyframes ds-floating-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.ds-floating-enter[data-state='open'] {
+  animation: ds-floating-in 150ms var(--ds-ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-floating-enter[data-state='open'] {
+    animation: none;
+  }
+}
+
+/* Arrow / tail — promoted VERBATIM from the frozen Floating reference
+ * (`.fl-tip__arrow`, /dev/tooltip): a small rotated square that continues the
+ * same material (volume fill + machined rim + light detaching shadow) down to
+ * the anchor. Same material, same shadow — never a different color. Sized for
+ * a 10×5 Radix arrow slot; the popper wrapper handles per-side rotation. */
+.ds-floating-arrow {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  transform: translateY(-5px) rotate(45deg);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  box-shadow:
+    inset 1px 1px 0 var(--ds-glass-edge-dim),
+    2px 2px 6px rgba(16, 16, 16, 0.16);
+}

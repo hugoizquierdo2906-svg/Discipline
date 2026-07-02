@@ -79,6 +79,28 @@
   (`defaultFiles`). Résumé de contraintes auto-dérivé (« PNG · up to 1.0 MB · max
   2 files ») — remplace l'ancien `hint` ; ancienne API `hint`/`onFiles` supprimée,
   2 consommateurs dev migrés. Preuve : `/dev/file-input`.
+- **Popover — Floating Surface, 1er membre Floating généralisé. BUILD (PAS gelé —
+  validation visuelle du propriétaire en attente).**
+
+  ```text
+  Floating
+  GlassSurface → .ds-floating → FloatingSurface → Popover
+  Status: Built (non frozen)
+  ```
+
+  API composée headless sur Radix : `Popover` (open/defaultOpen/onOpenChange/modal)
+  + `.Trigger` (asChild) / `.Anchor` / `.Content` / `.Close` / `.Arrow`. AUCUN
+  matériau déclaré (grep : pas de backdrop-filter/blur/box-shadow/rgba/ds-glass/
+  ds-floating dans popover.tsx) : panneau = `floatingHostClass` + `<FloatingSurface/>` ;
+  entrée = animation de base Floating partagée (`ds-floating-enter`, 150 ms opacity +
+  translateY + léger scale, ease-out système) ; flèche = queue Floating partagée
+  (`ds-floating-arrow`, promue VERBATIM de la référence Tooltip dans
+  `floating-surface.css`). Popover ne possède que le comportement : portail,
+  side/align/offsets, collision (flip+shift), sticky, hideWhenDetached, modal
+  (focus trap + scroll lock), Escape/outside dismiss, retour focus, clavier/ARIA
+  complets. Preuve : `/dev/popover` (placements · flèche · collision · conteneur
+  scrollable · modal/non-modal · imbriqué · contenu long/interactif · hiérarchie
+  Tooltip/Popover/Modal ; desktop/tablette/mobile). À geler sur validation explicite.
 - **Textarea — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun
   verre/blur/ombre/Fresnel recréé). Diffère seulement par la géométrie (multiligne,
@@ -181,10 +203,10 @@
 
 ## PROCHAINE SESSION
 
-1. La famille Control est 100 % gelée (Input · Textarea · SearchInput · Select ·
-   DatePicker · FileInput). Généraliser maintenant le rôle **Floating** : `Popover`
-   (en cours) puis `DropdownMenu` / `Toast` — ils composent le helper
-   **FloatingSurface** déjà validé par le calendrier du DatePicker.
+1. **Geler Popover** sur validation visuelle explicite du propriétaire. Puis
+   continuer le rôle **Floating** : `DropdownMenu` / `ContextMenu` / `Toast` — ils
+   composent FloatingSurface + l'entrée (`ds-floating-enter`) + la flèche
+   (`ds-floating-arrow`) désormais partagées.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 

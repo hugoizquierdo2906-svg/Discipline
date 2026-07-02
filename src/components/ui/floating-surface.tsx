@@ -1,5 +1,7 @@
 import { GlassSurface } from './glass-surface'
 
+import './floating-surface.css'
+
 /**
  * Floating Surface — shared scaffolding for the DISCIPLINE Liquid Glass floating
  * family (Calendar overlay · Popover · DropdownMenu · ContextMenu · Command
@@ -22,6 +24,14 @@ export const floatingHostClass = 'ds-glass ds-floating relative'
 
 /** The content plane — above every optical layer (edge is z-2). */
 export const floatingContentClass = 'relative z-[3]'
+
+/** The Floating base entrance (150ms opacity + translateY + slight scale,
+ * system ease-out, no bounce). Driven by Radix `data-state="open"`. */
+export const floatingEnterClass = 'ds-floating-enter'
+
+/** The Floating arrow/tail — the frozen Tooltip-reference tail, verbatim
+ * (same material, same rim, same shadow). Render inside a popper Arrow slot. */
+export const floatingArrowClass = 'ds-floating-arrow'
 
 /** The optical layer stack — placed as the first child of any `.ds-floating`. */
 export function FloatingSurface() {
