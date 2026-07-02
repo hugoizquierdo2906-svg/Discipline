@@ -249,8 +249,10 @@
 >     dialog overlay → grid/gridcell (aria-expanded/controls/selected). Proof:
 >     `/dev/date-picker` (family + all states + min/max + locales + formats + open
 >     calendar). `'use client'`.
->   - **FileInput — Control Surface, SIBLING of Input. Built (visual validation
->     PASS 2026-07-02 — desktop/tablet/mobile; NOT frozen).**
+>   - **FileInput — Control Surface, SIBLING of Input. FROZEN (visually validated
+>     2026-07-02 — desktop/tablet/mobile).** No redesign again unless an objective
+>     bug appears. **The Control family is now 100% frozen** (Input · Textarea ·
+>     SearchInput · Select · DatePicker · FileInput).
 >     ```text
 >     FileInput
 >     Role:        Control Surface
@@ -277,7 +279,7 @@
 >     1.0 MB · max 2 files") — replaces the old `hint` prop; old `hint`/`onFiles`
 >     API removed, both dev consumers migrated. Proof: `/dev/file-input`
 >     (family + states + previews + validation, desktop/tablet/mobile).
->     `'use client'`. Awaiting explicit freeze.
+>     `'use client'`.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
