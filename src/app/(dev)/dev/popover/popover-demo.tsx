@@ -101,7 +101,7 @@ function Demo({ dark }: { dark: boolean }) {
                     {side}
                   </Button>
                 </Popover.Trigger>
-                <Popover.Content side={side} arrow className="w-44">
+                <Popover.Content side={side} arrow size="xs">
                   <p className="text-body-sm">side=&quot;{side}&quot;</p>
                 </Popover.Content>
               </Popover>
@@ -113,7 +113,7 @@ function Demo({ dark }: { dark: boolean }) {
                     align {align}
                   </Button>
                 </Popover.Trigger>
-                <Popover.Content align={align} className="w-44">
+                <Popover.Content align={align} size="xs">
                   <p className="text-body-sm">align=&quot;{align}&quot;</p>
                 </Popover.Content>
               </Popover>
@@ -161,7 +161,7 @@ function Demo({ dark }: { dark: boolean }) {
                     Open, then scroll
                   </Button>
                 </Popover.Trigger>
-                <Popover.Content arrow className="w-52">
+                <Popover.Content arrow size="xs">
                   <p className="text-body-sm">
                     Tracks the anchor while scrolling.
                   </p>
@@ -183,7 +183,7 @@ function Demo({ dark }: { dark: boolean }) {
                   modal=true
                 </Button>
               </Popover.Trigger>
-              <Popover.Content className="w-56">
+              <Popover.Content size="xs">
                 <p className="text-body-sm">
                   Focus is trapped; the page behind is scroll-locked.
                 </p>
@@ -195,7 +195,7 @@ function Demo({ dark }: { dark: boolean }) {
                   non-modal
                 </Button>
               </Popover.Trigger>
-              <Popover.Content className="w-56">
+              <Popover.Content size="xs">
                 <p className="text-body-sm">Light: the page stays live.</p>
               </Popover.Content>
             </Popover>
@@ -205,7 +205,7 @@ function Demo({ dark }: { dark: boolean }) {
                   nested
                 </Button>
               </Popover.Trigger>
-              <Popover.Content className="w-60" data-testid="nested-outer">
+              <Popover.Content size="xs" data-testid="nested-outer">
                 <div className="flex flex-col gap-3">
                   <p className="text-body-sm">A popover…</p>
                   <Popover>
@@ -214,7 +214,7 @@ function Demo({ dark }: { dark: boolean }) {
                         …opens another
                       </Button>
                     </Popover.Trigger>
-                    <Popover.Content side="right" arrow className="w-48">
+                    <Popover.Content side="right" arrow size="xs">
                       <p className="text-body-sm">Nested pane.</p>
                     </Popover.Content>
                   </Popover>
@@ -259,7 +259,7 @@ function Demo({ dark }: { dark: boolean }) {
               side="bottom"
               arrow
               avoidCollisions={false}
-              className="w-80"
+              size="md"
             >
               <form className="flex flex-col gap-3">
                 <p className="text-body-sm font-medium">Weekly goal</p>
@@ -285,6 +285,63 @@ function Demo({ dark }: { dark: boolean }) {
                   </Button>
                 </div>
               </form>
+            </DemoPop>
+          </div>
+        </section>
+
+        {/* G2 — The shared Floating size scale (xs · sm · md · lg). */}
+        <section className="flex flex-col gap-6">
+          <h2 className={head}>
+            Size scale — xs · sm · md · lg (shared by every Floating member)
+          </h2>
+          <div className="flex flex-wrap justify-between pb-28">
+            <DemoPop
+              dark={dark}
+              label="xs"
+              side="bottom"
+              align="start"
+              avoidCollisions={false}
+              size="xs"
+            >
+              <p className="text-body-sm">xs — 224px. Hints, small actions.</p>
+            </DemoPop>
+            <DemoPop
+              dark={dark}
+              label="sm"
+              side="bottom"
+              align="end"
+              avoidCollisions={false}
+              size="sm"
+            >
+              <p className="text-body-sm">
+                sm — 288px (default). Standard contextual content.
+              </p>
+            </DemoPop>
+          </div>
+          <div className="flex flex-wrap justify-between pb-32">
+            <DemoPop
+              dark={dark}
+              label="md"
+              side="bottom"
+              align="start"
+              avoidCollisions={false}
+              size="md"
+            >
+              <p className="text-body-sm">
+                md — 320px. Forms, user menus, notifications.
+              </p>
+            </DemoPop>
+            <DemoPop
+              dark={dark}
+              label="lg"
+              side="bottom"
+              align="end"
+              avoidCollisions={false}
+              size="lg"
+            >
+              <p className="text-body-sm">
+                lg — 384px. Command palette, calendar, emoji picker.
+              </p>
             </DemoPop>
           </div>
         </section>

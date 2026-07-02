@@ -303,8 +303,19 @@
 >     collision flip+shift (`avoidCollisions`, `collisionPadding`), `sticky`,
 >     `hideWhenDetached`, `arrowPadding`, `forceMount`, focus scope (trap + scroll
 >     lock ONLY when `modal`), Escape/outside dismiss, focus return, full
->     keyboard/ARIA (Radix). Default intrinsic geometry only (w-72 · rounded-md ·
->     p-4) — layout via className (A1). Proof: `/dev/popover` — FloatingSurface
+>     keyboard/ARIA (Radix). Default intrinsic geometry only (shared size scale ·
+>     rounded-md · px-4 py-5) — layout via className (A1).
+>     **Craft pass (2026-07-02, owner review 98/100 — geometry only, zero
+>     architectural change):** (1) suspension +≈10% — `ds-floating-lift` (ONE soft
+>     added lower halo on the host; the frozen `.ds-floating` shadow layer
+>     untouched) + `sideOffset` 8→10; (2) arrow radius 2px→1px (a drop's tail, not
+>     a puffed chip); (3) vertical padding +4px (`p-4`→`px-4 py-5`); (4) shared
+>     **Floating size scale** — `size` prop xs·224 / sm·288 (default) / md·320 /
+>     lg·384 via `floatingSizeClass` in the FloatingSurface base, so the future
+>     UserMenu / Notifications / Command Palette / Calendar / Emoji picker reuse
+>     the SAME widths. Untouched, per instruction: material, blur, transmission,
+>     color, animation/speed/easing, collision, arrow behavior, placement, nested,
+>     modal, responsive, API. Proof: `/dev/popover` — FloatingSurface
 >     pane beside a live Popover (only behavior differs), placements side×align,
 >     arrow/no-arrow, collision auto-flip at the panel edge, scrollable container,
 >     modal vs non-modal, nested (side-arrow), long + interactive content (form/

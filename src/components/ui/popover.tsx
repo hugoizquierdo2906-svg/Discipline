@@ -11,6 +11,9 @@ import {
   floatingContentClass,
   floatingEnterClass,
   floatingHostClass,
+  floatingLiftClass,
+  floatingSizeClass,
+  type FloatingSize,
 } from './floating-surface'
 
 /**
@@ -71,14 +74,18 @@ export interface PopoverContentProps extends React.ComponentPropsWithoutRef<
 > {
   /** Render the shared Floating arrow/tail. */
   arrow?: boolean
+  /** Shared Floating width scale (xs · sm · md · lg) — the same steps the
+   * future UserMenu / Notifications / Command Palette reuse. */
+  size?: FloatingSize
   /** Keep the content mounted while closed (CSS-driven visibility). */
   forceMount?: true
 }
 
 /** Content — portaled Floating pane. Radix handles focus scope, Escape,
  * outside click, collision detection (flip + shift), sticky and detach hiding;
- * the glass and the entrance come from the Floating base. Default intrinsic
- * geometry only (w-72 · rounded-md · p-4) — layout stays with the consumer. */
+ * the glass, the lift and the entrance come from the Floating base. Default
+ * intrinsic geometry only (shared size scale · rounded-md · px-4 py-5) —
+ * layout stays with the consumer. */
 const PopoverContent = forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
   PopoverContentProps
@@ -86,10 +93,11 @@ const PopoverContent = forwardRef<
   {
     className,
     children,
-    sideOffset = 8,
+    sideOffset = 10,
     collisionPadding = 8,
     arrowPadding = 12,
     arrow = false,
+    size = 'sm',
     forceMount,
     ...props
   },
@@ -106,7 +114,9 @@ const PopoverContent = forwardRef<
         className={cn(
           floatingHostClass,
           floatingEnterClass,
-          'z-dropdown block w-72 rounded-md p-4 outline-none',
+          floatingLiftClass,
+          'z-dropdown block rounded-md px-4 py-5 outline-none',
+          floatingSizeClass[size],
           className,
         )}
         {...props}

@@ -29,9 +29,25 @@ export const floatingContentClass = 'relative z-[3]'
  * system ease-out, no bounce). Driven by Radix `data-state="open"`. */
 export const floatingEnterClass = 'ds-floating-enter'
 
-/** The Floating arrow/tail — the frozen Tooltip-reference tail, verbatim
- * (same material, same rim, same shadow). Render inside a popper Arrow slot. */
+/** The Floating arrow/tail — the frozen Tooltip-reference tail (same material,
+ * same rim, same shadow; radius eased to a drop-tail at panel scale). Render
+ * inside a popper Arrow slot. */
 export const floatingArrowClass = 'ds-floating-arrow'
+
+/** Elevation lift for anchored overlays — one soft added lower halo (~10%),
+ * the frozen `.ds-floating` shadow layer untouched. */
+export const floatingLiftClass = 'ds-floating-lift'
+
+/** The Floating panel size scale — shared by every floating member (Popover,
+ * UserMenu, Notifications, Command Palette, pickers) so no member invents its
+ * own width. */
+export const floatingSizeClass = {
+  xs: 'w-56',
+  sm: 'w-72',
+  md: 'w-80',
+  lg: 'w-96',
+} as const
+export type FloatingSize = keyof typeof floatingSizeClass
 
 /** The optical layer stack — placed as the first child of any `.ds-floating`. */
 export function FloatingSurface() {

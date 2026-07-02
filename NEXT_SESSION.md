@@ -98,8 +98,15 @@
   `floating-surface.css`). Popover ne possède que le comportement : portail,
   side/align/offsets, collision (flip+shift), sticky, hideWhenDetached, modal
   (focus trap + scroll lock), Escape/outside dismiss, retour focus, clavier/ARIA
-  complets. Preuve : `/dev/popover` (placements · flèche · collision · conteneur
-  scrollable · modal/non-modal · imbriqué · contenu long/interactif · hiérarchie
+  complets. **Passe craft (2026-07-02, revue 98/100 — géométrie seule)** :
+  suspension +≈10 % (`ds-floating-lift`, un halo inférieur ajouté, ombre gelée
+  intouchée + `sideOffset` 8→10), flèche 2px→1px (queue de goutte), padding
+  vertical +4 px (`px-4 py-5`), et **échelle de tailles Floating partagée**
+  (`size` xs·224 / sm·288 défaut / md·320 / lg·384 via `floatingSizeClass`) pour
+  les futurs UserMenu/Notifications/CommandPalette/Calendar/Emoji picker.
+  Matériau/blur/animation/collision/API intouchés. Preuve : `/dev/popover`
+  (placements · flèche · collision · conteneur scrollable · modal/non-modal ·
+  imbriqué · contenu long/interactif · échelle de tailles · hiérarchie
   Tooltip/Popover/Modal ; desktop/tablette/mobile). À geler sur validation explicite.
 - **Textarea — Control Surface, GELÉ (validé visuellement 2026-07-01).** Plus de
   redesign sauf bug objectif. Frère de Input (même parent `ControlSurface`, matériau verbatim ; aucun

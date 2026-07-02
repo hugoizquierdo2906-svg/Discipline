@@ -28,16 +28,26 @@
   }
 }
 
-/* Arrow / tail — promoted VERBATIM from the frozen Floating reference
+/* Elevation lift — the anchored-overlay suspension: ONE soft, wide lower halo
+ * ADDED on the host, under the frozen material (the `.ds-glass__shadow` layer
+ * in glass.css stays untouched). ~10%: it deepens the read of a suspended
+ * sheet without changing glass, blur or transmission. */
+.ds-floating-lift {
+  box-shadow: 0 18px 36px rgba(16, 16, 16, 0.08);
+}
+
+/* Arrow / tail — promoted from the frozen Floating reference
  * (`.fl-tip__arrow`, /dev/tooltip): a small rotated square that continues the
  * same material (volume fill + machined rim + light detaching shadow) down to
- * the anchor. Same material, same shadow — never a different color. Sized for
- * a 10×5 Radix arrow slot; the popper wrapper handles per-side rotation. */
+ * the anchor. Same material, same shadow — never a different color. Radius
+ * eased 2px → 1px at panel scale so it reads as a drop's tail, not a puffed
+ * chip. Sized for a 10×5 Radix arrow slot; the popper wrapper handles per-side
+ * rotation. */
 .ds-floating-arrow {
   display: block;
   width: 10px;
   height: 10px;
-  border-radius: 2px;
+  border-radius: 1px;
   transform: translateY(-5px) rotate(45deg);
   background: linear-gradient(
     135deg,
