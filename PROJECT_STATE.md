@@ -323,16 +323,16 @@
 >     links/Close), disabled trigger, and the hierarchy Tooltip (reads) · Popover
 >     (converses) · Modal (takes over, contained ModalReference). Captured
 >     desktop/tablet/mobile + nested interaction. `'use client'`.
->   - **DropdownMenu — Floating Surface, DERIVES FROM THE FROZEN POPOVER. Built
->     (visual validation pending; NOT frozen).**
+>   - **DropdownMenu — Floating Surface, DERIVES FROM THE FROZEN POPOVER. FROZEN
+>     (visually validated 2026-07-02).** No functional, visual or architectural
+>     change again — objective bugs only.
 >     ```text
->     Floating
+>     Floating Surface
 >     FloatingSurface
 >             ↓
 >     Popover (FROZEN)
 >             ↓
->     DropdownMenu
->     Status: Built (non frozen)
+>     DropdownMenu (FROZEN)
 >     ```
 >     Never restarts from FloatingSurface: the pane IS the frozen Popover pane via
 >     `popoverPaneClass` — a PURE EXTRACTION from PopoverContent (its output is
@@ -360,7 +360,7 @@
 >     DropdownMenu, one material three behaviors), full language, checkbox/radio,
 >     nested submenu, long scrollable, collision flip, hierarchy vs the Immersive
 >     reference; desktop/tablet/mobile + interactive captures (actions/checkbox/
->     radio/long/collision/nested). `'use client'`. Awaiting explicit freeze.
+>     radio/long/collision/nested). `'use client'`.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

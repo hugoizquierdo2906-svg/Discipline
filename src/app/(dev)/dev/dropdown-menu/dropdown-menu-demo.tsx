@@ -282,7 +282,7 @@ function Demo({ dark }: { dark: boolean }) {
                   Move to project…
                 </Button>
               </DropdownMenu.Trigger>
-              <DropdownMenu.Content className={cn2(dark)}>
+              <DropdownMenu.Content className={dark ? 'text-white/95' : ''}>
                 {Array.from({ length: 24 }, (_, i) => (
                   <DropdownMenu.Item key={i}>
                     Project {String(i + 1).padStart(2, '0')}
@@ -339,11 +339,6 @@ function Demo({ dark }: { dark: boolean }) {
       </div>
     </GlassPanel>
   )
-}
-
-/** Tiny helper — dark text override for portaled menu content. */
-function cn2(dark: boolean) {
-  return dark ? 'text-white/95' : ''
 }
 
 export function DropdownMenuScene({

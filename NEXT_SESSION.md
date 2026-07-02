@@ -79,13 +79,13 @@
   (`defaultFiles`). Résumé de contraintes auto-dérivé (« PNG · up to 1.0 MB · max
   2 files ») — remplace l'ancien `hint` ; ancienne API `hint`/`onFiles` supprimée,
   2 consommateurs dev migrés. Preuve : `/dev/file-input`.
-- **DropdownMenu — Floating Surface, DÉRIVE DU POPOVER GELÉ. BUILD (PAS gelé —
-  validation visuelle du propriétaire en attente).**
+- **DropdownMenu — Floating Surface, DÉRIVE DU POPOVER GELÉ. GELÉ (validé
+  visuellement 2026-07-02).** Plus aucune évolution fonctionnelle/visuelle/
+  architecturale — bug objectif uniquement.
 
   ```text
-  Floating
-  FloatingSurface → Popover (FROZEN) → DropdownMenu
-  Status: Built (non frozen)
+  Floating Surface
+  FloatingSurface → Popover (FROZEN) → DropdownMenu (FROZEN)
   ```
 
   Ne repart jamais de FloatingSurface : le panneau EST le panneau Popover gelé via
@@ -98,8 +98,7 @@
   (le sous-menu compose le MÊME panneau — matériau/animation/collision/flèche
   hérités), Shortcut. Géométrie d'item = menu Select gelé verbatim (py-2.5 · gap-3 ·
   colonne pl-8 · surbrillance `bg-accent-subtle/45`). Menus longs plafonnés à la
-  hauteur popper dispo + scroll. Preuve : `/dev/dropdown-menu`. À geler sur
-  validation explicite.
+  hauteur popper dispo + scroll. Preuve : `/dev/dropdown-menu`.
 - **Popover — Floating Surface, 1er membre Floating généralisé. GELÉ (validé
   visuellement 2026-07-02, après la passe craft 98/100).** Plus de redesign sauf
   bug objectif.
@@ -232,12 +231,14 @@
 
 ## PROCHAINE SESSION
 
-1. **Geler DropdownMenu** sur validation visuelle explicite du propriétaire. Puis
-   continuer le rôle Floating : **ContextMenu** (mêmes items, déclencheur clic
-   droit — dérive de la même paire gelée), **UserMenu** (composition
-   DropdownMenu + Avatar), **Toast**. Tous héritent du panneau Popover gelé
-   (`popoverPaneClass`), de l'entrée, du lift, de la flèche et de l'échelle de
-   tailles sans rien réinventer.
+1. DropdownMenu est GELÉ. Progression : **Control 100 % gelé** · **Floating :
+   Tooltip + Popover + DropdownMenu gelés** (base + fondation comportementale +
+   langage menu). Suite du rôle Floating : **ContextMenu** (mêmes items,
+   déclencheur clic droit — dérive de la même paire gelée), **UserMenu**
+   (composition DropdownMenu + Avatar), **Toast**. Tous héritent du panneau
+   Popover gelé (`popoverPaneClass`), de l'entrée, du lift, de la flèche et de
+   l'échelle de tailles sans rien réinventer. Ensuite : Immersive → `Modal`
+   réutilisable depuis la référence `/dev/modal`.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 
