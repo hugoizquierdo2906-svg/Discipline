@@ -79,13 +79,12 @@
   (`defaultFiles`). Résumé de contraintes auto-dérivé (« PNG · up to 1.0 MB · max
   2 files ») — remplace l'ancien `hint` ; ancienne API `hint`/`onFiles` supprimée,
   2 consommateurs dev migrés. Preuve : `/dev/file-input`.
-- **HoverCard — Floating Surface, DÉRIVE DU POPOVER GELÉ. BUILD (PAS gelé —
-  validation visuelle du propriétaire en attente).**
+- **HoverCard — Floating Surface, DÉRIVE DU POPOVER GELÉ. GELÉ (validé
+  visuellement 2026-07-02).** Plus aucune évolution — bug objectif uniquement.
 
   ```text
   Floating
-  FloatingSurface → Popover (FROZEN) → HoverCard
-  Status: Built (non frozen)
+  FloatingSurface → Popover (FROZEN) → HoverCard (FROZEN)
   ```
 
   Une PREVIEW contextuelle (user · exercice · livre · workout) — jamais un menu.
@@ -96,7 +95,7 @@
   l'ouverture : intention de survol (`openDelay` 200 ms · `closeDelay` 150 ms par
   défaut), pont de pointeur indulgent (zone de grâce Radix : Trigger→Content ne
   ferme jamais ; contenu hover-interactif). Tactile : le trigger reste un lien
-  normal. Preuve : `/dev/hover-card`. À geler sur validation explicite.
+  normal. Preuve : `/dev/hover-card`.
 - **ContextMenu — Floating Surface, DÉRIVE DU DROPDOWNMENU GELÉ. GELÉ (validé
   visuellement 2026-07-02).** Plus aucune évolution — bug objectif uniquement.
 
@@ -272,9 +271,9 @@
 
 ## PROCHAINE SESSION
 
-1. **Geler HoverCard** sur validation visuelle explicite du propriétaire. Puis :
-   **UserMenu** (composition DropdownMenu + Avatar), **Toast**. Ensuite :
-   Immersive → `Modal` réutilisable depuis la référence `/dev/modal`.
+1. HoverCard est GELÉ. **Command Palette (en cours — rôle Immersive : nécessite la
+   promotion de la référence `/dev/modal` en composant `Modal` réutilisable, dont
+   la palette compose tout)**. Puis : UserMenu, Toast.
 2. Continuer la famille Structural (dérivée de GlassCard / GlassPanel) :
    StatCard / EmptyState / ErrorState / ChartWrapper (← GlassCard)
 

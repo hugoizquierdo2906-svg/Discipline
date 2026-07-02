@@ -406,12 +406,13 @@
 >     `p-0` on the pane (menus own their padding on the viewport, per A1).
 >     Both proofs re-captured: labels fully legible, no other change. The shared
 >     classes fix DropdownMenu and ContextMenu at once (single source of truth).
->   - **HoverCard — Floating Surface, DERIVES FROM THE FROZEN POPOVER. Built
->     (visual validation pending; NOT frozen).**
+>   - **HoverCard — Floating Surface, DERIVES FROM THE FROZEN POPOVER. FROZEN
+>     (visually validated 2026-07-02).** No functional, visual or architectural
+>     change again — objective bugs only.
 >     ```text
 >     Floating
 >     GlassSurface → .ds-floating → FloatingSurface → Popover (FROZEN) → HoverCard
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     A small contextual PREVIEW (user · exercise · book · workout · session),
 >     never a menu. The pane is the frozen Popover pane VERBATIM: `popoverPaneClass`
@@ -432,8 +433,7 @@
 >     hover), previews (user/exercise/book/workout with Avatar · Badge · image),
 >     delays 0/200/500 · 0/150/300, sides, aligns, arrow on/off, shared sizes,
 >     scrollable container, edge collision; desktop/tablet/mobile + real-hover
->     captures incl. the pointer-bridge proof. `'use client'`. Awaiting explicit
->     freeze.
+>     captures incl. the pointer-bridge proof. `'use client'`.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
