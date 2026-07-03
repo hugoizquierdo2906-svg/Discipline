@@ -581,36 +581,59 @@
 >     template selectors with descriptions, desktop/tablet/mobile + keyboard
 >     captures (focus on "4 days", ArrowRight ×2 → "6 days" selected).
 >     'use client'.
->   - **Switch — Micro Surface, on the FROZEN micro-control foundation. Built
->     (visual validation pending; NOT frozen).**
+>   - **Switch — Micro Surface. FROZEN (visually validated 2026-07-03, after a
+>     dedicated visual-correction pass).** No functional, visual or
+>     architectural change again — objective bugs only.
 >     ```text
 >     Micro
->     GlassSurface → Micro Surface → micro-control → Switch
->     Status: Built (non frozen)
+>     GlassSurface → Micro Surface (.ds-glass .ds-micro) → Switch
+>     Status: FROZEN
 >     ```
->     EXACTLY the frozen Checkbox/Radio language — same token border, accent
->     active fill, motion, disabled dim, invalid rim, GLOBAL `:focus-visible`
->     ring. Only the geometry changes: a 44×24 rounded-pill track and a sliding
->     18px thumb — the thumb IS the dark glyph (the ✓/● philosophy, in motion;
->     new ADDITIVE `microControlThumbClass` in micro-control.tsx — the frozen
->     Checkbox/Radio outputs untouched). switch.tsx grep: zero GlassSurface/
->     blur/backdrop/rgba/box-shadow/animation/transition/shadow/focus strings.
+>     CORRECTED METAPHOR (supersedes the original build rationale): Checkbox and
+>     Radio *appear* — a glyph drawn on a resting, glass-budget-free
+>     micro-control box. Switch *moves* — motion replaces the glyph, so the
+>     thumb does not imitate the glyph, it inherits the material. Track and
+>     thumb both compose the real, frozen `<GlassSurface/>` stack directly
+>     (`.ds-glass .ds-micro`) — the thumb is its own nested glass object inside
+>     the rail, the same nested-glass pattern already used for a Button inside a
+>     Card. This is a deliberate, documented divergence from Checkbox/Radio's
+>     `micro-control.tsx` flat-recipe consumption: Switch's 44×24 rail can
+>     legitimately spend more of the Micro Glass Budget (§3) than a 20px
+>     Checkbox/Radio glyph ever needed, so it draws directly on the Micro Surface
+>     material instead. Switch still imports `microControlInvalidClass` from
+>     `micro-control.tsx` for its error rim — the ONLY point of contact with
+>     that shared file, which remains otherwise exactly as Checkbox/Radio left
+>     it (zero lines touched across all three visual-correction passes).
+>     VISUAL LANGUAGE (final, three-pass correction from the original ship):
+>     (1) rail material — restored via the real `<GlassSurface/>` stack (was a
+>     flat `bg-accent`/`border` box); (2) checked-state light — the rail's own
+>     `background-color` is `color-mix(in_srgb, var(--ds-color-accent) 42%,
+>     transparent)`, sitting BEHIND the unmodified `.ds-glass__body`
+>     backdrop-filter (blur 16px, saturate 1.7) so it reads as light diffused
+>     through glass, not a painted fill; plus the rail's own existing
+>     violet-caustic layer is revealed (`opacity-100`) and Button Primary's exact
+>     halo value is reused (`shadow-[0_2px_18px_rgba(139,124,255,0.22)]`) — zero
+>     new colors, every value traced to `--ds-color-accent` or an existing glass
+>     token; (3) thumb — a second nested `<GlassSurface/>`, translucent/frosted,
+>     rendered byte-identically in checked and unchecked (state is carried ONLY
+>     by rail tint + thumb position, never by thumb color). switch.tsx grep:
+>     zero redeclared `.ds-glass__*` layer, zero new hex, only token/var()
+>     references and one reused Button-Primary rgba literal.
 >     OBJECTIVE BUG (pre-rebuild): the old track used `h-6 w-11` = 32×96px on
 >     the DISCIPLINE spacing scale (designed for Tailwind's 24×44) and
 >     `translate-x-5` = 24px — the thumb never reached the right edge of the
->     96px track. Geometry is now explicit px (the scale-hazard lesson from the
->     command palette, applied). Also: the old white thumb (bg-surface-raised +
->     shadow-1) was a second visual language vs the frozen dark-glyph fill —
->     re-aligned. On Radix Switch: Space/Enter toggle, Tab/Shift+Tab, ARIA
->     switch role, touch, reduced-motion. API: label · description · error
->     (implies invalid) · helperText · invalid · readOnly (focusable, never
->     toggles — click swallowed) · required (marker + native) · labelPosition ·
->     controlled + uncontrolled. Backward compatible (label/defaultChecked
->     usages untouched). Proof: /dev/switch — all states, preference panel
->     (Dark mode · Biometrics · Auto sync), permission + workout panels, nested
->     master switch gating children; desktop/tablet/mobile + keyboard captures
->     (focus ring on the master, Space → off, children disabled).
->     'use client'. Awaiting explicit freeze.
+>     96px track. Geometry is explicit px throughout (unchanged since; the
+>     scale-hazard lesson from the command palette, applied). On Radix Switch:
+>     Space/Enter toggle, Tab/Shift+Tab, ARIA switch role, touch,
+>     reduced-motion. API: label · description · error (implies invalid) ·
+>     helperText · invalid · readOnly (focusable, never toggles — click
+>     swallowed) · required (marker + native) · labelPosition · controlled +
+>     uncontrolled. Backward compatible (label/defaultChecked usages
+>     untouched). Proof: /dev/switch — all states, preference panel (Dark mode
+>     · Biometrics · Auto sync), permission + workout panels, nested master
+>     switch gating children; desktop/tablet/mobile + rich-background +
+>     keyboard captures (focus ring on the master, Space → off, children
+>     disabled). 'use client'.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

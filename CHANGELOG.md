@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Switch — frozen (Micro Surface).** After a dedicated visual-correction
+  pass (rail material restored via the real `<GlassSurface/>` stack, checked
+  state expressed as `color-mix(in_srgb, var(--ds-color-accent) 42%,
+  transparent)` diffused through the existing backdrop-filter rather than a
+  painted fill, thumb rebuilt as its own nested glass object rendered
+  identically in both states), Switch is visually validated and frozen.
+  Deliberate architectural divergence from Checkbox/Radio: Switch composes
+  `<GlassSurface/>` directly instead of the flat `micro-control.tsx` recipe,
+  since its 44×24 rail can spend more of the Micro Glass Budget than a 20px
+  glyph. `micro-control.tsx` itself is unchanged.
+
 ### Added
 
 - **Phase 03 — Component Library (Level 1 Primitives).** 28 generic,

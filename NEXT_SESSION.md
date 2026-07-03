@@ -275,16 +275,29 @@
    (Tooltip · Popover · DropdownMenu · ContextMenu · HoverCard · Toast).
    **Checkbox : GELÉ (validé visuellement 2026-07-02)** — `micro-control.tsx`
    devient la fondation partagée gelée des petits membres Micro. **Radio : GELÉ (validé visuellement 2026-07-02)** — micro-control compte deux
-   consommateurs gelés (Checkbox · Radio) ; Switch reste Built. **Switch : rebuild sur la fondation micro-control gelée, Built non gelé — à
-   geler sur validation visuelle explicite** (rail 44×24 explicite — bug objectif :
+   consommateurs gelés (Checkbox · Radio). **Switch : GELÉ (validé visuellement
+   2026-07-03)**, après une passe de correction visuelle dédiée (3 itérations :
+   restauration du verre réel `<GlassSurface/>` sur rail + pouce, teinte lavande
+   `color-mix(in_srgb, var(--ds-color-accent) 42%, transparent)` derrière le
+   backdrop-filter existant, densité optique augmentée pour la lisibilité ON/OFF).
+   Métaphore corrigée : Checkbox/Radio *apparaissent* (un glyphe) ; Switch
+   *bouge* — le pouce hérite du matériau (un second objet de verre imbriqué
+   dans le rail), il n'imite plus le glyphe. Divergence architecturale
+   assumée : Switch compose `<GlassSurface/>` directement (`.ds-glass
+   .ds-micro`) plutôt que la recette plate de `micro-control.tsx`, car son rail
+   44×24 peut dépenser davantage du Glass Budget Micro (§3) qu'un glyphe de
+   20px — `micro-control.tsx` lui-même reste intact (seul `microControlInvalidClass`
+   encore importé). Bug objectif d'origine (rail 44×24 explicite) :
    l'ancien `h-6 w-11` faisait 32×96 px sur l'échelle DISCIPLINE et le pouce
-   n'atteignait jamais le bord ; pouce = glyphe sombre glissant, `microControlThumbClass`
-   additif). Ensuite : Dialog (← Modal), UserMenu. Nouveau helper `micro-control.tsx` (expression partagée
+   n'atteignait jamais le bord. **Prochaine étape : Slider — dernier membre
+   majeur de la famille Micro, clôture de la fondation Micro.** Nouveau helper `micro-control.tsx` (expression partagée
    des petits contrôles Micro — box token · fill accent · rim invalid ; focus =
    ring global) ; fix objectif : icône indéterminée pilotée par la prop (cassée
    en non-contrôlé) → data-state. API complète (description/error/helper/invalid/
    readOnly/required/labelPosition) + CheckboxGroup (fieldset, contexte
-   disabled/invalid). Radio et Switch composeront micro-control.tsx à leur audit.
+   disabled/invalid). Radio a composé micro-control.tsx verbatim à son audit ;
+   Switch, lui, s'en est écarté volontairement (voir plus haut) pour porter le
+   verre réel sur son rail 44×24.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
