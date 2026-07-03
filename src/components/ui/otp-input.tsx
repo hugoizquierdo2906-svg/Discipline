@@ -66,9 +66,9 @@ import { Label } from './label'
 export type OtpInputSize = 'sm' | 'md' | 'lg'
 
 const cellSizeClass: Record<OtpInputSize, string> = {
-  sm: 'h-10 w-10 text-body',
-  md: 'h-12 w-12 text-body-lg',
-  lg: 'h-14 w-14 text-h5',
+  sm: 'h-8 w-7 text-body-sm',
+  md: 'h-10 w-8 text-body',
+  lg: 'h-11 w-9 text-body-lg',
 }
 
 export interface OtpInputProps {
@@ -247,7 +247,7 @@ export const OtpInput = forwardRef<HTMLDivElement, OtpInputProps>(
             cn(description && descId, error && errorId, helperText && helpId) ||
             undefined
           }
-          className={cn('flex gap-2', className)}
+          className={cn('flex gap-1.5', className)}
         >
           {chars.map((char, index) => (
             <div
