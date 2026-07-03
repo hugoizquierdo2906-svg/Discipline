@@ -411,7 +411,8 @@
    Radix (empêché), zéro `.focus()` littéral. Select/Input/Checkbox/Radio/
    Switch/Slider/SegmentedControl/MultiSelect/Combobox intacts (grep).
    **Autocomplete : GELÉ (validé visuellement 2026-07-03).**
-   **OTP Input : Built, non gelé** — champ spécialisé pour un code composé
+   **OTP Input : GELÉ (validé visuellement 2026-07-03, après recalibrage de
+   la géométrie des cases).** Champ spécialisé pour un code composé
    de plusieurs caractères indépendants représentant une seule valeur
    logique. Pas Input (le nombre de cases EST le sujet — auto-advance,
    Backspace par position, flèches par position sont impossibles sur un
@@ -439,8 +440,13 @@
    littéral `.focus()`, irréductible — la gestion automatique du focus
    entre cases était une exigence explicite) + `autoFocus`/`onFocus`
    natifs. Input/Select/Checkbox/Radio/Switch/Slider/SegmentedControl/
-   MultiSelect/Combobox/Autocomplete intacts (grep). À geler sur validation
-   visuelle explicite.
+   MultiSelect/Combobox/Autocomplete intacts (grep). Recalibrage visuel
+   post-validation : cases trop grandes (lisibles comme des mini Cards) →
+   largeur/hauteur réduites et resserrées (`cellSizeClass` : sm 40×40 →
+   32×28, md 48×48 → 40×32, lg 56×56 → 44×36 ; gap `gap-2` → `gap-1.5`),
+   même matière, mêmes comportements, aucune logique modifiée.
+   Prochaine étape : Time Picker (sélection d'une heure, popup + saisie
+   clavier, format 24h, extensible AM/PM sans casser l'architecture).
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

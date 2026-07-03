@@ -518,11 +518,12 @@
 >     rich-background + opened/typing/free-text/keyboard captures.
 >     `'use client'`.
 >   - **OTP Input — Control Surface, composes the frozen Control Surface cell
->     recipe (Built, not frozen).**
+>     recipe. FROZEN (visually validated 2026-07-03, after the cell-geometry
+>     recalibration pass).**
 >     ```text
 >     Control
 >     the frozen optical-layer stack → Control Surface → OTP Input
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     A specialized field for a code made of several independent characters
 >     that together represent exactly ONE logical value: several visual

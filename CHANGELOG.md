@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **OTP Input — frozen (Control Surface), after a cell-geometry
+  recalibration pass.** Behavior was validated as-is; the cells initially
+  read as mini Cards instead of verification-code boxes, so
+  `cellSizeClass` was recalibrated (sm 40×40 → 32×28, md 48×48 → 40×32, lg
+  56×56 → 44×36) and the group gap tightened (`gap-2` → `gap-1.5`). Same
+  material, same behavior, no logic touched.
+
 - **Autocomplete — frozen (Control Surface).** No functional, visual or
   architectural change again except an objective bug.
 
