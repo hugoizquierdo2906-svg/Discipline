@@ -634,14 +634,16 @@
 >     switch gating children; desktop/tablet/mobile + rich-background +
 >     keyboard captures (focus ring on the master, Space → off, children
 >     disabled). 'use client'.
->   - **Slider — Micro Surface, last major Micro member. Built (visual
->     validation pending; NOT frozen).** Closes the Micro Surface foundation:
->     Checkbox, Radio, Switch and Slider are now all built.
+>   - **Slider — Micro Surface, last major Micro member. FROZEN (visually
+>     validated 2026-07-03).** No functional, visual or architectural change
+>     again — objective bugs only. **The Micro Surface family is now
+>     COMPLETE and FROZEN: Button, IconButton, LinkButton, Checkbox, Radio,
+>     Switch, Slider.**
 >     ```text
 >     Micro
 >     the frozen optical-layer stack → Micro Surface (.ds-glass .ds-micro) →
 >     micro-control → Slider
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     A continuous value manipulated by direct position — not Switch (binary,
 >     no state at all vs a value), not Progress (system-driven/read-only vs
@@ -674,7 +676,7 @@
 >     intensity, training volume, nutrition, daily steps, macro split,
 >     recovery score, coach difficulty, program progression);
 >     desktop/tablet/mobile + rich-background + focus + keyboard captures.
->     'use client'. Awaiting explicit freeze.
+>     'use client'.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's
