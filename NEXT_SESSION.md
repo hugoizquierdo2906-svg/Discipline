@@ -409,8 +409,10 @@
    autocomplete.tsx grep zéro GlassSurface/blur/backdrop-filter/rgba/shadow/
    transition/animation ; `focus` seulement `onFocus` + `onOpenAutoFocus`
    Radix (empêché), zéro `.focus()` littéral. Select/Input/Checkbox/Radio/
-   Switch/Slider/SegmentedControl/MultiSelect/Combobox intacts (grep). À
-   geler sur validation visuelle explicite.
+   Switch/Slider/SegmentedControl/MultiSelect/Combobox intacts (grep).
+   **Autocomplete : GELÉ (validé visuellement 2026-07-03).**
+   Prochaine étape : OTP Input (champ spécialisé pour un code multi-
+   caractères représentant une seule valeur logique).
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

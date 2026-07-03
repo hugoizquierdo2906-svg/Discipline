@@ -456,12 +456,12 @@
 >     filtered/no-result/keyboard captures. `'use client'`.
 >   - **Autocomplete — Control Surface, composes Input + the frozen Control
 >     Surface popup + the frozen Select row language (same foundation as
->     Combobox). Built (visual validation pending; NOT frozen).**
+>     Combobox). FROZEN (visually validated 2026-07-03).**
 >     ```text
 >     Control
 >     the frozen optical-layer stack → Control Surface → Autocomplete → Input
 >     → Popup → Scrollable list → Selectable row
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     Free text, assisted but never constrained by suggestions — not
 >     Combobox (a Combobox's final value is always exactly one of a CLOSED
