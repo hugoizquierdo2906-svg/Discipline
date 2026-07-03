@@ -445,8 +445,43 @@
    largeur/hauteur réduites et resserrées (`cellSizeClass` : sm 40×40 →
    32×28, md 48×48 → 40×32, lg 56×56 → 44×36 ; gap `gap-2` → `gap-1.5`),
    même matière, mêmes comportements, aucune logique modifiée.
-   Prochaine étape : Time Picker (sélection d'une heure, popup + saisie
-   clavier, format 24h, extensible AM/PM sans casser l'architecture).
+   **Time Picker : Built, non gelé** — sélectionner une heure (et
+   éventuellement les minutes) représentant une seule valeur ponctuelle.
+   Pas Date Picker (grille jour/mois/année vs deux petits nombres bornés),
+   pas Calendar (aucune notion de grille), pas Select (liste arbitraire vs
+   grammaire numérique 0-23/0-59 avec champ saisissable), pas Combobox/
+   Autocomplete (ni l'un ni l'autre ne résout du texte libre contre une
+   grammaire numérique bornée avec progression heure→minute), pas Input
+   (ajoute le parsing 24h + popup PAR-DESSUS Input, ne le remplace pas),
+   pas Number Input (pas de format, pas de deux-points, pas de structure en
+   deux parties), pas Clock (affichage lecture seule, n'accepte jamais de
+   valeur), pas Duration Picker (durée écoulée sans origine fixe vs heure
+   ancrée dans un cycle de 24h), pas Scheduler (composition de page
+   construite AUTOUR de champs comme celui-ci), pas Time Range Picker (deux
+   Time Pickers + invariant début<fin, un problème du consommateur). Le
+   trigger est Input lui-même ; le panneau est le vrai composant gelé
+   `<Popover/>` (matière Floating) — contrairement à Combobox/MultiSelect/
+   Autocomplete qui réutilisent la recette de panneau Control Surface
+   extraite de Select, le panneau de Time Picker est une surface
+   véritablement distincte, donc réutiliser le vrai Popover gelé est le
+   choix le plus honnête. Les lignes réutilisent le langage Select gelé
+   (`controlOptionRowClass`/`controlOptionHighlightClass`/
+   `controlOptionDisabledClass`, zéro nouvel export). Valeur canonique
+   toujours "HH:mm" 24h ; un futur mode d'affichage 12h/AM-PM ne serait
+   qu'une couche de formatage sur la même valeur. time-picker.tsx grep zéro
+   GlassSurface/blur/backdrop-filter/rgba/shadow/transition ; `focus`
+   apparaît via 7 appels littéraux `.focus()` (navigation par focus
+   manuelle entre les listes heure/minute, même schéma justifié que
+   MultiSelect) + `onFocus`/`onOpenAutoFocus` natifs ;
+   `requestAnimationFrame`/`cancelAnimationFrame` (API de planification du
+   navigateur, pas un effet de mouvement décoratif) sont les seules
+   occurrences du mot `animation`, nécessaires car les refs des lignes ne
+   s'attachent qu'une frame après que Radix a monté son contenu piloté par
+   Presence — bug réel découvert et corrigé pendant le build (le scroll
+   initial vers la valeur validée ne faisait rien au premier ouverture).
+   Input/Select/Checkbox/Radio/Switch/Slider/SegmentedControl/MultiSelect/
+   Combobox/Autocomplete/OtpInput/Popover intacts (grep) ; diff vide sur
+   tous les fichiers partagés. À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

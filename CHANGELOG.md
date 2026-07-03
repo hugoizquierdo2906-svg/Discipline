@@ -58,6 +58,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Time Picker — composes Input + the frozen Popover (Built, not
+  frozen).** Select an hour (and optionally minutes) representing exactly
+  ONE point-in-time value; not Date Picker (a day-grid vs. two small
+  bounded numbers), not Calendar (no day-grid concept), not Select
+  (arbitrary domain list vs. a fixed 0-23/0-59 grammar with a type-in-able
+  field), not Combobox/Autocomplete (neither resolves free text against a
+  bounded numeric grammar with hour→minute progression), not Input (adds
+  24h parsing/popup on top of Input, doesn't replace it), not Number Input
+  (no format, no colon, no two-part structure), not Clock (read-only
+  display, never accepts a value), not Duration Picker (an elapsed span
+  with no fixed origin vs. a time anchored to a 24h cycle), not Scheduler
+  (a page-level composition built around fields like this), not Time Range
+  Picker (two Time Pickers plus a start<end invariant — a consumer's
+  concern). The trigger is Input itself; the popup is the actual frozen
+  `<Popover/>` component (Floating Surface) rather than the raised Control
+  Surface popup recipe Combobox/MultiSelect/Autocomplete reuse, since Time
+  Picker's picker is a genuinely separate surface. Rows reuse the frozen
+  Select row language (zero new export). Canonical value is always a 24h
+  "HH:mm" string; a future 12h/AM-PM mode is a pure display layer on the
+  same value. time-picker.tsx grep: zero `GlassSurface`/`blur`/
+  `backdrop-filter`/`rgba`/`shadow`/`transition` string; `focus` appears as
+  7 literal `.focus()` calls (hand-rolled roving reachability between the
+  hour/minute lists, same justified pattern as MultiSelect) plus native
+  `onFocus`/`onOpenAutoFocus`; `requestAnimationFrame`/
+  `cancelAnimationFrame` (a browser scheduling API, not decorative motion)
+  are the only `animation`-string occurrences, needed because the popup's
+  row refs attach one frame after Radix mounts its Presence-driven content
+  — a real bug found and fixed during the build (the initial
+  scroll-to-committed-value silently did nothing on first open). Input,
+  Select, Checkbox, RadioGroup, Switch, Slider, SegmentedControl,
+  MultiSelect, Combobox, Autocomplete, OtpInput and Popover are all
+  untouched; zero shared-file diff anywhere.
+
 - **OTP Input — composes the frozen Control Surface cell recipe (Built, not
   frozen).** A specialized field for a code made of several independent
   characters representing exactly ONE logical value; not Input (box count

@@ -578,6 +578,69 @@
 >     progressive typing/filled/error/disabled/readOnly/autofocus/paste),
 >     lengths (4/6/8), sizes (sm/md/lg); desktop/tablet/mobile +
 >     rich-background captures. `'use client'`.
+>   - **Time Picker — Control Surface, composes Input + the frozen Popover
+>     (Built, not frozen).**
+>     ```text
+>     Control
+>     the frozen optical-layer stack → Control Surface → Time Picker → Input
+>     → Popover → Scrollable hour/minute lists → Selectable row
+>     Status: Built (non frozen)
+>     ```
+>     Select an hour (and optionally minutes) representing exactly ONE
+>     point-in-time value. Not Date Picker (a date is a day-grid with month/
+>     year navigation; a time has no such structure — two small bounded
+>     numbers best scanned as short scrolling lists), not Calendar (the
+>     day-grid Date Picker delegates to; Time Picker has no calendar concept
+>     at all), not Select (an arbitrary domain list vs. a fixed 0-23/0-59
+>     numeric grammar with a directly type-in-able field), not Combobox/
+>     Autocomplete (neither resolves free text against a bounded numeric
+>     grammar with automatic hour→minute progression), not Input (a raw
+>     text Input has no popup, no keyboard-drivable list, no 24h parsing —
+>     Time Picker adds exactly that on top of Input, it does not replace
+>     it), not Number Input (a number has no format, no colon, no two-part
+>     structure), not Clock (only DISPLAYS the current time, read-only,
+>     never accepts a value), not Duration Picker (an elapsed span with no
+>     fixed origin and no AM/PM concept, vs. a time anchored to one day's
+>     24h cycle), not Scheduler (a page-level composition built AROUND
+>     fields like this one), not Time Range Picker (two Time Pickers plus a
+>     start<end invariant — a consumer's layout/validation concern, not
+>     this field's job). The trigger is Input itself (not its classes
+>     rebuilt); the popup is the actual frozen `<Popover/>` component
+>     (Floating Surface material) — unlike Combobox/MultiSelect/Autocomplete,
+>     which reuse the raised Control Surface popup recipe extracted from
+>     Select, Time Picker's picker is a genuinely separate, self-contained
+>     surface, so composing the real frozen Popover is the more honest,
+>     more reused choice. Rows reuse the frozen Select row's own visual
+>     language (`controlOptionRowClass`/`controlOptionHighlightClass`/
+>     `controlOptionDisabledClass`, already extracted for Combobox/
+>     MultiSelect — zero new export needed anywhere). The canonical value is
+>     ALWAYS a 24h "HH:mm" string; a future 12h/AM-PM display mode is a pure
+>     formatting layer on the same canonical value and cannot break the
+>     picker's two-list architecture. time-picker.tsx grep: zero
+>     `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`
+>     string; `focus` appears as 7 literal `.focus()` calls (hand-rolled
+>     roving reachability between the hour/minute button lists, since a raw
+>     Popover has no bundled roving focus for a custom two-column grid —
+>     same justified pattern as the frozen MultiSelect) plus the native
+>     `onFocus`/`onOpenAutoFocus` props; `requestAnimationFrame`/
+>     `cancelAnimationFrame` (a browser scheduling API, not a decorative
+>     motion effect) are the only `animation`-string occurrences, needed
+>     because the popup's row refs attach one frame after Radix mounts its
+>     Presence-driven content. Input/Select/Checkbox/Radio/Switch/Slider/
+>     SegmentedControl/MultiSelect/Combobox/Autocomplete/OtpInput/Popover
+>     all untouched (grep-verified); zero shared-file diff anywhere (every
+>     `control-surface.tsx`/`popover.tsx` export needed already existed).
+>     A real bug found and fixed during the build: the popup's initial
+>     scroll-to-committed-value silently did nothing on first open, because
+>     the effect ran before Radix's Presence-driven content had actually
+>     mounted the row refs — fixed by deferring the scroll one animation
+>     frame. API: value/defaultValue/onValueChange · granularity hour/minute
+>     · minuteStep · minTime/maxTime · disabled · readOnly · loading ·
+>     required · label/description/helperText/error · name. Proof:
+>     `/dev/time-picker` — states (closed/open/selected/keyboard/disabled/
+>     readOnly/error/loading/required), granularities (hour-only/hour+
+>     minutes), real examples; desktop/tablet/mobile + rich-background +
+>     opened/keyboard/granularities captures. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.
