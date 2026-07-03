@@ -445,7 +445,7 @@
    largeur/hauteur réduites et resserrées (`cellSizeClass` : sm 40×40 →
    32×28, md 48×48 → 40×32, lg 56×56 → 44×36 ; gap `gap-2` → `gap-1.5`),
    même matière, mêmes comportements, aucune logique modifiée.
-   **Time Picker : Built, non gelé** — sélectionner une heure (et
+   **Time Picker : GELÉ (validé visuellement 2026-07-03).** Sélectionner une heure (et
    éventuellement les minutes) représentant une seule valeur ponctuelle.
    Pas Date Picker (grille jour/mois/année vs deux petits nombres bornés),
    pas Calendar (aucune notion de grille), pas Select (liste arbitraire vs
@@ -481,7 +481,9 @@
    initial vers la valeur validée ne faisait rien au premier ouverture).
    Input/Select/Checkbox/Radio/Switch/Slider/SegmentedControl/MultiSelect/
    Combobox/Autocomplete/OtpInput/Popover intacts (grep) ; diff vide sur
-   tous les fichiers partagés. À geler sur validation visuelle explicite.
+   tous les fichiers partagés.
+   Prochaine étape : Date Range Picker (début + fin, trigger Input,
+   calendrier composé des primitives gelées, mode range).
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

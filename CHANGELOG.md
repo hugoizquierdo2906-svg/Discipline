@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Time Picker — frozen (Control Surface).** No functional, visual or
+  architectural change again except an objective bug.
+
 - **OTP Input — frozen (Control Surface), after a cell-geometry
   recalibration pass.** Behavior was validated as-is; the cells initially
   read as mini Cards instead of verification-code boxes, so

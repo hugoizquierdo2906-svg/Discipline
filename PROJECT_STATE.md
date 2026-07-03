@@ -578,13 +578,13 @@
 >     progressive typing/filled/error/disabled/readOnly/autofocus/paste),
 >     lengths (4/6/8), sizes (sm/md/lg); desktop/tablet/mobile +
 >     rich-background captures. `'use client'`.
->   - **Time Picker — Control Surface, composes Input + the frozen Popover
->     (Built, not frozen).**
+>   - **Time Picker — Control Surface, composes Input + the frozen Popover.
+>     FROZEN (visually validated 2026-07-03).**
 >     ```text
 >     Control
 >     the frozen optical-layer stack → Control Surface → Time Picker → Input
 >     → Popover → Scrollable hour/minute lists → Selectable row
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     Select an hour (and optionally minutes) representing exactly ONE
 >     point-in-time value. Not Date Picker (a date is a day-grid with month/
