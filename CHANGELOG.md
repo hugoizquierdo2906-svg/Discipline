@@ -64,6 +64,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Color Picker — composes Input + the frozen Popover + the frozen
+  IconButton (Built, not frozen).** A form field committing exactly ONE
+  color value, chosen visually from a palette or entered as hex; not Input
+  (adds the color grammar ON TOP of Input — the trigger IS an Input), not
+  Select (a color is chosen by seeing it; free hex = open domain), not
+  Combobox/Autocomplete (a fixed format, not a query), not Radio Group/
+  Segmented Control (closed always-visible sets), not Palette/Swatch Grid
+  (internal display structures), not Theme Selector (an app-level mode),
+  not Gradient Editor (a different value type built on top of this one),
+  not Opacity Slider (alpha is a channel, not a color), not RGB/HSL Editor
+  (future alternate input formats inside this same panel), not Hex Input
+  (one internal organ), not Eyedropper (a capture tool), not Canvas
+  Editor/Image Picker, not MultiSelect, not Form Group. Trigger = Input
+  itself (current color as a swatch in the prefix slot); panel = the
+  actual frozen `<Popover/>` holding a `role="listbox"` swatch grid
+  (check-mark = selected, contrast-aware), the real frozen `<Input>` for
+  hex entry and the real frozen `<IconButton>` for copy. Palette ↔ hex
+  synchronized both ways and the panel stays open across picks (iterative
+  choice — MultiSelect precedent); canonical value `#RRGGBB` uppercase;
+  alpha deliberately deferred as a pure future extension (`#RRGGBBAA` +
+  one frozen-Slider row in the same panel). Swatch backgrounds are palette
+  DATA (the candidate values themselves), never material; the built-in
+  24-color default palette is the one documented, narrowly-scoped
+  exception to the Phase-02 no-raw-color-literals rule. color-picker.tsx
+  grep: zero `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/
+  `transition` string; `requestAnimationFrame` (a scheduling API, not
+  decorative motion) is the only `animation`-string occurrence; 3
+  irreducible literal `.focus()` calls (grid roving reachability, initial
+  landing on the current swatch, return-to-field on close). ZERO files
+  modified outside the new component — Input, Popover, IconButton, Icon,
+  Label and Spinner already provided everything.
+
 - **Date Range Picker — composes Input + the frozen DatePicker calendar
   language in range mode (Built, not frozen).** A start and an end date
   representing exactly ONE logical value: a continuous period. Not Date

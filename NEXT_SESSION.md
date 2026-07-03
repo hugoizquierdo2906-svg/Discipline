@@ -516,8 +516,46 @@
    restaurer, l'ancre est Input). grep zéro GlassSurface/blur/
    backdrop-filter/rgba/shadow/transition/animation. Tous les composants
    gelés intacts.
-   Prochaine étape : Color Picker (trigger Input, panneau Popover gelé,
-   palette prédéfinie + saisie HEX synchronisées, copie de valeur).
+   **Color Picker : Built, non gelé** — un champ validant UNE valeur de
+   couleur, choisie visuellement dans une palette ou saisie en hex. Pas
+   Input (aucun aperçu/palette/popup/grammaire couleur — Color Picker
+   ajoute exactement cela PAR-DESSUS Input, le trigger EST un Input), pas
+   Select (des lignes de texte étiquetées vs une couleur choisie en la
+   VOYANT ; la saisie hex libre = domaine ouvert), pas Combobox/
+   Autocomplete (le hex est un FORMAT fixe, pas une requête), pas Radio
+   Group/Segmented Control (petits ensembles fermés toujours visibles ;
+   la palette n'est qu'un raccourci dans un espace ouvert), pas Palette/
+   Swatch Grid (les structures d'affichage composées à l'intérieur — pas
+   de champ/popup/valeur seules), pas Theme Selector (un MODE applicatif,
+   un paquet nommé de tokens, vs une couleur littérale dans un champ), pas
+   Gradient Editor (plusieurs couleurs + stops + direction — un autre type
+   de valeur construit AU-DESSUS de celui-ci), pas Opacity Slider (l'alpha
+   est un CANAL d'une couleur, pas une couleur), pas RGB/HSL Editor (des
+   formats de saisie alternatifs qu'une extension future ajouterait DANS
+   ce même panneau, jamais des frères), pas Hex Input (un organe interne
+   de ce composant), pas Eyedropper (un OUTIL de capture d'écran, pas un
+   champ), pas Canvas Editor/Image Picker, pas MultiSelect (UNE couleur,
+   jamais une collection), pas Form Group. Trigger = Input lui-même
+   (pastille de la couleur courante dans le slot prefix, hex validé comme
+   texte, jamais de saisie libre — convention DatePicker/DateRangePicker) ;
+   panneau = le vrai `<Popover/>` gelé contenant une grille de pastilles
+   `role="listbox"` (coche = sélection, contraste auto), le vrai `<Input>`
+   gelé pour le hex, le vrai `<IconButton>` gelé pour la copie. Palette ↔
+   hex synchronisés dans les deux sens (vérifié programmatiquement) ; le
+   panneau reste ouvert entre les choix (choix itératif, précédent
+   MultiSelect). Valeur canonique `#RRGGBB` majuscule ; l'alpha est
+   volontairement différé (extension pure `#RRGGBBAA` + une ligne Slider
+   gelé dans ce même panneau, rien ne casse plus tard). Les fonds des
+   pastilles sont des DONNÉES de palette, jamais de la matière ; la
+   palette par défaut (24 entrées) est l'unique exception documentée et
+   circonscrite à la règle Phase-02 interdisant les littéraux de couleur
+   (domaine de valeurs = data, la règle protège la MATIÈRE). grep zéro
+   GlassSurface/blur/backdrop-filter/rgba/shadow/transition ;
+   `requestAnimationFrame` est la seule occurrence du mot `animation` ;
+   3 appels `.focus()` littéraux irréductibles (navigation de grille,
+   atterrissage initial, retour au champ). ZÉRO fichier modifié hors du
+   nouveau composant — Input/Popover/IconButton/Icon/Label/Spinner
+   fournissaient déjà tout. À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

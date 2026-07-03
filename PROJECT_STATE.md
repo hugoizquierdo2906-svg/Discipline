@@ -712,6 +712,87 @@
 >     assertions for open/close, start/end, inversion, keyboard, month
 >     navigation, focus return, ARIA, disabled/readOnly/loading,
 >     validation. `'use client'`.
+>   - **Color Picker — Control Surface, composes Input + the frozen Popover
+>     + the frozen IconButton (Built, not frozen).**
+>     ```text
+>     Control
+>     the frozen optical-layer stack → Control Surface → Color Picker
+>     → Input (trigger) → Popover (frozen Floating pane) → Palette listbox
+>     + Hex Input + Copy IconButton
+>     Status: Built (non frozen)
+>     ```
+>     A form field committing exactly ONE color value, chosen visually from
+>     a palette or entered as hex. Not Input (no swatch preview, no palette,
+>     no popup, no color grammar — Color Picker adds exactly that ON TOP of
+>     Input, the trigger IS an Input), not Select (labeled text rows vs. a
+>     color chosen by SEEING it, and free hex entry means the domain is
+>     open, not a closed list), not Combobox/Autocomplete (nothing searched
+>     or completed — hex is a fixed 6-digit FORMAT, not a query), not Radio
+>     Group/Segmented Control (small closed sets of labeled, always-visible
+>     choices; the palette is only a shortcut inside an open value space),
+>     not Palette/Swatch Grid (the display structures this field composes
+>     internally — no field, no popup, no committed value on their own),
+>     not Theme Selector (an app-level MODE, a named bundle of many tokens,
+>     vs. one literal color in one field), not Gradient Editor (several
+>     colors + stops + direction — a different value type built ON TOP of
+>     single-color picking), not Opacity Slider (alpha is one CHANNEL of a
+>     color, not a color), not RGB/HSL Editor (channel-by-channel editing
+>     surfaces — alternate input formats a future extension could add
+>     INSIDE this same panel, never siblings), not Hex Input (one internal
+>     organ of this component — alone it has no palette, preview or popup),
+>     not Eyedropper (a screen-sampling capture TOOL, not a form field),
+>     not Canvas Editor/Image Picker (drawing/file selection — different
+>     value types), not MultiSelect (ONE color, never a collection), not
+>     Form Group (one field, one logical value — palette, hex field and
+>     copy action are the value's own input organs). The trigger is Input
+>     itself: the current color sits in Input's own prefix slot as a small
+>     swatch, the text is the committed hex, never free-typed (frozen
+>     DatePicker/DateRangePicker convention); Palette icon / Spinner in the
+>     suffix slot. The panel is the actual frozen `<Popover/>` (Floating
+>     Surface — TimePicker precedent): a `role="listbox"` swatch grid using
+>     the Select family's check-mark = selected language (contrast-aware
+>     mark via a perceived-brightness check), the real frozen `<Input>` for
+>     hex entry, the real frozen `<IconButton>` for copy (icon flips to a
+>     ✓ for 1.5s). Palette ↔ hex perfectly synchronized both ways (verified
+>     programmatically in both directions); the panel STAYS OPEN across
+>     picks (color choice is iterative — MultiSelect precedent), closes on
+>     Escape/outside. Canonical value: `#RRGGBB` uppercase, '' when empty;
+>     "RGB"/"#RGB"/"RRGGBB"/"#RRGGBB" all accepted on entry (3-digit
+>     shorthand commits on Enter only, so typing a full value never commits
+>     a wrong intermediate color; a complete 6-digit value live-commits as
+>     typed). Alpha deliberately NOT implemented: an eventual `alpha` prop
+>     would extend the canonical string to #RRGGBBAA and add one opacity
+>     row (the frozen Slider) inside this same panel — a pure extension,
+>     nothing breaks later. Swatch backgrounds are set from palette DATA
+>     (`style.backgroundColor` = the candidate value itself — a Select
+>     option's label, an Avatar's image), never this component's own
+>     material, which stays 100% frozen-token glass; the built-in default
+>     palette (24 entries) is the one documented, narrowly-scoped exception
+>     to the Phase-02 no-raw-color-literals rule (value domain = data, the
+>     rule keeps MATERIAL token-pure). color-picker.tsx grep: zero
+>     `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`
+>     string; `requestAnimationFrame` (a browser scheduling API, not
+>     decorative motion — TimePicker precedent) is the only
+>     `animation`-string occurrence; `focus` = 3 literal `.focus()` calls
+>     (swatch grid roving reachability, initial landing on the current
+>     swatch, return-to-field on close — all irreducible, same justified
+>     patterns as MultiSelect/TimePicker/DateRangePicker) + the `autoFocus`
+>     props. ZERO modified files outside the new component — not even an
+>     additive shared-file extension was needed; Input, Popover,
+>     IconButton, Icon, Label and Spinner already provided everything
+>     (cleanest composition since Autocomplete). API:
+>     value/defaultValue/onValueChange · palette (default
+>     `colorPickerDefaultPalette`, 24 entries) · disabled · readOnly ·
+>     loading · required · invalid · autoFocus ·
+>     label/description/placeholder/helperText/error · name (hidden field)
+>     · className · data-testid. Proof: `/dev/color-picker` — states
+>     (empty/open/with-value/keyboard/hex-entry/loading/disabled/readOnly/
+>     error/invalid/required), custom palette, real examples;
+>     desktop/tablet/mobile + rich-background + opened/picked/keyboard
+>     captures; programmatic assertions for open/close, mouse pick,
+>     palette→hex and hex→palette sync, custom hex entry + normalization,
+>     copy-to-clipboard, keyboard grid navigation, focus landing/return,
+>     ARIA, disabled/readOnly/loading, validation. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.
