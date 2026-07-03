@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Slider — rebuilt on the Micro Surface material (Built, not frozen).**
+  Replaced the old Level-1 flat recipe (plain `bg-surface` track, flat
+  `bg-accent` range, bordered `bg-surface-raised` thumb) with the same real
+  glass already validated on Switch: Track and Thumb each nest the frozen
+  optical-layer stack, the Range reuses Switch's checked-rail illumination
+  recipe unconditionally. `micro-control.tsx` gained three additive exports
+  (`MicroGlass`, `microControlThumbMotionClass`,
+  `microControlActiveGlassClass`) so `slider.tsx` never names the material,
+  motion or shadow recipes directly (grep-provable: zero `GlassSurface`/
+  `backdrop-filter`/`blur`/`box-shadow`/`rgba`/`transition`/`animation`/
+  `focus` string in the file). Checkbox/Radio/Switch are untouched; the
+  dead, zero-consumer `microControlThumbClass` (superseded by Switch's own
+  visual-correction pass) was removed in the same pass. Closes the Micro
+  Surface foundation — Checkbox, Radio, Switch and Slider are now all built.
+
 - **Switch — frozen (Micro Surface).** After a dedicated visual-correction
   pass (rail material restored via the real `<GlassSurface/>` stack, checked
   state expressed as `color-mix(in_srgb, var(--ds-color-accent) 42%,

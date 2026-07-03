@@ -634,6 +634,47 @@
 >     switch gating children; desktop/tablet/mobile + rich-background +
 >     keyboard captures (focus ring on the master, Space → off, children
 >     disabled). 'use client'.
+>   - **Slider — Micro Surface, last major Micro member. Built (visual
+>     validation pending; NOT frozen).** Closes the Micro Surface foundation:
+>     Checkbox, Radio, Switch and Slider are now all built.
+>     ```text
+>     Micro
+>     the frozen optical-layer stack → Micro Surface (.ds-glass .ds-micro) →
+>     micro-control → Slider
+>     Status: Built (non frozen)
+>     ```
+>     A continuous value manipulated by direct position — not Switch (binary,
+>     no state at all vs a value), not Progress (system-driven/read-only vs
+>     user-driven/read-write), not a Range Slider (two thumbs — a later,
+>     separate primitive), not a Scrollbar (viewport position, not a business
+>     value). Same family as Checkbox/Radio/Switch: Track and Thumb each nest
+>     the real glass stack; the Range (filled portion) reuses the frozen
+>     Switch checked-rail recipe verbatim, generalized to an UNCONDITIONAL
+>     class (`microControlActiveGlassClass`, new in micro-control.tsx) since
+>     Range has no on/off state. Grep-provable foundation discipline: slider.tsx
+>     contains zero `GlassSurface`/`backdrop-filter`/`blur`/`box-shadow`/`rgba`/
+>     `transition`/`animation`/`focus` string — every optical/motion decision
+>     is imported by name from `micro-control.tsx` (`MicroGlass`,
+>     `microControlThumbMotionClass`, `microControlActiveGlassClass`, plus the
+>     already-frozen `microControlInvalidClass`). ADDITIVE-ONLY extension of
+>     micro-control.tsx: Checkbox/Radio/Switch untouched (grep-verified);
+>     the dead, zero-consumer `microControlThumbClass` (superseded by Switch's
+>     own visual-correction pass) was removed in the same pass. On Radix
+>     Slider: Arrow keys, Home/End, Page Up/Down, Tab/Shift+Tab, full ARIA,
+>     reduced-motion. API: value/defaultValue/onValueChange (always
+>     controlled internally so `readOnly` can pin the value regardless of
+>     controlled/uncontrolled usage — the same inert-handler pattern as
+>     RadioGroup) · min/max/step · disabled · readOnly (reachable, drag/arrows
+>     inert — verified programmatically) · invalid · required (surfaced via
+>     `aria-required`; Radix Slider has no native `required`) · orientation
+>     horizontal/vertical · size sm/md/lg · label · description · error ·
+>     helperText. Proof: `/dev/slider` — states, sizes, orientation
+>     (horizontal + vertical), values (0→100, Weight, Body Fat, Calories,
+>     Protein, Hydration, Intensity, Recovery), real examples (workout
+>     intensity, training volume, nutrition, daily steps, macro split,
+>     recovery score, coach difficulty, program progression);
+>     desktop/tablet/mobile + rich-background + focus + keyboard captures.
+>     'use client'. Awaiting explicit freeze.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

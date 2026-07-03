@@ -297,7 +297,18 @@
    readOnly/required/labelPosition) + CheckboxGroup (fieldset, contexte
    disabled/invalid). Radio a composé micro-control.tsx verbatim à son audit ;
    Switch, lui, s'en est écarté volontairement (voir plus haut) pour porter le
-   verre réel sur son rail 44×24.
+   verre réel sur son rail 44×24. **Slider : Built, non gelé** — dernier
+   membre majeur du Micro, clôture la fondation Micro (Checkbox/Radio/Switch/
+   Slider tous construits). Track + Thumb imbriquent le vrai verre ; le Range
+   réutilise verbatim la recette du rail Switch coché, généralisée en classe
+   inconditionnelle (`microControlActiveGlassClass`, additive dans
+   micro-control.tsx) puisque le Range n'a pas d'état on/off. slider.tsx grep
+   zéro GlassSurface/backdrop-filter/blur/box-shadow/rgba/transition/
+   animation/focus — tout vient de micro-control.tsx par le nom. Checkbox/
+   Radio/Switch intacts (grep) ; `microControlThumbClass`, mort (zéro
+   consommateur depuis la correction visuelle de Switch), supprimé au passage.
+   readOnly vérifié programmatiquement (flèches + drag inertes). À geler sur
+   validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
