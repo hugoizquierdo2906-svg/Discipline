@@ -516,7 +516,7 @@
    restaurer, l'ancre est Input). grep zéro GlassSurface/blur/
    backdrop-filter/rgba/shadow/transition/animation. Tous les composants
    gelés intacts.
-   **Color Picker : Built, non gelé** — un champ validant UNE valeur de
+   **Color Picker : GELÉ (validé visuellement 2026-07-03).** Un champ validant UNE valeur de
    couleur, choisie visuellement dans une palette ou saisie en hex. Pas
    Input (aucun aperçu/palette/popup/grammaire couleur — Color Picker
    ajoute exactement cela PAR-DESSUS Input, le trigger EST un Input), pas
@@ -555,7 +555,9 @@
    3 appels `.focus()` littéraux irréductibles (navigation de grille,
    atterrissage initial, retour au champ). ZÉRO fichier modifié hors du
    nouveau composant — Input/Popover/IconButton/Icon/Label/Spinner
-   fournissaient déjà tout. À geler sur validation visuelle explicite.
+   fournissaient déjà tout.
+   Prochaine étape : Alert Dialog (compose le Modal/Dialog immersif,
+   confirmation bloquante, variantes destructive/neutre).
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

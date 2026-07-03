@@ -713,13 +713,13 @@
 >     navigation, focus return, ARIA, disabled/readOnly/loading,
 >     validation. `'use client'`.
 >   - **Color Picker — Control Surface, composes Input + the frozen Popover
->     + the frozen IconButton (Built, not frozen).**
+>     + the frozen IconButton. FROZEN (visually validated 2026-07-03).**
 >     ```text
 >     Control
 >     the frozen optical-layer stack → Control Surface → Color Picker
 >     → Input (trigger) → Popover (frozen Floating pane) → Palette listbox
 >     + Hex Input + Copy IconButton
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     A form field committing exactly ONE color value, chosen visually from
 >     a palette or entered as hex. Not Input (no swatch preview, no palette,
