@@ -280,6 +280,57 @@
 >     API removed, both dev consumers migrated. Proof: `/dev/file-input`
 >     (family + states + previews + validation, desktop/tablet/mobile).
 >     `'use client'`.
+>   - **SegmentedControl — Control Surface, first member built on top of the
+>     now-frozen Micro foundation. Built (visual validation pending; NOT
+>     frozen).**
+>     ```text
+>     Control
+>     the frozen optical-layer stack → Control Surface (.ds-glass .ds-control)
+>     → SegmentedControl
+>     Status: Built (non frozen)
+>     ```
+>     An exclusive choice among 2–6 visible options, optimized for instant
+>     comparison — not RadioGroup (a form field: label + description per
+>     option, a long list, read top to bottom), not Tabs (owns a content
+>     panel — SegmentedControl only changes a value, nothing else on the page
+>     is implied to change), not a Button Group (independent actions, each
+>     fires something — a segment never fires, it only marks "this one"),
+>     not a Toggle Group (items independently on/off — a segment is
+>     exclusive by construction), not Select (trades visibility for density
+>     on long lists — SegmentedControl trades density for visibility, never
+>     hides an option). Built on the SAME Radix primitive as the frozen
+>     Radio (`@radix-ui/react-radio-group`: roving reachability, Arrow keys
+>     move AND select, full ARIA) — reused, not reinvented — but composed
+>     directly rather than nesting the `<Radio>` component (entirely
+>     different geometry: a compact strip, not a labeled list). The strip is
+>     the SAME recessed Control Surface glass Input/Select already use
+>     (`<ControlSurface/>` inside `.ds-glass .ds-control`). Every segment
+>     nests its own glass layers (`.ds-glass ds-micro` — deliberately
+>     Micro-tuned, not the Control-tuned recipe it would otherwise inherit
+>     from its `.ds-control` ancestor, so a selected segment reads
+>     byte-identical to the frozen Switch rail), kept invisible at rest and
+>     revealed only once selected — new `microControlSelectedGlassClass` in
+>     `micro-control.tsx`, the `data-state`-gated sibling of Slider's
+>     `microControlActiveGlassClass` (additive; Checkbox/Radio/Switch/Slider
+>     untouched, grep-verified). segmented-control.tsx grep: zero
+>     `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`/
+>     `animation`/`focus` string — every optical/motion decision is imported
+>     by name. Invalid state reuses the frozen `.ds-control--error` edge tint
+>     (`controlStateClass`), NOT the Micro invalid rim — SegmentedControl is
+>     a Control Surface member, so its error language matches Input/Select,
+>     not Checkbox/Radio/Switch/Slider. readOnly: same controlled/no-handler
+>     inert pattern as the frozen RadioGroup (verified programmatically:
+>     click and Arrow keys are inert). API: value/defaultValue/onValueChange
+>     · disabled · readOnly · invalid · required (marker + native) ·
+>     orientation horizontal/vertical · size sm/md/lg · label · description ·
+>     error · helperText. Compound API: `SegmentedControl` +
+>     `SegmentedControl.Item` (children-based, mirroring RadioGroup/Radio).
+>     Proof: `/dev/segmented-control` — states (default/selected/hover/
+>     focused/disabled/readOnly/invalid/required), sizes, orientation
+>     (horizontal + vertical), real examples (units, system, range,
+>     appearance, sex, portfolio, fitness level, program focus);
+>     desktop/tablet/mobile + rich-background + hover + focus + keyboard
+>     captures. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.

@@ -50,6 +50,14 @@ export const microControlThumbMotionClass = cn(
   'transition-transform duration-fast ease-standard motion-reduce:transition-none',
 )
 
+/** Motion for an element whose fill/glow toggles (not position) — the exact
+ * recipe the frozen Switch rail already uses, extracted so a new consumer
+ * (e.g. a Segmented Control item switching between neutral and the
+ * illuminated accent) never writes its own motion recipe. */
+export const microControlColorMotionClass = cn(
+  'transition-[background-color,box-shadow] duration-fast ease-standard motion-reduce:transition-none',
+)
+
 /** The "illuminated" Micro accent — light diffusing through an unmodified
  * glass body, not a painted fill. Same values as the frozen Switch checked
  * rail (--ds-color-accent at 42% density behind the existing backdrop-filter,
@@ -62,4 +70,19 @@ export const microControlActiveGlassClass = cn(
   'bg-[color-mix(in_srgb,var(--ds-color-accent)_42%,transparent)]',
   'shadow-[0_2px_18px_rgba(139,124,255,0.22)]',
   '[&>.ds-glass__body>.ds-glass__violet]:opacity-100',
+)
+
+/** The same illuminated accent, gated behind `data-state=checked` instead of
+ * unconditional — for a Micro/Control element that TOGGLES between neutral
+ * and active (e.g. one segment of a Segmented Control). Also reveals the
+ * element's own nested glass layers (hidden at rest) only once selected, so
+ * an unselected sibling carries zero material weight. */
+export const microControlSelectedGlassClass = cn(
+  '[&>.ds-glass__shadow]:opacity-0 [&>.ds-glass__body]:opacity-0 [&>.ds-glass__edge]:opacity-0',
+  'data-[state=checked]:[&>.ds-glass__shadow]:opacity-100',
+  'data-[state=checked]:[&>.ds-glass__body]:opacity-100',
+  'data-[state=checked]:[&>.ds-glass__edge]:opacity-100',
+  'data-[state=checked]:bg-[color-mix(in_srgb,var(--ds-color-accent)_42%,transparent)]',
+  'data-[state=checked]:shadow-[0_2px_18px_rgba(139,124,255,0.22)]',
+  'data-[state=checked]:[&>.ds-glass__body>.ds-glass__violet]:opacity-100',
 )

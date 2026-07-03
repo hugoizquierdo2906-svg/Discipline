@@ -309,9 +309,27 @@
    vient de micro-control.tsx par le nom. Checkbox/Radio/Switch intacts
    (grep) ; `microControlThumbClass`, mort (zéro consommateur depuis la
    correction visuelle de Switch), supprimé au passage. readOnly vérifié
-   programmatiquement (flèches + drag inertes). **Prochaine étape :
-   Segmented Control — premier composant Control construit au-dessus de la
-   fondation Micro désormais entièrement gelée.**
+   programmatiquement (flèches + drag inertes). **SegmentedControl : Built,
+   non gelé** — premier membre Control construit au-dessus de la fondation
+   Micro désormais entièrement gelée. Choix exclusif entre 2 et 6 options
+   toutes visibles ; pas RadioGroup (champ de formulaire, liste longue), pas
+   Tabs (pilote un panneau de contenu), pas Button Group (actions
+   indépendantes), pas Toggle Group (items indépendamment on/off), pas
+   Select (échange visibilité contre densité). Bâti sur le même primitif
+   Radix que Radio gelé (`@radix-ui/react-radio-group`) composé directement
+   (pas de nesting du composant `<Radio>` — géométrie totalement
+   différente). Le conteneur est le même verre Control Surface qu'Input/
+   Select (`<ControlSurface/>` dans `.ds-glass .ds-control`) ; chaque
+   segment imbrique son propre verre en `.ds-micro` (pas hérité du parent
+   `.ds-control`, pour lire à l'identique du rail Switch gelé), invisible au
+   repos, révélé uniquement sélectionné via le nouveau
+   `microControlSelectedGlassClass` (additif, sibling gated-par-data-state
+   du `microControlActiveGlassClass` de Slider). segmented-control.tsx grep
+   zéro GlassSurface/blur/backdrop-filter/rgba/shadow/transition/animation/
+   focus. Checkbox/Radio/Switch/Slider intacts (grep). Invalid réutilise le
+   rim `.ds-control--error` gelé (pas le langage Micro) — cohérent avec son
+   rôle Control. readOnly vérifié programmatiquement (clic + flèches
+   inertes). À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

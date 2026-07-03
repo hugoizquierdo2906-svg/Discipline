@@ -37,6 +37,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **SegmentedControl — first Control Surface member built on the frozen
+  Micro foundation (Built, not frozen).** An exclusive choice among 2–6
+  visible options; not RadioGroup (a form field), not Tabs (owns a content
+  panel), not a Button Group (independent actions), not a Toggle Group
+  (independently on/off), not Select (trades visibility for density). Built
+  on the same Radix primitive as the frozen Radio
+  (`@radix-ui/react-radio-group`) composed directly. The strip is the same
+  Control Surface glass Input/Select already use; every segment nests its
+  own Micro-tuned glass, invisible at rest and revealed only once selected
+  via the new `microControlSelectedGlassClass` (additive in
+  `micro-control.tsx`) — reading byte-identical to the frozen Switch rail.
+  segmented-control.tsx grep: zero `GlassSurface`/`blur`/`backdrop-filter`/
+  `rgba`/`shadow`/`transition`/`animation`/`focus` string. Checkbox, Radio,
+  Switch and Slider are untouched.
+
 - **Phase 03 — Component Library (Level 1 Primitives).** 28 generic,
   token-driven, accessible primitives in `src/components/ui` built on Radix UI +
   class-variance-authority, with a `cn()` class-merge utility:
