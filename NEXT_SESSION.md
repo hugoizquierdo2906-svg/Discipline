@@ -356,7 +356,7 @@
    Select/Checkbox/Radio/Switch/Slider/SegmentedControl intacts (grep).
    **Les Selection Controls sont désormais officiellement complets et gelés :
    Checkbox · Radio · Switch · Slider · SegmentedControl · MultiSelect.**
-   **Combobox : Built, non gelé** — valeur unique trouvée par recherche dans
+   **Combobox : GELÉ (validé visuellement 2026-07-03)** — valeur unique trouvée par recherche dans
    une très grande liste. Pas Select (liste courte, entièrement lisible, pas
    besoin de recherche), pas MultiSelect (plusieurs valeurs, reste ouvert),
    pas Command Palette (surface globale vs champ scopé), pas Search Input
@@ -384,7 +384,7 @@
    Germany). Limite connue et documentée : le rim rouge d'Input nécessite un
    vrai message d'erreur (même contrainte que Select) ; `invalid` seul pose
    `aria-invalid` correctement mais n'a pas d'effet visuel de rim en
-   composant Input gelé tel quel. À geler sur validation visuelle explicite.
+   composant Input gelé tel quel. **Prochaine étape : Autocomplete.**
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

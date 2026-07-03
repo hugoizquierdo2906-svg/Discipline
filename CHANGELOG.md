@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Combobox — frozen (Control Surface).** No functional, visual or
+  architectural change again except an objective bug.
+
 - **MultiSelect — frozen (Control Surface). The Selection Controls are now
   officially complete and frozen: Checkbox, Radio, Switch, Slider,
   SegmentedControl, MultiSelect.** No functional, visual or architectural

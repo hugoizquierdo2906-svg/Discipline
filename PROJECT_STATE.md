@@ -386,13 +386,14 @@
 >     desktop/tablet/mobile + rich-background + opened/closed/selection/
 >     disabled/keyboard captures. `'use client'`.
 >   - **Combobox — Control Surface, composes Input + the frozen Control
->     Surface popup + the frozen Select row language. Built (visual
->     validation pending; NOT frozen).**
+>     Surface popup + the frozen Select row language. FROZEN (visually
+>     validated 2026-07-03).** No functional, visual or architectural change
+>     again — objective bugs only.
 >     ```text
 >     Control
 >     the frozen optical-layer stack → Control Surface → Combobox → Input →
 >     Popup → Scrollable list → Selectable row
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     A single value found through search across a very large list — not
 >     Select (built for a short, fully-legible list; no search needed), not
