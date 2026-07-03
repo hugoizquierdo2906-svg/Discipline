@@ -92,6 +92,24 @@
   outline-offset: 1px;
 }
 
+/* Range selection (Date Range Picker) — STRICTLY ADDITIVE extension.
+ * react-day-picker's `mode="range"` marks both endpoints `.rdp-selected`,
+ * so they inherit the selected-day recipe above verbatim; only the days
+ * BETWEEN the endpoints need a rule of their own. They carry the same
+ * accent-subtle whisper already used site-wide for highlighted rows —
+ * a band of captured light between two anchored days, never a second
+ * solid fill. No new color, opacity or material value; radius squared
+ * only on the band so the period reads as one continuous span. */
+.ds-datepicker-calendar .rdp-range_middle .rdp-day_button {
+  background-color: var(--ds-color-accent-subtle);
+  color: var(--ds-color-text);
+  font-weight: 400;
+  border-radius: 0;
+}
+.ds-datepicker-calendar .rdp-range_middle .rdp-day_button:hover {
+  background-color: var(--ds-color-accent-subtle);
+}
+
 /* Overlay entrance — same quality as the future Popover: a short, calm rise
  * (opacity + translateY + a very light scale, no bounce). 150ms, ease-out. */
 @keyframes ds-datepicker-in {

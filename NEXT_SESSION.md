@@ -482,8 +482,40 @@
    Input/Select/Checkbox/Radio/Switch/Slider/SegmentedControl/MultiSelect/
    Combobox/Autocomplete/OtpInput/Popover intacts (grep) ; diff vide sur
    tous les fichiers partagés.
-   Prochaine étape : Date Range Picker (début + fin, trigger Input,
-   calendrier composé des primitives gelées, mode range).
+   **Date Range Picker : Built, non gelé** — un début et une fin
+   représentant UNE valeur logique : une période continue. Pas Date Picker
+   (un seul jour, ferme — une période est un autre type de valeur : deux
+   ancres ordonnées + tout ce qui est entre, avec état partiel, inversion
+   et bande de sélection), pas Calendar (la grille de jours à laquelle un
+   picker délègue), pas Time Picker (heures dans une journée), pas
+   DateTime Picker (un instant vs un intervalle de jours), pas Range
+   Slider (deux nombres sur un axe, aucune structure calendaire), pas Time
+   Range Picker (deux heures dans une journée), pas Month/Year Picker (une
+   unité plus grossière, toujours une seule ancre), pas MultiSelect
+   (valeurs indépendantes non ordonnées vs deux ancres ordonnées — on ne
+   peut pas désélectionner le milieu), pas Combobox (rien n'est cherché),
+   pas Scheduler/Booking/Availability Calendar (compositions de page
+   construites AUTOUR d'un champ comme celui-ci), pas Timeline/Gantt
+   (visualisations en lecture de plusieurs intervalles), pas Form Group
+   (un seul champ, une seule valeur). Trigger = Input lui-même (période
+   formatée, jamais saisie libre — convention du DatePicker gelé) ;
+   panneau = le langage calendrier du DatePicker gelé en `mode="range"`
+   (FloatingSurface + ds-datepicker-content/-calendar, même moteur
+   react-day-picker, même clavier, même ARIA). UNE règle strictement
+   additive dans `date-picker.css` (`.rdp-range_middle` — le surlignage
+   accent-subtle déjà utilisé partout, comme bande de période ; insertion
+   pure, le DatePicker gelé rend à l'identique). Grammaire pilotée par
+   l'état + le jour cliqué (bug réel trouvé et corrigé : rdp v9 renvoie
+   `{from: jour, to: jour}` dès le PREMIER clic, ce qui validait
+   instantanément une période d'un jour) : premier clic ancre le début
+   (reste ouvert, "Jul 10, 2026 – …"), second clic ancre la fin et ferme,
+   une fin antérieure au début s'inverse en place, un clic sur une période
+   complète en démarre une nouvelle. Le focus entre dans la grille à
+   l'ouverture et revient au champ à la fermeture (UN `.focus()` littéral
+   irréductible dans `onCloseAutoFocus` — aucun Trigger Radix pour le
+   restaurer, l'ancre est Input). grep zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition/animation. Tous les composants
+   gelés intacts. À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

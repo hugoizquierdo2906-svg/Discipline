@@ -641,6 +641,76 @@
 >     readOnly/error/loading/required), granularities (hour-only/hour+
 >     minutes), real examples; desktop/tablet/mobile + rich-background +
 >     opened/keyboard/granularities captures. `'use client'`.
+>   - **Date Range Picker — Control Surface, composes Input + the frozen
+>     DatePicker calendar language in range mode (Built, not frozen).**
+>     ```text
+>     Control
+>     the frozen optical-layer stack → Control Surface → Date Range Picker
+>     → Input (trigger) → Popover surface (.ds-floating) → Calendar grid
+>     → Range
+>     Status: Built (non frozen)
+>     ```
+>     A start and an end date representing exactly ONE logical value: a
+>     continuous period. Not Date Picker (commits ONE day and closes; a
+>     period is a different value type — two ordered anchors + everything
+>     between, with its own grammar: partial state, inversion, in-range
+>     band), not Calendar (the day-grid a picker delegates to — renders
+>     days, holds no field/popup/value), not Time Picker (hours inside one
+>     day vs. days across months), not DateTime Picker (one instant vs. a
+>     span of days), not Range Slider (two numbers on a continuous axis by
+>     dragging — no calendar structure), not Time Range Picker (two times
+>     within a day), not Month/Year Picker (one coarser unit, still a
+>     single anchor, never a pair), not MultiSelect (independent unordered
+>     values vs. two ORDERED anchors implying everything between — you
+>     cannot deselect the middle), not Combobox (nothing searched or
+>     matched), not Scheduler/Booking Calendar/Availability Calendar
+>     (page-level compositions built AROUND a field like this), not
+>     Timeline/Gantt (read-oriented visualizations of many spans vs. one
+>     input for one span), not Form Group (one field, one value — start/end
+>     are the value's own internal structure). The trigger is Input itself
+>     (`.ds-glass .ds-control` well, meta row, suffix slot inherited; the
+>     displayed text is the formatted period, never free-typed — frozen
+>     DatePicker convention). The overlay is the SAME Floating Surface +
+>     calendar language the frozen DatePicker validated (`floatingHostClass`
+>     + `<FloatingSurface/>` + `ds-datepicker-content`/
+>     `ds-datepicker-calendar`, react-day-picker in `mode="range"` — same
+>     engine, keyboard model and ARIA). ONE strictly additive rule appended
+>     to `date-picker.css` (`.rdp-range_middle`): the in-range band reuses
+>     the site-wide accent-subtle highlight, no new color/opacity/material
+>     value; the frozen DatePicker's own rendering is byte-identical (the
+>     class never appears in single mode; pure insertion, zero existing
+>     lines changed). Selection grammar (driven from committed state + the
+>     picked day, NOT react-day-picker's suggestion — a real bug found and
+>     fixed during the build: v9's range mode returns `{from: day, to: day}`
+>     on the very FIRST pick, which would commit an instantly complete
+>     single-day period and close): first pick anchors the start (popup
+>     stays open, field shows "Jul 10, 2026 – …"), second pick anchors the
+>     end and closes; an end picked EARLIER than the start swaps into place
+>     (a period has no invalid orientation — verified programmatically:
+>     picking 20 then 12 commits 12→20); picking any day over a complete
+>     period starts a fresh one. Focus moves into the grid on open (frozen
+>     DatePicker precedent) and is handed back to the field on close via
+>     `onCloseAutoFocus` (ONE literal `.focus()` call — irreducible, there
+>     is no Radix Trigger to restore it since the anchor is Input itself).
+>     date-range-picker.tsx grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string;
+>     `focus` appears as that one `.focus()` call + the `autoFocus` props
+>     (consumer opt-in on the field; DayPicker grid autofocus, both with
+>     the frozen DatePicker's own precedent) + Radix's `onCloseAutoFocus`
+>     prop name. Input/Select/DatePicker/Checkbox/Radio/Switch/Slider/
+>     SegmentedControl/MultiSelect/Combobox/Autocomplete/OtpInput/
+>     TimePicker/Popover all untouched (grep-verified). API:
+>     value/defaultValue/onChange ({from, to}) · minDate/maxDate · locale ·
+>     format · disabled · readOnly · loading · required · invalid ·
+>     autoFocus · label/description/helperText/error · name (two hidden
+>     yyyy-MM-dd fields `-start`/`-end`) · className · data-testid. Proof:
+>     `/dev/date-range-picker` — states (empty/open/partial/complete/
+>     keyboard/inversion/month-nav/loading/disabled/readOnly/error/invalid/
+>     required), bounds, real examples; desktop/tablet/mobile +
+>     rich-background + opened/partial/keyboard captures; programmatic
+>     assertions for open/close, start/end, inversion, keyboard, month
+>     navigation, focus return, ARIA, disabled/readOnly/loading,
+>     validation. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.

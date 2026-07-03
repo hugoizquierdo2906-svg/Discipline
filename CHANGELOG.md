@@ -61,6 +61,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Date Range Picker — composes Input + the frozen DatePicker calendar
+  language in range mode (Built, not frozen).** A start and an end date
+  representing exactly ONE logical value: a continuous period. Not Date
+  Picker (one day, closes — a period is a different value type: two
+  ordered anchors + everything between, with partial state, inversion and
+  an in-range band), not Calendar (the day-grid a picker delegates to),
+  not Time Picker/DateTime Picker/Time Range Picker (time-of-day
+  concerns), not Range Slider (two numbers on an axis), not Month/Year
+  Picker (one coarser single anchor), not MultiSelect (independent
+  unordered values — you cannot deselect the middle of a period), not
+  Combobox, not Scheduler/Booking/Availability Calendar (page-level
+  compositions around a field like this), not Timeline/Gantt (read
+  visualizations), not Form Group (one field, one value). Trigger is
+  Input itself; overlay is the frozen DatePicker calendar (FloatingSurface
+  + `ds-datepicker-*`, react-day-picker `mode="range"`). ONE strictly
+  additive rule in `date-picker.css` (`.rdp-range_middle` in-range band =
+  the site-wide accent-subtle highlight; pure insertion, frozen DatePicker
+  renders byte-identical). Selection grammar driven from committed state +
+  picked day — a real react-day-picker v9 behavior bug found and fixed
+  during the build (its range mode returns `{from: day, to: day}` on the
+  very first pick, which would instantly commit a complete single-day
+  period and close): first pick anchors the start and stays open, second
+  pick anchors the end and closes, an end picked before the start swaps
+  into place, a pick over a complete period starts a fresh one (all
+  verified programmatically). Focus enters the grid on open and returns to
+  the field on close (one irreducible literal `.focus()` in
+  `onCloseAutoFocus` — the anchor is Input, no Radix Trigger exists to
+  restore it). date-range-picker.tsx grep: zero `GlassSurface`/`blur`/
+  `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string. All
+  frozen components untouched.
+
 - **Time Picker — composes Input + the frozen Popover (Built, not
   frozen).** Select an hour (and optionally minutes) representing exactly
   ONE point-in-time value; not Date Picker (a day-grid vs. two small
