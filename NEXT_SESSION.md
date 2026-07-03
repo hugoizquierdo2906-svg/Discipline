@@ -384,7 +384,33 @@
    Germany). Limite connue et documentée : le rim rouge d'Input nécessite un
    vrai message d'erreur (même contrainte que Select) ; `invalid` seul pose
    `aria-invalid` correctement mais n'a pas d'effet visuel de rim en
-   composant Input gelé tel quel. **Prochaine étape : Autocomplete.**
+   composant Input gelé tel quel. **Autocomplete : Built, non gelé** — texte
+   libre assisté, jamais contraint, par des suggestions. Pas Combobox (la
+   valeur finale de Combobox est toujours exactement une option d'un
+   ensemble fermé ; Autocomplete accepte n'importe quel texte tapé), pas
+   Search Input (filtre la page, pas le champ lui-même), pas Command
+   Palette, pas Select/MultiSelect (ensemble fermé), pas Tag Input (crée des
+   tokens discrets ; Autocomplete porte une seule chaîne continue), pas
+   Dropdown Menu/Menu/Listbox. Même composition physique que Combobox gelé
+   — **zéro nouvel export nécessaire nulle part** : tout ce dont
+   Autocomplete a besoin dans `control-surface.tsx` était déjà extrait pour
+   Combobox ; `control-surface.tsx` montre un diff VIDE — le résultat
+   architectural le plus propre de la famille Control jusqu'ici, pure
+   réutilisation. Seule divergence comportementale délibérée : la frappe ne
+   met jamais en surbrillance automatique une suggestion (`activeIndex`
+   reste -1 tant que l'utilisateur n'appuie pas explicitement sur une
+   flèche), donc Enter garde toujours exactement ce qui a été tapé par
+   défaut — vérifié programmatiquement ("Pa" + Enter sans flèche garde
+   "Pa" ; "Pa" + ArrowDown + Enter accepte "Paris"). Escape/interaction
+   extérieure ferment SANS revenir en arrière (contrairement à Combobox)
+   puisque tout texte tapé est déjà une valeur valide ; aucun concept
+   "aucun résultat = erreur" — vérifié programmatiquement qu'un texte non
+   trouvé ("Nowhereville") se valide normalement sans panneau vide forcé.
+   autocomplete.tsx grep zéro GlassSurface/blur/backdrop-filter/rgba/shadow/
+   transition/animation ; `focus` seulement `onFocus` + `onOpenAutoFocus`
+   Radix (empêché), zéro `.focus()` littéral. Select/Input/Checkbox/Radio/
+   Switch/Slider/SegmentedControl/MultiSelect/Combobox intacts (grep). À
+   geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

@@ -48,6 +48,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Autocomplete — composes Input + the frozen Control Surface popup + the
+  frozen Select row language, same foundation as Combobox (Built, not
+  frozen).** Free text, assisted but never constrained by suggestions; not
+  Combobox (a Combobox's value is always exactly one of a closed set —
+  Autocomplete's value is always exactly what was typed), not Search Input
+  (filters the page, not the field itself), not Command Palette, not
+  Select/MultiSelect (closed sets), not Tag Input (discrete tokens vs one
+  continuous string), not Dropdown Menu/Menu/Listbox. Zero new exports
+  needed anywhere — every `control-surface.tsx` piece was already extracted
+  for Combobox; `control-surface.tsx` shows an empty diff, the cleanest
+  architectural result of the Control family so far. One deliberate
+  behavioral divergence from Combobox: typing never auto-highlights a
+  suggestion, so Enter's default keeps exactly what was typed unless the
+  user explicitly arrows to a suggestion; Escape/outside-interaction never
+  revert the typed text, and there is no no-match error state (verified
+  programmatically). autocomplete.tsx grep: zero `GlassSurface`/`blur`/
+  `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string; `focus`
+  appears only as `onFocus` and Radix's `onOpenAutoFocus` prop — zero
+  literal `.focus()` calls. Select, Input, Checkbox, RadioGroup, Switch,
+  Slider, SegmentedControl, MultiSelect and Combobox are all untouched.
+
 - **Combobox — composes Input + the frozen Control Surface popup + the
   frozen Select row language (Built, not frozen).** A single value found
   through search across a very large list; not Select (a short,

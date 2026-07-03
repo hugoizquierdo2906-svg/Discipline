@@ -454,6 +454,69 @@
 >     languages, exercises, foods, sports, workout templates, permissions);
 >     desktop/tablet/mobile + rich-background + opened/closed/searching/
 >     filtered/no-result/keyboard captures. `'use client'`.
+>   - **Autocomplete — Control Surface, composes Input + the frozen Control
+>     Surface popup + the frozen Select row language (same foundation as
+>     Combobox). Built (visual validation pending; NOT frozen).**
+>     ```text
+>     Control
+>     the frozen optical-layer stack → Control Surface → Autocomplete → Input
+>     → Popup → Scrollable list → Selectable row
+>     Status: Built (non frozen)
+>     ```
+>     Free text, assisted but never constrained by suggestions — not
+>     Combobox (a Combobox's final value is always exactly one of a CLOSED
+>     `options` set; typed text matching nothing cannot be committed.
+>     Autocomplete's value is always exactly what was typed — a suggestion
+>     only speeds up typing, never gates it), not Search Input (filters the
+>     page's own visible content; Autocomplete filters nothing outside its
+>     own field), not Command Palette (a global command surface vs. a scoped
+>     free-text field), not Select/MultiSelect (both carry a value from a
+>     closed, predefined set — free text is impossible by construction), not
+>     Tag Input (creates discrete tokens accumulated into a list of values;
+>     Autocomplete carries ONE continuous string, never a collection), not
+>     Dropdown Menu/Menu (commands, not a text field), not Listbox (a closed
+>     selection, never arbitrary text).
+>     Same physical composition as the frozen Combobox: the trigger is Input
+>     itself, the popup is the frozen Control Surface popup recipe, rows
+>     reuse the frozen Select row's own visual language. **Zero new exports
+>     needed anywhere** — every `control-surface.tsx` piece was already
+>     extracted for Combobox (`controlPanelClass`,
+>     `controlPanelPaddingClass`, `controlChevronMotionClass`,
+>     `controlOptionRowClass`, `controlOptionHighlightClass`,
+>     `controlOptionDisabledClass`); `control-surface.tsx` itself shows an
+>     EMPTY diff — the cleanest architectural result of the Control family
+>     so far, pure reuse.
+>     THE ONE DELIBERATE BEHAVIORAL DIVERGENCE from Combobox: typing never
+>     auto-highlights a suggestion (`activeIndex` stays -1 until the user
+>     explicitly presses an arrow key), so Enter's default outcome is always
+>     "keep exactly what I typed" — accepting a suggestion is something the
+>     user opts into, never sprung on them. Verified programmatically:
+>     typing "Pa" + Enter (no arrow) keeps "Pa"; typing "Pa" + ArrowDown +
+>     Enter accepts "Paris". Escape/outside-interaction close WITHOUT
+>     reverting the typed text (unlike Combobox, which reverts to the last
+>     committed option) since every typed string is already valid. No
+>     `emptyMessage`/no-match-is-an-error concept exists: verified
+>     programmatically that typing an unmatched string ("Nowhereville")
+>     commits correctly with no forced empty-state panel — not matching a
+>     suggestion is a normal outcome for free text, not an error.
+>     autocomplete.tsx grep: zero `GlassSurface`/`blur`/`backdrop-filter`/
+>     `rgba`/`shadow`/`transition`/`animation` string; `focus` appears only
+>     as `onFocus` (opens the list on focus) and Radix's own
+>     `onOpenAutoFocus` prop (prevented, keeping reachability on the input) —
+>     zero literal `.focus()` calls, same clean pattern as Combobox. Select,
+>     Input, Checkbox, RadioGroup, Switch, Slider, SegmentedControl,
+>     MultiSelect and Combobox are all untouched (grep-verified). Search is
+>     instant, case- and accent-insensitive via the same standard
+>     `String.prototype.normalize('NFD')` technique as Combobox. API:
+>     value/defaultValue/onValueChange · options[] (label/disabled) ·
+>     placeholder · disabled · readOnly (native `readOnly`, shows current
+>     text) · required · invalid · loading (spinner in Input's own suffix
+>     slot) · label · description · helperText · error · size sm/md/lg.
+>     Proof: `/dev/autocomplete` — states (closed/open/typing/free-text/
+>     loading/disabled/readOnly/invalid/required), real examples (city,
+>     exercise, job title, email domain); desktop/tablet/mobile +
+>     rich-background + opened/typing/free-text/keyboard captures.
+>     `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.
