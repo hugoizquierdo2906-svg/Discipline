@@ -332,8 +332,28 @@
    focus. Checkbox/Radio/Switch/Slider intacts (grep). Invalid réutilise le
    rim `.ds-control--error` gelé (pas le langage Micro) — cohérent avec son
    rôle Control. readOnly vérifié programmatiquement (clic + flèches
-   inertes). **Prochaine étape : MultiSelect — premier composant Control
-   composé (Control Surface + Checkbox gelé), pas un Micro member.**
+   inertes). **MultiSelect : Built, non gelé** — liste de valeurs, plusieurs
+   sélectionnables à la fois, ouvre/sélectionne/désélectionne/ferme en
+   gardant le contexte. Pas Select (une seule valeur, ferme au choix), pas
+   Dropdown Menu (un menu = des commandes ; MultiSelect est un champ de
+   formulaire), pas Command Palette (surface globale vs champ scopé), pas
+   Checkbox Group (toujours visible, aucun compromis de densité), pas Tag
+   Input (tokens texte libres créables), pas Combobox (filtre + role=option
+   — MultiSelect ne filtre jamais et garde role=checkbox). Le trigger est le
+   même puits `.ds-glass .ds-control` qu'Input/Select ; le panneau ouvert
+   réutilise verbatim la recette du menu Select gelé (3 nouveaux exports
+   additifs dans `control-surface.tsx` : `controlPanelClass`,
+   `controlPanelPaddingClass`, `controlChevronMotionClass`, extraits sans
+   toucher Select) ; chaque ligne est le composant `<Checkbox/>` gelé
+   lui-même, pas ses classes recréées. multiselect.tsx grep zéro
+   GlassSurface/blur/backdrop-filter/rgba/shadow/transition/animation.
+   Exception transparente assumée : `focus` apparaît 3 fois (2 appels DOM
+   natifs `.focus()` + la prop Radix `onOpenAutoFocus`) car un Popover brut
+   n'a aucune reachability roving intégrée (contrairement à RadioGroup/
+   Slider) — Arrow Up/Down/Home/End sont écrits à la main en JS pur, zéro
+   CSS, zéro matière, le ring `:focus-visible` global reste inchangé.
+   Select/Checkbox/Radio/Switch/Slider/SegmentedControl intacts (grep). À
+   geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

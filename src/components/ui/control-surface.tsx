@@ -54,3 +54,23 @@ export function controlStateClass({
 export function ControlSurface() {
   return <GlassSurface />
 }
+
+/** The Control family's popup recipe — a raised token surface, NOT glass
+ * ("a suspended, independent floating sheet: not more blur, not more glass;
+ * a stronger elevation shadow so the plane clearly hovers above the field").
+ * Pure extraction from the frozen Select's own menu (`SelectPrimitive.Content`
+ * className) so any other Control Surface popup (e.g. MultiSelect) reuses the
+ * exact same recipe instead of composing GlassSurface a second time. Select
+ * itself is untouched — this only gives the recipe a shared name. Geometry
+ * (width, max-height) stays with each consumer. */
+export const controlPanelClass =
+  'z-dropdown overflow-hidden rounded-md border border-border bg-surface-raised shadow-4'
+
+/** The frozen Select menu's inner padding, extracted the same way. */
+export const controlPanelPaddingClass = 'p-1.5'
+
+/** The frozen Select trigger's chevron-rotate recipe, extracted the same
+ * way, so a sibling Control Surface trigger (e.g. MultiSelect) reuses the
+ * exact same motion instead of writing its own. */
+export const controlChevronMotionClass =
+  'transition-transform duration-fast ease-standard'

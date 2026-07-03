@@ -42,6 +42,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **MultiSelect — composes Control Surface + the frozen Checkbox (Built,
+  not frozen).** A list of values, several selectable at once, open/select/
+  deselect/close while keeping context; not Select (one value, closes on
+  pick), not Dropdown Menu (commands, not a form field), not Command
+  Palette (a global searchable surface), not Checkbox Group (always
+  visible), not Tag Input (creatable free-text tokens), not Combobox
+  (filters + `role="option"`). The trigger is the exact Control Surface
+  glass Input/Select already use; the open panel reuses the frozen Select
+  menu's own recipe verbatim (three new additive exports in
+  `control-surface.tsx`, extracted without touching Select); every row is
+  the real, frozen `<Checkbox/>` component. multiselect.tsx grep: zero
+  `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`/
+  `animation` string; `focus` appears only as the irreducible native DOM
+  `.focus()` calls + Radix's `onOpenAutoFocus` prop, since a raw Popover has
+  no bundled roving-reachability (Arrow Up/Down/Home/End are hand-rolled in
+  keyboard code, zero material). Select, Checkbox, Radio, Switch, Slider and
+  SegmentedControl are all untouched.
+
 - **SegmentedControl — first Control Surface member built on the frozen
   Micro foundation (Built, not frozen).** An exclusive choice among 2–6
   visible options; not RadioGroup (a form field), not Tabs (owns a content

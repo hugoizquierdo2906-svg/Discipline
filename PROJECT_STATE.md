@@ -333,6 +333,55 @@
 >     appearance, sex, portfolio, fitness level, program focus);
 >     desktop/tablet/mobile + rich-background + hover + focus + keyboard
 >     captures. `'use client'`.
+>   - **MultiSelect — Control Surface, composes Control Surface + the frozen
+>     Checkbox. Built (visual validation pending; NOT frozen).**
+>     ```text
+>     Control
+>     the frozen optical-layer stack → Control Surface → MultiSelect → Checkbox
+>     Status: Built (non frozen)
+>     ```
+>     A list of values, several selectable at once — open/select/deselect/
+>     close while keeping context. Not Select (exactly one value, closes the
+>     instant you pick), not Dropdown Menu (a menu is commands that fire;
+>     MultiSelect is a form field — same reason it does not compose the
+>     Dropdown Menu primitive even though both open a panel), not Command
+>     Palette (a global searchable command surface vs. a scoped field), not
+>     Checkbox Group (always-visible, every option printed — MultiSelect
+>     trades that visibility for density, exactly where Select sits relative
+>     to Radio), not Tag Input (free-text creatable tokens vs. a closed set
+>     of predefined options), not Combobox (filters a list and picks ONE
+>     `role="option"` — MultiSelect never filters and every row keeps real
+>     Checkbox semantics: `role="checkbox"`, `aria-checked`).
+>     The trigger is the exact `.ds-glass .ds-control` well Input/Select/
+>     Textarea already use (`<ControlSurface/>` — zero new material). The
+>     open panel reuses the frozen Select menu's OWN recipe verbatim — three
+>     new additive exports in `control-surface.tsx` (`controlPanelClass`,
+>     `controlPanelPaddingClass`, `controlChevronMotionClass`, all pure
+>     extractions from `SelectPrimitive.Content`'s existing className; Select
+>     itself untouched) — a raised token surface, not a second glass. Every
+>     row is the real, frozen `<Checkbox/>` component — not its classes
+>     recreated, the component itself — so the item language can never
+>     drift. multiselect.tsx grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string.
+>     TRANSPARENT EXCEPTION: `focus` appears 3 times — two native DOM
+>     `.focus()` calls and Radix's own `onOpenAutoFocus` prop name — because
+>     a raw `@radix-ui/react-popover` has no bundled roving-reachability the
+>     way RadioGroup/Slider's own primitives do; Arrow Up/Down/Home/End are
+>     hand-rolled in ref/keyboard code only (zero CSS, zero material, no
+>     custom focus ring — the GLOBAL `:focus-visible` rule still applies
+>     unmodified). Select/Checkbox/Radio/Switch/Slider/SegmentedControl are
+>     all untouched (grep-verified). On Radix Popover (Escape, outside
+>     click, positioning/collision) + Radix Checkbox (Space toggles, ARIA)
+>     for every row. readOnly mirrors Select's own readOnly convention (a
+>     static field showing the current values, never opens). API:
+>     value/defaultValue/onValueChange · options[] (value/label/description/
+>     disabled) · disabled · readOnly · invalid · required · placeholder ·
+>     label · description · helperText · error · size sm/md/lg. Proof:
+>     `/dev/multiselect` — states (default/open/disabled/readOnly/invalid/
+>     required/loading/empty), real examples (sports, languages, goals,
+>     permissions, workout filters, food preferences, countries);
+>     desktop/tablet/mobile + rich-background + opened/closed/selection/
+>     disabled/keyboard captures. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.
