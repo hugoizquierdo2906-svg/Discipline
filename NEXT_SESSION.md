@@ -332,7 +332,8 @@
    focus. Checkbox/Radio/Switch/Slider intacts (grep). Invalid réutilise le
    rim `.ds-control--error` gelé (pas le langage Micro) — cohérent avec son
    rôle Control. readOnly vérifié programmatiquement (clic + flèches
-   inertes). **MultiSelect : Built, non gelé** — liste de valeurs, plusieurs
+   inertes). **MultiSelect : GELÉ (validé visuellement 2026-07-03)** — liste
+   de valeurs, plusieurs
    sélectionnables à la fois, ouvre/sélectionne/désélectionne/ferme en
    gardant le contexte. Pas Select (une seule valeur, ferme au choix), pas
    Dropdown Menu (un menu = des commandes ; MultiSelect est un champ de
@@ -352,8 +353,12 @@
    n'a aucune reachability roving intégrée (contrairement à RadioGroup/
    Slider) — Arrow Up/Down/Home/End sont écrits à la main en JS pur, zéro
    CSS, zéro matière, le ring `:focus-visible` global reste inchangé.
-   Select/Checkbox/Radio/Switch/Slider/SegmentedControl intacts (grep). À
-   geler sur validation visuelle explicite.
+   Select/Checkbox/Radio/Switch/Slider/SegmentedControl intacts (grep).
+   **Les Selection Controls sont désormais officiellement complets et gelés :
+   Checkbox · Radio · Switch · Slider · SegmentedControl · MultiSelect.**
+   **Prochaine étape : Combobox — valeur unique sélectionnée parmi une très
+   grande liste grâce à la recherche ; ni Select, ni MultiSelect, ni Command
+   Palette.**
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

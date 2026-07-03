@@ -9,10 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **SegmentedControl — frozen (Control Surface). The Selection Controls
-  family is now COMPLETE and FROZEN: Checkbox, Radio, Switch, Slider,
-  SegmentedControl.** No functional, visual or architectural change again
-  except an objective bug.
+- **MultiSelect — frozen (Control Surface). The Selection Controls are now
+  officially complete and frozen: Checkbox, Radio, Switch, Slider,
+  SegmentedControl, MultiSelect.** No functional, visual or architectural
+  change again except an objective bug.
+
+- **SegmentedControl — frozen (Control Surface).** No functional, visual or
+  architectural change again except an objective bug.
 
 - **Slider — frozen (Micro Surface). The Micro Surface family is now
   COMPLETE and FROZEN: Button, IconButton, LinkButton, Checkbox, Radio,

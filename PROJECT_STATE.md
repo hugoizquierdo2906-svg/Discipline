@@ -334,11 +334,14 @@
 >     desktop/tablet/mobile + rich-background + hover + focus + keyboard
 >     captures. `'use client'`.
 >   - **MultiSelect — Control Surface, composes Control Surface + the frozen
->     Checkbox. Built (visual validation pending; NOT frozen).**
+>     Checkbox. FROZEN (visually validated 2026-07-03).** No functional,
+>     visual or architectural change again — objective bugs only. **The
+>     Selection Controls are now officially complete and frozen: Checkbox,
+>     Radio, Switch, Slider, SegmentedControl, MultiSelect.**
 >     ```text
 >     Control
 >     the frozen optical-layer stack → Control Surface → MultiSelect → Checkbox
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     A list of values, several selectable at once — open/select/deselect/
 >     close while keeping context. Not Select (exactly one value, closes the
