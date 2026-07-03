@@ -101,11 +101,13 @@ export const Switch = forwardRef<
         // Checked = the Micro Surface's own "primary intent" light, reused
         // verbatim: the same violet-caustic layer + the same halo recipe as
         // Button Primary (rgba(139,124,255,…) is --ds-color-accent — no new
-        // color). --ds-glass-capture is the SAME token behind that caustic;
-        // used here as a translucent tint the existing backdrop-filter (blur
-        // + saturate 1.7) catches and diffuses — light passing through the
-        // unmodified glass, never a painted fill.
-        'data-[state=checked]:bg-[var(--ds-glass-capture)]',
+        // color). The rail's own tint is --ds-color-accent itself (the ONE
+        // accent token) mixed with transparent — the same color-mix idiom
+        // already used for state fills elsewhere (Select/DropdownMenu/
+        // ContextMenu/CommandPalette/Toast) — at higher density so the
+        // existing backdrop-filter (blur + saturate 1.7) diffuses a clearly
+        // lit tint through the unmodified glass, never a painted fill.
+        'data-[state=checked]:bg-[color-mix(in_srgb,var(--ds-color-accent)_42%,transparent)]',
         'data-[state=checked]:shadow-[0_2px_18px_rgba(139,124,255,0.22)]',
         'data-[state=checked]:[&>.ds-glass__body>.ds-glass__violet]:opacity-100',
         isInvalid && cn('border', microControlInvalidClass),
