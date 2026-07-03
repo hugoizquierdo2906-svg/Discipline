@@ -517,6 +517,66 @@
 >     exercise, job title, email domain); desktop/tablet/mobile +
 >     rich-background + opened/typing/free-text/keyboard captures.
 >     `'use client'`.
+>   - **OTP Input — Control Surface, composes the frozen Control Surface cell
+>     recipe (Built, not frozen).**
+>     ```text
+>     Control
+>     the frozen optical-layer stack → Control Surface → OTP Input
+>     Status: Built (non frozen)
+>     ```
+>     A specialized field for a code made of several independent characters
+>     that together represent exactly ONE logical value: several visual
+>     cells, one logical string. Not Input (Input's box COUNT is the point of
+>     OTP Input — a single `<Input maxLength={6}>` cannot do smart
+>     per-position Backspace, per-position arrow navigation, or auto-advance
+>     between cells), not Autocomplete/Combobox/Select/MultiSelect (all four
+>     resolve typed or chosen text against a set of candidate strings; an OTP
+>     code is never matched against options, only received), not Search
+>     Input (nothing is filtered — the code IS the value, not a query), not
+>     Password Input (a password is one opaque string in one field, revealed/
+>     hidden as a whole; an OTP code is legible by construction and split
+>     across boxes precisely so each character can be independently
+>     confirmed), not Pin Display/Code Viewer (those present a code that
+>     already exists, read-only; this component's job is to accept typed/
+>     pasted input and produce a value), not Verification Card (a
+>     page-level composition — heading, instructions, resend, submit — built
+>     AROUND a field like this one, a layout concern for the consumer, not
+>     the field), not Form Group (a Form Group lays out several independent
+>     fields; here there is exactly one field, one logical value — the
+>     cells are the value's own internal geometry, not independent fields).
+>     Each cell is the exact Control Surface well Input itself renders
+>     (`.ds-glass .ds-control` + `<ControlSurface/>`), compacted into a
+>     square via the new `controlCellClass` (additive in
+>     `control-surface.tsx`, Input untouched — no fixed height/width, sizing
+>     stays a layout decision of OTP Input per Invariant A1). A real
+>     `<input maxLength={1}>` sits in every cell — never a styled `<div>`
+>     showing a character — so native text selection, screen readers and
+>     mobile numeric keyboards keep working for free. Typing auto-advances
+>     to the next empty cell; Backspace on an empty cell moves back and
+>     clears the previous cell; Arrow Left/Right/Home/End move between
+>     cells; pasting a full code anywhere splits it across the remaining
+>     cells from that point on. A plain joined string can only represent a
+>     CONTIGUOUS run of filled cells, so a cell focused directly by the user
+>     past an earlier empty one redirects focus to that earlier cell instead
+>     (gaps become structurally impossible, verified programmatically);
+>     focus moves the component triggers itself (auto-advance/arrows/paste)
+>     are exempt via a ref flag so they are never second-guessed against a
+>     stale render. otp-input.tsx grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string;
+>     `focus` appears as `focusCell` (the component's own helper, containing
+>     exactly one literal `.focus()` DOM call — irreducible, since automatic
+>     focus management between cells was an explicit requirement), the
+>     `autoFocus`/`onFocus` native DOM props. Input/Select/Checkbox/Radio/
+>     Switch/Slider/SegmentedControl/MultiSelect/Combobox/Autocomplete
+>     untouched (grep-verified); control-surface.tsx shows one small
+>     additive export (`controlCellClass`), nothing else changed. API:
+>     length (4/6/8…) · value/defaultValue/onValueChange · onComplete ·
+>     numeric · disabled · readOnly · autoFocus · required · invalid ·
+>     label/description/helperText/error · size sm/md/lg · name (hidden
+>     field for form submission). Proof: `/dev/otp-input` — states (empty/
+>     progressive typing/filled/error/disabled/readOnly/autofocus/paste),
+>     lengths (4/6/8), sizes (sm/md/lg); desktop/tablet/mobile +
+>     rich-background captures. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.

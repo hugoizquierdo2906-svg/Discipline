@@ -411,8 +411,36 @@
    Radix (empêché), zéro `.focus()` littéral. Select/Input/Checkbox/Radio/
    Switch/Slider/SegmentedControl/MultiSelect/Combobox intacts (grep).
    **Autocomplete : GELÉ (validé visuellement 2026-07-03).**
-   Prochaine étape : OTP Input (champ spécialisé pour un code multi-
-   caractères représentant une seule valeur logique).
+   **OTP Input : Built, non gelé** — champ spécialisé pour un code composé
+   de plusieurs caractères indépendants représentant une seule valeur
+   logique. Pas Input (le nombre de cases EST le sujet — auto-advance,
+   Backspace par position, flèches par position sont impossibles sur un
+   seul champ), pas Autocomplete/Combobox/Select/MultiSelect (tous résolvent
+   un texte contre des options ; un code n'est jamais comparé, seulement
+   reçu), pas Search Input (rien n'est filtré), pas Password Input (une
+   chaîne opaque vs un code lisible, chaque caractère devant être vérifié
+   individuellement), pas Pin Display/Code Viewer (présentation en lecture
+   seule vs la saisie ici), pas Verification Card (composition de page
+   construite AUTOUR d'un champ comme celui-ci), pas Form Group (un seul
+   champ, une seule valeur logique, pas plusieurs champs indépendants).
+   Chaque case est exactement le puits Control Surface d'Input, compacté en
+   carré via le nouvel export additif `controlCellClass` dans
+   `control-surface.tsx` (Input intact). Un vrai `<input maxLength={1}>`
+   par case. La frappe avance automatiquement ; Backspace sur une case vide
+   recule et efface la case précédente ; les flèches naviguent ; coller un
+   code complet le répartit sur les cases restantes. Les trous sont
+   structurellement impossibles : si l'utilisateur fait le focus sur une
+   case au-delà d'une case vide antérieure, le focus est redirigé vers
+   cette case antérieure — vérifié programmatiquement (bug découvert et
+   corrigé pendant le build : une simple concaténation de chaîne perdait la
+   position des cases vides intermédiaires). otp-input.tsx grep zéro
+   GlassSurface/blur/backdrop-filter/rgba/shadow/transition/animation ;
+   `focus` apparaît seulement via le helper `focusCell` (un seul appel
+   littéral `.focus()`, irréductible — la gestion automatique du focus
+   entre cases était une exigence explicite) + `autoFocus`/`onFocus`
+   natifs. Input/Select/Checkbox/Radio/Switch/Slider/SegmentedControl/
+   MultiSelect/Combobox/Autocomplete intacts (grep). À geler sur validation
+   visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

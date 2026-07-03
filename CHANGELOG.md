@@ -51,6 +51,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **OTP Input — composes the frozen Control Surface cell recipe (Built, not
+  frozen).** A specialized field for a code made of several independent
+  characters representing exactly ONE logical value; not Input (box count
+  is the point — auto-advance/per-position Backspace/arrows are impossible
+  on one field), not Autocomplete/Combobox/Select/MultiSelect (all resolve
+  text against candidate options, a code is only received, never matched),
+  not Search Input (nothing filtered), not Password Input (opaque string vs
+  a legible, per-character-confirmable code), not Pin Display/Code Viewer
+  (read-only presentation vs accepting input), not Verification Card (a
+  page-level composition built around a field like this), not Form Group
+  (one field, one logical value). Each cell is the exact Control Surface
+  well Input renders, compacted to a square via the new `controlCellClass`
+  (additive in `control-surface.tsx`, Input untouched — no fixed size,
+  sizing stays with the consumer per Invariant A1); a real
+  `<input maxLength={1}>` sits in every cell. Typing auto-advances;
+  Backspace on an empty cell moves back and clears the previous cell;
+  Arrow Left/Right/Home/End move between cells; pasting a full code splits
+  it across the remaining cells. Gaps are structurally impossible: focusing
+  a cell past an earlier empty one redirects there, keeping the joined
+  string always position-correct (a real bug — found and fixed during the
+  build — where a naive string join silently lost interior blanks).
+  otp-input.tsx grep: zero `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/
+  `shadow`/`transition`/`animation` string; `focus` appears only as the
+  component's own `focusCell` helper (one irreducible literal `.focus()`
+  call, needed for the explicitly required automatic focus management
+  between cells) plus the native `autoFocus`/`onFocus` props. Input,
+  Select, Checkbox, RadioGroup, Switch, Slider, SegmentedControl,
+  MultiSelect, Combobox and Autocomplete are all untouched.
+
 - **Autocomplete — composes Input + the frozen Control Surface popup + the
   frozen Select row language, same foundation as Combobox (Built, not
   frozen).** Free text, assisted but never constrained by suggestions; not

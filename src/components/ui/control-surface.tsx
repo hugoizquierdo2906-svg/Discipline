@@ -93,3 +93,12 @@ export const controlOptionHighlightClass =
 
 /** The frozen Select row's disabled treatment, extracted the same way. */
 export const controlOptionDisabledClass = 'pointer-events-none opacity-40'
+
+/** A single-character Control Surface well — the same `.ds-glass .ds-control`
+ * recipe as `controlHostClass`, compacted to a square cell for a value split
+ * across several independent fields (OTP Input). Unlike `controlHostClass`
+ * this carries no fixed height/width/gap: cell size is a layout decision the
+ * consumer makes per its own `size` prop (Invariant A1), not something this
+ * shared file should fix. */
+export const controlCellClass =
+  'ds-glass ds-control relative flex items-center justify-center rounded-md'
