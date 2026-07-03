@@ -552,12 +552,14 @@
 >     (indeterminate), permissions matrix, desktop/tablet/mobile + keyboard
 >     captures (focus ring on the mixed parent, Space → all checked).
 >     `'use client'`.
->   - **Radio — Micro Surface, on the FROZEN micro-control foundation. Built
->     (visual validation pending; NOT frozen).**
+>   - **Radio — Micro Surface, on the FROZEN micro-control foundation. FROZEN
+>     (visually validated 2026-07-02).** No functional, visual or architectural
+>     change again — objective bugs only. micro-control now has TWO frozen
+>     consumers: Checkbox and Radio (Switch remains Built).
 >     ```text
 >     Micro
 >     GlassSurface → Micro Surface → micro-control → Radio
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     EXACTLY the frozen Checkbox language — same 20px box, token border, accent
 >     active fill + dark glyph, motion, disabled dim, invalid rim, GLOBAL
@@ -578,7 +580,7 @@
 >     Membership/Goal vertical groups, Frequency/Gender horizontal, permission +
 >     template selectors with descriptions, desktop/tablet/mobile + keyboard
 >     captures (focus on "4 days", ArrowRight ×2 → "6 days" selected).
->     'use client'. Awaiting explicit freeze.
+>     'use client'.
 >   - **SearchInput — Control Surface, search SPECIALIZATION of Input. FROZEN
 >     (visually validated 2026-07-01).** No redesign again unless an objective bug
 >     appears. Unlike Textarea (Input's

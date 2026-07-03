@@ -274,11 +274,10 @@
 1. Toast est GELÉ — **la famille Floating est complète et 100 % gelée**
    (Tooltip · Popover · DropdownMenu · ContextMenu · HoverCard · Toast).
    **Checkbox : GELÉ (validé visuellement 2026-07-02)** — `micro-control.tsx`
-   devient la fondation partagée gelée des petits membres Micro. **Radio : audité + rebuild sur la fondation micro-control gelée, Built non
-   gelé — à geler sur validation visuelle explicite** (langage Checkbox exact,
-   seule la forme change ○/● ; ancien état sélectionné re-aligné sur le fill
-   gelé ; readOnly = valeur verrouillée ; alias RadioItem conservé). Ensuite :
-   **Switch** (même fondation), puis Dialog (← Modal), UserMenu. Nouveau helper `micro-control.tsx` (expression partagée
+   devient la fondation partagée gelée des petits membres Micro. **Radio : GELÉ (validé visuellement 2026-07-02)** — micro-control compte deux
+   consommateurs gelés (Checkbox · Radio) ; Switch reste Built. **Switch (en
+   cours — même fondation gelée, dernier petit contrôle Micro)**. Ensuite :
+   Dialog (← Modal), UserMenu. Nouveau helper `micro-control.tsx` (expression partagée
    des petits contrôles Micro — box token · fill accent · rim invalid ; focus =
    ring global) ; fix objectif : icône indéterminée pilotée par la prop (cassée
    en non-contrôlé) → data-state. API complète (description/error/helper/invalid/
