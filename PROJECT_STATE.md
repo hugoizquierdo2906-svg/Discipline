@@ -385,6 +385,74 @@
 >     permissions, workout filters, food preferences, countries);
 >     desktop/tablet/mobile + rich-background + opened/closed/selection/
 >     disabled/keyboard captures. `'use client'`.
+>   - **Combobox — Control Surface, composes Input + the frozen Control
+>     Surface popup + the frozen Select row language. Built (visual
+>     validation pending; NOT frozen).**
+>     ```text
+>     Control
+>     the frozen optical-layer stack → Control Surface → Combobox → Input →
+>     Popup → Scrollable list → Selectable row
+>     Status: Built (non frozen)
+>     ```
+>     A single value found through search across a very large list — not
+>     Select (built for a short, fully-legible list; no search needed), not
+>     MultiSelect (several values, stays open across many toggles vs. one
+>     value that closes on commit), not Command Palette (a global, app-wide
+>     command surface vs. a scoped field bound to one label), not Search
+>     Input (filters the page's own visible content — typed text there IS
+>     the effect; here typed text is never itself the value), not
+>     Autocomplete (suggests completions for free text that stays free text;
+>     Combobox's final value is always exactly one of `options`), not
+>     Dropdown Menu / Menu (commands that fire vs. a value field), not
+>     Listbox (a bare listbox has no search — exactly the scanning problem
+>     Combobox solves once options exceed a screenful).
+>     The trigger is Input itself — not its classes rebuilt, the component:
+>     label, description(added by Combobox itself, since Input has no
+>     `description` prop), error/helperText, the `.ds-glass .ds-control`
+>     well, all inherited for free. The popup is the frozen Control Surface
+>     popup recipe (`controlPanelClass`, the exact same raised token surface
+>     already validated on Select/MultiSelect). Rows reuse the frozen
+>     Select row's own visual language — three new additive exports in
+>     `control-surface.tsx` (`controlOptionRowClass`,
+>     `controlOptionHighlightClass`, `controlOptionDisabledClass`, pure
+>     extractions from `SelectItem`'s existing className; Select itself
+>     untouched) — never a rebuilt checkbox, radio or menu item. The list is
+>     a plain scrollable region (`overflow-y-auto`; no dedicated ScrollArea
+>     primitive exists in this codebase — Select's own menu uses the same
+>     plain technique).
+>     combobox.tsx grep: zero `GlassSurface`/`blur`/`backdrop-filter`/
+>     `rgba`/`shadow`/`transition`/`animation` string. TRANSPARENT
+>     EXCEPTION: `focus` appears twice — `onFocus` (opens the list when the
+>     field receives it) and Radix's own `onOpenAutoFocus` prop (prevented,
+>     to keep reachability on the input instead of letting Radix pull it
+>     into the popup) — both real DOM/Radix event-prop names, not material.
+>     Zero literal `.focus()` calls anywhere (cleaner than MultiSelect's 3):
+>     Arrow Up/Down/Home/End move a pure `aria-activedescendant` pointer, so
+>     real DOM reachability never leaves the input at all — verified
+>     programmatically (`document.activeElement` stays the combobox input
+>     through open + two ArrowDown presses + Enter). Select, Input,
+>     Checkbox, RadioGroup, Switch, Slider, SegmentedControl and MultiSelect
+>     are all untouched (grep-verified). Full WAI-ARIA Combobox pattern:
+>     `role="combobox"`, `aria-expanded`, `aria-controls`,
+>     `aria-activedescendant`, `role="listbox"`/`role="option"`,
+>     `aria-selected`. Search is instant (no debounce), case- and
+>     accent-insensitive via the standard `String.prototype.normalize('NFD')`
+>     technique (built-in JS, no new dependency) — verified programmatically
+>     ("ger" → only Germany). KNOWN LIMITATION (documented, not silently
+>     patched): Input's `error` prop needs an actual message to show the red
+>     rim (same as Select's own established constraint); a message-less
+>     `invalid` flag still sets `aria-invalid` correctly but has no visual
+>     rim when composing the frozen Input as-is. API:
+>     value/defaultValue/onValueChange · options[] · placeholder ·
+>     searchPlaceholder · disabled · readOnly (native `readOnly`, shows the
+>     selected label as static text) · required · invalid · loading
+>     (spinner in Input's own suffix slot, blocks opening) · emptyMessage ·
+>     label · description · helperText · error · size sm/md/lg. Proof:
+>     `/dev/combobox` — states (closed/open/searching/filtered/loading/no
+>     result/disabled/readOnly/invalid/required), real examples (countries,
+>     languages, exercises, foods, sports, workout templates, permissions);
+>     desktop/tablet/mobile + rich-background + opened/closed/searching/
+>     filtered/no-result/keyboard captures. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.

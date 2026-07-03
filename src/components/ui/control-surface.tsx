@@ -74,3 +74,22 @@ export const controlPanelPaddingClass = 'p-1.5'
  * exact same motion instead of writing its own. */
 export const controlChevronMotionClass =
   'transition-transform duration-fast ease-standard'
+
+/** The frozen Select row's own visual language ("the Selection language"),
+ * extracted the same way so a new Control Surface consumer (e.g. Combobox)
+ * never recreates a selectable-row recipe. `SelectItem` expresses highlight/
+ * selected through Radix's own `data-[highlighted]`/`data-[state=checked]`
+ * attributes; a consumer driving highlight/selected from its own JS state
+ * (no Radix Select context available) composes this base class plus
+ * `controlOptionHighlightClass` conditionally instead. */
+export const controlOptionRowClass =
+  'relative flex cursor-pointer select-none items-center gap-3 rounded-sm py-2.5 pl-8 pr-3 text-body-sm text-text outline-none'
+
+/** The frozen Select row's highlighted-row tint — the same violet-as-light
+ * signature (a whisper of captured light, never a fill) already used
+ * site-wide for hover/highlighted rows. */
+export const controlOptionHighlightClass =
+  'bg-[color-mix(in_srgb,var(--ds-color-accent-subtle)_45%,transparent)]'
+
+/** The frozen Select row's disabled treatment, extracted the same way. */
+export const controlOptionDisabledClass = 'pointer-events-none opacity-40'

@@ -45,6 +45,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Combobox — composes Input + the frozen Control Surface popup + the
+  frozen Select row language (Built, not frozen).** A single value found
+  through search across a very large list; not Select (a short,
+  fully-legible list needs no search), not MultiSelect (several values,
+  stays open), not Command Palette (a global surface vs a scoped field), not
+  Search Input (filters the page, typed text is never the value here), not
+  Autocomplete (suggests completions that stay free text; Combobox's value
+  is always exactly one option), not Dropdown Menu/Menu (commands, not a
+  value field), not Listbox (no search — the exact problem Combobox
+  solves). The trigger is the real `<Input/>` component (not its classes
+  rebuilt); the popup is the frozen Control Surface popup recipe already
+  validated on Select/MultiSelect; rows reuse the frozen Select row's own
+  visual language (three new additive exports in `control-surface.tsx`,
+  extracted without touching Select). combobox.tsx grep: zero
+  `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`/
+  `animation` string; `focus` appears only as `onFocus` and Radix's
+  `onOpenAutoFocus` prop — zero literal `.focus()` calls, since Arrow
+  Up/Down/Home/End move a pure `aria-activedescendant` pointer rather than
+  real DOM reachability. Search is instant, case- and accent-insensitive
+  (standard `String.normalize('NFD')`). Select, Input, Checkbox, RadioGroup,
+  Switch, Slider, SegmentedControl and MultiSelect are all untouched.
+
 - **MultiSelect — composes Control Surface + the frozen Checkbox (Built,
   not frozen).** A list of values, several selectable at once, open/select/
   deselect/close while keeping context; not Select (one value, closes on

@@ -356,9 +356,35 @@
    Select/Checkbox/Radio/Switch/Slider/SegmentedControl intacts (grep).
    **Les Selection Controls sont désormais officiellement complets et gelés :
    Checkbox · Radio · Switch · Slider · SegmentedControl · MultiSelect.**
-   **Prochaine étape : Combobox — valeur unique sélectionnée parmi une très
-   grande liste grâce à la recherche ; ni Select, ni MultiSelect, ni Command
-   Palette.**
+   **Combobox : Built, non gelé** — valeur unique trouvée par recherche dans
+   une très grande liste. Pas Select (liste courte, entièrement lisible, pas
+   besoin de recherche), pas MultiSelect (plusieurs valeurs, reste ouvert),
+   pas Command Palette (surface globale vs champ scopé), pas Search Input
+   (filtre le contenu de la page — ici le texte tapé n'est jamais la
+   valeur), pas Autocomplete (suggère des complétions qui restent du texte
+   libre ; la valeur finale de Combobox est toujours exactement une option),
+   pas Dropdown Menu/Menu (des commandes, pas un champ), pas Listbox (aucune
+   recherche — exactement le problème que Combobox résout). Le trigger est
+   Input lui-même (le composant, pas ses classes recréées — label/
+   description/error/helperText hérités). Le panneau réutilise verbatim la
+   recette du panneau Control Surface déjà validée (Select/MultiSelect). Les
+   lignes réutilisent le langage Select gelé (3 nouveaux exports additifs
+   dans `control-surface.tsx` : `controlOptionRowClass`,
+   `controlOptionHighlightClass`, `controlOptionDisabledClass`, extraits
+   sans toucher Select). combobox.tsx grep zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition/animation. Exception transparente :
+   `focus` apparaît 2 fois (`onFocus` + `onOpenAutoFocus` Radix, empêché) —
+   zéro appel `.focus()` littéral, plus propre que MultiSelect, car les
+   flèches déplacent un pointeur `aria-activedescendant` pur, jamais le
+   focus DOM réel (vérifié programmatiquement : le focus reste sur l'input
+   du début à la fin). Select/Input/Checkbox/Radio/Switch/Slider/
+   SegmentedControl/MultiSelect intacts (grep). Recherche instantanée, case-
+   et accent-insensible (`String.normalize('NFD')` standard, aucune
+   dépendance nouvelle) — vérifié programmatiquement ("ger" → seulement
+   Germany). Limite connue et documentée : le rim rouge d'Input nécessite un
+   vrai message d'erreur (même contrainte que Select) ; `invalid` seul pose
+   `aria-invalid` correctement mais n'a pas d'effet visuel de rim en
+   composant Input gelé tel quel. À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
