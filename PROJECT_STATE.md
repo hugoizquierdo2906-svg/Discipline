@@ -794,12 +794,12 @@
 >     copy-to-clipboard, keyboard grid navigation, focus landing/return,
 >     ARIA, disabled/readOnly/loading, validation. `'use client'`.
 >   - **Alert Dialog — Immersive, composes the Modal foundation + the frozen
->     Button (Built, not frozen).**
+>     Button. FROZEN (visually validated 2026-07-03).**
 >     ```text
 >     Immersive
 >     the frozen optical-layer stack → .ds-immersive → ImmersiveSurface
 >     → Modal (the Dialog foundation) → Alert Dialog
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     An interrupting confirmation: the app stops and asks ONE question
 >     that must be answered — confirm or cancel — before anything else can

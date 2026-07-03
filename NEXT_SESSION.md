@@ -556,7 +556,7 @@
    atterrissage initial, retour au champ). ZÉRO fichier modifié hors du
    nouveau composant — Input/Popover/IconButton/Icon/Label/Spinner
    fournissaient déjà tout.
-   **Alert Dialog : Built, non gelé** — une confirmation interruptive :
+   **Alert Dialog : GELÉ (validé visuellement 2026-07-03).** Une confirmation interruptive :
    l'app s'arrête et pose UNE question à laquelle il faut répondre —
    confirmer ou annuler — avant toute autre chose. Pas Dialog/Modal (le
    conteneur immersif générique, tout contenu, fermable au clic extérieur ;
@@ -598,7 +598,7 @@
    littéral (focus initial sur Cancel — exigence WAI-ARIA alertdialog,
    irréductible) + le nom de prop Radix `onOpenAutoFocus`. ZÉRO fichier
    modifié hors du nouveau composant — Modal et Button fournissaient
-   tout. À geler sur validation visuelle explicite.
+   tout.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
