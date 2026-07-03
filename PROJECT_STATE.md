@@ -281,13 +281,15 @@
 >     (family + states + previews + validation, desktop/tablet/mobile).
 >     `'use client'`.
 >   - **SegmentedControl — Control Surface, first member built on top of the
->     now-frozen Micro foundation. Built (visual validation pending; NOT
->     frozen).**
+>     now-frozen Micro foundation. FROZEN (visually validated 2026-07-03).**
+>     No functional, visual or architectural change again — objective bugs
+>     only. **The Selection Controls family is now officially complete and
+>     frozen: Checkbox, Radio, Switch, Slider, SegmentedControl.**
 >     ```text
 >     Control
 >     the frozen optical-layer stack → Control Surface (.ds-glass .ds-control)
 >     → SegmentedControl
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     An exclusive choice among 2–6 visible options, optimized for instant
 >     comparison — not RadioGroup (a form field: label + description per
