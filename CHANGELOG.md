@@ -67,6 +67,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Alert Dialog — composes the Modal foundation + the frozen Button
+  (Built, not frozen).** An interrupting confirmation: one question that
+  must be answered — confirm or cancel — before anything else can happen;
+  not Dialog/Modal (the generic immersive container, dismissible by
+  outside click — Alert Dialog is a specialized message + binary choice on
+  top: `role="alertdialog"`, outside click never dismisses, initial focus
+  on the least destructive action), not Popover/Tooltip/Hover Card
+  (anchored, flow-preserving/passive), not Toast (transient — informs vs.
+  interrogates), not Banner/Alert/Notification (page-level information
+  with no required answer), not Confirm Dialog (this component's neutral
+  variant, not a sibling), not Sheet/Drawer, not Dropdown/Context Menu,
+  not Command Palette (the other Immersive member — same Modal parent,
+  different job), not Form (no fields), not Wizard, not Card, not Message
+  Box (the OS `window.confirm` — this is its design-system-native
+  replacement). Composes the Modal COMPONENT only (never the primitives
+  underneath — Modal's own rule): scrim, frozen pane material, entrance,
+  focus trap, scroll lock, Escape, inert background, focus return and the
+  Title/Description ARIA wiring all inherited verbatim; adds only the
+  alert semantics plus the two frozen Buttons (Cancel `secondary`, Confirm
+  `primary`/frozen `destructive` — zero new recipe). `loading` locks every
+  dismissal path while an action is in flight (Escape prevented, Cancel
+  disabled). Uncontrolled closes itself; controlled leaves closing to the
+  consumer, which is what enables async flows. alert-dialog.tsx grep: zero
+  `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`/
+  `animation` string; ONE irreducible literal `.focus()` (WAI-ARIA initial
+  focus on Cancel). ZERO files modified outside the new component — Modal
+  and Button provided everything.
+
 - **Color Picker — composes Input + the frozen Popover + the frozen
   IconButton (Built, not frozen).** A form field committing exactly ONE
   color value, chosen visually from a palette or entered as hex; not Input

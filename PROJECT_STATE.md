@@ -793,6 +793,72 @@
 >     palette→hex and hex→palette sync, custom hex entry + normalization,
 >     copy-to-clipboard, keyboard grid navigation, focus landing/return,
 >     ARIA, disabled/readOnly/loading, validation. `'use client'`.
+>   - **Alert Dialog — Immersive, composes the Modal foundation + the frozen
+>     Button (Built, not frozen).**
+>     ```text
+>     Immersive
+>     the frozen optical-layer stack → .ds-immersive → ImmersiveSurface
+>     → Modal (the Dialog foundation) → Alert Dialog
+>     Status: Built (non frozen)
+>     ```
+>     An interrupting confirmation: the app stops and asks ONE question
+>     that must be answered — confirm or cancel — before anything else can
+>     happen. Not Dialog/Modal (the generic immersive container, any
+>     content, dismissible by outside click; Alert Dialog is a specialized
+>     MESSAGE + BINARY CHOICE on top: `role="alertdialog"`, outside click
+>     never dismisses, initial focus on the least destructive action), not
+>     Popover (anchored, flow-preserving, non-blocking), not Tooltip (a
+>     hover label, never interactive), not Hover Card (passive preview),
+>     not Toast (transient, self-dismissing, never blocks — a toast
+>     informs, an alert dialog interrogates), not Banner/Alert (inline,
+>     persistent, page-level information with no required answer), not
+>     Notification (news about what already happened vs. a question about
+>     what is ABOUT to happen), not Confirm Dialog (the same species — the
+>     neutral variant of this component, not a sibling), not Sheet/Drawer
+>     (edge-anchored secondary CONTENT), not Dropdown/Context Menu
+>     (command lists), not Command Palette (the other Immersive member —
+>     same Modal parent, different job), not Form (NO fields — the moment
+>     it needs input it has become a form Dialog), not Wizard (multiple
+>     steps vs. one question), not Card (static structural container), not
+>     Message Box (the OS primitive `window.confirm` — this is its
+>     design-system-native replacement). Composes the Modal COMPONENT only
+>     (never the primitives underneath — Modal's own rule): scrim, pane
+>     material (frozen `.ds-immersive`/`.ds-scrim`), entrance, focus trap,
+>     scroll lock, Escape, inert background, portal, focus return and the
+>     Title/Description ARIA wiring all inherited verbatim. Adds exactly
+>     the alert semantics: `role="alertdialog"` + `aria-modal`,
+>     outside-click dismissal disabled, initial focus on Cancel, and the
+>     two frozen `<Button>`s — Cancel always `secondary`, Confirm `primary`
+>     (neutral) or `destructive` (destructive variant; the frozen error
+>     fill under the glass edge, zero new recipe). `loading` = the frozen
+>     Button's own loading state on Confirm, with EVERY dismissal path
+>     locked while in flight (Escape prevented, Cancel disabled — an
+>     in-flight destructive action must not be abandonable halfway).
+>     Uncontrolled (with `trigger`): confirm/cancel close by themselves;
+>     controlled: closing after confirm belongs to the consumer (enables
+>     async flows). Size prop sm/md/lg = pane max-width geometry only
+>     (md IS Modal's own frozen intrinsic width, untouched — Invariant A1:
+>     AlertDialog is the consumer making the layout decision).
+>     alert-dialog.tsx grep: zero `GlassSurface`/`blur`/`backdrop-filter`/
+>     `rgba`/`shadow`/`transition`/`animation` string; `focus` = ONE
+>     literal `.focus()` call (initial focus on Cancel — the WAI-ARIA
+>     alertdialog requirement; irreducible, Radix's default would land on
+>     the first focusable instead) + Radix's `onOpenAutoFocus` prop name.
+>     ZERO files modified outside the new component — Modal and Button
+>     provided everything. API: trigger · open/defaultOpen/onOpenChange ·
+>     title (required) · description · icon · variant neutral/destructive ·
+>     confirmLabel/cancelLabel · onConfirm/onCancel · loading · disabled ·
+>     size sm/md/lg · data-testid. Proof: `/dev/alert-dialog` — variants
+>     (simple confirmation/destructive deletion/irreversible action),
+>     states (loading/disabled/long content), sizes; desktop/tablet/mobile
+>     + rich-background + neutral/destructive/long/loading/sizes/
+>     mobile-open captures; programmatic assertions for open/close, Escape,
+>     Cancel click, Confirm click (+ callbacks), initial focus on Cancel,
+>     focus trap + TAB order (wrap both directions), focus return,
+>     outside-click NON-dismissal, ARIA (role/aria-modal/labelledby/
+>     describedby), the frozen destructive Button
+>     (`data-glass-variant="destructive"`), loading locks every dismissal
+>     path, disabled, increasing size scale. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.

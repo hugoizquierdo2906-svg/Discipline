@@ -556,8 +556,49 @@
    atterrissage initial, retour au champ). ZÉRO fichier modifié hors du
    nouveau composant — Input/Popover/IconButton/Icon/Label/Spinner
    fournissaient déjà tout.
-   Prochaine étape : Alert Dialog (compose le Modal/Dialog immersif,
-   confirmation bloquante, variantes destructive/neutre).
+   **Alert Dialog : Built, non gelé** — une confirmation interruptive :
+   l'app s'arrête et pose UNE question à laquelle il faut répondre —
+   confirmer ou annuler — avant toute autre chose. Pas Dialog/Modal (le
+   conteneur immersif générique, tout contenu, fermable au clic extérieur ;
+   Alert Dialog est un MESSAGE + CHOIX BINAIRE spécialisé par-dessus :
+   `role="alertdialog"`, le clic extérieur ne ferme jamais, focus initial
+   sur l'action la moins destructive), pas Popover (ancré, non bloquant),
+   pas Tooltip (étiquette au survol, jamais interactive), pas Hover Card
+   (aperçu passif), pas Toast (transitoire, se ferme seul, n'interrompt
+   jamais — un toast informe, un alert dialog interroge), pas Banner/Alert
+   (information de page persistante sans réponse exigée), pas Notification
+   (nouvelle de ce qui s'est déjà passé vs question sur ce qui VA se
+   passer), pas Confirm Dialog (la même espèce — c'est la variante neutre
+   de ce composant, pas un frère), pas Sheet/Drawer (surfaces de bord pour
+   du CONTENU secondaire), pas Dropdown/Context Menu (des commandes), pas
+   Command Palette (l'autre membre Immersive — même parent Modal, autre
+   métier), pas Form (AUCUN champ — dès qu'il faut saisir, c'est un Dialog
+   de formulaire), pas Wizard (plusieurs étapes vs une question), pas Card
+   (conteneur structurel statique), pas Message Box (la primitive OS
+   `window.confirm` — ceci est son remplaçant natif du design system).
+   Compose le COMPOSANT Modal uniquement (jamais les primitives dessous —
+   la règle de Modal) : scrim, matière du panneau (`.ds-immersive`/
+   `.ds-scrim` gelés), entrée, focus trap, scroll lock, Escape, fond
+   inerte, portal, retour du focus et le câblage ARIA Title/Description
+   hérités verbatim. Ajoute exactement la sémantique d'alerte :
+   `role="alertdialog"` + `aria-modal`, fermeture au clic extérieur
+   désactivée, focus initial sur Cancel, et les deux `<Button>` gelés —
+   Cancel toujours `secondary`, Confirm `primary` (neutre) ou
+   `destructive` (variante destructive ; le remplissage erreur gelé sous
+   l'arête de verre, zéro nouvelle recette). `loading` = l'état loading du
+   Button gelé sur Confirm, avec TOUTES les voies de fermeture
+   verrouillées pendant l'action (Escape empêché, Cancel désactivé — une
+   action destructive en cours ne doit pas être abandonnable à
+   mi-chemin). Non contrôlé (avec `trigger`) : confirm/cancel ferment
+   seuls ; contrôlé : la fermeture après confirm appartient au
+   consommateur (flux async). `size` sm/md/lg = géométrie de largeur du
+   panneau uniquement (md EST la largeur intrinsèque gelée de Modal,
+   intacte — Invariant A1). grep zéro GlassSurface/blur/backdrop-filter/
+   rgba/shadow/transition/animation ; `focus` = UN seul `.focus()`
+   littéral (focus initial sur Cancel — exigence WAI-ARIA alertdialog,
+   irréductible) + le nom de prop Radix `onOpenAutoFocus`. ZÉRO fichier
+   modifié hors du nouveau composant — Modal et Button fournissaient
+   tout. À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
