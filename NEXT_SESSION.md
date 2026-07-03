@@ -482,7 +482,7 @@
    Input/Select/Checkbox/Radio/Switch/Slider/SegmentedControl/MultiSelect/
    Combobox/Autocomplete/OtpInput/Popover intacts (grep) ; diff vide sur
    tous les fichiers partagés.
-   **Date Range Picker : Built, non gelé** — un début et une fin
+   **Date Range Picker : GELÉ (validé visuellement 2026-07-03).** Un début et une fin
    représentant UNE valeur logique : une période continue. Pas Date Picker
    (un seul jour, ferme — une période est un autre type de valeur : deux
    ancres ordonnées + tout ce qui est entre, avec état partiel, inversion
@@ -515,7 +515,9 @@
    irréductible dans `onCloseAutoFocus` — aucun Trigger Radix pour le
    restaurer, l'ancre est Input). grep zéro GlassSurface/blur/
    backdrop-filter/rgba/shadow/transition/animation. Tous les composants
-   gelés intacts. À geler sur validation visuelle explicite.
+   gelés intacts.
+   Prochaine étape : Color Picker (trigger Input, panneau Popover gelé,
+   palette prédéfinie + saisie HEX synchronisées, copie de valeur).
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

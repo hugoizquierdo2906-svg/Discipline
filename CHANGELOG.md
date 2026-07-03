@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Date Range Picker — frozen (Control Surface).** No functional, visual
+  or architectural change again except an objective bug.
+
 - **Time Picker — frozen (Control Surface).** No functional, visual or
   architectural change again except an objective bug.
 

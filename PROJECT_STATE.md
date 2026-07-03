@@ -642,13 +642,14 @@
 >     minutes), real examples; desktop/tablet/mobile + rich-background +
 >     opened/keyboard/granularities captures. `'use client'`.
 >   - **Date Range Picker — Control Surface, composes Input + the frozen
->     DatePicker calendar language in range mode (Built, not frozen).**
+>     DatePicker calendar language in range mode. FROZEN (visually
+>     validated 2026-07-03).**
 >     ```text
 >     Control
 >     the frozen optical-layer stack → Control Surface → Date Range Picker
 >     → Input (trigger) → Popover surface (.ds-floating) → Calendar grid
 >     → Range
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     A start and an end date representing exactly ONE logical value: a
 >     continuous period. Not Date Picker (commits ONE day and closes; a
