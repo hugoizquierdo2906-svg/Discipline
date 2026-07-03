@@ -97,11 +97,15 @@ export const Switch = forwardRef<
         // (w-11 would be 96px), so the track never trusts scale keys.
         'relative inline-flex h-[24px] w-[44px] shrink-0 items-center rounded-pill',
         'ds-glass ds-micro',
-        'transition-shadow duration-fast ease-standard motion-reduce:transition-none',
+        'transition-[background-color,box-shadow] duration-fast ease-standard motion-reduce:transition-none',
         // Checked = the Micro Surface's own "primary intent" light, reused
         // verbatim: the same violet-caustic layer + the same halo recipe as
         // Button Primary (rgba(139,124,255,…) is --ds-color-accent — no new
-        // color). Never a background fill.
+        // color). --ds-glass-capture is the SAME token behind that caustic;
+        // used here as a translucent tint the existing backdrop-filter (blur
+        // + saturate 1.7) catches and diffuses — light passing through the
+        // unmodified glass, never a painted fill.
+        'data-[state=checked]:bg-[var(--ds-glass-capture)]',
         'data-[state=checked]:shadow-[0_2px_18px_rgba(139,124,255,0.22)]',
         'data-[state=checked]:[&>.ds-glass__body>.ds-glass__violet]:opacity-100',
         isInvalid && cn('border', microControlInvalidClass),
