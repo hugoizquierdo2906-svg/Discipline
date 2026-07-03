@@ -275,9 +275,11 @@
    (Tooltip · Popover · DropdownMenu · ContextMenu · HoverCard · Toast).
    **Checkbox : GELÉ (validé visuellement 2026-07-02)** — `micro-control.tsx`
    devient la fondation partagée gelée des petits membres Micro. **Radio : GELÉ (validé visuellement 2026-07-02)** — micro-control compte deux
-   consommateurs gelés (Checkbox · Radio) ; Switch reste Built. **Switch (en
-   cours — même fondation gelée, dernier petit contrôle Micro)**. Ensuite :
-   Dialog (← Modal), UserMenu. Nouveau helper `micro-control.tsx` (expression partagée
+   consommateurs gelés (Checkbox · Radio) ; Switch reste Built. **Switch : rebuild sur la fondation micro-control gelée, Built non gelé — à
+   geler sur validation visuelle explicite** (rail 44×24 explicite — bug objectif :
+   l'ancien `h-6 w-11` faisait 32×96 px sur l'échelle DISCIPLINE et le pouce
+   n'atteignait jamais le bord ; pouce = glyphe sombre glissant, `microControlThumbClass`
+   additif). Ensuite : Dialog (← Modal), UserMenu. Nouveau helper `micro-control.tsx` (expression partagée
    des petits contrôles Micro — box token · fill accent · rim invalid ; focus =
    ring global) ; fix objectif : icône indéterminée pilotée par la prop (cassée
    en non-contrôlé) → data-state. API complète (description/error/helper/invalid/

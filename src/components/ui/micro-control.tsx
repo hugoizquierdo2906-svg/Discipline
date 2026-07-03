@@ -27,3 +27,11 @@ export const microControlActiveClass = cn(
 /** Invalid rim — the same error language as the Control family. */
 export const microControlInvalidClass =
   'border-error data-[state=checked]:border-error data-[state=indeterminate]:border-error'
+
+/** The sliding glyph (Switch thumb) — the SAME dark glyph philosophy as the
+ * Checkbox check and the Radio dot, in motion. (Additive extraction: the
+ * frozen Checkbox/Radio outputs are untouched.) */
+export const microControlThumbClass = cn(
+  'block rounded-pill bg-text',
+  'transition-transform duration-fast ease-standard motion-reduce:transition-none',
+)
