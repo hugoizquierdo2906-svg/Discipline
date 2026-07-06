@@ -859,6 +859,76 @@
 >     describedby), the frozen destructive Button
 >     (`data-glass-variant="destructive"`), loading locks every dismissal
 >     path, disabled, increasing size scale. `'use client'`.
+>   - **Fullscreen Overlay — Immersive, composes the Modal foundation + the
+>     frozen IconButton/Spinner (Built, not frozen).**
+>     ```text
+>     Immersive
+>     the frozen optical-layer stack → .ds-immersive → ImmersiveSurface
+>     → Modal (the Dialog foundation) → Fullscreen Overlay
+>     Status: Built (non frozen)
+>     ```
+>     DISCIPLINE's maximal immersive surface: a temporary takeover of the
+>     ENTIRE viewport for a long, complex or focus-hungry task, without
+>     leaving the current page. Not a bigger Drawer (a Drawer keeps the page
+>     visible beside it as context; the overlay deliberately REMOVES that
+>     context so nothing competes), not a fullscreen Dialog (a Dialog is a
+>     bounded MOMENT sized to its content — a decision or a small form; the
+>     overlay is an ENVIRONMENT with header/body/footer/sidebars/toolbars, a
+>     place you inhabit for minutes), not a Bottom Sheet (gesture-driven,
+>     detents; the overlay is always the whole screen and keyboard/pointer
+>     first), not AlertDialog (a blocking question), not Command Palette
+>     (search-to-jump), not Popover/Tooltip (anchored, non-blocking), not
+>     Sidebar/Navigation Drawer (persistent layout regions), not a Wizard (a
+>     multi-step flow that may LIVE inside an overlay — content, not the
+>     surface), not a Page (a routed destination with a URL — the overlay is
+>     transient and returns you exactly where you were). Why not each
+>     sibling: Dialog/AlertDialog interrupt for a decision; Drawer preserves
+>     page context; Bottom Sheet is touch physics; Command Palette jumps;
+>     Popover is anchored; Sidebar persists; a Page owns a URL. When to use:
+>     a task that fills the screen and the mind — editor, program builder,
+>     client creation, onboarding, AI assistant, media viewer, fullscreen
+>     search, comparison. When FORBIDDEN: a confirmation, a short form, a
+>     menu, contextual info, anything the page can host inline, and anything
+>     that deserves its own URL (that is a Page). Composes the Modal
+>     COMPONENT only — focus trap, restore focus, scroll lock, Escape,
+>     overlay, portal, inert background and Title/Description ARIA inherited
+>     verbatim (fullscreen-overlay.tsx contains ZERO focus/overlay/portal/
+>     scroll-lock code, grep-verified). Owns ONLY its geometry (edge-to-
+>     edge, 100dvh, `w-screen`, no centering, no radius — the frozen
+>     CommandPalette pane neutralization `p-0`), its slots (header ·
+>     breadcrumb · search · toolbar · sidebar · body · inspector · footer ·
+>     status bar) and its layout: a flex column where the header, toolbar,
+>     footer and status bar are sticky (`shrink-0`), the middle band is the
+>     only growing row (`flex-1 min-h-0`), and the BODY is the only scroll
+>     region (`overflow-y-auto`) — the VIEWPORT never scrolls (Modal's
+>     scroll lock; asserted in the proof that `document.scrollingElement`
+>     stays at 0). Sidebar and inspector are edge-to-edge-height columns with
+>     their own scroll. The material and the open entrance are the frozen
+>     Immersive ones, untouched — no `transition`/`animation` written here.
+>     ZERO files modified outside the two new component files (Modal,
+>     ImmersiveSurface, IconButton, Spinner reused as-is; no additive Modal
+>     extension needed). States surfaced through the props: closed/opening/
+>     open (Modal presence), loading (Spinner over the body), disabled
+>     (blocks opening), plus busy/read-only/success/error expressible in the
+>     consumer's own body/footer content. API: trigger · open/defaultOpen/
+>     onOpenChange · modal · loading · disabled · showCloseButton ·
+>     closeOnEscape · closeOnOverlay · restoreFocus · title · description ·
+>     header · breadcrumb · search · toolbar · sidebar · inspector · footer ·
+>     statusBar · data-testid. UX decision map documented in-file: yes/no →
+>     AlertDialog · one bounded action → Dialog · info by a trigger →
+>     Popover · a command → Command Palette · a workspace beside the page →
+>     Drawer · a gesture-driven mobile surface → Bottom Sheet · a
+>     full-screen focused task → Fullscreen Overlay. fullscreen-overlay.tsx
+>     grep: zero `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/
+>     `transition`/`animation` string. Proof: `/dev/fullscreen-overlay` —
+>     empty/simple/editor/long-form/AI-assistant/client-creation/program-
+>     builder/fullscreen-search/gallery/split-view/inspector/sidebar/
+>     toolbar/loading/disabled/nested; desktop/tablet/mobile + rich-
+>     background captures; programmatic assertions for open/close, Escape,
+>     portal, ARIA, edge-to-edge full-viewport geometry, single scroll
+>     region with the viewport never scrolling, sticky header/footer, all
+>     optional slots, loading, disabled, restore focus, nested per-layer
+>     Escape, mobile full-viewport. `'use client'`.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

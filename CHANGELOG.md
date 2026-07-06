@@ -103,6 +103,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Fullscreen Overlay — composes the Modal foundation + the frozen
+  IconButton/Spinner (Built, not frozen).** DISCIPLINE's maximal immersive
+  surface: a temporary takeover of the ENTIRE viewport for a long, complex
+  or focus-hungry task, without leaving the current page. Not a bigger
+  Drawer (a Drawer keeps the page visible beside it as context — the
+  overlay deliberately REMOVES that context so nothing competes for
+  attention), not a fullscreen Dialog (a Dialog is a bounded moment sized to
+  its content — a decision or a small form; the overlay is an environment
+  with its own header, body, footer, sidebars and toolbars, inhabited for
+  minutes not seconds), not a Bottom Sheet (gesture-driven mobile physics at
+  detents; the overlay is always the whole screen, keyboard/pointer first),
+  not a Command Palette (a search-to-jump surface), not a Sidebar/Navigation
+  Drawer (persistent layout regions), not a Popover (anchored, non-blocking),
+  not a Wizard (a multi-step flow — content that may live inside an overlay,
+  not the surface itself), not a Page (a routed destination with a URL — the
+  overlay is transient and returns you exactly where you were). It exists
+  because some tasks — building a program, creating a client, onboarding, an
+  AI-assistant session, a media viewer, a fullscreen search, a side-by-side
+  comparison — need the whole canvas and zero distraction, yet must not
+  become a routed page; forbidden for a confirmation, a short form, a menu,
+  contextual info, anything the page can host inline, and anything that
+  deserves its own URL. Composes the Modal COMPONENT only — focus trap,
+  restore focus, scroll lock, Escape, overlay, portal, inert background and
+  the Title/Description ARIA wiring inherited verbatim; fullscreen-overlay.tsx
+  contains ZERO focus/overlay/portal/scroll-lock code. Owns only its geometry
+  (edge-to-edge, 100dvh, no radius, no centering — `inset-0`/`w-screen`/
+  `max-w-none`/`translate-0`), its slots (header · breadcrumb · search ·
+  toolbar · sidebar · body · inspector · footer · status bar) and its layout:
+  a flex column where the header/toolbar/footer/status bar are sticky
+  (shrink-0), the middle band (flex-1, min-h-0) holds an optional left
+  sidebar + the body + an optional right inspector, the body is the ONLY
+  scroll region, and the viewport never scrolls (Modal's scroll lock).
+  `loading` overlays the body with the frozen Spinner; `disabled` blocks
+  opening (an already-open overlay still closes); modal/non-modal,
+  closeOnEscape/closeOnOverlay/restoreFocus guard the dismissal paths; a
+  custom `header` slot replaces the default bar (the Title stays, visually
+  hidden, so ARIA is intact); nested by plain composition (per-layer Escape,
+  verified). fullscreen-overlay.tsx grep: zero `GlassSurface`/`blur`/
+  `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string; zero
+  focus/portal/scroll-lock code. ZERO files modified outside the new
+  component files — Modal, ImmersiveSurface, IconButton, Icon and Spinner
+  reused as-is (not even the additive Modal props were needed).
+
 - **Bottom Sheet — composes the Modal foundation + the frozen Spinner
   (Built, not frozen).** DISCIPLINE's touch-first immersive surface: a
   panel that rises from the bottom edge and is driven by the gesture

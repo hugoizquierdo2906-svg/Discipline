@@ -690,6 +690,52 @@
    info ancrée → Popover · commande → Command Palette · espace de travail
    → Drawer · surface mobile gestuelle → Bottom Sheet. À geler sur
    validation visuelle explicite.
+   **Fullscreen Overlay : Built, non gelé** — la surface immersive maximale
+   de DISCIPLINE : une prise de contrôle temporaire du viewport ENTIER pour
+   une tâche longue, complexe ou exigeant toute l'attention, sans quitter la
+   page courante. Pas un Drawer agrandi (le Drawer garde la page visible à
+   côté comme contexte ; l'overlay RETIRE délibérément ce contexte pour que
+   rien ne dispute l'attention), pas un Dialog plein écran (un Dialog est un
+   MOMENT borné dimensionné à son contenu — une décision, un petit
+   formulaire ; l'overlay est un ENVIRONNEMENT avec son propre header, corps,
+   footer, barres latérales et toolbars, habité des minutes, pas des
+   secondes), pas un Bottom Sheet (physique gestuelle mobile aux detents ;
+   l'overlay est toujours l'écran entier, clavier/pointeur d'abord), pas une
+   Command Palette (surface de recherche-pour-sauter), pas une Sidebar/
+   Navigation Drawer (régions de layout persistantes), pas un Popover (ancré,
+   non bloquant), pas un Wizard (un flux multi-étapes — du contenu qui peut
+   VIVRE dans un overlay, pas la surface elle-même), pas une Page (une
+   destination routée avec URL — l'overlay est transitoire et te ramène
+   exactement où tu étais). Existe parce que certaines tâches — construire un
+   programme, créer un client, un onboarding, une session d'assistant IA, un
+   visualiseur de média, une recherche plein écran, une comparaison côte à
+   côte — exigent tout le canevas et zéro distraction, sans pour autant
+   devenir une page routée. Interdit pour : une confirmation, un court
+   formulaire, un menu, une info contextuelle, tout ce que la page peut
+   héberger inline, et tout ce qui mérite sa propre URL (c'est une Page).
+   GlassSurface → .ds-immersive → ImmersiveSurface → Modal →
+   **FullscreenOverlay** : compose le COMPOSANT Modal uniquement — focus
+   trap, restore focus, scroll lock, Escape, overlay, portal, fond inerte et
+   le câblage ARIA Title/Description hérités verbatim ; fullscreen-overlay.tsx
+   ne contient AUCUN code focus/overlay/portal/scroll-lock. Ne possède que sa
+   géométrie (bord à bord, 100dvh, aucun rayon, aucun centrage —
+   `inset-0`/`w-screen`/`max-w-none`/`translate-0`), ses slots (header ·
+   breadcrumb · search · toolbar · sidebar · body · inspector · status bar) et
+   sa mise en page : une colonne flex où header/toolbar/footer/status bar sont
+   sticky (shrink-0), la bande centrale (flex-1, min-h-0) porte une sidebar
+   gauche optionnelle + le corps + un inspector droit optionnel, le corps est
+   la SEULE zone de scroll, et le viewport ne scrolle jamais (scroll lock de
+   Modal). `loading` recouvre le corps du Spinner gelé ; `disabled` bloque
+   l'ouverture (un overlay déjà ouvert se ferme quand même) ; modal/non-modal,
+   closeOnEscape/closeOnOverlay/restoreFocus gardent les voies de fermeture ;
+   un slot `header` custom remplace la barre par défaut (le Title reste,
+   masqué visuellement, ARIA intact) ; imbriqués par simple composition
+   (Escape couche par couche, vérifié). grep zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition/animation ; zéro code focus/portal/
+   scroll-lock. ZÉRO fichier modifié hors des nouveaux fichiers du composant —
+   Modal/ImmersiveSurface/IconButton/Icon/Spinner réutilisés tels quels (même
+   les props additives de Modal n'ont pas été nécessaires). À geler sur
+   validation visuelle explicite.
    **Sheet : REJETÉ (ADR 2026-07-03, aucun code écrit).** Analyse
    documentée contre Radix (aucune primitive Sheet/Drawer/Bottom Sheet —
    Dialog seulement), Ariakit (idem — Dialog/Popover/Hovercard), shadcn
