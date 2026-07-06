@@ -649,6 +649,21 @@
    sont absentes ; indispensables et documentées). grep zéro
    GlassSurface/blur/backdrop-filter/rgba/shadow/transition/animation et
    zéro `focus` d'aucune sorte — le grep le plus propre de la session.
+   **Sheet : REJETÉ (ADR 2026-07-03, aucun code écrit).** Analyse
+   documentée contre Radix (aucune primitive Sheet/Drawer/Bottom Sheet —
+   Dialog seulement), Ariakit (idem — Dialog/Popover/Hovercard), shadcn
+   (son `Sheet` « étend le composant Dialog pour afficher du contenu qui
+   complète le contenu principal de l'écran », prop `side`
+   top/right/bottom/left + slots header/footer — soit EXACTEMENT notre
+   Drawer gelé, fonctionnalité pour fonctionnalité, sur la même fondation
+   Dialog) et Material (pas de « Sheet » : des *side sheets* ≡ Drawer et
+   des *bottom sheets* définis par le geste). « Sheet » ne nomme aucune
+   capacité manquante : c'est le Drawer sous le nom d'une autre
+   librairie → rejeté (un problème, un composant). La surface réellement
+   distincte est le **Bottom Sheet** (physique de drag, detents, snap
+   points, safe-area, tactile d'abord) — futur composant séparé, déjà
+   réservé nommément dans la doc du Drawer gelé ; ses comportements de
+   geste restent interdits dans Drawer.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Sheet — REJECTED (ADR).** Source-grounded analysis against the
+  official Radix, Ariakit, Material and shadcn documentation: Radix and
+  Ariakit ship no Sheet/Drawer/Bottom-Sheet primitive (Dialog only);
+  shadcn's Sheet "extends the Dialog component to display content that
+  complements the main content of the screen" with a side prop and
+  header/footer slots — exactly DISCIPLINE's frozen Drawer, feature for
+  feature; Material has side sheets (≡ Drawer) and bottom sheets (a
+  gesture-defined surface). "Sheet" therefore names no missing
+  capability — it is the frozen Drawer under another library's name, and
+  the design system never creates two components for one problem. The
+  genuinely distinct surface is the Bottom Sheet (drag physics, detents,
+  snap points, safe-area, touch-first), a separate future component
+  already reserved in the frozen Drawer's documentation; its gesture
+  behaviors remain forbidden in Drawer. No code was written.
+
 - **Drawer — frozen (Immersive), after the official freeze pass.** No
   functional, visual or architectural change again except an objective
   bug. Freeze pass contents: in-file documentation completed (philosophy,
