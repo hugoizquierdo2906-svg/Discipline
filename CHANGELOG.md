@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Pagination — frozen (Navigation, flat primitive).** No functional,
+  visual or architectural change again except an objective bug.
+
 - **Breadcrumb — frozen (Navigation, flat primitive).** No functional,
   visual or architectural change again except an objective bug.
 

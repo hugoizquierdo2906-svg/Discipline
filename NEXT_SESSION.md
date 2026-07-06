@@ -914,7 +914,8 @@
    chaque niveau doit rester visible (wrap toujours possible). **GELÉ
    (2026-07-06)** — plus de redesign, changements seulement pour un bug
    objectif désormais.
-   **Pagination : Built, non gelé** — navigation à accès aléatoire dans une
+   **Pagination : GELÉ (validé visuellement 2026-07-06).** Plus de
+   redesign sauf bug objectif — navigation à accès aléatoire dans une
    collection PLATE et ordonnée découpée en pages de taille fixe : sauter
    directement à la page 47 sur 900 sans parcourir les 46 précédentes. Pas
    une List (le contenu paginé lui-même, jamais le contrôle qui déplace
@@ -1006,7 +1007,8 @@
    par ses propres exigences explicites de démo « Compact » et
    « Responsive »). Délibérément NON ajouté : un `defaultPage` non
    contrôlé (comme le précédent contrôlé-seulement de MUI). Preuve :
-   `/dev/pagination`. À geler sur validation visuelle explicite.
+   `/dev/pagination`. **GELÉ (2026-07-06)** — plus de redesign, changements
+   seulement pour un bug objectif désormais.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

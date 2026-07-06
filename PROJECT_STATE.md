@@ -1057,12 +1057,14 @@
 >     (2026-07-06)** — no further redesign; changes only for an objective
 >     bug from here on.
 >   - **Pagination — Navigation, a FLAT primitive with NO Material Role
->     (composes the frozen Icon + Spinner only). Built (not frozen).**
+>     (composes the frozen Icon + Spinner only). FROZEN (visually
+>     validated 2026-07-06).** No functional, visual or architectural
+>     change again — objective bugs only.
 >     ```text
 >     Navigation (flat, no Material Role) — sibling of the frozen Breadcrumb
 >     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
 >     → Pagination (Icon + Spinner + Typography tokens)
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     Random-access navigation across a FLAT, ordered collection split into
 >     fixed-size pages — jump directly to page 47 of 900 without stepping
@@ -1164,7 +1166,8 @@
 >     jump buttons/smart collapse (boundary+siblings+ellipsis, never a
 >     single-page gap)/disabled/loading (state stays visible, Spinner
 >     shown)/compact/sibling-count scaling/responsive breakpoint/keyboard
->     (Tab+Enter, native)/RTL. `'use client'`.
+>     (Tab+Enter, native)/RTL. `'use client'`. **FROZEN (2026-07-06)** — no
+>     further redesign; changes only for an objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text
