@@ -860,12 +860,14 @@
 >     (`data-glass-variant="destructive"`), loading locks every dismissal
 >     path, disabled, increasing size scale. `'use client'`.
 >   - **Fullscreen Overlay — Immersive, composes the Modal foundation + the
->     frozen IconButton/Spinner (Built, not frozen).**
+>     frozen IconButton/Spinner. FROZEN (visually validated 2026-07-06).**
+>     No functional, visual or architectural change again — objective bugs
+>     only.
 >     ```text
 >     Immersive
 >     the frozen optical-layer stack → .ds-immersive → ImmersiveSurface
 >     → Modal (the Dialog foundation) → Fullscreen Overlay
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     DISCIPLINE's maximal immersive surface: a temporary takeover of the
 >     ENTIRE viewport for a long, complex or focus-hungry task, without

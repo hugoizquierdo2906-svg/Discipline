@@ -690,7 +690,8 @@
    info ancrée → Popover · commande → Command Palette · espace de travail
    → Drawer · surface mobile gestuelle → Bottom Sheet. À geler sur
    validation visuelle explicite.
-   **Fullscreen Overlay : Built, non gelé** — la surface immersive maximale
+   **Fullscreen Overlay : GELÉ (validé visuellement 2026-07-06).** Plus de
+   redesign sauf bug objectif — la surface immersive maximale
    de DISCIPLINE : une prise de contrôle temporaire du viewport ENTIER pour
    une tâche longue, complexe ou exigeant toute l'attention, sans quitter la
    page courante. Pas un Drawer agrandi (le Drawer garde la page visible à
@@ -734,8 +735,7 @@
    backdrop-filter/rgba/shadow/transition/animation ; zéro code focus/portal/
    scroll-lock. ZÉRO fichier modifié hors des nouveaux fichiers du composant —
    Modal/ImmersiveSurface/IconButton/Icon/Spinner réutilisés tels quels (même
-   les props additives de Modal n'ont pas été nécessaires). À geler sur
-   validation visuelle explicite.
+   les props additives de Modal n'ont pas été nécessaires).
    **Sheet : REJETÉ (ADR 2026-07-03, aucun code écrit).** Analyse
    documentée contre Radix (aucune primitive Sheet/Drawer/Bottom Sheet —
    Dialog seulement), Ariakit (idem — Dialog/Popover/Hovercard), shadcn

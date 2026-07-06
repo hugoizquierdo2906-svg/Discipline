@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Fullscreen Overlay — frozen (Immersive).** No functional, visual or
+  architectural change again except an objective bug.
+
 - **Sheet — REJECTED (ADR).** Source-grounded analysis against the
   official Radix, Ariakit, Material and shadcn documentation: Radix and
   Ariakit ship no Sheet/Drawer/Bottom-Sheet primitive (Dialog only);
