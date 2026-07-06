@@ -72,6 +72,14 @@ export interface ModalContentProps extends React.ComponentPropsWithoutRef<
   /** Geometry overrides for the PANE (`.ds-immersive` host) — e.g. `p-0` for
    * bespoke internal layouts. `className` targets the positioning shell. */
   paneClassName?: string
+  /** STRICTLY ADDITIVE (Drawer): geometry overrides for the inner content
+   * plane (e.g. `h-full` so a member can run a full-height column layout
+   * with its own internal scroll region). Output unchanged when absent. */
+  contentClassName?: string
+  /** STRICTLY ADDITIVE (Drawer): keep the portal + content mounted while
+   * closed (CSS-driven visibility, same contract as Popover's forceMount).
+   * Output unchanged when absent. */
+  forceMount?: true
 }
 
 /** Content — scrim + centered Immersive pane. The outer shell owns placement
@@ -81,20 +89,34 @@ export interface ModalContentProps extends React.ComponentPropsWithoutRef<
 const ModalContent = forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   ModalContentProps
->(function ModalContent({ className, paneClassName, children, ...props }, ref) {
+>(function ModalContent(
+  {
+    className,
+    paneClassName,
+    contentClassName,
+    forceMount,
+    children,
+    ...props
+  },
+  ref,
+) {
   return (
-    <DialogPrimitive.Portal>
+    <DialogPrimitive.Portal forceMount={forceMount}>
       <DialogPrimitive.Overlay
+        forceMount={forceMount}
         className={cn(
           immersiveScrimClass,
           immersiveScrimEnterClass,
           'fixed inset-0 z-overlay',
+          forceMount && 'data-[state=closed]:hidden',
         )}
       />
       <DialogPrimitive.Content
         ref={ref}
+        forceMount={forceMount}
         className={cn(
           'fixed left-1/2 top-1/2 z-overlay w-[calc(100vw-2rem)] max-w-[440px] -translate-x-1/2 -translate-y-1/2 outline-none',
+          forceMount && 'data-[state=closed]:hidden',
           className,
         )}
         {...props}
@@ -103,7 +125,13 @@ const ModalContent = forwardRef<
           className={cn(immersiveHostClass, immersiveEnterClass, paneClassName)}
         >
           <ImmersiveSurface />
-          <div className={cn(immersiveContentClass, 'flex flex-col gap-4')}>
+          <div
+            className={cn(
+              immersiveContentClass,
+              'flex flex-col gap-4',
+              contentClassName,
+            )}
+          >
             {children}
           </div>
         </div>

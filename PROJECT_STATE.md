@@ -859,6 +859,81 @@
 >     describedby), the frozen destructive Button
 >     (`data-glass-variant="destructive"`), loading locks every dismissal
 >     path, disabled, increasing size scale. `'use client'`.
+>   - **Drawer — Immersive, composes the Modal foundation + the frozen
+>     IconButton/Spinner (Built, not frozen).**
+>     ```text
+>     Immersive
+>     the frozen optical-layer stack → .ds-immersive → ImmersiveSurface
+>     → Modal (the Dialog foundation) → Drawer
+>     Status: Built (non frozen)
+>     ```
+>     An edge-anchored immersive panel: a secondary WORKSPACE that slides
+>     in from one side, holds real content (forms, settings, inspectors,
+>     navigation) and hands the screen back where the user left it. Not
+>     Dialog/Modal (a centered, self-contained MOMENT sized to its content
+>     vs. an edge-attached SPACE built for browsing/editing beside the
+>     page — a dialog for a decision, a drawer for a task), not Alert
+>     Dialog (a blocking question, zero content, maximum interruption —
+>     the exact opposite), not Sheet (another library's name for this same
+>     species; DISCIPLINE has one canonical name, no duplicate sibling),
+>     not Bottom Sheet (defined by DRAG — detents, snap points, swipe;
+>     Drawer's bottom side shares the placement, none of the gesture
+>     physics), not Popover (anchored to a trigger vs. the viewport edge),
+>     not Tooltip/Hover Card (hover, passive), not Dropdown/Context Menu
+>     (command lists), not Navigation Menu (an always-visible bar — a
+>     drawer may CONTAIN navigation but is a transient container), not
+>     Command Palette (the searchable Immersive member), not Sidebar (a
+>     PERSISTENT layout region sharing the screen; a drawer OVERLAYS and
+>     leaves — the moment it stays it has become a Sidebar), not
+>     Accordion/Collapsible (in-flow disclosure that pushes content), not
+>     Card, not Form/Wizard (content KINDS it may host), not Overlay (the
+>     scrim organ underneath), not Toast (transient, informs). Ergonomics:
+>     preserves spatial context (the page stays visible beside it), edge
+>     anchoring gives natural height for long scrolling content, maps to
+>     the OS panel gesture vocabulary. Responsive: desktop → side drawers
+>     as inspectors/settings at partial width; mobile → near-full width,
+>     bottom side more thumb-reachable; every size viewport-clamped
+>     (400px drawer on a 390px phone never overflows); `size="full"` turns
+>     any side into a full-screen surface. Composes the Modal COMPONENT
+>     only (never the primitives underneath — Modal's own rule): focus
+>     trap, restore focus, scroll lock, Escape, overlay, portal, inert
+>     background and Title/Description ARIA inherited VERBATIM, never
+>     reimplemented — drawer.tsx contains ZERO focus code of any kind.
+>     Adds only geometry and slots: edge placement per `side`
+>     (left/right/top/bottom — Modal's centered shell repositioned via
+>     className, the consumer's layout decision per Invariant A1), a size
+>     scale per axis (xs·280/sm·320/md·400/lg·480/xl·600/full for widths;
+>     200/280/360/460/580/full for heights), the frozen CommandPalette
+>     pane neutralization verbatim (`w-full max-w-none p-0`) with the
+>     pane's frozen radius kept whole thanks to an 8px viewport gutter (no
+>     corner surgery), sticky header (icon + Title + Description + frozen
+>     IconButton close) / scrollable body (frozen Spinner while `loading`)
+>     / sticky footer, custom header/footer slots (title stays, visually
+>     hidden, for ARIA), `Drawer.Close` re-export. modal/non-modal =
+>     Radix's own mode passed through; closeOnEscape/closeOnOverlay =
+>     prevented Radix callbacks; nested drawers = plain composition (Radix
+>     layering — Escape closes the top one only, verified); forceMount +
+>     contentClassName = TWO strictly additive extensions to modal.tsx
+>     (indispensable: the Portal did not forward forceMount, and a
+>     full-height column layout inside the pane was unreachable from
+>     outside — output byte-identical when the new props are absent). The
+>     entrance is the shared Immersive entrance verbatim (the family
+>     declares ONE entrance). drawer.tsx grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation`/`focus`
+>     string of ANY kind — the cleanest grep of the session. API: trigger ·
+>     open/defaultOpen/onOpenChange · side · size · modal · closeOnEscape ·
+>     closeOnOverlay · forceMount · loading · disabled · title (required) ·
+>     description · icon · header/footer (custom slots) · children ·
+>     data-testid. Proof: `/dev/drawer` — sides, sizes, workspaces
+>     (settings/navigation/inspector/destructive), long content, loading,
+>     disabled, no-overlay-close, full screen, nested; desktop/tablet/
+>     mobile + rich-background + right/bottom/xl/long-scrolled/loading/
+>     nested/settings/mobile-open captures; programmatic assertions for
+>     open/close, Escape, overlay (and closeOnOverlay=false), focus trap +
+>     tab order, restore focus, internal scroll, sticky header/footer,
+>     nested stacking + per-layer Escape, portal to <body>, ARIA
+>     (role/aria-modal/labelledby/describedby), all four sides anchored,
+>     all six sizes strictly increasing, mobile clamping. `'use client'`.
 >   - **Popover — Floating Surface, first generalized Floating member. FROZEN
 >     (visually validated 2026-07-02, after the 98/100 craft pass).** No redesign
 >     again unless an objective bug appears.

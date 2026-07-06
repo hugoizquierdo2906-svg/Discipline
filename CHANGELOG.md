@@ -70,6 +70,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Drawer — composes the Modal foundation + the frozen IconButton/Spinner
+  (Built, not frozen).** An edge-anchored immersive panel: a secondary
+  workspace sliding in from one side, holding real content (forms,
+  settings, inspectors, navigation) — a dialog for a decision, a drawer
+  for a task. Not Dialog/Modal (a centered moment vs. an edge-attached
+  space), not Alert Dialog (a blocking question — the opposite), not Sheet
+  (another library's name for the same species — one canonical name), not
+  Bottom Sheet (drag/detent/swipe physics — a future component), not
+  Popover/Tooltip/Hover Card, not Dropdown/Context Menu, not Navigation
+  Menu, not Command Palette, not Sidebar (persistent vs. overlaying), not
+  Accordion/Collapsible, not Card, not Form/Wizard, not Overlay, not
+  Toast. Composes the Modal COMPONENT only — focus trap, restore focus,
+  scroll lock, Escape, overlay, portal, inert background and
+  Title/Description ARIA inherited verbatim; drawer.tsx contains ZERO
+  focus code of any kind (the cleanest grep of the session). Adds only
+  geometry and slots: side left/right/top/bottom; sizes xs→full per axis,
+  viewport-clamped; the frozen CommandPalette pane neutralization verbatim
+  with the pane's frozen radius kept whole via an 8px viewport gutter;
+  sticky header / scrollable body / sticky footer with custom slots;
+  modal/non-modal; closeOnEscape/closeOnOverlay; forceMount; nested
+  drawers by plain composition (per-layer Escape, verified). TWO strictly
+  additive extensions to modal.tsx were required and documented
+  (`forceMount` forwarding to the Portal, `contentClassName` for the inner
+  content plane — Modal's output is byte-identical when the new props are
+  absent).
+
 - **Alert Dialog — composes the Modal foundation + the frozen Button
   (Built, not frozen).** An interrupting confirmation: one question that
   must be answered — confirm or cancel — before anything else can happen;

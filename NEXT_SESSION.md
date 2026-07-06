@@ -599,6 +599,50 @@
    irréductible) + le nom de prop Radix `onOpenAutoFocus`. ZÉRO fichier
    modifié hors du nouveau composant — Modal et Button fournissaient
    tout.
+   **Drawer : Built, non gelé** — un panneau immersif ancré au bord : un
+   espace de travail secondaire qui glisse depuis un côté de l'écran,
+   porte du vrai contenu (formulaire, réglages, inspecteur, navigation)
+   et rend l'écran là où l'utilisateur l'a laissé. Un dialog pour une
+   décision, un drawer pour une tâche. Pas Dialog/Modal (un MOMENT centré
+   et borné, dimensionné à son contenu vs un ESPACE attaché au bord,
+   pleine hauteur, fait pour parcourir/éditer à côté de la page), pas
+   Alert Dialog (question bloquante, zéro contenu, interruption maximale
+   — l'exact opposé), pas Sheet (le nom qu'une autre librairie donne à la
+   même espèce ; DISCIPLINE a UN nom canonique, pas de frère doublon),
+   pas Bottom Sheet (défini par le GESTE — detents, snap points, swipe ;
+   le côté bottom du Drawer partage le placement, aucune physique de
+   geste), pas Popover (ancré à un déclencheur vs au bord du viewport),
+   pas Tooltip/Hover Card (survol, passif), pas Dropdown/Context Menu
+   (commandes), pas Navigation Menu (barre toujours visible — un drawer
+   peut CONTENIR de la navigation, transitoirement), pas Command Palette
+   (l'autre membre Immersive), pas Sidebar (région de layout PERSISTANTE
+   qui partage l'écran ; un drawer RECOUVRE et repart — s'il reste, c'est
+   devenu une Sidebar), pas Accordion/Collapsible (divulgation dans le
+   flux qui pousse le contenu), pas Card, pas Form/Wizard (des GENRES de
+   contenu qu'il héberge), pas Overlay (l'organe scrim en dessous), pas
+   Toast. Ergonomie : conserve le contexte spatial (la page reste visible
+   à côté), l'ancrage au bord donne une hauteur naturelle aux contenus
+   longs, vocabulaire gestuel OS. Responsive : desktop → panneaux
+   latéraux partiels (inspecteur/réglages) ; mobile → quasi pleine
+   largeur, bottom plus accessible au pouce ; chaque taille est bornée au
+   viewport ; `size="full"` = surface plein écran. Compose le COMPOSANT
+   Modal uniquement : focus trap, restore focus, scroll lock, Escape,
+   overlay, portal, fond inerte et ARIA hérités VERBATIM — drawer.tsx ne
+   contient AUCUN code de focus. Ajoute seulement géométrie + slots :
+   side left/right/top/bottom, tailles xs→full par axe, la
+   neutralisation de panneau du CommandPalette gelé verbatim (`w-full
+   max-w-none p-0`) avec le radius gelé intact grâce à une gouttière de
+   8px (aucune chirurgie d'angle), header sticky (icône + Title +
+   Description + IconButton gelé) / corps scrollable (Spinner gelé en
+   loading) / footer sticky, slots header/footer custom, modal/non-modal,
+   closeOnEscape/closeOnOverlay, forceMount, drawers imbriqués par simple
+   composition (Escape ferme couche par couche, vérifié). DEUX extensions
+   strictement additives dans modal.tsx (transfert `forceMount` au Portal
+   + `contentClassName` — sortie identique à l'octet près quand les props
+   sont absentes ; indispensables et documentées). grep zéro
+   GlassSurface/blur/backdrop-filter/rgba/shadow/transition/animation et
+   zéro `focus` d'aucune sorte — le grep le plus propre de la session. À
+   geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
