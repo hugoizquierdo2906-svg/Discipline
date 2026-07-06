@@ -649,6 +649,47 @@
    sont absentes ; indispensables et documentées). grep zéro
    GlassSurface/blur/backdrop-filter/rgba/shadow/transition/animation et
    zéro `focus` d'aucune sorte — le grep le plus propre de la session.
+   **Bottom Sheet : Built, non gelé** — la surface immersive tactile de
+   DISCIPLINE : un panneau qui monte depuis le bord bas, piloté par le
+   GESTE (drag/swipe/flick), s'arrêtant à des detents et rejeté par un jet
+   vers le bas. Là où le Drawer gelé est un ESPACE DE TRAVAIL (deux
+   positions, fermé par bouton/overlay), le Bottom Sheet est une
+   INTERACTION : le doigt le possède. Comportements exclusifs, interdits
+   dans Drawer : drag/swipe/flick, dismissal par vélocité, snap points &
+   detents, rubber-band, coordination du scroll (la liste scrolle jusqu'en
+   haut, puis le sheet prend le drag), settle inertiel, keyboard avoidance,
+   safe-area. Pas Dialog/Modal (centré, sans geste), pas AlertDialog
+   (question bloquante), pas Popover (ancré à un trigger), pas Command
+   Palette, pas Navigation Drawer/Sidebar (cas d'usage Drawer / région
+   persistante), pas Action Sheet iOS (liste de choix figée — un pattern
+   de contenu qu'il héberge), pas Material Bottom Sheet/vaul (c'est CETTE
+   espèce — la version native token-only de DISCIPLINE ; vaul seulement
+   référence technique du drag, jamais visuelle). Compose le COMPOSANT
+   Modal uniquement — portal, focus trap, scroll lock, Escape, overlay,
+   fond inerte, ARIA hérités verbatim ; bottom-sheet.tsx ne contient AUCUN
+   code focus/overlay/portal/scroll-lock (grep). Ne gère que la physique :
+   panneau ancré en bas dont la HAUTEUR est le detent (header/footer
+   sticky fixes, corps scrollable entre) ; en drag la hauteur suit le doigt
+   1:1, rubber-band au-delà du detent le plus haut, un dépassement sous le
+   detent le plus bas glisse vers le dismissal, un flick rapide vers le bas
+   rejette sinon snap au detent le plus proche. Le settle (glissé transform
+   + height) vit dans `bottom-sheet.css` token-only (reduced-motion),
+   désactivé pendant le drag via une classe — donc le .tsx ne porte aucun
+   mot `transition`/`animation` ni `requestAnimationFrame`. Detents
+   content/small/medium/large/full/custom %, bornés au viewport ; `content`
+   lit la hauteur naturelle. Responsive : pleine largeur mobile, largeur
+   plafonnée centrée desktop, sans media query ; keyboard avoidance
+   (VisualViewport) ; safe-area. modal/non-modal, dismissible/
+   closeOnOverlay/closeOnEscape gardent les voies de fermeture (un
+   `BottomSheet.Close` explicite ferme toujours, même non-dismissible) ;
+   imbriqués par simple composition (Escape couche par couche). ZÉRO
+   fichier modifié hors des deux nouveaux fichiers du composant — même les
+   extensions additives de Modal n'ont pas été nécessaires
+   (`contentClassName`/`forceMount` du Drawer existaient déjà). Carte de
+   décision UX documentée : oui/non → AlertDialog · une action → Dialog ·
+   info ancrée → Popover · commande → Command Palette · espace de travail
+   → Drawer · surface mobile gestuelle → Bottom Sheet. À geler sur
+   validation visuelle explicite.
    **Sheet : REJETÉ (ADR 2026-07-03, aucun code écrit).** Analyse
    documentée contre Radix (aucune primitive Sheet/Drawer/Bottom Sheet —
    Dialog seulement), Ariakit (idem — Dialog/Popover/Hovercard), shadcn

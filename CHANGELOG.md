@@ -103,6 +103,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Bottom Sheet — composes the Modal foundation + the frozen Spinner
+  (Built, not frozen).** DISCIPLINE's touch-first immersive surface: a
+  panel that rises from the bottom edge and is driven by the gesture
+  (drag/swipe/flick), resting at detents and dismissed by a downward
+  throw. Where the frozen Drawer is a workspace (two positions, closed by
+  a button/overlay), the Bottom Sheet is an interaction — the finger owns
+  it; the gesture physics is the whole reason it exists and is exactly
+  what the Drawer forbids (its frozen doc reserved these behaviors for
+  "a future BottomSheet"). Not Dialog/Modal (centered, no gesture), not
+  AlertDialog (a blocking question), not Popover (trigger-anchored), not
+  Command Palette, not Navigation Drawer/Sidebar (a Drawer use-case / a
+  persistent region), not iOS Action Sheet (a fixed choice list — a
+  content pattern it hosts), not Material Bottom Sheet/vaul (this IS that
+  species — DISCIPLINE's native token-only take; vaul a technical
+  reference only, never visual). Composes the Modal COMPONENT only —
+  portal, focus trap, scroll lock, Escape, overlay, inert background and
+  Title/Description ARIA inherited verbatim; bottom-sheet.tsx contains
+  ZERO focus/overlay/portal/scroll-lock code. Owns only the physics: the
+  pane is bottom-pinned and its HEIGHT is the detent (sticky header/footer
+  stay put while the body scrolls between), the height follows the finger
+  1:1 with rubber-band resistance past the tallest detent, a downward
+  overshoot below the shortest detent slides toward dismissal, a velocity
+  flick dismisses else it snaps to the nearest detent. The settle
+  (transform + height glide) lives in a token-only `bottom-sheet.css`
+  (reduced-motion aware), toggled off during drag via a class — so the
+  .tsx carries no `transition`/`animation` string and no
+  `requestAnimationFrame`. Detents content/small/medium/large/full/custom
+  %, viewport-clamped; `content` reads the natural column height.
+  Responsive full-width mobile / width-capped centered desktop with no
+  media query; keyboard avoidance via VisualViewport; safe-area insets.
+  modal/non-modal, dismissible/closeOnOverlay/closeOnEscape guard the
+  dismissal paths (an explicit BottomSheet.Close always closes, even on a
+  non-dismissible sheet); nested by plain composition (per-layer Escape).
+  bottom-sheet.tsx grep: zero `GlassSurface`/`blur`/`backdrop-filter`/
+  `rgba`/`shadow`/`transition`/`animation` string. ZERO files modified
+  outside the two new component files — not even the additive Modal
+  extensions were needed (Modal, ImmersiveSurface and Spinner reused
+  as-is).
+
 - **Drawer — composes the Modal foundation + the frozen IconButton/Spinner
   (Built, not frozen).** An edge-anchored immersive panel: a secondary
   workspace sliding in from one side, holding real content (forms,

@@ -859,6 +859,83 @@
 >     describedby), the frozen destructive Button
 >     (`data-glass-variant="destructive"`), loading locks every dismissal
 >     path, disabled, increasing size scale. `'use client'`.
+>   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
+>     Spinner (Built, not frozen).**
+>     ```text
+>     Immersive
+>     the frozen optical-layer stack → .ds-immersive → ImmersiveSurface
+>     → Modal (the Dialog foundation) → Bottom Sheet
+>     Status: Built (non frozen)
+>     ```
+>     DISCIPLINE's touch-first immersive surface: a panel that rises from the
+>     bottom edge and is driven by the GESTURE (drag, swipe, flick), resting
+>     at one of several detents and dismissed by a downward throw. Where the
+>     frozen Drawer is a WORKSPACE (two positions, open/closed, closed by a
+>     button/overlay), the Bottom Sheet is an INTERACTION: the finger owns it
+>     — pull up to see more, push down to see less, throw to dismiss. That
+>     gesture physics is the whole reason it exists and is exactly what the
+>     Drawer forbids itself (the Drawer's frozen doc explicitly reserves
+>     these behaviors for "a future BottomSheet"). Behaviors exclusively the
+>     Bottom Sheet's, FORBIDDEN in Drawer: drag/swipe/flick, velocity
+>     dismissal, snap points & detents, rubber-band overscroll, scroll
+>     coordination (the inner list scrolls until its top, then the sheet
+>     takes the drag), inertial settle, keyboard avoidance, safe-area insets.
+>     Not Dialog/Modal (a centered moment, no gesture), not AlertDialog (a
+>     blocking question), not Popover (trigger-anchored, non-blocking), not
+>     Command Palette (searchable commands), not Navigation Drawer/Sidebar (a
+>     Drawer use-case / a persistent region), not iOS Action Sheet (a fixed
+>     list of choices — one detent, no continuum; a CONTENT PATTERN this
+>     hosts, not a rival), not Material Bottom Sheet/vaul (those ARE this
+>     species — this is DISCIPLINE's native token-only take; vaul used only
+>     as a technical reference for the drag mechanics, never visual).
+>     UX decision map (documented in-file): a yes/no question → AlertDialog;
+>     one bounded action → Dialog; contextual info by a trigger → Popover;
+>     jump to a command → Command Palette; a workspace beside the page →
+>     Drawer; a gesture-driven mobile surface → Bottom Sheet. Composes the
+>     Modal COMPONENT only — portal, focus trap, scroll lock, Escape,
+>     overlay, inert background and Title/Description ARIA inherited verbatim
+>     (bottom-sheet.tsx contains ZERO focus/overlay/portal/scroll-lock code,
+>     grep-verified). Owns ONLY the physics: the pane is BOTTOM-PINNED and
+>     its HEIGHT is the detent (so a sticky header/footer stay put while the
+>     body scrolls between); during a drag the height follows the finger 1:1
+>     with rubber-band resistance past the tallest detent; below the shortest
+>     detent the excess becomes a downward slide toward dismissal; on release
+>     a fast downward flick (velocity) dismisses, otherwise it snaps to the
+>     nearest detent (biased by the throw). The settle (transform + height
+>     glide) lives in `bottom-sheet.css` (token-only: `--ds-dur-standard`/
+>     `--ds-ease-out`, reduced-motion collapses it), toggled off during drag
+>     via a `ds-sheet-settle` class — so the .tsx carries no `transition`/
+>     `animation` string and no `requestAnimationFrame`. Detents: content /
+>     small(.35) / medium(.6) / large(.9) / full(.98) / custom fraction,
+>     resolved to viewport-clamped heights; `content` reads the natural
+>     column height (measured in a deferred tick once laid out). Responsive:
+>     full-width on mobile, width-capped (480) and horizontally centered on
+>     desktop, no media query (max-width + viewport clamp). Keyboard
+>     avoidance lifts the sheet above the on-screen keyboard via
+>     VisualViewport; safe-area pads the bottom by `env(safe-area-inset-*)`.
+>     Modal/non-modal, closeOnEscape/closeOnOverlay/dismissible guard the
+>     dismissal paths (an explicit `BottomSheet.Close` action always closes,
+>     even on a non-dismissible sheet); nested by plain composition (per-
+>     layer Escape, verified). ZERO files modified outside the two new
+>     component files — not even the additive Modal extensions were needed
+>     (`contentClassName`/`forceMount` from the Drawer already existed);
+>     Modal, ImmersiveSurface, Spinner reused as-is. States surfaced via
+>     `onStateChange`: closed/opening/open/dragging/snapping/dismissed. API:
+>     trigger · open/defaultOpen/onOpenChange · modal · dismissible ·
+>     closeOnOverlay · closeOnEscape · detents · defaultDetent · snap ·
+>     onSnapChange · dragHandle · showHandle · disableDrag ·
+>     disableSwipeToDismiss · avoidKeyboard · safeArea · loading · disabled ·
+>     title · description · icon · header/footer · onStateChange ·
+>     data-testid. bottom-sheet.tsx grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string.
+>     Proof: `/dev/bottom-sheet` — simple/action/share/filters/media/
+>     settings/long-form/keyboard/long-list/loading/disabled/non-dismissible/
+>     no-swipe/nested/snap/custom-detents/no-handle; mobile + desktop +
+>     rich-background captures; programmatic assertions for open/close,
+>     Escape, overlay, portal, ARIA, drag-to-resize, snap points, velocity
+>     dismissal, non-dismissible guards + explicit close, disable-swipe,
+>     scroll coordination, sticky footer, disabled, nested per-layer Escape,
+>     desktop centering. `'use client'`.
 >   - **Drawer — Immersive, composes the Modal foundation + the frozen
 >     IconButton/Spinner. FROZEN (visually validated 2026-07-03; freeze
 >     pass: documentation completed in-file — philosophy, Drawer vs Dialog

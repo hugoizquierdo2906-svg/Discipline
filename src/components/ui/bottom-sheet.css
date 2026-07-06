@@ -1,0 +1,24 @@
+/**
+ * Bottom Sheet — the sheet's OWN physics motion, and nothing else. No
+ * material lives here: the glass pane, the scrim, the depth and the radius
+ * all come from the frozen Immersive Surface through Modal. This file owns
+ * only the token-driven settle (the smooth glide the transform makes when a
+ * drag is released and the sheet snaps to a detent), which is the
+ * component's exclusive responsibility (physics / gesture), expressed with
+ * design tokens exclusively.
+ *
+ * During an active drag the settle class is removed so the transform tracks
+ * the finger 1:1; on release it is re-applied so the sheet glides to its
+ * resting detent. Reduced-motion collapses the glide to an instant move.
+ */
+.ds-sheet-settle {
+  transition:
+    transform var(--ds-dur-standard) var(--ds-ease-out),
+    height var(--ds-dur-standard) var(--ds-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-sheet-settle {
+    transition-duration: 1ms;
+  }
+}
