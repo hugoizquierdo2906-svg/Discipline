@@ -9,6 +9,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Spotlight — REJECTED (ADR).** Source-grounded analysis against the
+  official Apple Spotlight/HIG, Raycast, VS Code, Linear, Notion, Arc,
+  Material Design and Radix documentation: Apple's Spotlight is an
+  OS-level, cross-domain find-anything surface (apps, files, contacts,
+  mail, definitions, calculations, conversions, the web) invoked from
+  outside any application — a scope with no equivalent inside a single
+  web app, since DISCIPLINE is not an operating system and the frozen
+  Command Palette is already globally invocable (⌘K) from anywhere in
+  the app. Every real product studied converges on one unified palette
+  rather than two: Linear's Command Menu unifies navigation and action
+  execution in one surface; Raycast bills itself as "Spotlight on
+  steroids — same basic idea"; Notion's Quick Find is its singular
+  jump-and-search surface; Arc's Command Bar merges navigation,
+  organization, tools and settings into one searchable input (60+
+  actions, confirmed on Arc's own docs). VS Code, the one product with
+  two entry points (Quick Open for files, Command Palette for
+  commands), documents them sharing the same underlying input — Quick
+  Open accepts a `?` prefix to surface command suggestions in place — one
+  widget, mode-switched by a leading character, not two components.
+  Material has no "Spotlight" concept: its Search pattern is a
+  page-scoped content filter, already the frozen SearchInput's job.
+  Radix ships no Search/Spotlight/Command primitive at all (Dialog
+  only). Nothing about Spotlight's remaining, product-scoped
+  responsibility is behaviorally exclusive — heterogeneous row content
+  and computed-answer rows are row-template concerns, not new focus/
+  portal/scroll-lock/dismissal behavior — so nothing would be forbidden
+  inside Command Palette either. Classified as a use case / data
+  pattern of the already-frozen Command Palette (a "global entity
+  search" `groups` configuration), fully covered by its existing
+  data-driven, future-proofed `groups` API. No code was written.
+
 - **Fullscreen Overlay — frozen (Immersive).** No functional, visual or
   architectural change again except an objective bug.
 

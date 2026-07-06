@@ -751,6 +751,66 @@
    points, safe-area, tactile d'abord) — futur composant séparé, déjà
    réservé nommément dans la doc du Drawer gelé ; ses comportements de
    geste restent interdits dans Drawer.
+   **Spotlight : REJETÉ (ADR 2026-07-06, aucun code écrit).** Analyse
+   documentée contre Apple Spotlight/HIG, Raycast, VS Code, Linear,
+   Notion, Arc, Material Design et Radix. Spotlight (Apple) est une
+   surface de recherche universelle au niveau de l'OS, à travers des
+   domaines hétérogènes (apps, fichiers, contacts, mails, définitions,
+   calculs, conversions, le web), invocable DEPUIS N'IMPORTE OÙ, hors de
+   toute application — une portée sans équivalent produit à l'intérieur
+   d'une seule application web : DISCIPLINE n'est pas un système
+   d'exploitation, et la CommandPalette gelée est déjà invocable
+   globalement (⌘K) depuis n'importe où dans l'app, soit toute la portée
+   qu'un produit web peut offrir. Chaque produit réel étudié converge vers
+   UNE seule palette unifiée, jamais deux : le Command Menu de Linear
+   unifie navigation (« sauter à n'importe quelle section ») et exécution
+   de commandes dans une seule surface Cmd+K ; Raycast se présente
+   littéralement comme « Spotlight sous stéroïdes — la même idée de
+   base », regroupant launcher + recherche de fichiers + calculatrice +
+   presse-papier + extensions dans une seule barre ; le Quick Find de
+   Notion (Cmd+P/Cmd+K) est sa seule surface de saut-et-recherche, sans
+   concept « Spotlight » séparé ; la Command Bar d'Arc (⌘T) fusionne
+   Navigation + Organisation + Outils + Split View + Réglages — plus de
+   60 actions — dans une seule entrée cherchable (confirmé sur la propre
+   documentation d'Arc). Le seul produit à deux points d'entrée, VS Code
+   (Quick Open ⌘P pour les fichiers, Command Palette ⇧⌘P pour les
+   commandes), documente les deux comme partageant LE MÊME champ : Quick
+   Open accepte un préfixe `?` pour faire apparaître des suggestions de
+   commandes à l'intérieur (confirmé sur la documentation officielle de VS
+   Code) — un seul widget, changement de mode par caractère préfixe, pas
+   deux composants. Même le Spotlight actuel d'Apple converge vers
+   l'intérieur : les versions récentes laissent les apps enregistrer des
+   actions exécutables directement dans Spotlight via App Intents,
+   brouillant la frontière chercher/agir depuis l'autre sens aussi.
+   Material Design n'a aucun concept « Spotlight » : son pattern Search
+   (persistant ou extensible — un champ texte + des cartes de résultats)
+   est un filtre de contenu scopé à la page, déjà le métier du SearchInput
+   gelé, jamais une prise de contrôle globale. Radix ne fournit aucune
+   primitive Search/Spotlight/Command (Dialog seulement — les mêmes
+   parties Root/Trigger/Portal/Overlay/Content/Close/Title/Description que
+   Modal compose déjà) — confirmant, comme pour le rejet de Sheet, que
+   toute surface nommée au-dessus de Dialog est une composition
+   applicative, jamais une primitive manquante. En parcourant les quatre
+   questions obligatoires : Spotlight existe pour localiser une entité ou
+   une réponse calculée à travers un domaine de données hétérogène à
+   l'échelle de l'OS que l'utilisateur ne peut pas parcourir autrement —
+   un problème de PORTÉE qui se réduit à « chercher dans les données de
+   cette app » à l'intérieur d'un seul produit ; rien de ce qui reste
+   n'est comportementalement exclusif (contenu de ligne hétérogène,
+   lignes-réponses calculées, classement plus intelligent des récents sont
+   des préoccupations de gabarit de ligne/de données, jamais un nouveau
+   comportement focus/portal/scroll-lock/fermeture), donc rien ne serait
+   interdit dans la Command Palette non plus. Classé ni comme un
+   composant, ni comme un alias de renommage strict (contrairement à
+   Sheet≡Drawer), mais comme un CAS D'USAGE / PATTERN DE DONNÉES de la
+   CommandPalette déjà gelée : une configuration `groups` de « recherche
+   globale d'entités » (un groupe Clients/Programmes/Exercices aux côtés
+   des groupes existants Recent/Navigation/Actions/Settings/AI),
+   entièrement couverte par son API `groups` déjà pilotée par la donnée et
+   explicitement conçue pour évoluer (« async/streaming/AI plus tard sans
+   rien casser »), sans aucun changement de composant. Command Menu
+   (Linear) et Command Bar (Arc) sont, à l'inverse, de purs alias de nom
+   d'éditeur pour cette même espèce déjà gelée. Aucun code écrit.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
