@@ -931,6 +931,107 @@
 >     region with the viewport never scrolling, sticky header/footer, all
 >     optional slots, loading, disabled, restore focus, nested per-layer
 >     Escape, mobile full-viewport. `'use client'`.
+>   - **Breadcrumb — Navigation, a FLAT primitive with NO Material Role
+>     (composes the frozen Icon + Skeleton only). Built (not frozen).**
+>     ```text
+>     Navigation (flat, no Material Role)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → Breadcrumb (Icon + Skeleton + Typography tokens)
+>     Status: Built (non frozen)
+>     ```
+>     DISCIPLINE's hierarchical position indicator — a trail of ancestors from
+>     the app's root down to the current view, answering exactly one
+>     question: "where am I?" Not primary navigation (a menu explored FROM,
+>     never a report of where you already ARE), not Tabs (siblings at the
+>     SAME level, each owning a content panel), not a Stepper (linear
+>     PROGRESS through a task being completed — Carbon's own guidance:
+>     "If you are taking users through a multistep process use a progress
+>     indicator instead"), not Pagination (a flat numbered sequence within
+>     one collection), not a Tree View (the whole structure, every branch,
+>     persistently), not history/a back button (the ORDER pages were
+>     visited, one reversible step — Apple's own HIG: "The back button
+>     always performs a single action"; Breadcrumb always reflects the
+>     current page's fixed STRUCTURAL position, independent of how the user
+>     arrived), not a Filesystem Path (a static string — every ancestor here
+>     is an independently clickable destination), not a Menubar/Dropdown
+>     Menu/Command Palette (commands, never a position report). Forbidden on
+>     a flat single-level app (GOV.UK: "do not use... on websites with a
+>     flat structure"), for linear-process progress, as a substitute for
+>     real primary navigation (Carbon: "always treated as secondary... never
+>     entirely replace the primary navigation"), and for browser session
+>     history (NN/g: "not intended to show the history of pages traversed
+>     during a session"). Apple's HIG explicitly recommends AGAINST
+>     multisegment breadcrumb paths in iOS navigation bars — "consider
+>     flattening your app's hierarchy instead of using breadcrumb
+>     navigation" — confirming Breadcrumb is a WEB/DESKTOP hierarchical
+>     pattern, not a native-stack one.
+>
+>     A FLAT, token-only primitive: carries NO Material Role at all (zero
+>     GlassSurface, zero `.ds-micro`/`.ds-control`/`.ds-card`/`.ds-floating`/
+>     `.ds-immersive`) and spends ZERO motion budget (zero `transition`/
+>     `animation` string in breadcrumb.tsx outside prose doc comments
+>     describing their absence). Composes only the frozen **Icon** (never
+>     LinkButton — a Button wearing glass; a crumb is plain inline text) and
+>     the frozen **Skeleton** (loading placeholders only — its own file
+>     owns the pulse, not this one). Full WAI-ARIA Breadcrumb pattern
+>     (confirmed against the W3C APG's own reference example): `nav
+>     aria-label="Breadcrumb"`, an ordered list, `aria-current="page"` on
+>     the current (NEVER a link) item, a purely decorative separator kept
+>     out of the accessibility tree (`role="presentation"` + `aria-hidden`).
+>     No roving-tabindex/arrow-key model needed — the APG pattern is a
+>     plain link list, not a composite widget — so native Tab order is the
+>     COMPLETE keyboard model: zero literal `.focus()` calls anywhere, the
+>     cleanest focus story of any component built this session. Radix ships
+>     no Breadcrumb primitive at all (confirmed via their own open feature
+>     request, GitHub issue #2050) — pure semantic HTML, no interaction
+>     primitive needed (no focus trap/portal/dismissal complexity to
+>     inherit).
+>
+>     Two composition modes, mirroring the frozen Select: a data-driven
+>     `items` array (auto-renders List/Item/Link/Page/Separator, sharing the
+>     SAME exported parts as manual composition — zero duplication) or full
+>     manual composition via the exported sub-parts (`Breadcrumb` +
+>     `.List`/`.Item`/`.Link`/`.Page`/`.Separator`/`.Ellipsis`, every part
+>     also individually named-exported). Collapse (`maxItems`) preserves the
+>     first crumb + a trailing run — IBM Carbon's own documented convention
+>     ("the first and last two page links should be shown... condensed into
+>     an overflow menu") — and reveals the rest via a real, focusable
+>     `Ellipsis` button that expands the trail in place (plain list state,
+>     no floating layer, no new material), never a permanently-lost static
+>     truncation. A SEPARATE, CSS-only `responsive` layer (default on)
+>     collapses middle crumbs below the `md` breakpoint with zero JS
+>     measuring (GOV.UK's own "collapse-on-mobile" precedent), deliberately
+>     scoped to skip the already-`maxItems`-collapsed path so the
+>     interactive Ellipsis is never hidden by the same rule that hides plain
+>     crumbs. RTL: flexbox row direction reverses natively (no `rtl:`
+>     variant needed for the layout itself); the optional chevron separator
+>     flips via `rtl:rotate-180`. Truncation caps long labels (`truncate`,
+>     default on) with a native `title` tooltip, never touching the
+>     accessible name. breadcrumb.tsx grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string
+>     outside prose. API: `items` · `children` · `separator` · `maxItems` ·
+>     `collapse` · `ellipsis` · `showHome` · `home` · `loading` ·
+>     `loadingItems` · `responsive` · `truncate` (per item: `label` · `href`
+>     · `icon` · `current` · `disabled`). ZERO files modified outside the
+>     new component files.
+>
+>     Two real bugs found and fixed during the build: (1) the Loading state
+>     nested `Breadcrumb.Separator` (its own `<li>`) INSIDE
+>     `Breadcrumb.Item` (also an `<li>`) — invalid `<li><li>` nesting,
+>     causing a real hydration mismatch (fixed by pushing them as siblings,
+>     matching the main render path's own pattern); (2) the CSS `responsive`
+>     layer's "hide middle crumbs" rule also matched the JS collapse's own
+>     Ellipsis button (structurally a "middle" entry too), silently hiding
+>     the only escape hatch to the hidden crumbs on mobile whenever
+>     `maxItems` was ALSO set — fixed by scoping the CSS rule to the
+>     not-`willCollapse` path only, verified with a dedicated mobile
+>     assertion. Proof: `/dev/breadcrumb` — minimal · long hierarchy ·
+>     collapsed · icons · disabled · loading · responsive mobile · very
+>     long labels · RTL · custom/slash/chevron/dot separators · home icon;
+>     desktop/tablet/mobile + RTL captures; programmatic assertions for nav
+>     landmark/ARIA/last-item-never-a-link/separator accessibility-tree
+>     exclusion/keyboard Tab order/collapse-expand/disabled/loading/
+>     responsive breakpoint/mobile Ellipsis reachability. `'use client'`.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

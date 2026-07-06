@@ -811,6 +811,85 @@
    rien casser »), sans aucun changement de composant. Command Menu
    (Linear) et Command Bar (Arc) sont, à l'inverse, de purs alias de nom
    d'éditeur pour cette même espèce déjà gelée. Aucun code écrit.
+   **Breadcrumb : Built, non gelé** — indicateur de position hiérarchique
+   officiel de DISCIPLINE : le chemin d'ancêtres depuis la racine de l'app
+   jusqu'à la vue actuelle, répondant exactement à une question : « où
+   suis-je ? ». Pas une navigation principale (un menu qu'on explore
+   DEPUIS, jamais un rapport d'où on est DÉJÀ), pas Tabs (des frères au
+   MÊME niveau, chacun possédant un panneau), pas un Stepper (une
+   PROGRESSION linéaire dans une tâche en cours — Carbon : « pour un
+   processus multi-étapes, utiliser un indicateur de progression »), pas
+   Pagination (une séquence numérotée plate dans une seule collection),
+   pas une Tree View (toute la structure, chaque branche, en permanence),
+   pas l'historique/un bouton retour (l'ORDRE des pages visitées, un seul
+   geste réversible — Apple HIG : « le bouton retour effectue toujours une
+   seule action » ; Breadcrumb reflète toujours la position STRUCTURELLE
+   fixe de la page actuelle, peu importe comment l'utilisateur y est
+   arrivé), pas un chemin de système de fichiers (une chaîne statique —
+   chaque ancêtre ici est une destination cliquable indépendante), pas un
+   Menubar/Dropdown Menu/Command Palette (des commandes, jamais un rapport
+   de position). Interdit sur une app à structure plate (GOV.UK : « ne pas
+   utiliser... sur des sites à structure plate »), pour la progression
+   d'un processus linéaire, comme substitut à la navigation principale
+   réelle (Carbon : « toujours traité comme secondaire... ne doit jamais
+   remplacer entièrement la navigation principale »), et pour l'historique
+   de session du navigateur. Le HIG d'Apple recommande explicitement de NE
+   PAS utiliser de chemins breadcrumb multi-segments dans les barres de
+   navigation iOS — confirmant que Breadcrumb est un pattern WEB/DESKTOP
+   hiérarchique, pas un pattern natif à pile.
+   Un primitif PLAT, uniquement tokens : ne porte AUCUN rôle matériel
+   (zéro GlassSurface, zéro `.ds-micro`/`.ds-control`/`.ds-card`/
+   `.ds-floating`/`.ds-immersive`) et ne dépense ZÉRO budget de mouvement.
+   Compose uniquement l'Icon gelé (jamais LinkButton — un Button portant
+   du verre) et le Skeleton gelé (placeholders de chargement seulement).
+   Pattern WAI-ARIA Breadcrumb complet : `nav aria-label="Breadcrumb"`, une
+   liste ordonnée, `aria-current="page"` sur la page actuelle (jamais un
+   lien), un séparateur purement décoratif exclu de l'arbre
+   d'accessibilité (`role="presentation"` + `aria-hidden`). Aucun modèle de
+   roving-tabindex/flèches nécessaire (le pattern APG est une simple liste
+   de liens, pas un widget composite) — l'ordre Tab natif est le modèle
+   clavier complet, zéro appel `.focus()` littéral nulle part. Radix ne
+   fournit aucune primitive Breadcrumb (confirmé via leur propre demande de
+   fonctionnalité ouverte, issue GitHub #2050) — HTML sémantique pur,
+   aucune primitive d'interaction à hériter. Deux modes de composition,
+   miroir du Select gelé : un tableau `items` piloté par la donnée (rend
+   automatiquement List/Item/Link/Page/Separator, réutilisant LES MÊMES
+   parts exportées que la composition manuelle) ou une composition
+   manuelle complète via les sous-parts exportées
+   (`Breadcrumb.List`/`.Item`/`.Link`/`.Page`/`.Separator`/`.Ellipsis`).
+   Le collapse (`maxItems`) préserve le premier élément + une série finale
+   (convention documentée d'IBM Carbon) et révèle le reste via un vrai
+   bouton `Ellipsis` focusable qui déplie le chemin sur place (simple état
+   de liste, aucune couche flottante, aucune nouvelle matière). Une couche
+   `responsive` séparée, CSS pure (activée par défaut), réduit les
+   éléments du milieu sous le breakpoint `md` sans aucune mesure JS
+   (précédent « collapse-on-mobile » de GOV.UK), volontairement conçue
+   pour s'effacer sur le chemin déjà collapsé par `maxItems`, afin que le
+   bouton Ellipsis interactif ne soit jamais caché par la même règle qui
+   cache les éléments simples. RTL : la ligne flex s'inverse nativement ;
+   le séparateur chevron optionnel se retourne via `rtl:rotate-180`.
+   La troncature plafonne les longs libellés avec une infobulle native
+   `title`. grep zéro GlassSurface/blur/backdrop-filter/rgba/shadow/
+   transition/animation en dehors de la prose des commentaires. Deux bugs
+   réels trouvés et corrigés pendant le build : (1) l'état Loading
+   imbriquait `Breadcrumb.Separator` (son propre `<li>`) À L'INTÉRIEUR de
+   `Breadcrumb.Item` (aussi un `<li>`) — imbrication `<li><li>` invalide,
+   causant un vrai décalage d'hydratation (corrigé en les poussant comme
+   frères, comme le chemin de rendu principal le fait déjà) ; (2) la règle
+   CSS `responsive` masquant les éléments du milieu masquait AUSSI le
+   bouton Ellipsis du collapse JS (structurellement un élément « du
+   milieu » lui aussi), rendant les éléments cachés inaccessibles sur
+   mobile dès que `maxItems` était également actif — corrigé en limitant
+   la règle CSS au chemin non-collapsé, vérifié par une assertion mobile
+   dédiée. ZÉRO fichier modifié hors des nouveaux fichiers du composant.
+   Preuve : `/dev/breadcrumb` — minimal · longue hiérarchie · collapsed ·
+   icônes · éléments désactivés · loading · responsive mobile · très longs
+   libellés · RTL · séparateurs custom/slash/chevron/dot · icône home ;
+   desktop/tablet/mobile + captures RTL ; assertions programmatiques pour
+   le landmark nav/ARIA/dernier-élément-jamais-un-lien/exclusion du
+   séparateur de l'arbre d'accessibilité/ordre clavier Tab/collapse-expand/
+   disabled/loading/breakpoint responsive/accessibilité de l'Ellipsis sur
+   mobile. À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

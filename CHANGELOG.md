@@ -137,6 +137,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Breadcrumb — a flat primitive with no Material Role, composing only the
+  frozen Icon + Skeleton (Built, not frozen).** DISCIPLINE's hierarchical
+  position indicator: a trail of ancestors from the app's root down to the
+  current view, answering exactly one question — "where am I?" Not primary
+  navigation (a menu explored FROM, never a report of where you already
+  ARE), not Tabs (siblings at the SAME level, each owning a content panel),
+  not a Stepper (linear PROGRESS through a task being completed — Carbon:
+  "use a progress indicator instead"), not Pagination (a flat numbered
+  sequence within one collection), not a Tree View (the whole structure,
+  every branch, persistently), not history/a back button (the ORDER pages
+  were visited, one reversible step — Apple's own HIG: "the back button
+  always performs a single action"; Breadcrumb always reflects the current
+  page's fixed STRUCTURAL position, independent of how the user arrived),
+  not a Filesystem Path (a static string — every ancestor here is an
+  independently clickable destination), not a Menubar/Dropdown Menu/
+  Command Palette (commands, never a position report). Forbidden on a flat
+  single-level app, for linear-process progress, as a substitute for real
+  primary navigation (always secondary), and for browser session history.
+  Apple's HIG explicitly recommends against multisegment breadcrumb paths
+  in iOS navigation bars, confirming Breadcrumb is a web/desktop
+  hierarchical pattern, not a native-stack one. Carries NO Material Role
+  (zero GlassSurface, zero `.ds-micro`/`.ds-control`/`.ds-card`/
+  `.ds-floating`/`.ds-immersive`) and spends zero motion budget. Full
+  WAI-ARIA Breadcrumb pattern: `nav aria-label="Breadcrumb"`, an ordered
+  list, `aria-current="page"` on the current (never a link) item, a
+  decorative separator excluded from the accessibility tree. No
+  roving-tabindex/arrow-key model needed — native Tab order is the
+  complete keyboard model, zero literal `.focus()` calls anywhere. Radix
+  ships no Breadcrumb primitive (confirmed via their own open GitHub issue
+  #2050) — pure semantic HTML. Two composition modes mirroring the frozen
+  Select: a data-driven `items` array or full manual composition via the
+  exported sub-parts (`Breadcrumb.List`/`.Item`/`.Link`/`.Page`/
+  `.Separator`/`.Ellipsis`). Collapse (`maxItems`) preserves the first
+  crumb + a trailing run (IBM Carbon's documented convention) and reveals
+  the rest via a real, focusable `Ellipsis` button that expands the trail
+  in place — no floating layer, no new material. A separate, CSS-only
+  `responsive` layer (default on) collapses middle crumbs below the `md`
+  breakpoint with zero JS measuring, scoped to skip the already-collapsed
+  path so the interactive Ellipsis is never hidden on mobile. RTL:
+  flexbox reverses natively; the optional chevron separator flips via
+  `rtl:rotate-180`. Two real bugs found and fixed during the build: the
+  Loading state initially nested `<li>` inside `<li>` (invalid HTML,
+  hydration mismatch) — fixed by rendering separators as siblings; the
+  `responsive` CSS rule initially hid the JS collapse's own Ellipsis
+  button on mobile (structurally a "middle" entry too) — fixed by scoping
+  it to the non-collapsed path, verified with a dedicated mobile
+  assertion. ZERO files modified outside the new component files.
+
 - **Fullscreen Overlay — composes the Modal foundation + the frozen
   IconButton/Spinner (Built, not frozen).** DISCIPLINE's maximal immersive
   surface: a temporary takeover of the ENTIRE viewport for a long, complex
