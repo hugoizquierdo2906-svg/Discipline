@@ -58,6 +58,37 @@ import { Spinner } from './spinner'
  * turns any side into a full-screen surface. Every size is
  * viewport-clamped, so a 400px drawer on a 390px phone never overflows.
  *
+ * WHEN A COMMAND PALETTE INSTEAD: when the user knows what they want and
+ * wants to JUMP there — a global, searchable, keyboard-first surface for
+ * commands and navigation (⌘K). A drawer is a PLACE you work in; a
+ * palette is a teleport. If the content is "type to find an action",
+ * it is the palette's; if it is "stay here and edit", it is the drawer's.
+ *
+ * WHEN NOT TO USE A DRAWER: for a yes/no decision (Alert Dialog); for one
+ * small bounded action (Dialog); for content that must stay permanently
+ * visible next to the page (Sidebar — the moment a drawer never closes,
+ * it is a layout region, not an overlay); for transient feedback (Toast);
+ * for contextual info anchored to an element (Popover/Tooltip); for a
+ * primary page — a drawer is never a destination with a URL of its own;
+ * and never nest more than two (a third level means the flow should be a
+ * page).
+ *
+ * INVARIANTS (frozen with the component):
+ * 1. Drawer composes the Modal COMPONENT — never Radix primitives, never
+ *    GlassSurface, never `.ds-immersive` directly.
+ * 2. Drawer contains ZERO focus / overlay / portal / scroll-lock logic —
+ *    all of it is Modal's (verified by grep: no `focus` string of any
+ *    kind in this file).
+ * 3. Drawer owns ONLY its layout (side placement), its slots
+ *    (header/body/footer), its sizes and its side — nothing else.
+ * 4. The pane material, radius and entrance are the frozen Immersive
+ *    ones, verbatim; the 8px viewport gutter exists precisely so the
+ *    frozen radius never needs corner surgery.
+ * 5. The size scales are frozen: widths 280/320/400/480/600/full,
+ *    heights 200/280/360/460/580/full, all viewport-clamped.
+ * 6. `title` is always required — a drawer always has an accessible name,
+ *    even under a custom header (rendered visually hidden).
+ *
  *   the frozen optical-layer stack → .ds-immersive → ImmersiveSurface
  *   → Modal (the Dialog foundation) → Drawer
  *

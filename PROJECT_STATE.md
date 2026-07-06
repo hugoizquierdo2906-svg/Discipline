@@ -860,12 +860,23 @@
 >     (`data-glass-variant="destructive"`), loading locks every dismissal
 >     path, disabled, increasing size scale. `'use client'`.
 >   - **Drawer — Immersive, composes the Modal foundation + the frozen
->     IconButton/Spinner (Built, not frozen).**
+>     IconButton/Spinner. FROZEN (visually validated 2026-07-03; freeze
+>     pass: documentation completed in-file — philosophy, Drawer vs Dialog
+>     vs Command Palette, when NOT to use, six frozen invariants — and
+>     `/dev/drawer` promoted to the official reference page with nine
+>     added reference cases: data table, timeline, markdown, graph, tabs
+>     via the frozen SegmentedControl, accordion via native disclosure,
+>     upload via the frozen FileInput, validation errors, very long form —
+>     all composed from frozen primitives + semantic token-styled HTML
+>     since Tabs/Accordion/DataTable/Timeline do not exist yet as
+>     components; ADR: the two strictly additive modal.tsx extensions
+>     (`forceMount` Portal forwarding, `contentClassName`) are part of the
+>     frozen contract).**
 >     ```text
 >     Immersive
 >     the frozen optical-layer stack → .ds-immersive → ImmersiveSurface
 >     → Modal (the Dialog foundation) → Drawer
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     An edge-anchored immersive panel: a secondary WORKSPACE that slides
 >     in from one side, holds real content (forms, settings, inspectors,

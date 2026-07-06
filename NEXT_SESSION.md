@@ -599,7 +599,14 @@
    irréductible) + le nom de prop Radix `onOpenAutoFocus`. ZÉRO fichier
    modifié hors du nouveau composant — Modal et Button fournissaient
    tout.
-   **Drawer : Built, non gelé** — un panneau immersif ancré au bord : un
+   **Drawer : GELÉ (validé visuellement 2026-07-03, après la passe de
+   freeze : documentation complète dans le fichier — philosophie, Drawer
+   vs Dialog vs Command Palette, quand NE PAS l'utiliser, six invariants
+   gelés — et `/dev/drawer` promu page de référence officielle avec neuf
+   cas ajoutés : data table, timeline, markdown, graph, tabs via le
+   SegmentedControl gelé, accordion via disclosure natif, upload via le
+   FileInput gelé, erreurs de validation, très long formulaire).** Un
+   panneau immersif ancré au bord : un
    espace de travail secondaire qui glisse depuis un côté de l'écran,
    porte du vrai contenu (formulaire, réglages, inspecteur, navigation)
    et rend l'écran là où l'utilisateur l'a laissé. Un dialog pour une
@@ -641,8 +648,7 @@
    + `contentClassName` — sortie identique à l'octet près quand les props
    sont absentes ; indispensables et documentées). grep zéro
    GlassSurface/blur/backdrop-filter/rgba/shadow/transition/animation et
-   zéro `focus` d'aucune sorte — le grep le plus propre de la session. À
-   geler sur validation visuelle explicite.
+   zéro `focus` d'aucune sorte — le grep le plus propre de la session.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

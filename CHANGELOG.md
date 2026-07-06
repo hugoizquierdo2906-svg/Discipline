@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Drawer — frozen (Immersive), after the official freeze pass.** No
+  functional, visual or architectural change again except an objective
+  bug. Freeze pass contents: in-file documentation completed (philosophy,
+  Drawer vs Dialog vs Command Palette, when NOT to use a Drawer, six
+  frozen invariants — composes Modal only, zero focus/overlay/portal/
+  scroll-lock logic, owns only layout/slots/sizes/side, frozen material/
+  radius/entrance verbatim, frozen size scales, title always required);
+  `/dev/drawer` promoted to the official reference page with nine added
+  reference cases (data table, timeline, markdown prose, graph, tabs via
+  the frozen SegmentedControl, accordion via native disclosure, upload
+  via the frozen FileInput, validation errors, very long form — composed
+  from frozen primitives + semantic token-styled HTML since
+  Tabs/Accordion/DataTable/Timeline do not exist yet as components). ADR:
+  the two strictly additive `modal.tsx` extensions (`forceMount`
+  forwarded to the Portal, `contentClassName` on the inner content
+  plane) are part of the frozen contract. Full re-validation: lint,
+  type-check, build, proof script — zero regressions.
+
 - **Alert Dialog — frozen (Immersive).** No functional, visual or
   architectural change again except an objective bug.
 
