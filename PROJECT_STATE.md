@@ -932,12 +932,14 @@
 >     optional slots, loading, disabled, restore focus, nested per-layer
 >     Escape, mobile full-viewport. `'use client'`.
 >   - **Breadcrumb — Navigation, a FLAT primitive with NO Material Role
->     (composes the frozen Icon + Skeleton only). Built (not frozen).**
+>     (composes the frozen Icon + Skeleton only). FROZEN (visually
+>     validated 2026-07-06, after the craft pass below).** No functional,
+>     visual or architectural change again — objective bugs only.
 >     ```text
 >     Navigation (flat, no Material Role)
 >     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
 >     → Breadcrumb (Icon + Skeleton + Typography tokens)
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     DISCIPLINE's hierarchical position indicator — a trail of ancestors from
 >     the app's root down to the current view, answering exactly one
@@ -1051,8 +1053,9 @@
 >     original research) so a long hierarchy auto-collapses instead of
 >     growing into an unbounded, multi-line paragraph by accident;
 >     `collapse={false}` remains the explicit, documented escape hatch for
->     the rare case every level must stay visible (still wraps). Still
->     **Built, not frozen** — awaiting a second visual pass before Freeze.
+>     the rare case every level must stay visible (still wraps). **FROZEN
+>     (2026-07-06)** — no further redesign; changes only for an objective
+>     bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

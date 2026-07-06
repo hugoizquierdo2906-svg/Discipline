@@ -811,7 +811,9 @@
    rien casser »), sans aucun changement de composant. Command Menu
    (Linear) et Command Bar (Arc) sont, à l'inverse, de purs alias de nom
    d'éditeur pour cette même espèce déjà gelée. Aucun code écrit.
-   **Breadcrumb : Built, non gelé** — indicateur de position hiérarchique
+   **Breadcrumb : GELÉ (validé visuellement 2026-07-06, après la passe de
+   craft ci-dessous).** Plus de redesign sauf bug objectif — indicateur de
+   position hiérarchique
    officiel de DISCIPLINE : le chemin d'ancêtres depuis la racine de l'app
    jusqu'à la vue actuelle, répondant exactement à une question : « où
    suis-je ? ». Pas une navigation principale (un menu qu'on explore
@@ -909,9 +911,9 @@
    d'origine) afin qu'une longue hiérarchie se collapse automatiquement au
    lieu de croître en un paragraphe multi-lignes non borné par accident ;
    `collapse={false}` reste l'échappatoire documentée pour le cas rare où
-   chaque niveau doit rester visible (wrap toujours possible). Toujours
-   **Built, non gelé** — en attente d'une seconde validation visuelle
-   avant Freeze.
+   chaque niveau doit rester visible (wrap toujours possible). **GELÉ
+   (2026-07-06)** — plus de redesign, changements seulement pour un bug
+   objectif désormais.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Breadcrumb — frozen (Navigation, flat primitive).** No functional,
+  visual or architectural change again except an objective bug.
+
 - **Breadcrumb — craft pass (owner visual review, 90-95%, geometry/contrast
   only, no architectural change).** Separators were reading as separate
   blocks instead of one phrase — an explicit `gap-x-1` now sets a tight,
@@ -24,8 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   defaults to 4 (Adobe Spectrum's own documented default, already cited in
   the original research) so a long hierarchy auto-collapses instead of
   growing into an unbounded, multi-line paragraph by accident;
-  `collapse={false}` remains the explicit, documented escape hatch. Still
-  Built, not frozen — awaiting a second visual pass before Freeze.
+  `collapse={false}` remains the explicit, documented escape hatch. Frozen
+  after this pass (see the dedicated Freeze entry above).
 
 - **Spotlight — REJECTED (ADR).** Source-grounded analysis against the
   official Apple Spotlight/HIG, Raycast, VS Code, Linear, Notion, Arc,
