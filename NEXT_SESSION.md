@@ -914,6 +914,99 @@
    chaque niveau doit rester visible (wrap toujours possible). **GELÉ
    (2026-07-06)** — plus de redesign, changements seulement pour un bug
    objectif désormais.
+   **Pagination : Built, non gelé** — navigation à accès aléatoire dans une
+   collection PLATE et ordonnée découpée en pages de taille fixe : sauter
+   directement à la page 47 sur 900 sans parcourir les 46 précédentes. Pas
+   une List (le contenu paginé lui-même, jamais le contrôle qui déplace
+   entre pages), pas un DataTable (le contenu que Pagination COMPOSE en
+   pied de page, pas un substitut), pas un Infinite Scroll (un flux continu
+   sans concept de « page N sur M » ni accès direct — impossible de sauter
+   à l'élément 4700 sans tout charger avant), pas une Virtual List (une
+   OPTIMISATION de rendu invisible pour l'utilisateur, toujours un seul
+   scroll continu), pas un Stepper (une PROGRESSION linéaire à travers des
+   étapes sémantiquement DIFFÉRENTES d'une tâche, souvent bloquante tant
+   que l'étape n'est pas validée — Carbon : « ne pas l'utiliser pour des
+   parcours linéaires, par exemple une progression de formulaire » ; les
+   pages de Pagination sont des subdivisions STRUCTURELLEMENT IDENTIQUES,
+   librement accessibles dans n'importe quel ordre), pas Tabs (un petit
+   ensemble toujours visible de panneaux sémantiquement DISTINCTS), pas un
+   Segmented Control (gelé, plafonné à « 2-6 options toujours visibles » —
+   Pagination doit gérer un nombre de pages ARBITRAIREMENT GRAND, exactement
+   le problème d'échelle que Segmented Control refuse par construction),
+   pas une Navigation Menu (les destinations PRINCIPALES de l'app, pas des
+   pages numérotées d'une même collection), pas une simple suite de Buttons
+   (aucun landmark `nav` partagé, aucun `aria-current`, aucune relation
+   ordinale, et surtout aucun algorithme de collapse RÉUTILISABLE — chaque
+   consommateur réinventerait le calcul siblings/boundary/ellipsis à partir
+   de zéro).
+   Un primitif PLAT, uniquement tokens — le frère de Breadcrumb gelé, PAS
+   un membre Control Surface. Un choix architectural délibéré : les
+   contrôles de page SONT des boutons avec une valeur contrôlée
+   (`page` + `onPageChange`), ce qui ressemble superficiellement au
+   value+onChange de Slider/SegmentedControl — mais l'API contrôlée n'est
+   qu'une convention ergonomique (comme le Pagination de MUI, lui aussi
+   contrôlé uniquement — aucun `defaultPage` non contrôlé, délibérément
+   absent ici aussi, car l'état de pagination appartient presque toujours
+   à l'extérieur du composant, lié au routage/fetch de données). Le vrai
+   signal est le précédent de classification : MUI range lui-même
+   Pagination sous « Navigation » (à côté de Breadcrumbs, Drawer, Link,
+   Menu, Tabs), jamais sous « Inputs » (Slider, Switch) ; le balisage
+   recommandé par WAI-ARIA est `nav` + liste + `aria-current` —
+   structurellement identique au Breadcrumb gelé, pas à un membre Control
+   Surface ; et envelopper potentiellement des milliers de numéros de page
+   dans des pastilles de verre individuelles (comme le fait Segmented
+   Control pour ses 2-6 options plafonnées) serait un non-sens visuel et
+   de performance à l'échelle de Pagination. Compose uniquement l'Icon gelé
+   (chevrons) et le Spinner gelé (`loading` seulement) — jamais
+   GlassSurface, jamais LinkButton. Radix ne fournit aucune primitive
+   Pagination (confirmé via leurs propres demandes de fonctionnalité
+   ouvertes et non résolues — issues #1856, #886, discussion #831, l'une
+   affirmant que la pagination est « tough and quite opinionated »).
+   Contrairement au Breadcrumb gelé (mode `items` piloté par la donnée ET
+   composition manuelle complète), Pagination est délibérément un
+   composant UNIQUE, autonome, non composé — aucun sous-composant exporté
+   `.Item`/`.Ellipsis`, conformément à la consigne explicite « une API très
+   simple » (l'API composée de shadcn/ui — Root/Content/Ellipsis/Item/Link/
+   Next/Previous — n'a délibérément pas été le modèle ici).
+   Algorithme de collapse identique à la sémantique publiée de MUI
+   `siblingCount`/`boundaryCount` (défaut 1 chacun) : toujours montrer
+   `boundaryCount` pages à chaque extrémité, toujours montrer
+   `siblingCount` pages de chaque côté de la page actuelle, condenser tout
+   le reste en un seul ellipsis — jamais pour un écart d'exactement une
+   page (IBM Carbon : « ne jamais placer le bouton ellipsis au début ou à
+   la fin d'une série » ; une seule page cachée est montrée directement
+   plutôt que de gaspiller un ellipsis dessus). Contrairement à l'ellipsis
+   de Carbon (un bouton interactif ouvrant un menu), l'ellipsis de
+   DISCIPLINE est purement décoratif : Prev/Next garantissent déjà que
+   chaque page reste atteignable (contrairement au Breadcrumb gelé, où un
+   ancêtre caché n'a AUCUN autre chemin pour y accéder — exactement
+   pourquoi l'Ellipsis de Breadcrumb EST un bouton) — un menu interactif
+   ici composerait la machinerie Floating Surface pour une commodité, pas
+   une nécessité démontrée, contredisant « une API très simple ». Deux
+   interrupteurs indépendants et superposés, miroir du `responsive` de
+   Breadcrumb : `compact` (override explicite — force la lecture
+   « ‹ 7 / 24 › », par ex. pour un widget de barre latérale étroit sur un
+   viewport large) et `responsive` (activé par défaut ; quand `compact`
+   n'est pas défini, rend LES DEUX balisages et laisse une règle CSS au
+   breakpoint `md` choisir — zéro mesure JS, même technique que le
+   collapse mobile de Breadcrumb). RTL : flexbox s'inverse nativement ; les
+   chevrons se retournent via `rtl:rotate-180` pour que Prev/Next pointent
+   toujours dans la direction de lecture sémantiquement correcte — vérifié
+   visuellement : les numéros de page montent de 1 à 24 dans l'ordre de
+   lecture naturel droite-à-gauche, et les icônes retournées atterrissent
+   du bon côté sémantique. Aucun modèle de roving-tabindex/flèches
+   nécessaire (une simple liste de boutons indépendants, pas un widget ARIA
+   composite, contrairement à RadioGroup/Slider/Tablist) — l'ordre Tab
+   natif est le modèle clavier complet, zéro appel `.focus()` littéral nulle
+   part. ZÉRO fichier modifié hors des nouveaux fichiers du composant. API :
+   `page` · `totalPages` · `onPageChange` · `disabled` · `loading` · `size`
+   · `siblingCount` · `boundaryCount` · `showFirst` · `showLast` ·
+   `showPrev` · `showNext` · `compact` · `responsive` (les deux derniers
+   sont additifs au-delà de la liste littérale de la consigne, justifiés
+   par ses propres exigences explicites de démo « Compact » et
+   « Responsive »). Délibérément NON ajouté : un `defaultPage` non
+   contrôlé (comme le précédent contrôlé-seulement de MUI). Preuve :
+   `/dev/pagination`. À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

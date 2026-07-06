@@ -1056,6 +1056,115 @@
 >     the rare case every level must stay visible (still wraps). **FROZEN
 >     (2026-07-06)** — no further redesign; changes only for an objective
 >     bug from here on.
+>   - **Pagination — Navigation, a FLAT primitive with NO Material Role
+>     (composes the frozen Icon + Spinner only). Built (not frozen).**
+>     ```text
+>     Navigation (flat, no Material Role) — sibling of the frozen Breadcrumb
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → Pagination (Icon + Spinner + Typography tokens)
+>     Status: Built (non frozen)
+>     ```
+>     Random-access navigation across a FLAT, ordered collection split into
+>     fixed-size pages — jump directly to page 47 of 900 without stepping
+>     through the 46 before it. Not a List (the paginated content itself,
+>     never the control that moves between pages), not a DataTable (the
+>     content Pagination is composed INTO, not a substitute), not Infinite
+>     Scroll (a continuous flow with no "page N of M" concept and no random
+>     access — you cannot jump to item 4700 without loading everything
+>     before it), not a Virtual List (a rendering OPTIMIZATION invisible to
+>     the user, still one continuous scroll, never a page boundary), not a
+>     Stepper (linear PROGRESS through semantically DIFFERENT steps of one
+>     task, usually blocking until valid — Carbon: "do not use it to
+>     display linear journeys, for example, in a form progression";
+>     Pagination's pages are structurally IDENTICAL subdivisions, freely
+>     reachable in any order, nothing to validate), not Tabs (a small,
+>     always-visible set of semantically DISTINCT panels, not numbered
+>     subdivisions of one data set), not a Segmented Control (frozen,
+>     deliberately capped at "2–6 visible options" — Pagination must
+>     handle an ARBITRARILY LARGE page count, exactly the scale problem
+>     Segmented Control refuses by construction), not a Navigation Menu
+>     (the app's PRIMARY, semantically distinct destinations, not numbered
+>     pages of one collection), not a plain row of Buttons (no shared `nav`
+>     landmark, no `aria-current`, no ordinal relationship, and no
+>     REUSABLE collapse algorithm — every consumer would reinvent the
+>     sibling/boundary/ellipsis math and its keyboard/ARIA wiring from
+>     scratch).
+>
+>     A FLAT, token-only Navigation primitive — the sibling of the frozen
+>     Breadcrumb, NOT a Control Surface member. This is a deliberate
+>     placement: the individual page controls ARE buttons with a
+>     controlled value (`page` + `onPageChange`), superficially resembling
+>     Slider/SegmentedControl's own value+onChange shape, but the
+>     controlled API is just an ergonomic convention (matching MUI's own
+>     Pagination, which is controlled-only — no uncontrolled `defaultPage`,
+>     deliberately NOT added here either, since pagination state is almost
+>     always externally owned, tied to routing/data-fetching). The real
+>     signal is classification precedent: MUI itself files Pagination
+>     under "Navigation" (next to Breadcrumbs, Drawer, Link, Menu, Tabs),
+>     never under "Inputs" (Slider, Switch); the WAI-ARIA-recommended
+>     markup is `nav` + list + `aria-current` — structurally identical to
+>     the frozen Breadcrumb, not to any Control Surface member; and
+>     wrapping potentially thousands of page numbers in individual glass
+>     pills (as Segmented Control does for its capped 2–6 options) would be
+>     visual and performance nonsense at Pagination's scale. Composes only
+>     the frozen Icon (chevrons) and the frozen Spinner (`loading` only) —
+>     never GlassSurface, never LinkButton. Radix ships no Pagination
+>     primitive at all — confirmed via their own open, unresolved feature
+>     requests (issues #1856, #886, discussion #831), one stating plainly
+>     that pagination is "tough and quite opinionated." Unlike the frozen
+>     Breadcrumb (data-driven `items` mode AND full manual sub-part
+>     composition), Pagination is deliberately a SINGLE, self-contained,
+>     non-compound component — no exported `.Item`/`.Ellipsis` sub-parts,
+>     per the brief's explicit "une API très simple" (shadcn/ui's own
+>     compound Pagination API — Root/Content/Ellipsis/Item/Link/Next/
+>     Previous — was deliberately not the model here).
+>
+>     Collapse algorithm mirrors MUI's own published `siblingCount` +
+>     `boundaryCount` semantics (both default 1): always show
+>     `boundaryCount` pages at each end, always show `siblingCount` pages
+>     on each side of the current page, collapse anything else into a
+>     single ellipsis — never for a gap of exactly one page (IBM Carbon:
+>     "never place the ellipsis button at the beginning or end of a
+>     series"; a lone hidden page is shown directly instead of wasting an
+>     ellipsis on it). Unlike Carbon's own ellipsis (an interactive button
+>     opening a menu of hidden pages), DISCIPLINE's ellipsis is purely
+>     decorative: Prev/Next already guarantee every page stays reachable
+>     (unlike the frozen Breadcrumb, where a hidden ancestor has no other
+>     path to it — exactly why Breadcrumb's Ellipsis is a real button) — an
+>     interactive menu here would compose Floating Surface machinery for a
+>     convenience, not a demonstrated necessity, contradicting "une API
+>     très simple." Two independent, layered switches mirroring
+>     Breadcrumb's own `responsive`: `compact` (explicit override — forces
+>     the "‹ 7 / 24 ›" reading, e.g. for a narrow sidebar widget on a wide
+>     viewport) and `responsive` (default on; when `compact` is left
+>     unset, renders BOTH markups and lets an `md`-breakpoint CSS rule pick
+>     one — zero JS measuring, same technique as Breadcrumb's own mobile
+>     collapse). RTL: flexbox reverses natively; the chevrons flip via
+>     `rtl:rotate-180` so Prev/Next still point the semantically correct
+>     reading direction — verified visually: page numbers ascend 1→24 in
+>     natural right-to-left reading order, and the flipped icons land on
+>     the semantically correct side (Previous reads as a right-pointing
+>     chevron, sitting toward the RTL reading start; Next reads as a
+>     left-pointing chevron, toward the reading end). No roving-tabindex/
+>     arrow-key model needed (a plain list of independent buttons, not a
+>     composite ARIA widget, unlike RadioGroup/Slider/Tablist) — native Tab
+>     order is the complete keyboard model, zero literal `.focus()` calls
+>     anywhere. pagination.tsx grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string
+>     outside prose doc comments. ZERO files modified outside the new
+>     component files. API: `page` · `totalPages` · `onPageChange` ·
+>     `disabled` · `loading` · `size` sm/md/lg · `siblingCount` ·
+>     `boundaryCount` · `showFirst` · `showLast` · `showPrev` · `showNext`
+>     · `compact` · `responsive`. Proof: `/dev/pagination` — minimal ·
+>     first/middle/last page · large dataset (1000 pages) · few pages ·
+>     disabled · loading · compact · sibling counts 0/1/2 · responsive ·
+>     RTL · keyboard · sizes; desktop/tablet/mobile + RTL captures;
+>     programmatic assertions for nav landmark/list structure/
+>     aria-current/page-change/first-last boundary disabling/First-Last
+>     jump buttons/smart collapse (boundary+siblings+ellipsis, never a
+>     single-page gap)/disabled/loading (state stays visible, Spinner
+>     shown)/compact/sibling-count scaling/responsive breakpoint/keyboard
+>     (Tab+Enter, native)/RTL. `'use client'`.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

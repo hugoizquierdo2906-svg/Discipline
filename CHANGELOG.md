@@ -158,6 +158,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Pagination — a flat primitive with no Material Role, composing only the
+  frozen Icon + Spinner (Built, not frozen).** Random-access navigation
+  across a flat, ordered collection split into fixed-size pages — jump
+  directly to page 47 of 900 without stepping through the 46 before it.
+  Not a List (the paginated content itself), not a DataTable (the content
+  Pagination is composed INTO), not Infinite Scroll (a continuous flow
+  with no "page N of M" concept or random access), not a Virtual List (a
+  rendering optimization, invisible to the user), not a Stepper (linear
+  progress through semantically different steps — Carbon: "do not use it
+  to display linear journeys, for example, in a form progression"), not
+  Tabs, not a Segmented Control (frozen, capped at "2–6 visible options"
+  — Pagination must handle an arbitrarily large page count), not a
+  Navigation Menu, not a plain row of Buttons (no shared `nav` landmark,
+  no `aria-current`, no reusable collapse algorithm). A flat, token-only
+  Navigation primitive — the sibling of the frozen Breadcrumb, not a
+  Control Surface member: despite a controlled `page`/`onPageChange` API
+  resembling Slider/SegmentedControl's value+onChange shape, MUI itself
+  files Pagination under "Navigation" (never "Inputs"), and the
+  WAI-ARIA-recommended markup (`nav` + list + `aria-current`) matches
+  Breadcrumb, not any Control Surface member. Radix ships no Pagination
+  primitive (confirmed via their own open, unresolved feature requests —
+  issues #1856, #886, discussion #831). Unlike Breadcrumb, Pagination is
+  a single, self-contained, non-compound component — no exported
+  sub-parts, per the brief's explicit "une API très simple." Collapse
+  mirrors MUI's own published `siblingCount`/`boundaryCount` semantics
+  (both default 1): boundary and sibling pages always shown, one ellipsis
+  for any larger gap, never for a gap of exactly one page (IBM Carbon's
+  own documented rule). The ellipsis is purely decorative (unlike
+  Carbon's own interactive menu-opening ellipsis) since Prev/Next already
+  guarantee every page stays reachable — unlike Breadcrumb, where a
+  hidden ancestor has no other path to it. Two independent switches
+  mirroring Breadcrumb's own `responsive`: `compact` (explicit override)
+  and `responsive` (default on, CSS-only breakpoint switch, zero JS
+  measuring). RTL: flexbox reverses natively; chevrons flip via
+  `rtl:rotate-180`. No roving-tabindex/arrow-key model needed — native
+  Tab order is the complete keyboard model, zero literal `.focus()`
+  calls. ZERO files modified outside the new component files.
+
 - **Breadcrumb — a flat primitive with no Material Role, composing only the
   frozen Icon + Skeleton (Built, not frozen).** DISCIPLINE's hierarchical
   position indicator: a trail of ancestors from the app's root down to the
