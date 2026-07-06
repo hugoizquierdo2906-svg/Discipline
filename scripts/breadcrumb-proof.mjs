@@ -151,7 +151,7 @@ for (const [w, h, suffix] of [
   await context.close()
 }
 
-// Responsive: below `sm`, middle crumbs collapse to a static CSS-only
+// Responsive: below `md`, middle crumbs collapse to a static CSS-only
 // ellipsis — no JS measuring, verified by viewport alone.
 {
   const { context, page } = await newPage(390, 900)
@@ -159,7 +159,7 @@ for (const [w, h, suffix] of [
   const middleLink = scene.getByRole('link', { name: 'Programs' })
   if (await middleLink.isVisible().catch(() => false))
     issues.push(
-      '[assert] a middle crumb is still visible below the sm breakpoint',
+      '[assert] a middle crumb is still visible below the md breakpoint',
     )
   await context.close()
 }
