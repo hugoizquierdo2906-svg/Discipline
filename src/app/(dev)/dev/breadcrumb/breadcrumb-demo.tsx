@@ -86,18 +86,18 @@ export function BreadcrumbScene() {
       <Separator />
 
       <Section
-        title="Long hierarchy"
-        description="No maxItems — every level renders, wrapping gracefully if needed."
+        title="Long hierarchy — escape hatch (collapse disabled)"
+        description="maxItems defaults to 4, so a hierarchy this long collapses on its own — this explicitly opts out (collapse={false}) to show the wrapping fallback still available for the rare case every level must stay visible."
         data-testid="breadcrumb-long"
       >
-        <Breadcrumb showHome items={longHierarchy} />
+        <Breadcrumb showHome items={longHierarchy} collapse={false} />
       </Section>
 
       <Separator />
 
       <Section
-        title="Collapsed"
-        description="Same trail, maxItems={4} — first crumb + a trailing run of 3; the ellipsis reveals the rest."
+        title="Collapsed (the default)"
+        description="Same trail — maxItems=4 is now the default, so this needs no extra props. First crumb + a trailing run of 3; the ellipsis reveals the rest."
         data-testid="breadcrumb-collapsed"
       >
         <Breadcrumb showHome items={clientHierarchy} maxItems={4} />
@@ -155,10 +155,10 @@ export function BreadcrumbScene() {
 
       <Section
         title="Responsive mobile"
-        description="Below the md breakpoint, middle crumbs collapse to a static ellipsis (CSS-only, no measuring). Resize the viewport to see it."
+        description="collapse={false} isolates the CSS-only layer from the JS maxItems default: below the md breakpoint, middle crumbs collapse to a static ellipsis (no measuring). Resize the viewport to see it."
         data-testid="breadcrumb-responsive"
       >
-        <Breadcrumb showHome items={clientHierarchy} />
+        <Breadcrumb showHome items={clientHierarchy} collapse={false} />
       </Section>
 
       <Separator />

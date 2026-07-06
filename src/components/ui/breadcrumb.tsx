@@ -1,12 +1,10 @@
 'use client'
 
 import { Slot } from '@radix-ui/react-slot'
-import { MoreHorizontal } from 'lucide-react'
 import { forwardRef, useState } from 'react'
 
 import { cn } from '@/lib/cn'
 
-import { Icon } from './icon'
 import { Skeleton } from './skeleton'
 
 /**
@@ -69,9 +67,15 @@ export interface BreadcrumbProps extends Omit<
   children?: React.ReactNode
   /** Overrides the default "/" separator (a string, icon, or node). */
   separator?: React.ReactNode
-  /** Once the trail exceeds this many crumbs, collapses to first + a trailing run. */
+  /**
+   * Once the trail exceeds this many crumbs, collapses to first + a
+   * trailing run. Defaults to 4 (Adobe Spectrum's own default visible-crumb
+   * count) so a long hierarchy never grows into an unbounded, multi-line
+   * paragraph by accident — pass a higher number, or `collapse={false}`,
+   * to opt out.
+   */
   maxItems?: number
-  /** Disables the `maxItems` collapse. Default true. */
+  /** Disables the `maxItems` collapse (falls back to wrapping). Default true. */
   collapse?: boolean
   /** Overrides the default ellipsis glyph. */
   ellipsis?: React.ReactNode
@@ -89,14 +93,21 @@ export interface BreadcrumbProps extends Omit<
 
 export type BreadcrumbListProps = React.OlHTMLAttributes<HTMLOListElement>
 
-/** Breadcrumb.List — the `ol` that holds the trail. */
+/**
+ * Breadcrumb.List — the `ol` that holds the trail. Reads as ONE phrase, not
+ * separate blocks: a tight, explicit `gap-x-1` between crumb/separator
+ * pairs (never left to an ambiguous default). Text steps up to `body`
+ * (16px) below the `md` breakpoint for mobile legibility, settling to the
+ * quieter `body-sm` (14px) from `md` up — the same reference size Text/
+ * Label use, never an invented literal.
+ */
 const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(
   function BreadcrumbList({ className, ...props }, ref) {
     return (
       <ol
         ref={ref}
         className={cn(
-          'flex flex-wrap items-center gap-y-1.5 text-body-sm',
+          'flex flex-wrap items-center gap-x-1 gap-y-1.5 text-body md:text-body-sm',
           className,
         )}
         {...props}
@@ -113,7 +124,7 @@ const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
     return (
       <li
         ref={ref}
-        className={cn('inline-flex items-center gap-1.5', className)}
+        className={cn('inline-flex items-center gap-1', className)}
         {...props}
       />
     )
@@ -160,7 +171,7 @@ const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
         <span
           aria-disabled="true"
           className={cn(
-            'inline-flex max-w-full items-center gap-1.5 text-text-tertiary',
+            'inline-flex max-w-full items-center gap-1 text-text-tertiary',
             className,
           )}
         >
@@ -177,7 +188,7 @@ const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
         href={href}
         title={title ?? (typeof children === 'string' ? children : undefined)}
         className={cn(
-          'inline-flex max-w-full items-center gap-1.5 rounded-sm text-text-secondary outline-none hover:text-text',
+          'inline-flex max-w-full items-center gap-1 rounded-sm text-text-secondary outline-none hover:text-text',
           'focus-visible:ring-2 focus-visible:ring-accent-accessible',
           className,
         )}
@@ -211,7 +222,7 @@ const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
         aria-current="page"
         title={title ?? (typeof children === 'string' ? children : undefined)}
         className={cn(
-          'inline-flex max-w-full items-center gap-1.5 font-medium text-text',
+          'inline-flex max-w-full items-center gap-1 font-medium text-text',
           className,
         )}
         {...props}
@@ -237,7 +248,10 @@ export type BreadcrumbSeparatorProps = React.LiHTMLAttributes<HTMLLIElement>
  * `aria-hidden` keep it out of the accessibility tree entirely (the APG's
  * own stated goal), so it is never announced and never counted as a crumb.
  * Defaults to "/" (the WAI-ARIA APG's own reference glyph); pass any
- * string, icon or node to override.
+ * string, icon or node to override. `text-text-secondary` (not the fainter
+ * `-tertiary`) and `leading-none` keep the glyph legible enough for the eye
+ * to reconstruct the hierarchy at a glance, without its line-box adding
+ * false vertical space around it.
  */
 const BreadcrumbSeparator = forwardRef<HTMLLIElement, BreadcrumbSeparatorProps>(
   function BreadcrumbSeparator({ className, children, ...props }, ref) {
@@ -246,7 +260,10 @@ const BreadcrumbSeparator = forwardRef<HTMLLIElement, BreadcrumbSeparatorProps>(
         ref={ref}
         role="presentation"
         aria-hidden="true"
-        className={cn('flex items-center text-text-tertiary', className)}
+        className={cn(
+          'flex items-center leading-none text-text-secondary',
+          className,
+        )}
         {...props}
       >
         {children ?? '/'}
@@ -264,6 +281,9 @@ export interface BreadcrumbEllipsisProps extends React.ButtonHTMLAttributes<HTML
  * (not a static glyph) so the hidden crumbs are never permanently
  * unreachable; the data-driven `items` mode wires it to reveal the full
  * trail in place — plain list state, no floating layer, no new material.
+ * Defaults to the real Unicode ellipsis ("…", one character) rather than
+ * three periods or an icon — content-width, not a fixed square, so it never
+ * adds more surrounding space than the separators around it.
  */
 const BreadcrumbEllipsis = forwardRef<
   HTMLButtonElement,
@@ -278,13 +298,13 @@ const BreadcrumbEllipsis = forwardRef<
       type="button"
       aria-label={label}
       className={cn(
-        'inline-flex h-6 w-6 items-center justify-center rounded-sm text-text-tertiary outline-none hover:text-text',
+        'inline-flex items-center rounded-sm px-1 leading-none text-text-secondary outline-none hover:text-text',
         'focus-visible:ring-2 focus-visible:ring-accent-accessible',
         className,
       )}
       {...props}
     >
-      {children ?? <Icon icon={MoreHorizontal} size="sm" />}
+      {children ?? '…'}
     </button>
   )
 })
@@ -295,7 +315,7 @@ const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbProps>(
       items,
       children,
       separator,
-      maxItems,
+      maxItems = 4,
       collapse = true,
       ellipsis,
       showHome = false,
@@ -441,9 +461,9 @@ const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbProps>(
                   role="presentation"
                   aria-hidden="true"
                   data-slot="responsive-ellipsis"
-                  className="hidden items-center gap-1.5 text-text-tertiary max-md:flex"
+                  className="hidden items-center gap-1 leading-none text-text-secondary max-md:flex"
                 >
-                  {ellipsis ?? <Icon icon={MoreHorizontal} size="sm" />}
+                  {ellipsis ?? '…'}
                   <span>/</span>
                 </li>,
               )

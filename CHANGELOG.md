@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Breadcrumb — craft pass (owner visual review, 90-95%, geometry/contrast
+  only, no architectural change).** Separators were reading as separate
+  blocks instead of one phrase — an explicit `gap-x-1` now sets a tight,
+  deterministic rhythm (was ambiguous/implicit); the ellipsis switched from
+  a `MoreHorizontal` icon to the real Unicode "…" character (content-width,
+  never a fixed square, never three periods); separator/ellipsis contrast
+  raised one step (`text-text-tertiary` → `text-text-secondary`) with
+  `leading-none` so the glyph's line-box doesn't add false vertical space;
+  every icon-to-label gap tightened (`gap-1.5` → `gap-1`); trail text steps
+  up to `body` (16px, was a flat `body-sm` 14px) below the `md` breakpoint
+  for mobile legibility, settling back to `body-sm` from `md` up — both
+  named type-scale tokens, never an invented literal. `maxItems` now
+  defaults to 4 (Adobe Spectrum's own documented default, already cited in
+  the original research) so a long hierarchy auto-collapses instead of
+  growing into an unbounded, multi-line paragraph by accident;
+  `collapse={false}` remains the explicit, documented escape hatch. Still
+  Built, not frozen — awaiting a second visual pass before Freeze.
+
 - **Spotlight — REJECTED (ADR).** Source-grounded analysis against the
   official Apple Spotlight/HIG, Raycast, VS Code, Linear, Notion, Arc,
   Material Design and Radix documentation: Apple's Spotlight is an

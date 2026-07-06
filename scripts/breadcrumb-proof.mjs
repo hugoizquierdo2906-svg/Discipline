@@ -180,7 +180,9 @@ for (const [w, h, suffix] of [
   const scene = section(page, 'breadcrumb-rtl')
   const dirEl = scene.locator('[dir="rtl"]')
   if ((await dirEl.count()) !== 1) issues.push('[assert] rtl wrapper missing')
-  await page.screenshot({ path: `${OUT}/breadcrumb-rtl.png` })
+  await scene.scrollIntoViewIfNeeded()
+  await page.waitForTimeout(150)
+  await scene.screenshot({ path: `${OUT}/breadcrumb-rtl.png` })
   console.log(`screenshot: ${OUT}/breadcrumb-rtl.png`)
   await context.close()
 }

@@ -889,7 +889,29 @@
    le landmark nav/ARIA/dernier-élément-jamais-un-lien/exclusion du
    séparateur de l'arbre d'accessibilité/ordre clavier Tab/collapse-expand/
    disabled/loading/breakpoint responsive/accessibilité de l'Ellipsis sur
-   mobile. À geler sur validation visuelle explicite.
+   mobile.
+   **Passe de craft (2026-07-06, retour visuel du owner — 90-95 %,
+   géométrie/contraste seulement, aucun changement architectural) :** les
+   séparateurs se lisaient comme des blocs séparés plutôt qu'une seule
+   phrase — un `gap-x-1` explicite fixe désormais un rythme serré et
+   déterministe (était implicite/ambigu) ; l'ellipsis passe d'une icône
+   `MoreHorizontal` au vrai caractère Unicode `…` (largeur de contenu,
+   jamais un carré fixe, jamais trois points) ; le contraste du séparateur/
+   ellipsis monte d'un cran (`text-text-tertiary` → `text-text-secondary`)
+   avec `leading-none` pour que la boîte de ligne du glyphe n'ajoute pas de
+   faux espace vertical ; chaque espace icône-libellé resserré (`gap-1.5` →
+   `gap-1`, rapprochant l'icône Home de son texte) ; le texte du chemin
+   passe à `body` (16px, était `body-sm` 14px fixe) sous le breakpoint
+   `md` pour la lisibilité mobile, puis redescend à `body-sm` à partir de
+   `md` — deux tokens d'échelle typographique nommés, jamais un littéral
+   inventé. Ajout comportemental : `maxItems` a désormais pour défaut 4
+   (le défaut documenté d'Adobe Spectrum, déjà cité dans la recherche
+   d'origine) afin qu'une longue hiérarchie se collapse automatiquement au
+   lieu de croître en un paragraphe multi-lignes non borné par accident ;
+   `collapse={false}` reste l'échappatoire documentée pour le cas rare où
+   chaque niveau doit rester visible (wrap toujours possible). Toujours
+   **Built, non gelé** — en attente d'une seconde validation visuelle
+   avant Freeze.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

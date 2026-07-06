@@ -1032,6 +1032,27 @@
 >     landmark/ARIA/last-item-never-a-link/separator accessibility-tree
 >     exclusion/keyboard Tab order/collapse-expand/disabled/loading/
 >     responsive breakpoint/mobile Ellipsis reachability. `'use client'`.
+>     **Craft pass (2026-07-06, owner visual review — 90-95%, geometry/
+>     contrast only, zero architectural change):** separators were reading
+>     as separate blocks instead of one phrase — an explicit `gap-x-1` now
+>     sets a tight, deterministic rhythm (was ambiguous/implicit); the
+>     ellipsis switched from a `MoreHorizontal` icon to the real Unicode
+>     `…` character (content-width, never a fixed square, never three
+>     periods); separator/ellipsis contrast raised one step
+>     (`text-text-tertiary` → `text-text-secondary`) with `leading-none` so
+>     the glyph's line-box doesn't add false vertical space; every
+>     icon-to-label gap tightened (`gap-1.5` → `gap-1`, closing the Home
+>     icon's distance from its text); trail text now steps up to `body`
+>     (16px, was a flat `body-sm` 14px) below the `md` breakpoint for
+>     mobile legibility, settling back to the quieter `body-sm` from `md`
+>     up — both named type-scale tokens, never an invented literal.
+>     Behavioral addition: `maxItems` now DEFAULTS to 4 (Adobe Spectrum's
+>     own documented default-visible-crumb count, already cited in the
+>     original research) so a long hierarchy auto-collapses instead of
+>     growing into an unbounded, multi-line paragraph by accident;
+>     `collapse={false}` remains the explicit, documented escape hatch for
+>     the rare case every level must stay visible (still wraps). Still
+>     **Built, not frozen** — awaiting a second visual pass before Freeze.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text
