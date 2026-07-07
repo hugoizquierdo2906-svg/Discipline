@@ -1107,6 +1107,91 @@
    RTL. **GELÉ (2026-07-06)** — API publique verrouillée
    (`Tabs`/`Tabs.List`/`Tabs.Trigger`/`Tabs.Content` + leurs props Radix
    natives) ; plus de redesign ni de changement d'API sans ADR.
+
+   **Stepper : Built, non gelé.** Progression à travers une séquence
+   ordonnée d'étapes sémantiquement DIFFÉRENTES d'UNE seule tâche en cours
+   (Account → Profile → Payment → Review) — jamais quelle facette du même
+   enregistrement (Tabs), jamais une hiérarchie de navigation (Breadcrumb),
+   jamais une page d'une collection de données (Pagination). Pas Tabs (vues
+   interchangeables, librement accessibles dans n'importe quel ordre,
+   aucune séquence requise, aucun état complété/en attente — le Stepper
+   existe précisément pour l'ORDRE + la PROGRESSION), pas un Breadcrumb
+   (une hiérarchie d'ancêtres, jamais un état de complétion), pas
+   Pagination (des pages structurellement identiques, aucune sémantique
+   « terminé », aucun nombre fixe restreint), pas Progress/Progress Ring
+   (une quantité continue unique 0–100 %, aucune étape nommée discrète),
+   pas une Timeline (un historique chronologique en LECTURE SEULE,
+   souvent non borné, d'événements PASSÉS — le Stepper est un petit
+   ensemble fixe, tourné vers l'avenir, d'étapes d'une tâche en cours
+   MAINTENANT), pas un Navigation Menu (destinations primaires
+   indépendantes, aucun ordre ni complétion), pas des Tabs verticaux
+   (l'orientation ne change jamais ce qu'EST un composant — ce qui
+   distingue le Stepper, c'est l'ordre et la machine à états
+   complété/actuel/en attente, pas son axe), pas un Wizard (une
+   composition de niveau supérieur qui POSSÈDE le contenu des
+   étapes/la validation/le flux de navigation — le Stepper n'est que
+   l'indicateur qu'un Wizard composerait au-dessus de ce contenu), pas un
+   `<ol>` brut (aucune sémantique de progression, aucun
+   `aria-current="step"`, aucun état complété/en attente, aucun
+   connecteur — un ingrédient que le Stepper utilise en interne). Un
+   primitif PLAT sans Rôle Matériel — frère du Breadcrumb/Pagination
+   gelés, pas de Tabs : MUI lui-même classe Stepper sous « Navigation »
+   (le même signal de précédent déjà utilisé pour Breadcrumb/Pagination/
+   Tabs) ; contrairement à Tabs (widget ARIA composite, `aria-selected`),
+   Stepper suit structurellement la sous-famille liste-plate de
+   Breadcrumb/Pagination — les étapes cliquables sont des boutons
+   indépendants à ordre Tab natif, et exactement un élément porte
+   `aria-current="step"`, la valeur que la spec ARIA définit précisément
+   pour « l'étape actuelle dans un processus », explicitement distincte
+   de `aria-selected`. Aucun pattern WAI-ARIA APG n'existe pour
+   « Stepper » (contrairement à Tabs/Breadcrumb) — cette structure est
+   propre à DISCIPLINE, fondée directement sur la sémantique définie de
+   `aria-current`. États exprimés uniquement par la typographie, les
+   bordures, l'Icon gelée (une coche qui gagne toujours sur une étape
+   complétée, prioritaire sur toute icône personnalisée par étape) et le
+   Spinner gelé (`loading` uniquement) — jamais de GlassSurface, jamais de
+   connecteur glissant/animé (zéro transition/animation). Un composant
+   unique, autonome, non composé (aucune sous-partie exportée), comme
+   Pagination (« une API très simple »). Suivant la recommandation
+   explicite de Material Design pour le mobile (« préférer les steppers
+   verticaux... les steppers horizontaux introduisent typiquement un
+   défilement horizontal »), la couche `responsive` (activée par défaut,
+   CSS pur, aucune mesure JS) bascule automatiquement l'horizontal vers le
+   vertical sous le breakpoint `md` en rendant les deux structures avec
+   des espaces de noms d'id distincts (pour qu'`aria-describedby` ne
+   collide jamais) et en laissant CSS choisir ; `orientation="vertical"`
+   explicite saute cette couche. Deux props additives au-delà de la
+   liste littérale du brief, toutes deux indispensables : `onStepClick`
+   (un Stepper `clickable` sans moyen d'observer un clic ne serait pas
+   navigable) et `responsive` (exigence d'adaptation mobile du brief
+   lui-même). Les segments de connecteur sont calculés à partir de la
+   frontière PARTAGÉE entre deux étapes (jamais du statut propre de
+   chaque étape) pour que les deux moitiés d'une même ligne soient
+   toujours cohérentes — corrigé en auto-relecture après qu'une première
+   ébauche laissait chaque côté calculer sa propre couleur, risquant un
+   désaccord visuel à une frontière complétée→actuelle. `forwardRef`
+   ajouté (manquant initialement) ; `isInteractive` ne dépend plus que de
+   `clickable`, jamais de `disabled`, conformément à la convention
+   Pagination/Tabs gelée où `disabled` ne change jamais le TYPE
+   d'élément. grep zéro GlassSurface/blur/backdrop-filter/rgba/shadow/
+   transition/animation en dehors de la prose des commentaires ; zéro
+   appel `.focus()` littéral. API : `currentStep` · `steps` (`id` ·
+   `label` · `description?` · `icon?` · `disabled?`) · `onStepClick` ·
+   `orientation` · `clickable` · `completed` · `loading` · `disabled` ·
+   `responsive` · `className`. ZÉRO fichier gelé modifié. Preuve :
+   `/dev/stepper` — basic · étape actuelle · étapes complétées · cliquable
+   · étape désactivée · vertical · horizontal · longs libellés ·
+   descriptions · icônes · loading · responsive · RTL ; captures desktop/
+   tablet/mobile + RTL ; assertions programmatiques pour la structure
+   nav/liste ordonnée, exactement un `aria-current="step"`, le compte de
+   coches complétées, le saut au clic, l'étape désactivée (`disabled`
+   natif + `aria-disabled`, toujours un vrai bouton), le Spinner de
+   chargement, le `flex-direction` horizontal/vertical, l'activation
+   clavier Tab+Enter native, le changement de breakpoint responsive, et
+   le wrapper RTL. **Built, non gelé** — aucun freeze automatique ;
+   en attente d'une validation visuelle explicite avant toute phase de
+   Freeze.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

@@ -1288,6 +1288,94 @@
 >     API locked (`Tabs`/`Tabs.List`/`Tabs.Trigger`/`Tabs.Content` + their
 >     native Radix props); no further redesign or API change without an
 >     ADR; changes only for an objective bug from here on.
+>   - **Stepper — Navigation, a FLAT primitive with NO Material Role, the
+>     plain-list sub-family sibling of Breadcrumb/Pagination (native Tab
+>     order, one item marked `aria-current`, NOT the composite-widget
+>     sub-family Tabs belongs to). Built, not frozen.**
+>     ```text
+>     Navigation (flat, no Material Role) — plain-list sub-family
+>     (Breadcrumb, Pagination, Stepper — native Tab order, aria-current)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → Stepper (frozen Icon + frozen Spinner only)
+>     Status: Built (not frozen)
+>     ```
+>     Progress through a sequence of ordered, semantically DIFFERENT steps
+>     of ONE task being completed right now (Account → Profile → Payment →
+>     Review) — never which facet of the same record (Tabs), never a
+>     navigation hierarchy (Breadcrumb), never a page of a data collection
+>     (Pagination). Not Tabs (interchangeable views, freely reachable in
+>     any order, no required sequence, no completed/pending state — a
+>     Stepper's entire point is ORDER + PROGRESS), not a Breadcrumb (a
+>     navigation hierarchy of ancestors, never a completion state), not
+>     Pagination (structurally identical pages of a data collection, no
+>     "done" semantics, no fixed small count), not Progress/Progress Ring
+>     (a single continuous quantity 0–100%, no named discrete steps), not
+>     a Timeline (a read-only, often unbounded chronological record of
+>     PAST events — a Stepper is a small, fixed, forward-looking set of
+>     steps for a task happening NOW), not a Navigation Menu (independent
+>     primary destinations, no order or completion), not vertical Tabs
+>     (orientation never changes what a component IS — what distinguishes
+>     Stepper is the order and the completed/current/pending state
+>     machine, not its axis), not a Wizard (a higher-level composition
+>     that OWNS step content/validation/navigation flow — the Stepper is
+>     only the indicator a Wizard would compose above that content), not a
+>     plain `<ol>` (no progress semantics, no `aria-current="step"`, no
+>     completed/pending state, no connectors — an ingredient Stepper uses
+>     internally). A FLAT primitive with NO Material Role — the sibling of
+>     the frozen Breadcrumb/Pagination, not Tabs: MUI itself files Stepper
+>     under "Navigation" (the same precedent signal already used for
+>     Breadcrumb/Pagination/Tabs); unlike Tabs (a composite ARIA widget,
+>     `aria-selected`), Stepper structurally matches Breadcrumb/
+>     Pagination's plain-list sub-family — clickable steps are
+>     independent, native-Tab-order buttons and exactly one item carries
+>     `aria-current="step"`, the value the ARIA spec defines specifically
+>     for "the current step within a process," explicitly distinct from
+>     `aria-selected`. No WAI-ARIA APG pattern exists for "Stepper" (unlike
+>     Tabs/Breadcrumb) — this structure is DISCIPLINE's own, grounded
+>     directly in `aria-current`'s defined semantics. States expressed
+>     only by typography, borders, the frozen Icon (a checkmark that
+>     always wins on completed steps, overriding any custom per-step icon)
+>     and the frozen Spinner (`loading` only) — never GlassSurface, never
+>     a sliding/animated connector (zero transition/animation). A single,
+>     self-contained, non-compound component (no exported sub-parts),
+>     matching Pagination's own "une API très simple" precedent. Per
+>     Material Design's own explicit mobile guidance ("prefer vertical
+>     steppers... horizontal steppers typically introduce horizontal
+>     scrolling"), the `responsive` layer (default on, CSS-only, zero JS
+>     measuring) auto-switches horizontal to vertical below the `md`
+>     breakpoint by rendering both structures with distinct id namespaces
+>     (so `aria-describedby` never collides) and letting CSS pick one;
+>     explicit `orientation="vertical"` skips it. Two additive props
+>     beyond the brief's literal list, both indispensable: `onStepClick`
+>     (a `clickable` Stepper with no way to observe a click would not be
+>     navigable) and `responsive` (the brief's own mobile-adaptation
+>     requirement). Connector segments are computed from the shared
+>     boundary between two steps (not each step's own status
+>     independently) so both halves of the same visual line always agree
+>     — fixed during self-review after an initial draft let each side
+>     compute its own color and could visually disagree at a
+>     completed→current boundary. `forwardRef` added (initially missed);
+>     `isInteractive` now depends only on `clickable`, never on
+>     `disabled`, matching the frozen Pagination/Tabs convention that
+>     `disabled` toggles only the native attribute/styling, never the
+>     element's type. grep: zero `GlassSurface`/`blur`/`backdrop-filter`/
+>     `rgba`/`shadow`/`transition`/`animation` string outside prose doc
+>     comments; zero literal `.focus()` calls. API: `currentStep` ·
+>     `steps` (`id` · `label` · `description?` · `icon?` · `disabled?`) ·
+>     `onStepClick` · `orientation` · `clickable` · `completed` (step ids,
+>     additive to the auto-derived "before currentStep" rule) · `loading`
+>     · `disabled` · `responsive` · `className`. ZERO frozen files
+>     modified. Proof: `/dev/stepper` — basic · current step · completed
+>     steps · clickable · disabled step · vertical · horizontal · long
+>     labels · descriptions · icons · loading · responsive · RTL;
+>     desktop/tablet/mobile + RTL captures; programmatic assertions for
+>     nav/ordered-list structure, exactly one `aria-current="step"`,
+>     completed-checkmark count, click-to-jump, disabled step (native
+>     `disabled` + `aria-disabled`, still a real button), loading Spinner,
+>     horizontal/vertical `flex-direction`, native Tab+Enter keyboard
+>     activation, responsive breakpoint switch, and the RTL wrapper.
+>     `'use client'`. **Built, not frozen** — no automatic freeze; awaiting
+>     explicit visual validation before any Freeze phase.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

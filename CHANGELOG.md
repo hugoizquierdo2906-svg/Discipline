@@ -173,6 +173,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Stepper — a flat primitive with no Material Role, the plain-list
+  sub-family sibling of Breadcrumb/Pagination (Built, not frozen).**
+  Progress through a sequence of ordered, semantically different steps of
+  one task being completed right now (Account → Profile → Payment →
+  Review) — never which facet of the same record (Tabs), never a
+  navigation hierarchy (Breadcrumb), never a page of a data collection
+  (Pagination). Not Tabs (interchangeable views, freely reachable in any
+  order, no completed/pending state), not a Breadcrumb (a navigation
+  hierarchy, never a completion state), not Pagination (structurally
+  identical pages, no "done" semantics), not Progress/Progress Ring (a
+  single continuous quantity, no named discrete steps), not a Timeline (a
+  read-only, often unbounded record of past events), not a Navigation
+  Menu (independent primary destinations, no order or completion), not
+  vertical Tabs (orientation never changes what a component is), not a
+  Wizard (a higher-level composition that owns step content/validation/
+  navigation flow — the Stepper is only the indicator a Wizard would
+  compose above it), not a plain `<ol>` (no progress semantics, no
+  `aria-current="step"`, no connectors). A flat primitive with no
+  Material Role — the sibling of the frozen Breadcrumb/Pagination, not
+  Tabs: MUI itself files Stepper under "Navigation"; unlike Tabs (a
+  composite ARIA widget, `aria-selected`), Stepper matches Breadcrumb/
+  Pagination's plain-list sub-family — clickable steps are independent,
+  native-Tab-order buttons and exactly one item carries
+  `aria-current="step"`, distinct from `aria-selected`. No WAI-ARIA APG
+  pattern exists for Stepper (unlike Tabs/Breadcrumb) — this structure is
+  grounded directly in `aria-current`'s defined semantics. States
+  expressed only by typography, borders, the frozen Icon (a checkmark
+  that always wins on completed steps, overriding any custom per-step
+  icon) and the frozen Spinner (`loading` only) — never GlassSurface,
+  never a sliding/animated connector. A single, self-contained,
+  non-compound component, matching Pagination's own "very simple API"
+  precedent. Per Material Design's own mobile guidance, the `responsive`
+  layer (default on, CSS-only) auto-switches horizontal to vertical below
+  the `md` breakpoint. Two additive props beyond the brief's literal
+  list, both indispensable: `onStepClick` and `responsive`. Connector
+  segments are computed from the shared boundary between two steps (not
+  each step's own status independently) so both halves of the same
+  visual line always agree. API: `currentStep` · `steps` (`id` · `label`
+  · `description?` · `icon?` · `disabled?`) · `onStepClick` ·
+  `orientation` · `clickable` · `completed` · `loading` · `disabled` ·
+  `responsive` · `className`. Zero frozen files modified. Proof:
+  `/dev/stepper`.
+
 - **Tabs — a flat primitive with no Material Role, composing
   `@radix-ui/react-tabs` directly (Built, not frozen).** Switch between a
   small, named, always-visible set of alternate content views for the
