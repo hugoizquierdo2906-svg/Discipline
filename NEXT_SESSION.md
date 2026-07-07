@@ -1422,7 +1422,16 @@
    automatique ; en attente d'une validation visuelle explicite avant toute
    phase de Freeze.
 
-   **Skeleton : Built, non gelé.** Reconstruit à partir d'une implémentation
+   **Skeleton : GELÉ (validé visuellement 2026-07-07, après une passe de
+   Frozen-review).** Plus de changement fonctionnel, visuel ou
+   architectural sauf bug objectif ; changement d'API impossible sans ADR.
+   Constat de la Frozen-review : la branche `circle` et la branche
+   ligne-unique étaient deux retours `<div>` quasi identiques ne différant
+   que par le width/height résolu — une vraie duplication. Fusionnées en
+   un seul retour de barre unique (le multi-lignes reste sa propre
+   branche) ; comportement identique à l'octet près (revérifié : preuve
+   complète au vert, build inchangé à 3,05 kB). Reconstruit à partir d'une
+   implémentation
    pré-méthodologie vers le processus complet d'analyse/construction/preuve.
    Un placeholder de MISE EN PAGE silencieux : réserve l'espace exact que le
    vrai contenu occupera pendant son chargement, pour que la structure de la
@@ -1486,8 +1495,9 @@
    valeurs de radius distinctes, le compte multi-lignes + la règle des 60%
    sur la dernière ligne, `animation-name` animé vs statique, la largeur
    responsive suivant le conteneur à tout viewport, et le wrapper RTL.
-   **Built, non gelé** — aucun freeze automatique ; en attente d'une
-   validation visuelle explicite avant toute phase de Freeze.
+   **GELÉ (2026-07-07)** — API publique verrouillée (`width`/`height`/
+   `radius`/`circle`/`lines`/`animated`/`className`) ; plus de redesign ni
+   de changement d'API sans ADR.
 
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),

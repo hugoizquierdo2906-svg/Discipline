@@ -105,54 +105,50 @@ export function Skeleton({
     animated && 'animate-pulse motion-reduce:animate-none',
   )
 
-  if (circle) {
-    const size = toLength(width) ?? toLength(height) ?? 'var(--ds-space-7)'
-    return (
-      <div
-        aria-hidden
-        className={cn(barClass, className)}
-        style={{
-          width: toLength(width) ?? size,
-          height: toLength(height) ?? size,
-          ...style,
-        }}
-        {...props}
-      />
-    )
-  }
-
+  // Multi-line text stacks `lines` bars (last at 60% width); never for a
+  // circle. Every other case — a circle, a rectangle, a single text line —
+  // is one bar, differing only in its resolved width/height.
   const resolvedWidth = toLength(width) ?? '100%'
   const resolvedHeight = toLength(height) ?? 'var(--ds-space-4)'
 
-  if (lines <= 1) {
+  if (!circle && lines > 1) {
     return (
       <div
         aria-hidden
-        className={cn(barClass, className)}
-        style={{ width: resolvedWidth, height: resolvedHeight, ...style }}
+        className={cn('flex flex-col gap-2', className)}
+        style={style}
         {...props}
-      />
+      >
+        {Array.from({ length: lines }).map((_, i) => (
+          <div
+            key={i}
+            className={barClass}
+            style={{
+              width:
+                i === lines - 1
+                  ? `calc(${resolvedWidth} * 0.6)`
+                  : resolvedWidth,
+              height: resolvedHeight,
+            }}
+          />
+        ))}
+      </div>
     )
   }
 
+  // A circle is square: a given dimension applies to both axes, defaulting
+  // to a token-sized avatar square when neither is given.
+  const circleSize = toLength(width) ?? toLength(height) ?? 'var(--ds-space-7)'
   return (
     <div
       aria-hidden
-      className={cn('flex flex-col gap-2', className)}
-      style={style}
+      className={cn(barClass, className)}
+      style={{
+        width: circle ? circleSize : resolvedWidth,
+        height: circle ? (toLength(height) ?? circleSize) : resolvedHeight,
+        ...style,
+      }}
       {...props}
-    >
-      {Array.from({ length: lines }).map((_, i) => (
-        <div
-          key={i}
-          className={barClass}
-          style={{
-            width:
-              i === lines - 1 ? `calc(${resolvedWidth} * 0.6)` : resolvedWidth,
-            height: resolvedHeight,
-          }}
-        />
-      ))}
-    </div>
+    />
   )
 }

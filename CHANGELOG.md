@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Skeleton — frozen (flat primitive, token system).** Frozen-review pass
+  found and removed one genuine duplication: the `circle` branch and the
+  single-line branch were two near-identical single-`<div>` returns
+  differing only in the resolved width/height. Collapsed into one
+  single-bar return (multi-line stays its own branch), computing width/
+  height per case — behavior byte-identical, re-verified with a full green
+  proof run and an unchanged 3.05 kB build. No functional, visual or
+  architectural change again except an objective bug; the public API
+  (`width`/`height`/`radius`/`circle`/`lines`/`animated`/`className`) is
+  locked — any future change requires an ADR.
+
 - **Stepper — frozen (Navigation, flat primitive, plain-list sub-family).**
   Frozen-review pass found and fixed one genuine layout bug (not
   cosmetic): the horizontal connector row nested the full label block,

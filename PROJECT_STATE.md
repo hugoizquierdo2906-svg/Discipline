@@ -1629,12 +1629,20 @@
 >     explicit visual validation before any Freeze phase.
 >   - **Skeleton — Flat primitive (token system, no glass role). Rebuilt
 >     from a pre-methodology implementation onto the full analysis/build/
->     proof process. Built, not frozen.**
+>     proof process. FROZEN (visually validated 2026-07-07, after a
+>     Frozen-review pass).** No functional, visual or architectural change
+>     again — objective bugs only; API changes require an ADR.
+>     Frozen-review finding: the `circle` branch and the single-line
+>     branch were two near-identical single-`<div>` returns differing only
+>     in the resolved width/height — a genuine duplication. Collapsed into
+>     one single-bar return (multi-line stays its own branch); behavior
+>     byte-identical (re-verified: full proof green, build unchanged at
+>     3.05 kB).
 >     ```text
 >     Flat primitives (token system, no glass role)
 >     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
 >     → Skeleton (composes nothing — a div, CSS, and tokens only)
->     Status: Built (not frozen)
+>     Status: FROZEN
 >     ```
 >     A silent LAYOUT placeholder: reserves the exact space real content
 >     will occupy while it loads, so the page's structure is visible
@@ -1696,8 +1704,10 @@
 >     rounding, 4 distinct radius values, multi-line count + the 60%
 >     last-line rule, animated vs static `animation-name`, responsive
 >     width following the container at any viewport, and the RTL
->     wrapper. **Built, not frozen** — no automatic freeze; awaiting
->     explicit visual validation before any Freeze phase.
+>     wrapper. **FROZEN (2026-07-07)** — public API locked (`width`/
+>     `height`/`radius`/`circle`/`lines`/`animated`/`className`); no
+>     further redesign or API change without an ADR; changes only for an
+>     objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text
