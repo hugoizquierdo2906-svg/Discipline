@@ -1721,6 +1721,65 @@
    verrouillée (`title`/`description`/`icon`/`action`/`size`/`align`/
    `className`) ; plus de redesign ni de changement d'API sans ADR.
 
+   **SuccessBanner : CONSTRUIT, NON GELÉ (2026-07-07).** Une primitive
+   Feedback qui POSSÈDE sa propre surface — l'inverse délibéré des états
+   content-only. Une confirmation PERSISTANTE, DANS LE FLUX, qu'une
+   opération que l'utilisateur vient d'effectuer a RÉUSSI et mérite de
+   rester visible (un programme publié, une séance enregistrée, un client
+   créé, un paiement confirmé, un profil mis à jour). UNE seule
+   responsabilité : un « c'est fait » positif et permanent qui vit dans la
+   page, pousse le contenu, et persiste jusqu'à ce que l'utilisateur le
+   ferme ou que l'état change. JAMAIS une erreur serveur, un chargement, un
+   progrès, une absence de données, une permission refusée, une maintenance
+   ou un échec inconnu. Pas un Toast (transitoire, flottant, auto-fermant,
+   hors du flux — SuccessBanner vit DANS le flux et persiste), pas un Alert
+   (la bande générique multi-variantes AU SUJET de la vue — SuccessBanner
+   est la confirmation unique, positive, succès-seulement, DE l'action
+   effectuée ; le brief interdit d'être/composer un Alert), pas un Dialog
+   (bloquant/modal — SuccessBanner ne bloque jamais, ne piège jamais le
+   focus), pas les états content-only (EmptyState/ErrorState/OfflineState
+   REMPLACENT une région qui n'a pas pu afficher son contenu —
+   SuccessBanner est À CÔTÉ d'un contenu PRÉSENT), pas un Progress/Spinner
+   (en cours — SuccessBanner est le résultat positif terminal APRÈS le
+   travail), pas un Snackbar/message inline ni un Notification Center. Les
+   variantes (save, publish, import, sync, payment) se ramènent à UNE
+   responsabilité. **Possède sa surface : une bande teintée succès
+   construite UNIQUEMENT depuis les tokens succès
+   (`bg-[var(--ds-color-success-tint)]`,
+   `border-[var(--ds-color-success-border)]`, icône `text-success`), un
+   rayon token (`rounded-lg`) et un espacement token — jamais de couleur en
+   dur, jamais de GlassSurface/blur/backdrop-filter/shadow, jamais de
+   mouvement.** Compose uniquement l'Icon gelé (le caller fournit l'icône
+   de validation), Text, et l'IconButton gelé (fermeture) — jamais
+   Toast/Alert/Card/Dialog. `w-full` (suit la largeur du parent sans JS —
+   vérifié : colonnes pleine vs demi-largeur suivies exactement) ;
+   `role="status"` (aria-live polite) annonce le succès sans l'urgence d'un
+   alert ; flex horizontal → la fermeture se retourne sous `dir="rtl"`
+   (vérifié : `direction: rtl`, action + fermeture rendues) ; l'IconButton
+   de fermeture garde sa sémantique native (aucun focus auto, aucun piège)
+   et auto-masque la bande (vérifié) + déclenche `onDismiss`. Deux props
+   additives justifiées : `align` (left/center, la section Alignement du
+   brief) et `onDismiss` (une bande fermable doit pouvoir observer sa
+   fermeture). Tailles sm/md/lg échelonnées ensemble (vérifié : la taille
+   du titre croît strictement). Statique : zéro animation sur la racine,
+   hors boutons composés (vérifié). grep zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition/animation/animate-/`.focus()`
+   dans le composant (uniquement dans la prose du doc-comment décrivant ce
+   qu'il n'est PAS) ; zéro TODO/FIXME/`console.*`/import inutilisé ; zéro
+   hex/px/ms en dur. API : `title` · `description` · `icon` · `action` ·
+   `dismissible` · `onDismiss` · `size` (sm/md/lg) · `align` (left/center)
+   · `className` (+ attributs natifs du div). ZÉRO fichier gelé modifié.
+   Preuve : `/dev/success-banner` (sur le fond d'écran, la bande montrée
+   directement dans le flux puisqu'elle possède sa surface) — basic ·
+   with/without description · dismissible · with/without action ·
+   dismissible+action · sm/md/lg · program published · payment confirmed ·
+   import completed · settings saved · responsive width · RTL, plus
+   `scripts/success-banner-proof.mjs` (captures desktop/tablet/mobile + RTL
+   ; assertions rendu, `role="status"`, surface teintée, auto-masquage à la
+   fermeture, bouton d'action, tailles strictement croissantes, largeur
+   responsive, direction RTL, statique). **Built, non frozen** — gel
+   interdit tant que la validation visuelle explicite n'a pas eu lieu.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

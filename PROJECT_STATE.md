@@ -1948,6 +1948,71 @@
 >     public API locked (`title`/`description`/`icon`/`action`/`size`/
 >     `align`/`className`); no further redesign or API change without an
 >     ADR; changes only for an objective bug from here on.
+>   - **SuccessBanner — Feedback primitive that OWNS its surface (Built,
+>     not frozen).**
+>     ```text
+>     Feedback (owns its surface — built from success tokens, not a glass role)
+>     success-tint fill + success-border + text-success icon (all tokens)
+>     → SuccessBanner (frozen Icon + Text + IconButton; caller's icon/action verbatim)
+>     Status: Built (non frozen) — awaiting explicit visual validation
+>     ```
+>     A PERSISTENT, IN-FLOW confirmation that an operation the user just
+>     took SUCCEEDED and deserves to stay visible (a program published, a
+>     session saved, a client created, a payment confirmed, a profile
+>     updated). Exactly ONE responsibility: a standing, positive "this is
+>     done" that lives in the page, pushes surrounding content, and
+>     persists until the user dismisses it or the state changes. NEVER a
+>     server error, a loading state, progress, an absence of data, a denied
+>     permission, maintenance, or an unknown failure. Not a Toast (a
+>     TRANSIENT, floating, auto-dismissing notification outside the flow —
+>     SuccessBanner lives IN the flow and persists), not an Alert (the
+>     generic multi-variant strip ABOUT the view — SuccessBanner is the
+>     single positive success-only confirmation OF an action just taken;
+>     the brief scopes it to NOT be/compose an Alert), not a Dialog
+>     (blocking/modal — SuccessBanner never blocks or traps focus), not the
+>     content-only states (EmptyState/ErrorState/OfflineState REPLACE a
+>     region that could not show content — SuccessBanner sits ALONGSIDE
+>     content that IS present), not a Progress/Spinner (in-flight —
+>     SuccessBanner is the terminal positive outcome AFTER the work), not a
+>     Snackbar/inline message or Notification Center. Variants (save,
+>     publish, import, sync, payment) collapse to ONE responsibility.
+>     **A Feedback primitive that OWNS its surface — the deliberate inverse
+>     of the content-only states: a banner IS a surface element, a
+>     success-tinted strip built ONLY from success tokens
+>     (`bg-[var(--ds-color-success-tint)]`,
+>     `border-[var(--ds-color-success-border)]`, `text-success` icon), a
+>     token radius (`rounded-lg`) and token spacing — never a hard-coded
+>     color, never GlassSurface/blur/backdrop-filter/shadow, never
+>     motion.** Composes only the frozen Icon (caller supplies the check
+>     icon), Text, and IconButton (dismiss) — never Toast/Alert/Card/
+>     Dialog. `w-full` (follows parent width, no JS — verified: full vs.
+>     half column tracked exactly); `role="status"` (aria-live polite)
+>     announces success without an alert's urgency; horizontal flex so the
+>     dismiss control flips under `dir="rtl"` (verified: `direction: rtl`,
+>     action + dismiss still render); the dismiss IconButton keeps native
+>     button semantics (no auto-focus, no trap) and self-hides the banner
+>     (verified) + fires `onDismiss`. Two additive props, both justified:
+>     `align` (left/center, the brief's Alignement section) and `onDismiss`
+>     (a dismissible banner needs to observe dismissal). Sizes sm/md/lg
+>     scale icon/title/description/padding together (verified: title
+>     font-size strictly increases). Static: zero animation on the root,
+>     ignoring composed buttons (verified). grep: zero `GlassSurface`/
+>     `blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`/`animation`/
+>     `animate-`/`.focus()` string in the component (only in doc-comment
+>     prose describing what it is NOT); zero TODO/FIXME/`console.*`/unused
+>     imports; zero hard-coded hex/px/ms. API: `title` · `description` ·
+>     `icon` · `action` · `dismissible` · `onDismiss` · `size` (sm/md/lg) ·
+>     `align` (left/center) · `className` (+ native div attributes). ZERO
+>     frozen files modified. Proof: `/dev/success-banner` (on the capture
+>     wallpaper, shown directly in flow since it owns its surface) — basic
+>     · with/without description · dismissible · with/without action ·
+>     dismissible+action · sm/md/lg · program published · payment confirmed
+>     · import completed · settings saved · responsive width · RTL, plus
+>     `scripts/success-banner-proof.mjs` (desktop/tablet/mobile + RTL
+>     captures; assertions for rendering, `role="status"`, tinted surface,
+>     dismiss self-hide, action button, strictly increasing sizes,
+>     responsive width, RTL direction, static). **Built, non frozen** —
+>     freeze forbidden until explicit visual validation.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **SuccessBanner — built, not frozen (Feedback primitive that owns its
+  surface).** A PERSISTENT, IN-FLOW confirmation that an operation the user
+  just took SUCCEEDED and deserves to stay visible (program published,
+  session saved, client created, payment confirmed, profile updated). Exactly
+  one responsibility: a standing, positive "this is done" that lives in the
+  page — it pushes surrounding content and persists until the user dismisses
+  it or the state changes. Deliberately NOT a Toast (transient, floating,
+  auto-dismissing, outside the flow), NOT an Alert (generic multi-variant
+  message ABOUT the view), NOT a Dialog (blocking/modal), NOT the content-only
+  states (which REPLACE a region; SuccessBanner sits ALONGSIDE present
+  content), NOT a Progress/Spinner (in-flight), NOT a Snackbar/inline message
+  or Notification Center. Unlike EmptyState/ErrorState/OfflineState, it OWNS
+  its surface: a success-tinted strip built ONLY from success tokens
+  (`bg-[var(--ds-color-success-tint)]`, `border-[var(--ds-color-success-border)]`,
+  `text-success` icon), token radius and spacing — no hard-coded color, no
+  GlassSurface/blur/shadow, no motion. Composes only the frozen Icon, Text,
+  and IconButton (dismiss). `w-full` (follows parent width, no JS),
+  `role="status"` (aria-live polite), horizontal flex so the dismiss control
+  flips under `dir="rtl"`; the dismiss button self-hides the banner and fires
+  `onDismiss`. API: `title` · `description` · `icon` · `action` ·
+  `dismissible` · `onDismiss` · `size` (sm/md/lg) · `align` (left/center) ·
+  `className`. Proof `/dev/success-banner` + `scripts/success-banner-proof.mjs`
+  (rendering, `role="status"`, tinted surface, dismiss self-hide, action
+  button, sizes, responsive width, RTL, static). Awaiting visual validation
+  before any freeze.
+
 ### Changed
 
 - **OfflineState — frozen (flat primitive, content-only).** Frozen-review
