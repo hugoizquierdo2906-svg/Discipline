@@ -41,6 +41,21 @@ import { Text } from './text'
  * wearing different copy and icons; they are content variations a consumer
  * passes in, never separate components.
  *
+ * A CONTENT primitive, NOT a surface. ErrorState draws NO surface of its
+ * own — no background, no shadow, no radius, no border, no glass, no
+ * material whatsoever. It is not a Card. ALL visual material comes
+ * exclusively from the parent surface it fills (a GlassCard, GlassPanel,
+ * Drawer, Modal, FullscreenOverlay, or a plain page region). In DISCIPLINE,
+ * surfaces are an ARCHITECTURAL level (the Liquid Glass material) and states
+ * (EmptyState/ErrorState/OfflineState/NoPermission…) are a CONTENT level;
+ * giving a state its own surface would duplicate material and weaken the
+ * system's identity. ErrorState therefore renders only icon, title,
+ * description and an optional action, aligned by tokens, and inherits
+ * everything else from its container — the rendering stays coherent whether
+ * the parent is a Card, Drawer, Dialog, FullscreenOverlay or Page. The root
+ * is a transparent flex column: spacing/alignment tokens only, never a
+ * `bg-*`/`shadow`/`rounded`/`border` class.
+ *
  * A FLAT primitive (token system, no glass role) — it does NOT compose
  * Modal/Drawer/Alert/Toast (it is content those may contain, never the
  * other way round), and deliberately does NOT compose the frozen

@@ -1809,7 +1809,22 @@
 >     families — server error (5xx), load failed, not found (404),
 >     temporary network error, unknown error — are ONE responsibility
 >     (expected content could not be loaded + a way to recover) wearing
->     different copy/icons, never separate components. Does NOT compose
+>     different copy/icons, never separate components. **A CONTENT
+>     primitive, NOT a surface: ErrorState draws NO surface of its own —
+>     no background, no shadow, no radius, no border, no glass, no
+>     material. It is not a Card. ALL visual material comes from the
+>     parent surface it fills (GlassCard/GlassPanel/Drawer/Modal/
+>     FullscreenOverlay/Page). In DISCIPLINE, surfaces are an
+>     ARCHITECTURAL level (Liquid Glass material) and states
+>     (EmptyState/ErrorState/OfflineState/NoPermission…) are a CONTENT
+>     level — giving a state its own surface would duplicate material and
+>     weaken the identity. The root is a transparent flex column
+>     (spacing/alignment tokens only, never `bg-*`/`shadow`/`rounded`/
+>     `border`). Demos place it inside REAL Liquid Glass surfaces
+>     (GlassCard/GlassPanel/a real Drawer/a real FullscreenOverlay) on the
+>     shared capture wallpaper, never a dedicated opaque card — the glass
+>     material and the wallpaper refracting through it produce the
+>     "embedded on a real screen" reading.** Does NOT compose
 >     Modal/Drawer/Alert/Toast, and deliberately does NOT compose the
 >     frozen EmptyState despite the adjacent layout: distinct
 >     responsibilities (failure vs. empty), EmptyState is frozen (coupling

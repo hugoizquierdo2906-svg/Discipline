@@ -1587,8 +1587,24 @@
    chargement, introuvable (404), erreur réseau temporaire, erreur
    inconnue — sont UNE seule responsabilité (le contenu attendu n'a pas pu
    être chargé + un moyen de récupérer) portant des copies/icônes
-   différentes, jamais des composants séparés. Ne compose PAS Modal/
-   Drawer/Alert/Toast, et délibérément NE compose PAS l'EmptyState gelé
+   différentes, jamais des composants séparés. **Un primitif de CONTENU,
+   PAS une surface : ErrorState ne dessine AUCUNE surface propre — aucun
+   fond, aucune ombre, aucun radius, aucune bordure, aucun verre, aucune
+   matière. Ce n'est pas une Card. Toute la matière visuelle provient
+   exclusivement de la surface parente qu'il occupe (GlassCard/GlassPanel/
+   Drawer/Modal/FullscreenOverlay/Page). Dans DISCIPLINE, les surfaces
+   sont un niveau ARCHITECTURAL (la matière Liquid Glass) et les états
+   (EmptyState/ErrorState/OfflineState/NoPermission…) un niveau de
+   CONTENU — donner une surface propre à un état dupliquerait la matière
+   et affaiblirait l'identité. La racine est une colonne flex transparente
+   (tokens d'espacement/alignement uniquement, jamais `bg-*`/`shadow`/
+   `rounded`/`border`). Les démos le placent dans de VRAIES surfaces
+   Liquid Glass (GlassCard/GlassPanel/un vrai Drawer/un vrai
+   FullscreenOverlay) sur le fond d'écran de capture partagé, jamais une
+   carte opaque dédiée — le verre et le wallpaper qui transparaît à
+   travers produisent le rendu « incrusté sur un vrai écran ».** Ne
+   compose PAS Modal/Drawer/Alert/Toast, et délibérément NE compose PAS
+   l'EmptyState gelé
    malgré la mise en page voisine : responsabilités distinctes (échec vs
    vide), EmptyState est gelé (le coupler bloquerait l'évolution propre
    d'ErrorState derrière une ADR), et le brief scope la composition aux

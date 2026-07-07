@@ -242,8 +242,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   frozen Heading and Text and renders a caller-supplied icon and Retry
   action verbatim. Its one semantic distinction from EmptyState: the icon
   is tinted `text-error` (the universal failure signal), matching the
-  frozen Alert's tone+icon precedent. Purely informative and static: no
-  role on the container (the Retry Button keeps its own semantics — no
+  frozen Alert's tone+icon precedent. A CONTENT primitive, not a surface:
+  it draws no surface of its own (no background, shadow, radius, border,
+  glass or material) — all visual material comes from the parent Liquid
+  Glass surface it fills (GlassCard/GlassPanel/Drawer/Modal/
+  FullscreenOverlay/Page); surfaces are an architectural level and states
+  are a content level, so a state never carries its own surface. Its demos
+  place it inside real Liquid Glass surfaces on the shared capture
+  wallpaper, never a dedicated opaque card. Purely informative and static:
+  no role on the container (the Retry Button keeps its own semantics — no
   auto-focus, no keyboard trap), zero motion, zero glass, zero transition/
   animation. `align` uses logical `start`. Sizes sm/md/lg scale the icon,
   title level, description size and padding together. Responsive with no JS

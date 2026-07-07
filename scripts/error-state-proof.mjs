@@ -36,8 +36,15 @@ function section(page, testId) {
   return page.locator(`[data-testid="${testId}"]`)
 }
 
+// The ErrorState root is the parent of its heading (icon/title/description/
+// action are siblings under it). Scope to the glass surface (`.ds-card`,
+// shared by GlassCard/GlassPanel) so the Section's own label heading — also
+// an <h3>, but outside the surface — is never matched.
 function root(page, testId) {
-  return section(page, testId).locator('.rounded-lg > div').first()
+  return section(page, testId)
+    .locator('.ds-card h3')
+    .first()
+    .locator('xpath=..')
 }
 
 // Full-page captures (desktop/tablet/mobile).
