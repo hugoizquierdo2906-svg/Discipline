@@ -48,9 +48,9 @@ import { cn } from '@/lib/cn'
  * values with a legend — a dataviz concern; this has exactly one fraction,
  * done vs. remaining, never several compared series).
  *
- * A FLAT primitive (token system, no glass role) — direct sibling of the
- * frozen... Progress (itself Built, not frozen), never a variant of it.
- * Composes `@radix-ui/react-progress` DIRECTLY for the identical ARIA
+ * A FLAT primitive (token system, no glass role) — direct sibling of
+ * Progress (itself Built, not frozen), never a variant of it. Composes
+ * `@radix-ui/react-progress` DIRECTLY for the identical ARIA
  * contract Progress already relies on: `role="progressbar"`,
  * `aria-valuemin`/`aria-valuemax`, `aria-valuenow` set for a numeric value
  * and OMITTED entirely for `indeterminate` (Radix's own convention — no
