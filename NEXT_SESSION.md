@@ -1347,6 +1347,81 @@
    freeze automatique ; en attente d'une validation visuelle explicite
    avant toute phase de Freeze.
 
+   **Spinner : Built, non gelé.** Reconstruit à partir d'une implémentation
+   pré-méthodologie vers le processus complet d'analyse/construction/preuve.
+   L'indicateur d'activité PUREMENT indéterminé — « quelque chose se passe,
+   de durée inconnue » — jamais « combien reste-t-il ». Sa seule promesse
+   est qu'un travail est en cours ; il n'a jamais, et n'aura jamais, de
+   valeur. Pas Progress/CircularProgress (une fraction CONNUE, `max`,
+   `role="progressbar"`, `aria-valuenow` présent dès qu'une fraction est
+   déterminée — même leur propre `indeterminate` garde ce contrat en forme
+   de progressbar, seulement sans `aria-valuenow` ; Spinner n'a jamais eu ce
+   contrat), pas un Skeleton (un placeholder de mise en page, jamais une
+   icône d'activité), pas un Loading Overlay (un motif qui affiche un
+   Spinner en son centre, jamais le Spinner lui-même), pas FullscreenOverlay/
+   Toast/Drawer/CommandPalette (chacun compose déjà Spinner en interne — un
+   ingrédient, jamais un concurrent), pas Alert/Badge/Timeline/Gauge/Meter
+   (un message permanent, une étiquette statique, un historique du passé,
+   une lecture permanente d'une valeur réelle), pas Stepper (compose Spinner
+   sur son étape actuelle, mais Spinner n'a aucune notion de « quelle
+   étape »), pas le mode indéterminé de CircularProgress (visuellement
+   proche mais sémantiquement disjoint — reste un candidat `progressbar` à
+   devenir déterminé ; Spinner ne l'est jamais), pas l'état loading de
+   Button (Button compose Spinner, ne réinvente jamais sa propre icône —
+   exactement comme aujourd'hui). Déjà l'affordance de chargement interne de
+   18 consommateurs avant cette reconstruction, plusieurs gelés (Button,
+   Pagination, Drawer, Toast, DropdownMenu, ContextMenu, Select,
+   FullscreenOverlay, Stepper, CommandPalette, et d'autres) — la contrainte
+   dominante de cette reconstruction était ZÉRO régression visuelle sur
+   chacun d'eux. Ne compose rien — c'est la feuille que chaque autre
+   primitif Feedback de cette bibliothèque cite comme précédent pour sa
+   propre exception de mouvement non décorative (`indeterminate` de
+   Progress, `indeterminate` de CircularProgress, le shimmer de Skeleton
+   pointent tous vers le `animate-spin` de Spinner, jamais l'inverse).
+   `role="status"` + `aria-live="polite"`, JAMAIS `role="progressbar"`,
+   JAMAIS un attribut `aria-value*`. La couleur de l'anneau utilise par
+   défaut `border-current` (hérite de la couleur de texte ambiante) plutôt
+   qu'une couleur de marque fixe — porteur pour les 18 consommateurs
+   existants ; la nouvelle prop `color` est donc OPTIONNELLE sans valeur
+   par défaut — omise (comme le fait chaque consommateur existant), elle
+   rend un résultat identique à l'octet près (vérifié : omettre `color`
+   produit une couleur de bordure qui correspond à la couleur de texte
+   ambiante) ; seule une `color` explicite outrepasse `currentColor`.
+   `sm`/`md`/`lg` sont inchangés à l'octet près (les mêmes chaînes de
+   classes Tailwind exactement) ; `xs`/`xl` sont purement additifs, aux deux
+   extrémités de l'échelle de tailles propre à ce projet (12px/16px/24px/
+   32px/48px — les tokens de ce projet, pas l'échelle d'espacement par
+   défaut de Tailwind, vérifié via le style calculé). `disabled` est
+   purement visuel (assombrit l'anneau, gèle la rotation — vérifié :
+   `animation-name: none`) — `role="status"` est un rôle de région live et
+   ne supporte pas `aria-disabled` (confirmé via `role-supports-aria-props`
+   d'eslint-plugin-jsx-a11y), contrairement au `role="progressbar"` de
+   Progress/CircularProgress qui le supporte. `motion-reduce:animate-none`
+   ajouté (Skeleton/Progress/CircularProgress l'ont déjà tous ; son absence
+   ici précédait cette convention). `forwardRef` ajouté (auparavant un
+   simple composant fonction). Zéro régression visuelle vérifiée : le build
+   de production complet réussit sur les 51 routes, et la capture `loading`
+   de Stepper (Spinner `sm`, couleur accent héritée via `border-current`)
+   rend un résultat identique au pixel près à sa capture gelée antérieure.
+   grep zéro GlassSurface/blur/backdrop-filter/rgba/shadow/transition ;
+   l'unique occurrence `animate-spin` est l'unique exception documentée et
+   autorisée ; zéro appel `.focus()` littéral ; zéro TODO/FIXME/
+   `console.*`/import inutilisé. API : `size` (xs/sm/md/lg/xl) · `color`
+   (accent/neutral/success/warning/error/info, optionnelle, sans défaut) ·
+   `label` · `disabled` · `className`. ZÉRO fichier gelé modifié (Spinner
+   lui-même n'est pas gelé ; les fichiers sources de ses 18 consommateurs
+   sont restés intouchés). Preuve : `/dev/spinner` — basic · sizes ·
+   colors · inline · centered · with/without label · disabled · responsive
+   · RTL · inside Button/Card/Drawer/FullscreenOverlay ; captures desktop/
+   tablet/mobile + RTL ; assertions programmatiques pour role="status"/
+   aria-live="polite", l'absence de role="progressbar"/aria-valuenow, les
+   tailles strictement croissantes, 6 couleurs distinctes plus le défaut
+   currentColor, le label personnalisé vs par défaut, l'assombrissement +
+   le gel de rotation en disabled, la taille intrinsèque indépendante du
+   viewport, et le wrapper RTL. **Built, non gelé** — aucun freeze
+   automatique ; en attente d'une validation visuelle explicite avant toute
+   phase de Freeze.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

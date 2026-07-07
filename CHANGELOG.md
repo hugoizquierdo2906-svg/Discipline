@@ -197,6 +197,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Spinner — a flat primitive (token system, no glass role), rebuilt onto
+  the full analysis/build/proof process from a pre-methodology
+  implementation (Built, not frozen).** The purely indeterminate activity
+  indicator — "something is happening, of unknown duration" — never "how
+  much is left." It never has, and never will have, a value. Not Progress/
+  CircularProgress (a known fraction, `role="progressbar"`,
+  `aria-valuenow` present the moment a fraction is determined — even their
+  own `indeterminate` keeps that progressbar-shaped contract minus
+  `aria-valuenow`; Spinner never had that contract), not a Skeleton, a
+  Loading Overlay, FullscreenOverlay/Toast/Drawer/CommandPalette (each
+  already composes Spinner internally — an ingredient, never a
+  competitor), an Alert, a Badge, a Timeline, a Gauge/Meter, or
+  CircularProgress's own indeterminate mode (visually close but still a
+  progressbar candidate; Spinner never is). Already the internal loading
+  affordance of 18 consumers before this rebuild, several frozen (Button,
+  Pagination, Drawer, Toast, DropdownMenu, ContextMenu, Select,
+  FullscreenOverlay, Stepper, CommandPalette, and more) — the overriding
+  constraint was zero visual regression across every one of them, verified
+  via a full production build (51/51 routes) and a pixel-identical capture
+  of Stepper's own loading state. `role="status"` + `aria-live="polite"`,
+  never `role="progressbar"`, never an `aria-value*` attribute. The ring
+  color defaults to `border-current` (inherits the surrounding text
+  color); the new `color` prop is optional with no default, so every
+  existing consumer (which omits it) renders byte-identical to before.
+  `sm`/`md`/`lg` are unchanged byte-for-byte; `xs`/`xl` are purely
+  additive. `disabled` dims the ring and freezes the spin (no
+  `aria-disabled`, since `role="status"` doesn't support it).
+  `motion-reduce:animate-none` added (Skeleton/Progress/CircularProgress
+  already carry it). `forwardRef` added. API: `size` (xs/sm/md/lg/xl) ·
+  `color` (accent/neutral/success/warning/error/info, optional) · `label`
+  · `disabled` · `className`. Zero frozen files modified (Spinner itself
+  is not frozen; its 18 consumers' own source files were untouched).
+  Proof: `/dev/spinner`.
+
 - **CircularProgress — a flat primitive (token system, no glass role),
   direct sibling of Progress (Built, not frozen).** The same known
   fraction of completion as Progress, in a ring — reserved for compact/

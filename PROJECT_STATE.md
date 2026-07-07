@@ -1545,6 +1545,88 @@
 >     viewport, and large-number percentage math. **Built, not frozen** —
 >     no automatic freeze; awaiting explicit visual validation before any
 >     Freeze phase.
+>   - **Spinner — Flat primitive (token system, no glass role). Rebuilt
+>     from a pre-methodology implementation onto the full analysis/build/
+>     proof process. Built, not frozen.**
+>     ```text
+>     Flat primitives (token system, no glass role)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → Spinner (composes nothing — the leaf every other Feedback primitive cites as precedent)
+>     Status: Built (not frozen)
+>     ```
+>     The PURELY indeterminate activity indicator — "something is
+>     happening, of unknown duration" — never "how much is left." Its only
+>     promise is that work is in progress; it never has, and never will
+>     have, a value. Not Progress/CircularProgress (a KNOWN fraction,
+>     `max`, `role="progressbar"`, `aria-valuenow` present the moment a
+>     fraction is determined — even their own `indeterminate` keeps that
+>     progressbar-shaped contract, just without `aria-valuenow`; Spinner
+>     never had that contract at all), not a Skeleton (a layout
+>     placeholder, never an activity icon), not a Loading Overlay (a
+>     pattern that shows a Spinner at its center, never the Spinner
+>     itself), not FullscreenOverlay/Toast/Drawer/CommandPalette (each
+>     already composes Spinner internally — an ingredient, never a
+>     competitor), not Alert/Badge/Timeline/Gauge/Meter (a permanent
+>     message, a static label, a record of the past, a permanent reading
+>     of a real value), not Stepper (composes Spinner on its current step,
+>     but Spinner has no notion of "which step"), not CircularProgress's
+>     own indeterminate mode (visually close but semantically disjoint —
+>     still a `progressbar` candidate to become determinate; Spinner never
+>     is), not Button's loading state (Button composes Spinner, never
+>     reinvents its own icon — exactly as it already does). Already the
+>     internal loading affordance of 18 consumers before this rebuild,
+>     several frozen (Button, Pagination, Drawer, Toast, DropdownMenu,
+>     ContextMenu, Select, FullscreenOverlay, Stepper, CommandPalette, and
+>     more) — this rebuild's overriding constraint was ZERO visual
+>     regression across every one of them. Composes nothing — the leaf
+>     every other Feedback primitive in this library cites as precedent
+>     for its own one non-decorative motion exception (Progress's
+>     `indeterminate`, CircularProgress's `indeterminate`, Skeleton's
+>     shimmer all point back to Spinner's `animate-spin`, never the
+>     reverse). `role="status"` + `aria-live="polite"`, NEVER `role=
+>     "progressbar"`, NEVER an `aria-value*` attribute. The ring color
+>     defaults to `border-current` (inherits the surrounding text color)
+>     rather than a fixed brand color — load-bearing for all 18 existing
+>     consumers; the new `color` prop is OPTIONAL with no default value —
+>     omitted (as every existing consumer does), it renders byte-identical
+>     to before (verified: omitting `color` produces a border color
+>     matching the ambient text color); only an explicit `color` overrides
+>     `currentColor`. `sm`/`md`/`lg` are unchanged byte-for-byte from
+>     before (the exact same Tailwind class strings); `xs`/`xl` are purely
+>     additive, at both ends of this project's own sizing scale (12px/
+>     16px/24px/32px/48px — this project's tokens, not stock Tailwind's
+>     default spacing scale, verified via computed style). `disabled` is
+>     purely visual (dims the ring, freezes the spin — verified:
+>     `animation-name: none`) — `role="status"` is a live-region role and
+>     does not support `aria-disabled` (confirmed via `eslint-plugin-jsx-
+>     a11y`'s `role-supports-aria-props`), unlike Progress/CircularProgress's
+>     `role="progressbar"` which does. `motion-reduce:animate-none` added
+>     (Skeleton/Progress/CircularProgress all already carry it; its
+>     absence here predated that convention). `forwardRef` added
+>     (previously a plain function component). Zero visual regression
+>     verified: full production build succeeds across all 51 routes, and
+>     Stepper's own `loading` capture (Spinner `sm`, `border-current`
+>     inherited accent color) renders pixel-identical to its prior frozen
+>     capture. grep: zero `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/
+>     `shadow`/`transition` string; the sole `animate-spin` occurrence is
+>     the one documented, authorized exception; zero literal `.focus()`
+>     calls; zero TODO/FIXME/`console.*`/unused imports. API: `size`
+>     (xs/sm/md/lg/xl) · `color` (accent/neutral/success/warning/error/
+>     info, optional, no default) · `label` · `disabled` · `className`.
+>     ZERO frozen files modified (Spinner itself is not frozen; its 18
+>     consumers' own source files were untouched). Proof: `/dev/spinner` —
+>     basic · sizes · colors · inline · centered · with/without label ·
+>     disabled · responsive · RTL · inside Button/Card/Drawer/
+>     FullscreenOverlay; desktop/tablet/mobile + RTL captures;
+>     programmatic assertions for role="status"/aria-live="polite", the
+>     absence of role="progressbar"/aria-valuenow, strictly increasing
+>     sizes (measured on the outer wrapper, not the spinning ring itself,
+>     since a rotating element's own bounding rect is rotation-angle-
+>     dependent even at a fixed layout size), 6 distinct colors plus the
+>     `currentColor` default, custom vs default label, disabled dimming +
+>     frozen spin, intrinsic size independent of viewport, and the RTL
+>     wrapper. **Built, not frozen** — no automatic freeze; awaiting
+>     explicit visual validation before any Freeze phase.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text
