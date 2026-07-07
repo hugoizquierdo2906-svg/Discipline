@@ -1650,7 +1650,10 @@
    (`title`/`description`/`icon`/`action`/`size`/`align`/`className`) ;
    plus de redesign ni de changement d'API sans ADR.
 
-   **OfflineState : Built, non gelé.** Une impossibilité momentanée
+   **OfflineState : GELÉ (validé visuellement 2026-07-07, après une passe
+   de Frozen-review — contenu-only dès l'origine, comme l'ErrorState gelé ;
+   zéro code mort, zéro import/prop inutilisé, aucune duplication interne ;
+   verrouillé tel quel).** Une impossibilité momentanée
    d'accéder au contenu parce que l'APPLICATION N'A PLUS DE CONNEXION
    RÉSEAU — et (généralement) un moyen de réessayer au retour du réseau.
    JAMAIS une erreur serveur, un chargement, une progression, une absence
@@ -1714,9 +1717,9 @@
    (couleur calculée ≠ couleur du corps), le bouton Retry présent/absent,
    les tailles de titre strictement croissantes, l'alignement center vs
    start logique, le recentrage responsive à deux viewports, la direction
-   RTL, et la garantie statique. **Built, non gelé** — aucun freeze
-   automatique ; en attente d'une validation visuelle explicite avant
-   toute phase de Freeze.
+   RTL, et la garantie statique. **GELÉ (2026-07-07)** — API publique
+   verrouillée (`title`/`description`/`icon`/`action`/`size`/`align`/
+   `className`) ; plus de redesign ni de changement d'API sans ADR.
 
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),

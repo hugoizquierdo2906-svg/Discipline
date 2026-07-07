@@ -1872,13 +1872,16 @@
 >     change without an ADR; changes only for an objective bug from here
 >     on.
 >   - **OfflineState — Flat primitive (token system, no glass role),
->     content-only, composes only the frozen Heading + Text. Built, not
->     frozen.**
+>     content-only, composes only the frozen Heading + Text. FROZEN
+>     (visually validated 2026-07-07, after a Frozen-review pass —
+>     content-only from the start, mirroring the frozen ErrorState; no
+>     dead code, no unused imports/props, no internal duplication; locked
+>     unchanged).**
 >     ```text
 >     Flat primitives (token system, no glass role)
 >     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
 >     → OfflineState (frozen Heading + Text; caller's Icon/Button verbatim; text-warning icon tint)
->     Status: Built (not frozen)
+>     Status: FROZEN
 >     ```
 >     A momentary inability to reach content because the APPLICATION HAS NO
 >     NETWORK CONNECTION — and (usually) a way to retry once it returns.
@@ -1941,9 +1944,10 @@
 >     warning-tinted icon (computed color ≠ body color), Retry present/
 >     absent, strictly increasing title sizes, center vs logical-start
 >     alignment, responsive centering at two viewports, RTL direction, and
->     the static (no animation) guarantee. **Built, not frozen** — no
->     automatic freeze; awaiting explicit visual validation before any
->     Freeze phase.
+>     the static (no animation) guarantee. **FROZEN (2026-07-07)** —
+>     public API locked (`title`/`description`/`icon`/`action`/`size`/
+>     `align`/`className`); no further redesign or API change without an
+>     ADR; changes only for an objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **OfflineState — frozen (flat primitive, content-only).** Frozen-review
+  pass found no dead code, no unused imports/props, and no internal
+  duplication; the component was content-only from the start (mirroring
+  the frozen ErrorState), so the freeze locks it unchanged. No functional,
+  visual or architectural change again except an objective bug; the public
+  API (`title`/`description`/`icon`/`action`/`size`/`align`/`className`)
+  is locked — any future change requires an ADR.
+
 - **ErrorState — frozen (flat primitive, content-only).** Frozen-review
   pass found no dead code, no unused imports/props, and no internal
   duplication (the `sizeConfig` shape it shares with the frozen EmptyState
