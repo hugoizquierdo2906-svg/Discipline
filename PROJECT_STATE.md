@@ -1170,13 +1170,21 @@
 >     further redesign; changes only for an objective bug from here on.
 >   - **Tabs — Navigation, a FLAT primitive with NO Material Role, the
 >     first component this session to compose a real Radix primitive
->     directly (`@radix-ui/react-tabs`). Built (not frozen).**
+>     directly (`@radix-ui/react-tabs`). FROZEN (visually validated
+>     2026-07-06, after a Frozen-review pass).** No functional, visual or
+>     architectural change again — objective bugs only. Frozen-review
+>     finding: `orientation` was destructured in the Root and re-passed
+>     unchanged — dead extraction, since the orientation-aware styling
+>     reads Radix's own runtime `data-orientation` attribute via CSS, not
+>     this JS variable. Removed; `orientation` now flows through
+>     `{...props}` like every other native prop. Zero behavioral change
+>     (re-verified: full proof green, build unchanged at 10 kB).
 >     ```text
 >     Navigation (flat, no Material Role) — composite ARIA widget sub-family
 >     (distinct from Breadcrumb/Pagination's plain-list sub-family)
 >     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
 >     → Tabs (@radix-ui/react-tabs + Typography tokens)
->     Status: Built (non frozen)
+>     Status: FROZEN
 >     ```
 >     Switch between a small, named, always-visible set of alternate
 >     content views for the SAME record, without leaving the page: "which
@@ -1276,7 +1284,10 @@
 >     automatic vs manual activation (Enter required in manual), Home/End,
 >     Arrow-key loop, vertical Arrow Up/Down, disabled trigger skipped by
 >     keyboard, forceMount panel present-but-hidden in the DOM, and RTL
->     Arrow-key direction. `'use client'`.
+>     Arrow-key direction. `'use client'`. **FROZEN (2026-07-06)** — public
+>     API locked (`Tabs`/`Tabs.List`/`Tabs.Trigger`/`Tabs.Content` + their
+>     native Radix props); no further redesign or API change without an
+>     ADR; changes only for an objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

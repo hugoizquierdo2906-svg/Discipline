@@ -1009,7 +1009,14 @@
    contrôlé (comme le précédent contrôlé-seulement de MUI). Preuve :
    `/dev/pagination`. **GELÉ (2026-07-06)** — plus de redesign, changements
    seulement pour un bug objectif désormais.
-   **Tabs : Built, non gelé** — bascule entre un petit ensemble nommé et
+   **Tabs : GELÉ (validé visuellement 2026-07-06, après une passe de
+   revue Frozen).** Une extraction morte trouvée et supprimée :
+   `orientation` était déstructuré puis repassé sans changement — le
+   style lit le `data-orientation` d'exécution de Radix via CSS, pas
+   cette variable JS ; passe désormais par `{...props}` comme toute autre
+   prop native, zéro changement comportemental (re-vérifié : proof
+   entièrement vert, build inchangé à 10 kB). Plus de redesign ni de
+   changement d'API sans ADR — bascule entre un petit ensemble nommé et
    toujours visible de vues de contenu alternatives pour LE MÊME
    enregistrement, sans quitter la page : « quelle facette de CECI je
    regarde » — jamais « où suis-je dans la hiérarchie » (Breadcrumb),
@@ -1097,7 +1104,9 @@
    manuelle (Enter requis en manuel), Home/End, boucle des flèches,
    Flèches Haut/Bas en vertical, trigger disabled sauté au clavier, panel
    forceMount présent-mais-caché dans le DOM, et direction des flèches en
-   RTL. À geler sur validation visuelle explicite.
+   RTL. **GELÉ (2026-07-06)** — API publique verrouillée
+   (`Tabs`/`Tabs.List`/`Tabs.Trigger`/`Tabs.Content` + leurs props Radix
+   natives) ; plus de redesign ni de changement d'API sans ADR.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

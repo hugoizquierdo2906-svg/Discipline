@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Tabs — frozen (Navigation, flat primitive, composite ARIA widget).**
+  Frozen-review pass found and removed one dead extraction: `orientation`
+  was destructured in the Root and re-passed unchanged, even though the
+  orientation-aware styling reads Radix's own runtime `data-orientation`
+  attribute via CSS, never that JS variable. Now flows through
+  `{...props}` like every other native prop — zero behavioral change,
+  re-verified with a full green proof run and an unchanged 10 kB build.
+  No functional, visual or architectural change again except an
+  objective bug; the public API
+  (`Tabs`/`Tabs.List`/`Tabs.Trigger`/`Tabs.Content` + their native Radix
+  props) is locked — any future change requires an ADR.
+
 - **Pagination — frozen (Navigation, flat primitive).** No functional,
   visual or architectural change again except an objective bug.
 

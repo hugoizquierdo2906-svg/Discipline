@@ -95,15 +95,11 @@ export type TabsProps = React.ComponentPropsWithoutRef<
 const TabsRoot = forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
   TabsProps
->(function Tabs(
-  { className, activationMode = 'manual', orientation, ...props },
-  ref,
-) {
+>(function Tabs({ className, activationMode = 'manual', ...props }, ref) {
   return (
     <TabsPrimitive.Root
       ref={ref}
       activationMode={activationMode}
-      orientation={orientation}
       className={cn(
         'flex gap-4',
         'data-[orientation=horizontal]:flex-col',
