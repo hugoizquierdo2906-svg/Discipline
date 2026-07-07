@@ -1218,6 +1218,74 @@
    `completed`/`loading`/`disabled`/`responsive`/`className`) ; plus de
    redesign ni de changement d'API sans ADR.
 
+   **Progress : Built, non gelé.** Reconstruit à partir d'une implémentation
+   pré-méthodologie (jamais documentée individuellement, noyée dans la ligne
+   fourre-tout des primitifs plats) vers le processus complet d'analyse/
+   construction/preuve. La fraction CONNUE de complétion (0 → max) d'UNE
+   opération continue et unidimensionnelle en cours — jamais des étapes
+   nommées (Stepper), jamais un placeholder de contenu inconnu (Skeleton),
+   jamais une attente purement indéterminée sans aucune fraction (Spinner),
+   jamais une présentation circulaire (Progress Ring — la même sémantique en
+   SVG, un choix de géométrie, pas ce composant : MUI/Chakra/Radix livrent
+   Linear et Circular comme deux composants SÉPARÉS, jamais un `variant`,
+   car leur géométrie — largeur vs stroke-dasharray — est du code
+   fondamentalement différent ; Progress Ring sera un futur frère séparé,
+   jamais un mode ici), pas une Timeline (un historique en lecture seule
+   d'événements PASSÉS qui ne progresse pas lui-même), pas un Badge (une
+   étiquette statique, aucune piste, aucune valeur qui évolue), pas un
+   Counter/Gauge/Meter/Chart/Status (un chiffre brut sans piste ; une
+   lecture analogique/à seuils permanente sans début-fin ; un état actuel
+   borné affiché indéfiniment ; une visualisation multi-points/multi-
+   dimensionnelle ; une pastille d'état discret instantané — aucun ne
+   représente une fraction continue, terminale et mesurée). Compose
+   `@radix-ui/react-progress` DIRECTEMENT (déjà une dépendance exact-pinned) :
+   `role="progressbar"`, `aria-valuemin`/`aria-valuemax`, `aria-valuenow`
+   défini pour une valeur numérique et OMIS entièrement pour `indeterminate`
+   (convention propre à Radix, vérifiée : `aria-valuenow` est absent du DOM
+   en mode indéterminé), `getValueLabel` défini par défaut ici pour calculer
+   `aria-valuetext` en cohérence avec la légende visible. Les changements de
+   valeur déterminée sont un changement de `width` INSTANTANÉ — zéro
+   transition/animation ; `indeterminate` reprend tel quel le
+   `animate-pulse motion-reduce:animate-none` du Skeleton gelé (l'unique
+   exception non décorative et fonctionnellement nécessaire — signaler
+   « activité en cours, durée inconnue », le même raisonnement qui couvre
+   déjà le `animate-spin` du Spinner gelé), gelé (aucune animation) quand
+   `disabled` (vérifié : `animation-name: none`). La piste est une ligne
+   `flex` dont l'indicateur, dimensionné par `width`, est un simple élément
+   flex — jamais un div positionné/transformé — pour qu'il s'ancre au bord
+   INLINE-START, que flexbox inverse nativement sous `dir="rtl"` (vérifié :
+   le bord droit du remplissage touche le bord droit de la piste en RTL, en
+   s'étendant vers la gauche). `disabled` n'a aucune surface interactive à
+   désactiver (Progress est en lecture seule, rien n'est focalisable) — il
+   ne fait qu'assombrir la piste/légende, geler le pulse indéterminé, et
+   poser `aria-disabled`. La légende optionnelle (`label` personnalisé, ou
+   le `{percent}%` automatique via `showLabel`) n'ajoute un `<div>`
+   enveloppant QUE lorsqu'une légende est réellement rendue — sans légende
+   (l'usage exact déjà existant du Toast gelé et du FileInput gelé : `value`/
+   `aria-label`/`className` seulement), le DOM reste identique en profondeur
+   à l'ancien, donc `className` continue d'atterrir sur la piste elle-même
+   (le `h-1` du Toast, le `flex-1` du FileInput, tous deux vérifiés
+   inchangés). Un seul fichier non gelé modifié en conséquence directe de
+   l'abandon du mode `variant="circular"` : la page de galerie générique
+   (`src/app/(dev)/dev/components/showcase.tsx`, pas un composant tracké/
+   gelé) a perdu sa ligne de démo circulaire. grep zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition en dehors de la prose des
+   commentaires ; l'unique occurrence `animate-pulse` est l'exception
+   documentée et déjà précédentée ; zéro appel `.focus()` littéral. API :
+   `value` · `max` · `indeterminate` · `size` (sm/md/lg) · `showLabel` ·
+   `label` · `color` (accent/success/warning/error/info) · `disabled` ·
+   `className`. ZÉRO fichier gelé modifié. Preuve : `/dev/progress` — basic
+   · determinate · indeterminate · custom max · small/medium/large · label
+   · percentage · disabled · loading screen · responsive · RTL ; captures
+   desktop/tablet/mobile + RTL ; assertions programmatiques pour role/
+   aria-valuemin/aria-valuemax/aria-valuenow/aria-valuetext, l'absence
+   d'aria-valuenow en indéterminé, le max personnalisé, les hauteurs de
+   taille strictement croissantes, la légende personnalisée vs le
+   pourcentage automatique, le `aria-disabled` + pulse gelé en disabled, la
+   largeur responsive suivant le conteneur, et l'ancrage RTL du
+   remplissage. **Built, non gelé** — aucun freeze automatique ; en attente
+   d'une validation visuelle explicite avant toute phase de Freeze.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

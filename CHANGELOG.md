@@ -197,6 +197,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Progress — a flat primitive (token system, no glass role), sibling of
+  Spinner/Skeleton/Badge, rebuilt onto the full analysis/build/proof
+  process from a pre-methodology implementation (Built, not frozen).** The
+  known fraction of completion (0 → max) of one continuous, unidimensional
+  operation happening right now — never named steps (Stepper), never a
+  placeholder for unknown content (Skeleton), never a pure indeterminate
+  wait with no fraction at all (Spinner), never a circular presentation
+  (Progress Ring — the identical semantics in SVG form, a geometry choice,
+  not this component; a future, separate sibling, never a `variant` here,
+  matching how MUI/Chakra/Radix all ship Linear and Circular as two
+  separate components), not a Timeline, Badge, Counter, Gauge, Meter,
+  Chart, or Status indicator (none represent a continuous, terminal,
+  measured fraction with a known denominator). Composes
+  `@radix-ui/react-progress` directly: `role="progressbar"`,
+  `aria-valuemin`/`aria-valuemax`, `aria-valuenow` set for a numeric value
+  and never present for `indeterminate`, `getValueLabel` defaulted to
+  compute `aria-valuetext` matching the visible caption. Determinate value
+  changes are an instant `width` change — zero transition/animation;
+  `indeterminate` reuses the frozen Skeleton's own
+  `animate-pulse motion-reduce:animate-none` verbatim (the one
+  non-decorative, functionally-necessary exception, the same reasoning
+  already covering the frozen Spinner's `animate-spin`), frozen when
+  `disabled`. The track is a `flex` row with the indicator sized by
+  `width` as a plain flex item so it anchors to the inline-start edge,
+  which flexbox flips natively under `dir="rtl"`. The frozen Toast's and
+  frozen FileInput's existing usage (`value`/`aria-label`/`className`
+  only) renders byte-identical to before — zero visual regression. One
+  non-frozen file updated as a direct consequence of dropping the legacy
+  `variant="circular"` mode: the generic dev components gallery lost its
+  circular demo line. API: `value` · `max` · `indeterminate` · `size`
+  (sm/md/lg) · `showLabel` · `label` · `color`
+  (accent/success/warning/error/info) · `disabled` · `className`. Zero
+  frozen files modified. Proof: `/dev/progress`.
+
 - **Stepper — a flat primitive with no Material Role, the plain-list
   sub-family sibling of Breadcrumb/Pagination (Built, not frozen).**
   Progress through a sequence of ordered, semantically different steps of

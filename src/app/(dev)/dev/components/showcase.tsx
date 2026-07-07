@@ -252,9 +252,8 @@ export function Showcase() {
 
         <Block title="Progress">
           <div className="w-64">
-            <Progress value={64} />
+            <Progress value={64} showLabel />
           </div>
-          <Progress variant="circular" value={64} />
         </Block>
 
         <Block title="Alert">
