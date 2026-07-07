@@ -1709,12 +1709,20 @@
 >     further redesign or API change without an ADR; changes only for an
 >     objective bug from here on.
 >   - **EmptyState — Flat primitive (token system, no glass role),
->     composes only the frozen Heading + Text. Built, not frozen.**
+>     composes only the frozen Heading + Text. FROZEN (visually validated
+>     2026-07-07, after a Frozen-review pass).** No functional, visual or
+>     architectural change again — objective bugs only; API changes
+>     require an ADR. Frozen-review finding: the centered description
+>     carried both `items-center` (on the flex-col parent) and a redundant
+>     `mx-auto` on the `<p>` — two mechanisms centering the same block.
+>     Removed `mx-auto`; behavior byte-identical (verified: centered
+>     description 0.008px off-center, full proof green, build unchanged at
+>     6.84 kB).
 >     ```text
 >     Flat primitives (token system, no glass role)
 >     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
 >     → EmptyState (frozen Heading + Text; caller's Icon/Button rendered verbatim)
->     Status: Built (not frozen)
+>     Status: FROZEN
 >     ```
 >     A MEANINGFUL absence of content or result, that also points the user
 >     at the next action: "there is deliberately nothing here (yet), and
@@ -1768,8 +1776,10 @@
 >     rendering, icon present/absent, action present/absent, strictly
 >     increasing title sizes, center vs logical-start alignment, responsive
 >     centering at two viewports, RTL direction, and the static (no
->     animation) guarantee. **Built, not frozen** — no automatic freeze;
->     awaiting explicit visual validation before any Freeze phase.
+>     animation) guarantee. **FROZEN (2026-07-07)** — public API locked
+>     (`title`/`description`/`icon`/`action`/`size`/`align`/`className`);
+>     no further redesign or API change without an ADR; changes only for
+>     an objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

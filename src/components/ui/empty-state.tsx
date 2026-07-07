@@ -136,7 +136,7 @@ export function EmptyState({
         <Text
           size={config.description}
           tone="secondary"
-          className={cn(config.measure, centered && 'mx-auto')}
+          className={config.measure}
         >
           {description}
         </Text>

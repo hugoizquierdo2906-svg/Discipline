@@ -1499,7 +1499,15 @@
    `radius`/`circle`/`lines`/`animated`/`className`) ; plus de redesign ni
    de changement d'API sans ADR.
 
-   **EmptyState : Built, non gelé.** Une absence SIGNIFICATIVE de contenu
+   **EmptyState : GELÉ (validé visuellement 2026-07-07, après une passe de
+   Frozen-review).** Plus de changement fonctionnel, visuel ou
+   architectural sauf bug objectif ; changement d'API impossible sans ADR.
+   Constat de la Frozen-review : la description centrée portait à la fois
+   `items-center` (sur le parent flex-col) et un `mx-auto` redondant sur le
+   `<p>` — deux mécanismes centrant le même bloc. `mx-auto` retiré ;
+   comportement identique à l'octet près (vérifié : description centrée à
+   0,008px près, preuve complète au vert, build inchangé à 6,84 kB). Une
+   absence SIGNIFICATIVE de contenu
    ou de résultat, qui oriente aussi l'utilisateur vers la prochaine
    action : « il n'y a délibérément rien ici (encore), et voici quoi
    faire ». JAMAIS un chargement, une erreur bloquante, une notification,
@@ -1552,9 +1560,9 @@
    le rendu titre/description, icône présente/absente, action présente/
    absente, tailles de titre strictement croissantes, alignement center vs
    start logique, recentrage responsive à deux viewports, direction RTL, et
-   la garantie statique (aucune animation). **Built, non gelé** — aucun
-   freeze automatique ; en attente d'une validation visuelle explicite
-   avant toute phase de Freeze.
+   la garantie statique (aucune animation). **GELÉ (2026-07-07)** — API
+   publique verrouillée (`title`/`description`/`icon`/`action`/`size`/
+   `align`/`className`) ; plus de redesign ni de changement d'API sans ADR.
 
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
