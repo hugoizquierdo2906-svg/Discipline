@@ -219,6 +219,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **ErrorState — a flat primitive (token system, no glass role),
+  composing only the frozen Heading + Text (Built, not frozen).** A view
+  or operation that failed to load — the user momentarily cannot proceed,
+  and here is how to recover (typically Retry). Never an absence of data,
+  a loading state, progress, a confirmation, a notification, a denied
+  permission, or a lost connection. Not an EmptyState (a success whose
+  result set is empty, or a pristine first-run — no failure; ErrorState is
+  a failure, recovery is retrying not creating), an Alert (a message
+  layered on a populated view), a Toast (a transient notification), a
+  Spinner/Skeleton/Progress/CircularProgress (in-flight state — ErrorState
+  is the terminal state after the attempt failed), an OfflineState (a
+  narrower network-only sibling), a NoPermission block (the request
+  succeeded, you may not see it), a MaintenanceState (planned downtime), or
+  a bare empty Dashboard/Card/Search (those show an EmptyState in their
+  empty branch — ErrorState is their failed branch). Its families — server
+  error, load failed, not found, network, unknown — are one responsibility
+  wearing different copy/icons. Does not compose Modal/Drawer/Alert/Toast,
+  and deliberately does not compose the frozen EmptyState despite the
+  adjacent layout (distinct responsibilities; EmptyState is frozen;
+  coupling would block ErrorState's own evolution). Composes only the
+  frozen Heading and Text and renders a caller-supplied icon and Retry
+  action verbatim. Its one semantic distinction from EmptyState: the icon
+  is tinted `text-error` (the universal failure signal), matching the
+  frozen Alert's tone+icon precedent. Purely informative and static: no
+  role on the container (the Retry Button keeps its own semantics — no
+  auto-focus, no keyboard trap), zero motion, zero glass, zero transition/
+  animation. `align` uses logical `start`. Sizes sm/md/lg scale the icon,
+  title level, description size and padding together. Responsive with no JS
+  measuring. API: `title` · `description` · `icon` · `action` · `size`
+  (sm/md/lg) · `align` (center/left) · `className`. Zero frozen files
+  modified. Proof: `/dev/error-state`.
+
 - **EmptyState — a flat primitive (token system, no glass role),
   composing only the frozen Heading + Text (Built, not frozen).** A
   meaningful absence of content or result that also points the user at the

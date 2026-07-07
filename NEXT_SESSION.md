@@ -1564,6 +1564,67 @@
    publique verrouillée (`title`/`description`/`icon`/`action`/`size`/
    `align`/`className`) ; plus de redesign ni de changement d'API sans ADR.
 
+   **ErrorState : Built, non gelé.** Une vue ou une opération qui a ÉCHOUÉ
+   au chargement — l'utilisateur ne peut momentanément pas poursuivre, et
+   voici comment récupérer (typiquement Retry). JAMAIS une absence de
+   données, un chargement, une progression, une confirmation, une
+   notification, une permission refusée, ou une perte de connexion. Pas un
+   EmptyState (un SUCCÈS dont le résultat est vide, ou un premier lancement
+   vierge — aucun échec ; ErrorState est un ÉCHEC, la récupération consiste
+   généralement à réessayer, pas à créer), pas un Alert (un message posé
+   SUR une vue peuplée ; ErrorState EST la vue quand la vue elle-même a
+   échoué), pas un Toast (une notification transiente auto-disparaissante ;
+   ErrorState est permanent jusqu'au retry/à la navigation), pas un
+   Spinner/Skeleton/Progress/CircularProgress (activité / placeholder /
+   fraction PENDANT le chargement — ErrorState est l'état terminal APRÈS
+   l'échec), pas un OfflineState (un frère plus étroit, réseau seulement),
+   pas un NoPermission (un BLOCAGE d'autorisation — la requête a réussi,
+   tu n'as juste pas le droit de voir), pas un MaintenanceState (un arrêt
+   planifié de toute l'app avec un ETA — ErrorState est non planifié,
+   local, réessayable), pas un Dashboard/Card/Search vide (ceux-ci
+   montrent un EmptyState dans leur branche vide — ErrorState est leur
+   branche ÉCHOUÉE). Les familles — erreur serveur (5xx), échec de
+   chargement, introuvable (404), erreur réseau temporaire, erreur
+   inconnue — sont UNE seule responsabilité (le contenu attendu n'a pas pu
+   être chargé + un moyen de récupérer) portant des copies/icônes
+   différentes, jamais des composants séparés. Ne compose PAS Modal/
+   Drawer/Alert/Toast, et délibérément NE compose PAS l'EmptyState gelé
+   malgré la mise en page voisine : responsabilités distinctes (échec vs
+   vide), EmptyState est gelé (le coupler bloquerait l'évolution propre
+   d'ErrorState derrière une ADR), et le brief scope la composition aux
+   primitifs directement. Compose uniquement les Heading et Text gelés ;
+   rend un `icon` et une `action` Retry fournis par l'appelant
+   (typiquement l'Icon et le Button gelés) tels quels. Son UNIQUE
+   distinction sémantique vis-à-vis d'EmptyState : l'icône est teintée
+   `text-error` (le signal universel « échec », lisible au premier coup
+   d'œil) plutôt que le tertiaire neutre d'un état vide — un token
+   signifiant et non décoratif, reprenant le précédent ton+icône de
+   l'Alert gelé (vérifié : la couleur calculée de l'icône diffère de la
+   couleur du corps). Purement informatif et STATIQUE : aucun rôle sur le
+   conteneur (le Button Retry optionnel garde sa sémantique native — aucun
+   focus auto, aucun piège clavier), zéro mouvement, zéro glass, zéro
+   transition/animation. `align` utilise le `start` logique pour suivre
+   `dir="rtl"` naturellement (vérifié : `direction: rtl`). Les tailles
+   sm/md/lg mettent à l'échelle l'icône, le niveau de titre (h5/h4/h3), la
+   taille de description et le padding ensemble (vérifié : la taille de
+   police du titre croît strictement). Responsive : `w-full`, se recentre
+   sans mesure JS (vérifié : icône centrée à moins de 2px du centre à
+   1280px et 390px). grep zéro GlassSurface/blur/backdrop-filter/rgba/
+   shadow/transition/animation/animate-/`.focus()` ; zéro TODO/FIXME/
+   `console.*`/import inutilisé. API : `title` · `description` · `icon` ·
+   `action` · `size` (sm/md/lg) · `align` (center/left) · `className`
+   (+ attributs natifs du div). ZÉRO fichier gelé modifié. Preuve :
+   `/dev/error-state` — basic · retry · without action · sm/md/lg ·
+   centered · inline · inside card/table/list · dashboard · server error ·
+   load failed (network) · unknown error · RTL ; captures desktop/tablet/
+   mobile + RTL ; assertions programmatiques pour le rendu titre/
+   description, l'icône teintée d'erreur (couleur calculée ≠ couleur du
+   corps), le bouton Retry présent/absent, les tailles de titre
+   strictement croissantes, l'alignement center vs start logique, le
+   recentrage responsive à deux viewports, la direction RTL, et la
+   garantie statique. **Built, non gelé** — aucun freeze automatique ; en
+   attente d'une validation visuelle explicite avant toute phase de Freeze.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

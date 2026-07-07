@@ -1780,6 +1780,72 @@
 >     (`title`/`description`/`icon`/`action`/`size`/`align`/`className`);
 >     no further redesign or API change without an ADR; changes only for
 >     an objective bug from here on.
+>   - **ErrorState — Flat primitive (token system, no glass role),
+>     composes only the frozen Heading + Text. Built, not frozen.**
+>     ```text
+>     Flat primitives (token system, no glass role)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → ErrorState (frozen Heading + Text; caller's Icon/Button rendered verbatim; text-error icon tint)
+>     Status: Built (not frozen)
+>     ```
+>     A view or operation that FAILED to load — the user momentarily
+>     cannot proceed, and here is how to recover (typically Retry). NEVER
+>     an absence of data, a loading state, progress, a confirmation, a
+>     notification, a denied permission, or a lost connection. Not an
+>     EmptyState (a SUCCESS whose result set is simply empty, or a pristine
+>     first-run — no failure occurred; ErrorState is a FAILURE, recovery is
+>     usually retrying not creating), not an Alert (a message layered ON a
+>     populated view; ErrorState IS the view when the view itself failed),
+>     not a Toast (a transient auto-dismissing notification; ErrorState is
+>     permanent until retry/navigation), not a Spinner/Skeleton/Progress/
+>     CircularProgress (activity / placeholder / a fraction while IN
+>     FLIGHT — ErrorState is the terminal state AFTER the attempt failed),
+>     not an OfflineState (a narrower network-only sibling), not a
+>     NoPermission state (an authorization BLOCK — the request succeeded,
+>     you simply may not see it), not a MaintenanceState (planned whole-app
+>     downtime with an ETA — ErrorState is unplanned, local, retryable),
+>     not a bare empty Dashboard/Card/Search (those show an EmptyState in
+>     their empty branch — ErrorState is their FAILED branch). The
+>     families — server error (5xx), load failed, not found (404),
+>     temporary network error, unknown error — are ONE responsibility
+>     (expected content could not be loaded + a way to recover) wearing
+>     different copy/icons, never separate components. Does NOT compose
+>     Modal/Drawer/Alert/Toast, and deliberately does NOT compose the
+>     frozen EmptyState despite the adjacent layout: distinct
+>     responsibilities (failure vs. empty), EmptyState is frozen (coupling
+>     would block ErrorState's own evolution behind an ADR), and the brief
+>     scopes composition to the primitives directly. Composes only the
+>     frozen Heading and Text; renders a caller-supplied `icon` and Retry
+>     `action` (typically the frozen Icon and Button) verbatim. Its ONE
+>     semantic distinction from EmptyState: the icon is tinted `text-error`
+>     (the universal "failure" signal, read at a glance) rather than the
+>     neutral tertiary of an empty state — a meaningful, non-decorative
+>     token, matching the frozen Alert's own tone+icon precedent (verified:
+>     the icon's computed color differs from the body color). Purely
+>     informative and STATIC: no role on the container (the optional Retry
+>     Button keeps its own native semantics — no auto-focus, no keyboard
+>     trap), zero motion, zero glass, zero transition/animation. `align`
+>     uses logical `start` so a left-aligned state follows `dir="rtl"`
+>     naturally (verified: computed `direction: rtl`). Sizes sm/md/lg scale
+>     the icon, title level (h5/h4/h3), description size and padding
+>     together (verified: title font-size strictly increases). Responsive:
+>     `w-full`, re-centers with no JS measuring (verified: centered icon
+>     within 2px of the container center at 1280px and 390px). grep: zero
+>     `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`/
+>     `animation`/`animate-`/`.focus()` string; zero TODO/FIXME/
+>     `console.*`/unused imports. API: `title` · `description` · `icon` ·
+>     `action` · `size` (sm/md/lg) · `align` (center/left) · `className`
+>     (+ native div attributes). ZERO frozen files modified. Proof:
+>     `/dev/error-state` — basic · retry · without action · sm/md/lg ·
+>     centered · inline · inside card/table/list · dashboard · server
+>     error · load failed (network) · unknown error · RTL; desktop/tablet/
+>     mobile + RTL captures; programmatic assertions for title/description
+>     rendering, the error-tinted icon (computed color ≠ body color), Retry
+>     present/absent, strictly increasing title sizes, center vs
+>     logical-start alignment, responsive centering at two viewports, RTL
+>     direction, and the static (no animation) guarantee. **Built, not
+>     frozen** — no automatic freeze; awaiting explicit visual validation
+>     before any Freeze phase.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text
