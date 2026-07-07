@@ -1564,7 +1564,15 @@
    publique verrouillée (`title`/`description`/`icon`/`action`/`size`/
    `align`/`className`) ; plus de redesign ni de changement d'API sans ADR.
 
-   **ErrorState : Built, non gelé.** Une vue ou une opération qui a ÉCHOUÉ
+   **ErrorState : GELÉ (validé visuellement 2026-07-07, après une passe de
+   Frozen-review et le refactor contenu-only / vraies surfaces glass).**
+   Plus de changement fonctionnel, visuel ou architectural sauf bug
+   objectif ; changement d'API impossible sans ADR. Frozen-review : zéro
+   code mort, zéro import/prop inutilisé, aucune duplication interne (la
+   forme de `sizeConfig` partagée avec l'EmptyState gelé est une
+   similarité inter-composants, non extractible sans ADR) ; le composant
+   était déjà contenu-only, le gel le verrouille tel quel. Une vue ou une
+   opération qui a ÉCHOUÉ
    au chargement — l'utilisateur ne peut momentanément pas poursuivre, et
    voici comment récupérer (typiquement Retry). JAMAIS une absence de
    données, un chargement, une progression, une confirmation, une
@@ -1638,8 +1646,9 @@
    corps), le bouton Retry présent/absent, les tailles de titre
    strictement croissantes, l'alignement center vs start logique, le
    recentrage responsive à deux viewports, la direction RTL, et la
-   garantie statique. **Built, non gelé** — aucun freeze automatique ; en
-   attente d'une validation visuelle explicite avant toute phase de Freeze.
+   garantie statique. **GELÉ (2026-07-07)** — API publique verrouillée
+   (`title`/`description`/`icon`/`action`/`size`/`align`/`className`) ;
+   plus de redesign ni de changement d'API sans ADR.
 
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),

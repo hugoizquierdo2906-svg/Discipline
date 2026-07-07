@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **ErrorState — frozen (flat primitive, content-only).** Frozen-review
+  pass found no dead code, no unused imports/props, and no internal
+  duplication (the `sizeConfig` shape it shares with the frozen EmptyState
+  is a cross-component similarity, not extractable without an ADR); the
+  component was already content-only after the real-glass-surface refactor,
+  so the freeze locks it unchanged. No functional, visual or architectural
+  change again except an objective bug; the public API (`title`/
+  `description`/`icon`/`action`/`size`/`align`/`className`) is locked — any
+  future change requires an ADR.
+
 - **EmptyState — frozen (flat primitive, token system).** Frozen-review
   pass removed one genuine redundancy: the centered description carried
   both `items-center` (on the flex-col parent) and a redundant `mx-auto`

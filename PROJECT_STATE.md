@@ -1781,12 +1781,20 @@
 >     no further redesign or API change without an ADR; changes only for
 >     an objective bug from here on.
 >   - **ErrorState — Flat primitive (token system, no glass role),
->     composes only the frozen Heading + Text. Built, not frozen.**
+>     composes only the frozen Heading + Text. FROZEN (visually validated
+>     2026-07-07, after a Frozen-review pass and the content-only/
+>     real-glass-surface refactor).** No functional, visual or
+>     architectural change again — objective bugs only; API changes
+>     require an ADR. Frozen-review found no dead code, no unused imports/
+>     props, no internal duplication (the sizeConfig shape shared with the
+>     frozen EmptyState is a cross-component similarity, not extractable
+>     without an ADR); the component was already content-only, so the
+>     freeze locks it unchanged.
 >     ```text
 >     Flat primitives (token system, no glass role)
 >     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
 >     → ErrorState (frozen Heading + Text; caller's Icon/Button rendered verbatim; text-error icon tint)
->     Status: Built (not frozen)
+>     Status: FROZEN
 >     ```
 >     A view or operation that FAILED to load — the user momentarily
 >     cannot proceed, and here is how to recover (typically Retry). NEVER
@@ -1858,9 +1866,11 @@
 >     rendering, the error-tinted icon (computed color ≠ body color), Retry
 >     present/absent, strictly increasing title sizes, center vs
 >     logical-start alignment, responsive centering at two viewports, RTL
->     direction, and the static (no animation) guarantee. **Built, not
->     frozen** — no automatic freeze; awaiting explicit visual validation
->     before any Freeze phase.
+>     direction, and the static (no animation) guarantee. **FROZEN
+>     (2026-07-07)** — public API locked (`title`/`description`/`icon`/
+>     `action`/`size`/`align`/`className`); no further redesign or API
+>     change without an ADR; changes only for an objective bug from here
+>     on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text
