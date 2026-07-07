@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Stepper — frozen (Navigation, flat primitive, plain-list sub-family).**
+  Frozen-review pass found and fixed one genuine layout bug (not
+  cosmetic): the horizontal connector row nested the full label block,
+  not just the indicator, as a flex sibling of the two `flex-1`
+  connectors — with a long, multi-line label its content width dominated
+  the row and collapsed both connectors to ~3px regardless of the step
+  column's actual width (measured via `getBoundingClientRect`: 0–4px
+  before the fix, 85px after, in the "Long labels" demo at 1280px). Fixed
+  by restructuring the row to wrap only the indicator, with the label
+  rendered as a separate full-width row beneath it inside the same
+  button/span — re-verified visually and via measurement, full proof
+  re-run green, build unchanged at 5.49 kB. The `loading` state's design
+  was also reviewed and its justification written into the component's
+  own doc comment: advancing from the current step is almost always
+  gated on an async call the Stepper never owns (the consuming Wizard
+  does), so `loading` freezes every step, not only the current one, while
+  placing transition-in-flight feedback on the current step's own circle
+  via the frozen Spinner — mirroring the frozen Pagination's own
+  `loading`. No functional, visual or architectural change again except
+  an objective bug; the public API (`currentStep`/`steps`/`onStepClick`/
+  `orientation`/`clickable`/`completed`/`loading`/`disabled`/
+  `responsive`/`className`) is locked — any future change requires an
+  ADR.
+
 - **Tabs — frozen (Navigation, flat primitive, composite ARIA widget).**
   Frozen-review pass found and removed one dead extraction: `orientation`
   was destructured in the Root and re-passed unchanged, even though the

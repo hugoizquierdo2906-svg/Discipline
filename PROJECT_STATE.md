@@ -1291,13 +1291,36 @@
 >   - **Stepper — Navigation, a FLAT primitive with NO Material Role, the
 >     plain-list sub-family sibling of Breadcrumb/Pagination (native Tab
 >     order, one item marked `aria-current`, NOT the composite-widget
->     sub-family Tabs belongs to). Built, not frozen.**
+>     sub-family Tabs belongs to). FROZEN (visually validated 2026-07-07,
+>     after a Frozen-review pass).** No functional, visual or
+>     architectural change again — objective bugs only. Frozen-review
+>     finding (a genuine layout bug, not cosmetic): the horizontal
+>     connector row nested the FULL label block, not just the indicator,
+>     as a flex sibling of the two `flex-1` connectors — with a long,
+>     multi-line label its content width dominated the row and collapsed
+>     both connectors to ~3px regardless of the step column's actual
+>     width (measured via `getBoundingClientRect`: 0–4px before the fix,
+>     85px after, in the "Long labels" demo at 1280px). Fixed by
+>     restructuring the row to wrap ONLY the indicator, with the label
+>     rendered as a separate full-width row beneath it inside the same
+>     button/span. Re-verified visually (screenshot + measurement) and
+>     via a full green proof re-run, build unchanged at 5.49 kB. The
+>     `loading` state's design was also reviewed and its justification
+>     written into the component's own doc comment: advancing from the
+>     current step is almost always gated on an async call the Stepper
+>     never owns (the consuming Wizard does), so `loading` freezes every
+>     step — not only the current one, since jumping to an already-
+>     completed step mid-submit would be as wrong as jumping ahead — while
+>     placing transition-in-flight feedback on the current step's own
+>     circle via the frozen Spinner, mirroring the frozen Pagination's own
+>     `loading` (disables all controls during a page transition) adapted
+>     to Stepper's shape.
 >     ```text
 >     Navigation (flat, no Material Role) — plain-list sub-family
 >     (Breadcrumb, Pagination, Stepper — native Tab order, aria-current)
 >     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
 >     → Stepper (frozen Icon + frozen Spinner only)
->     Status: Built (not frozen)
+>     Status: FROZEN
 >     ```
 >     Progress through a sequence of ordered, semantically DIFFERENT steps
 >     of ONE task being completed right now (Account → Profile → Payment →
@@ -1374,8 +1397,11 @@
 >     `disabled` + `aria-disabled`, still a real button), loading Spinner,
 >     horizontal/vertical `flex-direction`, native Tab+Enter keyboard
 >     activation, responsive breakpoint switch, and the RTL wrapper.
->     `'use client'`. **Built, not frozen** — no automatic freeze; awaiting
->     explicit visual validation before any Freeze phase.
+>     `'use client'`. **FROZEN (2026-07-07)** — public API locked
+>     (`currentStep`/`steps`/`onStepClick`/`orientation`/`clickable`/
+>     `completed`/`loading`/`disabled`/`responsive`/`className`); no
+>     further redesign or API change without an ADR; changes only for an
+>     objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

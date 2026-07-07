@@ -82,6 +82,21 @@ import { Spinner } from './spinner'
  * implements). Future consumers: a Wizard (composes Stepper as its
  * progress indicator, owns content/validation/flow), onboarding, client
  * creation, program builder — any multi-step flow.
+ *
+ * `loading` justification: advancing FROM the current step in a real flow
+ * (e.g. submitting Payment before Review can be shown) is almost always
+ * gated on an async call the Stepper itself never owns or awaits — the
+ * consuming Wizard does. `loading` is the one signal a Wizard needs to
+ * freeze the WHOLE indicator (every step, not only the current one,
+ * becomes non-interactive — jumping to an already-completed step mid-
+ * submit would be as wrong as jumping ahead) while placing the transition-
+ * in-flight feedback where the user is already looking: the current
+ * step's own circle, via the frozen Spinner, replacing its number/icon
+ * for that instant. This mirrors the frozen Pagination's own `loading`
+ * (disables all controls while a page transition is in flight) adapted to
+ * Stepper's shape — Pagination appends a standalone Spinner because it has
+ * no single "current" focal element to reuse; Stepper's current-step
+ * circle already IS that element.
  */
 
 export interface StepperStep {
@@ -279,45 +294,54 @@ export const Stepper = forwardRef<HTMLElement, StepperProps>(function Stepper(
     }
 
     if (layout === 'horizontal') {
+      // The connector row wraps ONLY the indicator (never the label) — the
+      // two `flex-1` connectors must divide the FULL li width between
+      // themselves and the fixed-size circle alone. Nesting the (often
+      // long, multi-line) label inside this same row would give the label's
+      // content width priority over the connectors, collapsing both toward
+      // zero regardless of how wide the step column actually is.
+      const connectorRow = (
+        <span className="flex w-full items-center">
+          <span
+            aria-hidden="true"
+            className={cn('h-px flex-1', beforeConnectorClass)}
+          />
+          {indicator}
+          <span
+            aria-hidden="true"
+            className={cn('h-px flex-1', afterConnectorClass)}
+          />
+        </span>
+      )
       return (
         <li key={step.id} className="flex flex-1 flex-col items-center gap-2">
-          <span className="flex w-full items-center">
+          {isInteractive ? (
+            <button
+              type="button"
+              {...sharedA11yProps}
+              disabled={stepDisabled}
+              onClick={() => onStepClick?.(index, step)}
+              className={cn(
+                'flex w-full flex-col items-center gap-2 rounded-md outline-none',
+                'focus-visible:ring-2 focus-visible:ring-accent-accessible',
+                stepDisabled && 'pointer-events-none opacity-40',
+              )}
+            >
+              {connectorRow}
+              {labelBlock}
+            </button>
+          ) : (
             <span
-              aria-hidden="true"
-              className={cn('h-px flex-1', beforeConnectorClass)}
-            />
-            {isInteractive ? (
-              <button
-                type="button"
-                {...sharedA11yProps}
-                disabled={stepDisabled}
-                onClick={() => onStepClick?.(index, step)}
-                className={cn(
-                  'flex flex-col items-center gap-2 rounded-md outline-none',
-                  'focus-visible:ring-2 focus-visible:ring-accent-accessible',
-                  stepDisabled && 'pointer-events-none opacity-40',
-                )}
-              >
-                {indicator}
-                {labelBlock}
-              </button>
-            ) : (
-              <span
-                {...sharedA11yProps}
-                className={cn(
-                  'flex flex-col items-center gap-2',
-                  stepDisabled && 'opacity-40',
-                )}
-              >
-                {indicator}
-                {labelBlock}
-              </span>
-            )}
-            <span
-              aria-hidden="true"
-              className={cn('h-px flex-1', afterConnectorClass)}
-            />
-          </span>
+              {...sharedA11yProps}
+              className={cn(
+                'flex w-full flex-col items-center gap-2',
+                stepDisabled && 'opacity-40',
+              )}
+            >
+              {connectorRow}
+              {labelBlock}
+            </span>
+          )}
         </li>
       )
     }

@@ -1108,7 +1108,32 @@
    (`Tabs`/`Tabs.List`/`Tabs.Trigger`/`Tabs.Content` + leurs props Radix
    natives) ; plus de redesign ni de changement d'API sans ADR.
 
-   **Stepper : Built, non gelé.** Progression à travers une séquence
+   **Stepper : GELÉ (validé visuellement 2026-07-07, après une passe de
+   Frozen-review).** Plus de changement fonctionnel, visuel ou
+   architectural sauf bug objectif ; changement d'API impossible sans ADR.
+   Constat de la Frozen-review (un vrai bug de layout, pas cosmétique) :
+   la ligne de connecteurs horizontale imbriquait le label COMPLET (pas
+   seulement l'indicateur) comme frère flex des deux connecteurs
+   `flex-1` — avec un label long et multi-lignes, sa largeur de contenu
+   dominait la ligne et écrasait les deux connecteurs à ~3px quelle que
+   soit la largeur réelle de la colonne d'étape (mesuré via
+   `getBoundingClientRect` : 0–4px avant le correctif, 85px après, dans
+   la démo « Long labels » à 1280px). Corrigé en restructurant la ligne
+   pour n'entourer QUE l'indicateur, le label étant rendu séparément sur
+   une ligne pleine largeur juste en dessous, à l'intérieur du même
+   bouton/span. Revérifié visuellement (capture + mesure) et via une
+   preuve complète repassée au vert, build inchangé à 5,49 kB. La
+   conception de l'état `loading` a aussi été relue et sa justification
+   consignée dans le commentaire du composant : avancer depuis l'étape
+   actuelle est presque toujours conditionné à un appel asynchrone que le
+   Stepper ne possède jamais (c'est le Wizard consommateur qui l'a), donc
+   `loading` gèle TOUTES les étapes — pas seulement l'actuelle, car sauter
+   vers une étape déjà complétée en pleine soumission serait aussi faux
+   que sauter en avant — tout en plaçant le retour visuel de transition
+   en cours sur le cercle de l'étape actuelle elle-même via le Spinner
+   gelé, reprenant le `loading` de Pagination gelé (désactive tous les
+   contrôles pendant une transition de page) adapté à la forme du
+   Stepper. Progression à travers une séquence
    ordonnée d'étapes sémantiquement DIFFÉRENTES d'UNE seule tâche en cours
    (Account → Profile → Payment → Review) — jamais quelle facette du même
    enregistrement (Tabs), jamais une hiérarchie de navigation (Breadcrumb),
@@ -1188,9 +1213,10 @@
    natif + `aria-disabled`, toujours un vrai bouton), le Spinner de
    chargement, le `flex-direction` horizontal/vertical, l'activation
    clavier Tab+Enter native, le changement de breakpoint responsive, et
-   le wrapper RTL. **Built, non gelé** — aucun freeze automatique ;
-   en attente d'une validation visuelle explicite avant toute phase de
-   Freeze.
+   le wrapper RTL. **GELÉ (2026-07-07)** — API publique verrouillée
+   (`currentStep`/`steps`/`onStepClick`/`orientation`/`clickable`/
+   `completed`/`loading`/`disabled`/`responsive`/`className`) ; plus de
+   redesign ni de changement d'API sans ADR.
 
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
