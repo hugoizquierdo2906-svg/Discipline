@@ -1871,6 +1871,79 @@
 >     `action`/`size`/`align`/`className`); no further redesign or API
 >     change without an ADR; changes only for an objective bug from here
 >     on.
+>   - **OfflineState — Flat primitive (token system, no glass role),
+>     content-only, composes only the frozen Heading + Text. Built, not
+>     frozen.**
+>     ```text
+>     Flat primitives (token system, no glass role)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → OfflineState (frozen Heading + Text; caller's Icon/Button verbatim; text-warning icon tint)
+>     Status: Built (not frozen)
+>     ```
+>     A momentary inability to reach content because the APPLICATION HAS NO
+>     NETWORK CONNECTION — and (usually) a way to retry once it returns.
+>     NEVER a server error, a loading state, progress, an absence of data,
+>     a denied permission, maintenance, or an unknown failure. Not an
+>     ErrorState (a FAILURE — the request actually reached and failed;
+>     OfflineState is the opposite: the request never left the device for
+>     lack of connection — a different cause, a different action:
+>     "reconnect" not "our servers are broken"), not an EmptyState
+>     (a success with no data / a first-run — here nothing loaded BECAUSE
+>     there is no network), not a Spinner/Skeleton/Progress/
+>     CircularProgress (in-flight activity — OfflineState is terminal:
+>     nothing can happen until connectivity returns), not an Alert (a
+>     message on a working view; OfflineState IS the view when the region
+>     can't load), not a Toast (a transient "you went offline" ping —
+>     momentary), not a NoPermission (an authorization BLOCK — the network
+>     is fine, the request succeeded), not a MaintenanceState (planned
+>     server-side downtime with an ETA — here it's the user's OWN
+>     connectivity), not a Retry Banner (a thin strip — OfflineState is the
+>     full-region take), not a FullscreenOverlay (a SURFACE that may
+>     CONTAIN one). Variants (connection lost, airplane mode, no
+>     connection, reconnection pending) collapse to ONE responsibility:
+>     absence of connectivity. **A CONTENT primitive, NOT a surface — the
+>     exact frozen-ErrorState contract: draws no background/shadow/radius/
+>     border/glass/material/Card; all material comes from the parent
+>     surface it fills (GlassCard/GlassPanel/Drawer/Modal/
+>     FullscreenOverlay/Page/Dashboard). Surfaces are architectural
+>     (Liquid Glass), states are content — a state never carries its own
+>     surface. Root is a transparent flex column (spacing/alignment tokens
+>     only). Demos place it inside REAL glass surfaces (GlassCard/
+>     GlassPanel/a real Drawer/a real Modal-Dialog/a real
+>     FullscreenOverlay) on the shared capture wallpaper.** Does NOT
+>     compose Modal/Drawer/Alert/Toast, and deliberately does NOT compose
+>     the frozen ErrorState despite the identical layout (distinct
+>     responsibilities: no-network vs. failure; ErrorState frozen —
+>     coupling would block its evolution behind an ADR). Composes only the
+>     frozen Heading and Text; renders a caller-supplied `icon` and Retry
+>     `action` verbatim. Icon tinted `text-warning` (amber) — a deliberate
+>     three-tier semantic: EmptyState neutral (nothing here) → OfflineState
+>     amber (no network) → ErrorState red (failure), read at a glance
+>     (verified: icon color ≠ body color, and ≠ ErrorState's red). Purely
+>     informative and STATIC: no role on the container (Retry Button keeps
+>     its native semantics — no auto-focus, no keyboard trap), zero motion,
+>     zero glass, zero transition/animation. `align` uses logical `start`
+>     (verified: `direction: rtl`). Sizes sm/md/lg scale together
+>     (verified: title font-size strictly increases). Responsive: `w-full`,
+>     re-centers with no JS measuring (verified: centered icon within 2px
+>     at 1280px and 390px). grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation`/`animate-`/
+>     `.focus()` string; zero TODO/FIXME/`console.*`/unused imports. API:
+>     `title` · `description` · `icon` · `action` · `size` (sm/md/lg) ·
+>     `align` (center/left) · `className` (+ native div attributes). ZERO
+>     frozen files modified. Proof: `/dev/offline-state` (on the capture
+>     wallpaper, every example inside a real GlassCard/GlassPanel/Drawer/
+>     Modal/FullscreenOverlay) — basic · retry · without action · sm/md/lg
+>     · centered (GlassPanel) · inline · inside a real Drawer · inside a
+>     real Dialog · inside a real FullscreenOverlay · dashboard · chat ·
+>     gallery · files · RTL; desktop/tablet/mobile + RTL captures;
+>     programmatic assertions for title/description rendering, the
+>     warning-tinted icon (computed color ≠ body color), Retry present/
+>     absent, strictly increasing title sizes, center vs logical-start
+>     alignment, responsive centering at two viewports, RTL direction, and
+>     the static (no animation) guarantee. **Built, not frozen** — no
+>     automatic freeze; awaiting explicit visual validation before any
+>     Freeze phase.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

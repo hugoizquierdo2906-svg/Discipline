@@ -229,6 +229,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **OfflineState — a flat primitive (token system, no glass role),
+  content-only, composing only the frozen Heading + Text (Built, not
+  frozen).** A momentary inability to reach content because the app has no
+  network connection — and (usually) a way to retry once it returns. Never
+  a server error, a loading state, progress, an absence of data, a denied
+  permission, maintenance, or an unknown failure. Not an ErrorState (a
+  failure — the request reached the server and failed; OfflineState is the
+  opposite, the request never left the device for lack of connection — a
+  different cause and a different action, "reconnect"), an EmptyState
+  (nothing loaded because there is no network, not because the collection
+  is empty), a Spinner/Skeleton/Progress/CircularProgress (in-flight
+  activity), an Alert (a message on a working view), a Toast (a transient
+  ping), a NoPermission block, a MaintenanceState (planned server-side
+  downtime), a Retry Banner (a thin strip), or a FullscreenOverlay (a
+  surface that may contain one). Follows the exact frozen-ErrorState
+  content-only contract: draws no surface of its own (no background,
+  shadow, radius, border, glass or material) — all material comes from the
+  parent Liquid Glass surface it fills; surfaces are architectural and
+  states are content. Deliberately does not compose the frozen ErrorState
+  despite the identical layout (distinct responsibilities; ErrorState is
+  frozen). Composes only the frozen Heading and Text and renders a
+  caller-supplied icon and Retry action verbatim. Its icon is tinted
+  `text-warning` (amber) — a three-tier semantic read at a glance:
+  EmptyState neutral (nothing here) → OfflineState amber (no network) →
+  ErrorState red (failure). Purely informative and static: no role on the
+  container (the Retry Button keeps its own semantics — no auto-focus, no
+  keyboard trap), zero motion, zero glass, zero transition/animation.
+  `align` uses logical `start`. Sizes sm/md/lg scale together. Responsive
+  with no JS measuring. Its demos place it inside real Liquid Glass
+  surfaces (GlassCard/GlassPanel/Drawer/Modal/FullscreenOverlay) on the
+  shared capture wallpaper. API: `title` · `description` · `icon` ·
+  `action` · `size` (sm/md/lg) · `align` (center/left) · `className`. Zero
+  frozen files modified. Proof: `/dev/offline-state`.
+
 - **ErrorState — a flat primitive (token system, no glass role),
   composing only the frozen Heading + Text (Built, not frozen).** A view
   or operation that failed to load — the user momentarily cannot proceed,

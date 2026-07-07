@@ -1650,6 +1650,74 @@
    (`title`/`description`/`icon`/`action`/`size`/`align`/`className`) ;
    plus de redesign ni de changement d'API sans ADR.
 
+   **OfflineState : Built, non gelé.** Une impossibilité momentanée
+   d'accéder au contenu parce que l'APPLICATION N'A PLUS DE CONNEXION
+   RÉSEAU — et (généralement) un moyen de réessayer au retour du réseau.
+   JAMAIS une erreur serveur, un chargement, une progression, une absence
+   de données, une permission refusée, une maintenance, ou une erreur
+   inconnue. Pas un ErrorState (un ÉCHEC — la requête a réellement atteint
+   le serveur et échoué ; OfflineState est l'inverse : la requête n'a
+   jamais quitté l'appareil faute de connexion — cause différente, action
+   différente : « se reconnecter », pas « nos serveurs sont cassés »), pas
+   un EmptyState (un succès sans données / un premier lancement — ici rien
+   n'a chargé PARCE QU'il n'y a pas de réseau), pas un Spinner/Skeleton/
+   Progress/CircularProgress (activité en cours — OfflineState est terminal :
+   rien ne peut se produire tant que la connectivité n'est pas revenue),
+   pas un Alert (un message sur une vue qui fonctionne ; OfflineState EST
+   la vue quand la région ne peut pas charger), pas un Toast (un ping
+   transient « vous êtes hors ligne » — momentané), pas un NoPermission
+   (un BLOCAGE d'autorisation — le réseau va bien, la requête a réussi),
+   pas un MaintenanceState (un arrêt planifié côté serveur avec un ETA —
+   ici c'est la connectivité PROPRE de l'utilisateur qui manque), pas un
+   Retry Banner (une fine bande — OfflineState est la version pleine
+   région), pas un FullscreenOverlay (une SURFACE qui peut en CONTENIR
+   un). Les variantes (connexion perdue, mode avion, aucune connexion,
+   reconnexion en attente) se ramènent à UNE responsabilité : l'absence de
+   connectivité. **Un primitif de CONTENU, PAS une surface — le contrat
+   exact de l'ErrorState gelé : ne dessine aucun fond/ombre/radius/
+   bordure/verre/matière/Card ; toute la matière vient de la surface
+   parente (GlassCard/GlassPanel/Drawer/Modal/FullscreenOverlay/Page/
+   Dashboard). Les surfaces sont architecturales (Liquid Glass), les états
+   sont du contenu — un état ne porte jamais sa propre surface. La racine
+   est une colonne flex transparente (tokens d'espacement/alignement
+   uniquement). Les démos le placent dans de VRAIES surfaces glass
+   (GlassCard/GlassPanel/un vrai Drawer/un vrai Modal-Dialog/un vrai
+   FullscreenOverlay) sur le fond d'écran de capture partagé.** Ne compose
+   PAS Modal/Drawer/Alert/Toast, et délibérément NE compose PAS
+   l'ErrorState gelé malgré la mise en page identique (responsabilités
+   distinctes : réseau absent vs échec ; ErrorState gelé — le coupler
+   bloquerait son évolution derrière une ADR). Compose uniquement les
+   Heading et Text gelés ; rend un `icon` et une `action` Retry fournis
+   par l'appelant tels quels. Icône teintée `text-warning` (ambre) — une
+   hiérarchie sémantique à trois niveaux lisible d'un coup d'œil :
+   EmptyState neutre (rien ici) → OfflineState ambre (pas de réseau) →
+   ErrorState rouge (échec) (vérifié : couleur de l'icône ≠ couleur du
+   corps, et ≠ le rouge d'ErrorState). Purement informatif et STATIQUE :
+   aucun rôle sur le conteneur (le Button Retry garde sa sémantique native
+   — aucun focus auto, aucun piège clavier), zéro mouvement, zéro glass,
+   zéro transition/animation. `align` utilise le `start` logique (vérifié :
+   `direction: rtl`). Les tailles sm/md/lg s'échelonnent ensemble
+   (vérifié : la taille de police du titre croît strictement).
+   Responsive : `w-full`, se recentre sans mesure JS (vérifié : icône
+   centrée à moins de 2px à 1280px et 390px). grep zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition/animation/animate-/`.focus()` ;
+   zéro TODO/FIXME/`console.*`/import inutilisé. API : `title` ·
+   `description` · `icon` · `action` · `size` (sm/md/lg) · `align`
+   (center/left) · `className` (+ attributs natifs du div). ZÉRO fichier
+   gelé modifié. Preuve : `/dev/offline-state` (sur le fond d'écran, chaque
+   exemple dans un vrai GlassCard/GlassPanel/Drawer/Modal/
+   FullscreenOverlay) — basic · retry · without action · sm/md/lg ·
+   centered (GlassPanel) · inline · inside a real Drawer · inside a real
+   Dialog · inside a real FullscreenOverlay · dashboard · chat · gallery ·
+   files · RTL ; captures desktop/tablet/mobile + RTL ; assertions
+   programmatiques pour le rendu titre/description, l'icône teintée warning
+   (couleur calculée ≠ couleur du corps), le bouton Retry présent/absent,
+   les tailles de titre strictement croissantes, l'alignement center vs
+   start logique, le recentrage responsive à deux viewports, la direction
+   RTL, et la garantie statique. **Built, non gelé** — aucun freeze
+   automatique ; en attente d'une validation visuelle explicite avant
+   toute phase de Freeze.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
