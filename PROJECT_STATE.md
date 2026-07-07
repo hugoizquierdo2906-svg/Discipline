@@ -1708,6 +1708,68 @@
 >     `height`/`radius`/`circle`/`lines`/`animated`/`className`); no
 >     further redesign or API change without an ADR; changes only for an
 >     objective bug from here on.
+>   - **EmptyState — Flat primitive (token system, no glass role),
+>     composes only the frozen Heading + Text. Built, not frozen.**
+>     ```text
+>     Flat primitives (token system, no glass role)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → EmptyState (frozen Heading + Text; caller's Icon/Button rendered verbatim)
+>     Status: Built (not frozen)
+>     ```
+>     A MEANINGFUL absence of content or result, that also points the user
+>     at the next action: "there is deliberately nothing here (yet), and
+>     here is what to do about it." NEVER a loading state, a blocking
+>     error, a notification, or progress. Not an Alert (a message ABOUT
+>     existing content — a strip layered onto a populated view; EmptyState
+>     IS the view when there is no content), not a Toast (a transient
+>     auto-dismissing notification — EmptyState is permanent for as long
+>     as the region stays empty), not a Skeleton (a placeholder for
+>     content that IS coming, milliseconds away — EmptyState is the
+>     resolved, final answer that nothing is there), not a Spinner/
+>     Progress/CircularProgress (activity / a known fraction in flight —
+>     EmptyState is the opposite: the task is done and its result is
+>     empty), not an ErrorState (a FAILURE, often retryable — EmptyState
+>     is a SUCCESS whose result set happens to be empty, or a pristine
+>     first-run), not an OfflineState (a connectivity failure, a kind of
+>     ErrorState), not a NoPermission state (an authorization BLOCK — the
+>     content exists but you may not see it), not a Card (a container for
+>     content that exists — EmptyState is what a Card shows INSTEAD of
+>     content), not a bare empty Table/List/Dashboard/Search result (those
+>     are the CONTEXTS that render an EmptyState in their empty branch —
+>     EmptyState is the reusable body they share), not placeholder text
+>     (fake filler — EmptyState is honest, purpose-built copy). The many
+>     families (no results, no data, no clients, no sessions, no programs,
+>     no notifications, no conversations, first-run) are ONE
+>     responsibility wearing different copy/icons — content variations a
+>     consumer passes in, never separate components. Does NOT compose
+>     Modal/Drawer/Card/Alert (it is content those may contain, never the
+>     reverse). Composes only the frozen Heading and Text; renders a
+>     caller-supplied `icon` and `action` node (typically the frozen Icon
+>     and Button) verbatim — no icon/button logic of its own. Purely
+>     informative and STATIC: no role on the container (the optional
+>     `action` Button keeps its own semantics), zero motion, zero glass,
+>     zero transition/animation. `align` uses logical `start` so a
+>     left-aligned state follows `dir="rtl"` naturally with no directional
+>     code (verified: computed `direction: rtl`, left-aligned icon hugs
+>     the start edge). Sizes sm/md/lg scale the icon, title level (h5/h4/
+>     h3), description size and padding together (verified: title
+>     font-size strictly increases). Responsive: `w-full`, content
+>     re-centers with no JS measuring (verified: the centered icon stays
+>     within 2px of the container center at 1280px and 390px). grep: zero
+>     `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`/
+>     `animation`/`animate-`/`.focus()` string; zero TODO/FIXME/
+>     `console.*`/unused imports. API: `title` · `description` · `icon` ·
+>     `action` · `size` (sm/md/lg) · `align` (center/left) · `className`
+>     (+ native div attributes). ZERO frozen files modified. Proof:
+>     `/dev/empty-state` — basic · icon · with/without action · sm/md/lg ·
+>     centered/left · inside table · inside list · no results · no
+>     sessions · no programs · gallery · first use · RTL; desktop/tablet/
+>     mobile + RTL captures; programmatic assertions for title/description
+>     rendering, icon present/absent, action present/absent, strictly
+>     increasing title sizes, center vs logical-start alignment, responsive
+>     centering at two viewports, RTL direction, and the static (no
+>     animation) guarantee. **Built, not frozen** — no automatic freeze;
+>     awaiting explicit visual validation before any Freeze phase.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

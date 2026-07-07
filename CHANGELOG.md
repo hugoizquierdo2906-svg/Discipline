@@ -208,6 +208,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **EmptyState — a flat primitive (token system, no glass role),
+  composing only the frozen Heading + Text (Built, not frozen).** A
+  meaningful absence of content or result that also points the user at the
+  next action — never a loading state, a blocking error, a notification,
+  or progress. Not an Alert (a message about existing content), a Toast (a
+  transient notification), a Skeleton (a placeholder for content that is
+  coming), a Spinner/Progress/CircularProgress (activity / a known
+  fraction in flight), an ErrorState (a failure — EmptyState is a success
+  whose result set is empty, or a pristine first-run), an OfflineState, a
+  NoPermission block, a Card (a container for content that exists —
+  EmptyState is what it shows instead), or a bare empty Table/List/
+  Dashboard/Search result (those render an EmptyState in their empty
+  branch). Its many families — no results, no clients, no sessions, no
+  programs, no notifications, first-run onboarding — are one
+  responsibility wearing different copy/icons, content variations a
+  consumer passes in. Does not compose Modal/Drawer/Card/Alert; composes
+  only the frozen Heading and Text and renders a caller-supplied `icon`
+  and `action` node verbatim. Purely informative and static: no role on
+  the container (the optional action Button keeps its own semantics), zero
+  motion, zero glass, zero transition/animation. `align` uses logical
+  `start` so a left-aligned state follows `dir="rtl"` naturally. Sizes
+  sm/md/lg scale the icon, title level, description size and padding
+  together. Responsive with no JS measuring. API: `title` · `description`
+  · `icon` · `action` · `size` (sm/md/lg) · `align` (center/left) ·
+  `className`. Zero frozen files modified. Proof: `/dev/empty-state`.
+
 - **Skeleton — a flat primitive (token system, no glass role), rebuilt
   onto the full analysis/build/proof process from a pre-methodology
   implementation (Built, not frozen).** A silent layout placeholder:

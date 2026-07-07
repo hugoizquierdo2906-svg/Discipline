@@ -1499,6 +1499,63 @@
    `radius`/`circle`/`lines`/`animated`/`className`) ; plus de redesign ni
    de changement d'API sans ADR.
 
+   **EmptyState : Built, non gelé.** Une absence SIGNIFICATIVE de contenu
+   ou de résultat, qui oriente aussi l'utilisateur vers la prochaine
+   action : « il n'y a délibérément rien ici (encore), et voici quoi
+   faire ». JAMAIS un chargement, une erreur bloquante, une notification,
+   ou une progression. Pas un Alert (un message SUR du contenu existant —
+   une bande posée sur une vue peuplée ; EmptyState EST la vue quand il n'y
+   a pas de contenu), pas un Toast (une notification transiente
+   auto-disparaissante — EmptyState est permanent tant que la zone reste
+   vide), pas un Skeleton (un placeholder pour du contenu qui ARRIVE, à
+   quelques millisecondes — EmptyState est la réponse finale et résolue que
+   rien n'est là), pas un Spinner/Progress/CircularProgress (activité / une
+   fraction connue en cours — EmptyState est l'inverse : la tâche est
+   terminée et son résultat est vide), pas un ErrorState (un ÉCHEC, souvent
+   réessayable — EmptyState est un SUCCÈS dont le résultat est vide, ou un
+   premier lancement vierge), pas un OfflineState (un échec de
+   connectivité, un type d'ErrorState), pas un NoPermission (un BLOCAGE
+   d'autorisation — le contenu existe mais tu n'as pas le droit de le
+   voir), pas une Card (un conteneur pour du contenu existant — EmptyState
+   est ce qu'une Card affiche À LA PLACE du contenu), pas un Table/List/
+   Dashboard/Search vide (ce sont les CONTEXTES qui rendent un EmptyState
+   dans leur branche vide — EmptyState est le corps réutilisable qu'ils
+   partagent), pas un texte factice (du remplissage — EmptyState est une
+   copie honnête et intentionnelle). Les nombreuses familles (aucun
+   résultat, aucune donnée, aucun client, aucune séance, aucun programme,
+   aucune notification, aucune conversation, premier usage) sont UNE seule
+   responsabilité portant des copies/icônes différentes — des variations de
+   contenu passées par le consommateur, jamais des composants séparés. Ne
+   compose PAS Modal/Drawer/Card/Alert (c'est du contenu que ceux-ci
+   peuvent contenir, jamais l'inverse). Compose uniquement les Heading et
+   Text gelés ; rend un `icon` et un `action` fournis par l'appelant
+   (typiquement l'Icon et le Button gelés) tels quels — aucune logique
+   d'icône/bouton propre. Purement informatif et STATIQUE : aucun rôle sur
+   le conteneur (le Button `action` optionnel garde sa propre sémantique),
+   zéro mouvement, zéro glass, zéro transition/animation. `align` utilise le
+   `start` logique pour qu'un état left suive `dir="rtl"` naturellement sans
+   code directionnel (vérifié : `direction: rtl` calculé, l'icône
+   left-alignée colle au bord de départ). Les tailles sm/md/lg mettent à
+   l'échelle l'icône, le niveau de titre (h5/h4/h3), la taille de
+   description et le padding ensemble (vérifié : la taille de police du
+   titre croît strictement). Responsive : `w-full`, le contenu se recentre
+   sans mesure JS (vérifié : l'icône centrée reste à moins de 2px du centre
+   du conteneur à 1280px et 390px). grep zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition/animation/animate-/`.focus()` ;
+   zéro TODO/FIXME/`console.*`/import inutilisé. API : `title` ·
+   `description` · `icon` · `action` · `size` (sm/md/lg) · `align`
+   (center/left) · `className` (+ attributs natifs du div). ZÉRO fichier
+   gelé modifié. Preuve : `/dev/empty-state` — basic · icon · with/without
+   action · sm/md/lg · centered/left · inside table · inside list · no
+   results · no sessions · no programs · gallery · first use · RTL ;
+   captures desktop/tablet/mobile + RTL ; assertions programmatiques pour
+   le rendu titre/description, icône présente/absente, action présente/
+   absente, tailles de titre strictement croissantes, alignement center vs
+   start logique, recentrage responsive à deux viewports, direction RTL, et
+   la garantie statique (aucune animation). **Built, non gelé** — aucun
+   freeze automatique ; en attente d'une validation visuelle explicite
+   avant toute phase de Freeze.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
