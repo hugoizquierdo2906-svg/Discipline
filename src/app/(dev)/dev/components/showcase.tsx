@@ -219,11 +219,11 @@ export function Showcase() {
           <Spinner size="md" />
           <Spinner size="lg" />
           <div className="flex w-48 flex-col gap-2">
-            <Skeleton shape="text" />
-            <Skeleton shape="text" className="w-2/3" />
-            <Skeleton shape="rect" className="h-16" />
+            <Skeleton />
+            <Skeleton width="66%" />
+            <Skeleton height={64} />
           </div>
-          <Skeleton shape="circle" className="h-12 w-12" />
+          <Skeleton circle width={48} height={48} />
           <div className="flex h-12 items-center gap-4">
             <Separator orientation="vertical" />
             <Separator orientation="vertical" />

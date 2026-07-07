@@ -343,7 +343,7 @@ const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbProps>(
           <BreadcrumbList>
             {Array.from({ length: loadingItems }).flatMap((_, i) => [
               <BreadcrumbItem key={`item-${i}`}>
-                <Skeleton shape="text" className="h-4 w-16" />
+                <Skeleton width={64} height={16} radius="sm" />
               </BreadcrumbItem>,
               i < loadingItems - 1 && (
                 <BreadcrumbSeparator key={`sep-${i}`}>

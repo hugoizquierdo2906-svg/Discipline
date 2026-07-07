@@ -197,6 +197,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Skeleton — a flat primitive (token system, no glass role), rebuilt
+  onto the full analysis/build/proof process from a pre-methodology
+  implementation (Built, not frozen).** A silent layout placeholder:
+  reserves the exact space real content will occupy while it loads, so the
+  page's structure is visible immediately and nothing shifts when data
+  arrives — never signals activity (Spinner), never a known fraction
+  (Progress/CircularProgress). Not Spinner, Progress/CircularProgress,
+  FullscreenOverlay/Drawer loading (both compose Spinner, never Skeleton,
+  since their content is arbitrary), a Loading Overlay (the opposite of
+  Skeleton — hides structure rather than revealing it), placeholder text/
+  "Lorem ipsum" (Skeleton is deliberately abstract, never legible), an
+  empty Card/Empty State (a permanent absence vs. a transient wait), Alert/
+  Toast, a Shimmer Loader (explicitly excluded — a sliding gradient is
+  decorative motion this library does not ship), a Pulse Loader, or a
+  Blur/Image Placeholder (an image-specific technique needing a
+  pre-existing preview). Composes nothing — no Radix, no other component:
+  a `div`, CSS, and tokens only. `circle` forces full/pill rounding;
+  `lines > 1` stacks that many text-line bars with the last line at 60%
+  width, the near-universal skeleton-text convention. `width`/`height`
+  accept a number (px) or any CSS length string, defaulting to a
+  full-width single line (`100%` × `var(--ds-space-4)`) or a
+  `var(--ds-space-7)` square for a bare circle — never a raw literal.
+  `animated` defaults to `true` (`animate-pulse motion-reduce:animate-none`,
+  the one authorized animation). Marked `aria-hidden`, no role, no
+  tabindex. Breadcrumb's single call site was updated as a mechanical,
+  zero-visual-difference consequence of the new API replacing the old
+  `shape` enum (`shape="text" className="h-4 w-16"` → `width={64}
+  height={16} radius="sm"`, the exact same computed pixels). API: `width`
+  · `height` · `radius` (none/sm/md/lg/full) · `circle` · `lines` ·
+  `animated` · `className`. Proof: `/dev/skeleton`.
+
 - **Spinner — a flat primitive (token system, no glass role), rebuilt onto
   the full analysis/build/proof process from a pre-methodology
   implementation (Built, not frozen).** The purely indeterminate activity

@@ -1627,6 +1627,77 @@
 >     frozen spin, intrinsic size independent of viewport, and the RTL
 >     wrapper. **Built, not frozen** — no automatic freeze; awaiting
 >     explicit visual validation before any Freeze phase.
+>   - **Skeleton — Flat primitive (token system, no glass role). Rebuilt
+>     from a pre-methodology implementation onto the full analysis/build/
+>     proof process. Built, not frozen.**
+>     ```text
+>     Flat primitives (token system, no glass role)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → Skeleton (composes nothing — a div, CSS, and tokens only)
+>     Status: Built (not frozen)
+>     ```
+>     A silent LAYOUT placeholder: reserves the exact space real content
+>     will occupy while it loads, so the page's structure is visible
+>     immediately and nothing shifts when data arrives — never signals
+>     activity (Spinner), never a known fraction (Progress/
+>     CircularProgress). Not Spinner (pure activity, reserves no space),
+>     not Progress/CircularProgress (a known fraction of one task), not
+>     FullscreenOverlay/Drawer loading (both compose Spinner, never
+>     Skeleton, since their `children` content is arbitrary — Skeleton
+>     needs to know the final layout in advance), not a Loading Overlay
+>     (blocks/dims a region and shows a Spinner at its center — the
+>     opposite of Skeleton, which reveals structure), not placeholder
+>     text/"Lorem ipsum" (fake, readable text — Skeleton is deliberately
+>     abstract, never a legible word), not an empty Card/Empty State (a
+>     permanent, resolved absence of data — Skeleton signals a transient
+>     "data is arriving"), not Alert/Toast (a permanent message / a
+>     transient notification), not a Shimmer Loader (explicitly EXCLUDED —
+>     a sliding gradient is decorative, never functionally necessary),
+>     not a Pulse Loader (an activity-signaling spinner variant, not this
+>     file's own `animate-pulse`), not a Blur/Image Placeholder (an
+>     image-specific technique needing a pre-existing low-res preview —
+>     narrower than Skeleton). Composes NOTHING — no Radix, no other
+>     component: a `div`, CSS, and tokens only, the simplest primitive in
+>     this library. `circle` forces full/pill rounding regardless of
+>     `radius`; `lines > 1` stacks that many text-line bars with the LAST
+>     line at 60% width (verified: uniform width for all but the last,
+>     ~60% for the last) — the near-universal skeleton-text convention.
+>     `width`/`height` accept a number (px) or any CSS length string;
+>     omitted, they default to a full-width single-text-line shape (`100%`
+>     × `var(--ds-space-4)`, 16px) or a `var(--ds-space-7)` (40px) square
+>     when `circle` is set with neither dimension given — never a raw
+>     literal (ESLint's `no-restricted-syntax` caught and corrected two
+>     initial raw-px defaults during validation). `animated` defaults to
+>     `true` (`animate-pulse motion-reduce:animate-none`, the ONE
+>     authorized animation — verified: `animation-name` is `pulse` when
+>     animated, `none` when not); no shimmer, no gradient, no custom
+>     keyframe. Marked `aria-hidden`, no role, no tabindex (verified) —
+>     represents absent content, never focusable, never announces
+>     progress. One frozen file's single call site updated as a direct,
+>     mechanical, zero-visual-difference consequence of the new API
+>     replacing the old `shape` enum: Breadcrumb's
+>     `<Skeleton shape="text" className="h-4 w-16" />` (64×16px,
+>     `rounded-sm`) became `<Skeleton width={64} height={16} radius="sm" />`
+>     (the exact same computed pixels — verified via a byte-for-byte
+>     visual comparison of Breadcrumb's own loading capture, before and
+>     after). One non-frozen file (`showcase.tsx`, the generic dev
+>     components gallery) updated for the same reason. grep: zero
+>     `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/`shadow`/`transition`
+>     string; the sole `animate-pulse` occurrence is the one authorized
+>     exception; zero literal `.focus()` calls; zero TODO/FIXME/
+>     `console.*`/unused imports. API: `width` · `height` · `radius`
+>     (none/sm/md/lg/full) · `circle` · `lines` · `animated` ·
+>     `className`. ZERO other frozen files modified. Proof:
+>     `/dev/skeleton` — basic · rectangle · circle · text · multiple
+>     lines · avatar · card · table · list · dashboard · article · image
+>     · responsive · RTL · animated · static; desktop/tablet/mobile + RTL
+>     captures; programmatic assertions for aria-hidden/no role/no
+>     tabindex, exact width/height, circle equal dimensions + full
+>     rounding, 4 distinct radius values, multi-line count + the 60%
+>     last-line rule, animated vs static `animation-name`, responsive
+>     width following the container at any viewport, and the RTL
+>     wrapper. **Built, not frozen** — no automatic freeze; awaiting
+>     explicit visual validation before any Freeze phase.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

@@ -1422,6 +1422,73 @@
    automatique ; en attente d'une validation visuelle explicite avant toute
    phase de Freeze.
 
+   **Skeleton : Built, non gelé.** Reconstruit à partir d'une implémentation
+   pré-méthodologie vers le processus complet d'analyse/construction/preuve.
+   Un placeholder de MISE EN PAGE silencieux : réserve l'espace exact que le
+   vrai contenu occupera pendant son chargement, pour que la structure de la
+   page soit visible immédiatement et que rien ne bouge à l'arrivée des
+   données — ne signale jamais une activité (Spinner), jamais une fraction
+   connue (Progress/CircularProgress). Pas Spinner (activité pure, ne
+   réserve aucun espace), pas Progress/CircularProgress (une fraction
+   connue d'une tâche), pas le loading de FullscreenOverlay/Drawer (tous
+   deux composent Spinner, jamais Skeleton, puisque leur contenu `children`
+   est arbitraire — Skeleton doit connaître la mise en page finale à
+   l'avance), pas un Loading Overlay (assombrit une zone et affiche un
+   Spinner en son centre — l'OPPOSÉ de Skeleton, qui révèle la structure),
+   pas un texte factice/« Lorem ipsum » (un texte lisible pouvant être pris
+   pour du vrai contenu — Skeleton est délibérément abstrait, jamais un mot
+   lisible), pas une Card vide/Empty State (une absence PERMANENTE et
+   résolue de données — Skeleton signale une attente TRANSITOIRE), pas
+   Alert/Toast (un message permanent / une notification transiente), pas un
+   Shimmer Loader (un motif explicitement EXCLU — un gradient glissant est
+   un mouvement décoratif, jamais fonctionnellement nécessaire), pas un
+   Pulse Loader (une variante de spinner signalant une activité, à ne pas
+   confondre avec le `animate-pulse` de ce fichier), pas un Blur/Image
+   Placeholder (une technique spécifique aux images nécessitant une
+   miniature préexistante — plus étroite que Skeleton). Ne compose RIEN —
+   aucun Radix, aucun autre composant : un `div`, du CSS, et des tokens
+   uniquement, le primitif le plus simple de cette bibliothèque. `circle`
+   force un arrondi complet/pill quel que soit `radius` ; `lines > 1` empile
+   autant de barres de ligne de texte avec la DERNIÈRE ligne à 60% de
+   largeur (vérifié : largeur uniforme pour toutes sauf la dernière, ~60%
+   pour la dernière) — la convention quasi universelle du texte skeleton.
+   `width`/`height` acceptent un nombre (px) ou toute chaîne de longueur
+   CSS ; omis, ils utilisent par défaut une forme de ligne de texte pleine
+   largeur (`100%` × `var(--ds-space-4)`, 16px) ou un carré
+   `var(--ds-space-7)` (40px) quand `circle` est activé sans dimension
+   fournie — jamais un littéral brut (la règle ESLint `no-restricted-syntax`
+   a détecté et fait corriger deux valeurs par défaut en px brut lors de la
+   validation). `animated` vaut `true` par défaut (`animate-pulse
+   motion-reduce:animate-none`, la SEULE animation autorisée — vérifié :
+   `animation-name` vaut `pulse` quand animé, `none` sinon) ; aucun
+   shimmer, aucun gradient, aucun keyframe personnalisé. Marqué
+   `aria-hidden`, aucun rôle, aucun tabindex (vérifié) — représente un
+   contenu absent, jamais focalisable, n'annonce jamais de progression. Un
+   seul site d'appel d'un fichier gelé mis à jour en conséquence directe,
+   mécanique et sans différence visuelle du nouveau remplacement de
+   l'ancien enum `shape` : le `<Skeleton shape="text" className="h-4
+   w-16" />` de Breadcrumb (64×16px, `rounded-sm`) est devenu `<Skeleton
+   width={64} height={16} radius="sm" />` (exactement les mêmes pixels
+   calculés — vérifié via une comparaison visuelle au pixel près de la
+   capture `loading` de Breadcrumb, avant et après). Un fichier non gelé
+   (`showcase.tsx`, la galerie générique de composants dev) mis à jour pour
+   la même raison. grep zéro GlassSurface/blur/backdrop-filter/rgba/
+   shadow/transition ; l'unique occurrence `animate-pulse` est l'unique
+   exception autorisée ; zéro appel `.focus()` littéral ; zéro TODO/FIXME/
+   `console.*`/import inutilisé. API : `width` · `height` · `radius`
+   (none/sm/md/lg/full) · `circle` · `lines` · `animated` · `className`.
+   ZÉRO autre fichier gelé modifié. Preuve : `/dev/skeleton` — basic ·
+   rectangle · circle · text · multiple lines · avatar · card · table ·
+   list · dashboard · article · image · responsive · RTL · animated ·
+   static ; captures desktop/tablet/mobile + RTL ; assertions
+   programmatiques pour aria-hidden/aucun rôle/aucun tabindex, largeur/
+   hauteur exactes, cercle aux dimensions égales + arrondi complet, 4
+   valeurs de radius distinctes, le compte multi-lignes + la règle des 60%
+   sur la dernière ligne, `animation-name` animé vs statique, la largeur
+   responsive suivant le conteneur à tout viewport, et le wrapper RTL.
+   **Built, non gelé** — aucun freeze automatique ; en attente d'une
+   validation visuelle explicite avant toute phase de Freeze.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
