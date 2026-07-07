@@ -1286,6 +1286,67 @@
    remplissage. **Built, non gelé** — aucun freeze automatique ; en attente
    d'une validation visuelle explicite avant toute phase de Freeze.
 
+   **CircularProgress : Built, non gelé.** La même fraction connue de
+   complétion que Progress, sous forme d'anneau — réservé aux espaces
+   compacts/circulaires (un avatar en cours d'upload, une tuile de sync, un
+   KPI de dashboard) où une barre linéaire n'a pas de place naturelle. Un
+   choix de GÉOMÉTRIE, pas un problème UX différent : le calcul stroke-
+   dasharray/circonférence est du code fondamentalement différent d'un
+   `width`, exactement pourquoi MUI/Chakra/Radix livrent Linear et Circular
+   comme deux composants SÉPARÉS, jamais un `variant` — le même raisonnement
+   déjà consigné lors de l'abandon de l'ancien mode circulaire de Progress.
+   Pas Progress (a besoin d'une largeur horizontale), pas un Spinner
+   (purement indéterminé, aucune fraction réelle), pas un Skeleton (un
+   placeholder de mise en page), pas un Gauge (une lecture analogique
+   permanente sans début-fin), pas un Meter (un état actuel borné affiché
+   indéfiniment), pas un Chart (visualisation multi-points/multi-
+   dimensionnelle), pas un Badge (une étiquette statique), pas un Stepper
+   (des étapes nommées discrètes vs une quantité continue unique), pas une
+   Timeline (un historique en lecture seule d'événements passés), pas un
+   Counter (un chiffre brut, aucune piste), pas un Toast (une surface de
+   notification entière qui PEUT composer ceci en interne, jamais un
+   indicateur concurrent), pas un anneau de progression Avatar (un cas
+   d'usage « anneau autour d'un avatar » compose ce composant AUTOUR d'un
+   Avatar existant — jamais une fonctionnalité qu'Avatar possède lui-même),
+   pas un Donut Chart (plusieurs valeurs de catégories comparées avec une
+   légende — un sujet de dataviz). Compose `@radix-ui/react-progress`
+   DIRECTEMENT pour le même contrat ARIA que Progress : `role="progressbar"`,
+   `aria-valuemin`/`aria-valuemax`, `aria-valuenow` défini pour une valeur
+   numérique et OMIS entièrement pour `indeterminate` (vérifié : absent du
+   DOM), `getValueLabel` défini par défaut sur le pourcentage visible. Deux
+   `<circle>` SVG (piste + indicateur) sont le seul nouveau code visuel —
+   aucune dépendance Icon/Spinner. Les changements de valeur déterminée sont
+   un changement de `strokeDashoffset` INSTANTANÉ — zéro transition/
+   animation ; `indeterminate` reprend tel quel le `animate-spin` du
+   Spinner gelé (pas l'arc à deux keyframes de Material, bespoke), faisant
+   tourner un arc de longueur constante via une enveloppe autour du SVG (le
+   `-rotate-90` statique du SVG lui-même entrerait en conflit avec une
+   animation ciblant la même propriété `transform` sur le même élément),
+   gelé quand `disabled` (vérifié : `animation-name: none`). `label` est un
+   booléen simple (contrairement au couple `label`/`showLabel` de Progress)
+   — un `{percent}%` centré dans l'anneau, supprimé automatiquement en
+   indéterminé. `disabled` n'a aucune surface interactive à désactiver — il
+   ne fait qu'assombrir l'anneau/le label, geler la rotation, et poser
+   `aria-disabled`. Zéro prop additive au-delà de la liste littérale du
+   brief. grep zéro GlassSurface/blur/backdrop-filter/rgba/shadow/transition
+   en dehors de la prose des commentaires ; l'unique occurrence
+   `animate-spin` est l'exception documentée et déjà précédentée ; zéro
+   appel `.focus()` littéral ; zéro TODO/FIXME/`console.*`/import inutilisé.
+   API : `value` · `max` · `indeterminate` · `size` (sm/md/lg) · `color`
+   (accent/success/warning/error/info/neutral) · `label` · `disabled` ·
+   `className`. ZÉRO fichier gelé modifié. Preuve : `/dev/circular-progress`
+   — basic · determinate · indeterminate · sizes · colors · percentage ·
+   custom max · 0%/100% · disabled · loading · responsive · RTL · long
+   values ; captures desktop/tablet/mobile + RTL ; assertions
+   programmatiques pour role/aria-valuemin/aria-valuemax/aria-valuenow/
+   aria-valuetext, l'absence d'aria-valuenow en indéterminé, le max
+   personnalisé, les bords 0%/100%, les diamètres de taille strictement
+   croissants, 6 couleurs de trait distinctes, le `aria-disabled` + spin
+   gelé en disabled, la taille intrinsèque indépendante du viewport, et le
+   calcul de pourcentage sur de grands nombres. **Built, non gelé** — aucun
+   freeze automatique ; en attente d'une validation visuelle explicite
+   avant toute phase de Freeze.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

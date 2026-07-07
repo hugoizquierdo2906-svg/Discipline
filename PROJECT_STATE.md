@@ -1477,6 +1477,74 @@
 >     the container, and the RTL fill anchor. **Built, not frozen** — no
 >     automatic freeze; awaiting explicit visual validation before any
 >     Freeze phase.
+>   - **CircularProgress — Flat primitive (token system, no glass role),
+>     direct sibling of Progress. Built, not frozen.**
+>     ```text
+>     Flat primitives (token system, no glass role)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → CircularProgress (@radix-ui/react-progress, exact-pinned dependency)
+>     Status: Built (not frozen)
+>     ```
+>     The same known fraction of completion as Progress, in a ring —
+>     reserved for compact/circular spaces (an avatar mid-upload, a sync
+>     tile, a dashboard KPI) where a linear bar has no natural home. A
+>     GEOMETRY choice, not a different UX problem: stroke-dasharray/
+>     circumference math is fundamentally different code from a bar's
+>     `width`, exactly why MUI/Chakra/Radix ship Linear and Circular as two
+>     SEPARATE components, never one `variant` — the same reasoning
+>     already recorded when Progress's own legacy circular mode was
+>     dropped. Not Progress (needs horizontal width), not a Spinner
+>     (purely indeterminate, no real fraction), not a Skeleton (a layout
+>     placeholder), not a Gauge (a permanent analog reading with no
+>     start/finish), not a Meter (a bounded current-state reading
+>     displayed indefinitely), not a Chart (multi-point/multi-dimensional
+>     visualization), not a Badge (a static label), not a Stepper (named
+>     discrete steps vs one continuous quantity), not a Timeline (a
+>     read-only record of past events), not a Counter (a plain number, no
+>     track), not a Toast (an entire notification surface that MAY compose
+>     this internally, never a competing indicator), not an Avatar
+>     progress ring (a "ring around an avatar" use case composes this
+>     AROUND an existing Avatar — never a feature Avatar owns itself), not
+>     a Donut Chart (multiple comparative category values with a legend —
+>     a dataviz concern). Composes `@radix-ui/react-progress` DIRECTLY for
+>     the identical ARIA contract Progress relies on: `role="progressbar"`,
+>     `aria-valuemin`/`aria-valuemax`, `aria-valuenow` set for a numeric
+>     value and OMITTED entirely for `indeterminate` (verified: absent
+>     from the DOM), `getValueLabel` defaulted to the visible percentage.
+>     Two SVG `<circle>` elements (track + indicator) are the only new
+>     visual code — no Icon/Spinner dependency. Determinate value changes
+>     are an instant `strokeDashoffset` change — zero transition/
+>     animation; `indeterminate` reuses the frozen Spinner's own
+>     `animate-spin` verbatim (not Material's bespoke two-keyframe
+>     expanding arc), rotating a constant-length arc via a wrapper around
+>     the SVG (the static `-rotate-90` base transform on the SVG itself
+>     would conflict with an animation targeting the same `transform`
+>     property on the same element), frozen when `disabled` (verified:
+>     `animation-name: none`). `label` is a plain boolean (unlike
+>     Progress's ReactNode `label`/`showLabel` pair) — a centered
+>     `{percent}%` inside the ring, suppressed automatically when
+>     `indeterminate`. `disabled` has no interactive surface to disable —
+>     it only dims the ring/label, freezes the spin, and sets
+>     `aria-disabled`. Zero additive props beyond the brief's own literal
+>     list. grep: zero `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/
+>     `shadow`/`transition` string outside prose doc comments; the sole
+>     `animate-spin` occurrence is the documented, precedented
+>     indeterminate exception; zero literal `.focus()` calls; zero
+>     TODO/FIXME/`console.*`/unused imports. API: `value` · `max` ·
+>     `indeterminate` · `size` (sm/md/lg) · `color`
+>     (accent/success/warning/error/info/neutral) · `label` · `disabled` ·
+>     `className`. ZERO frozen files modified. Proof:
+>     `/dev/circular-progress` — basic · determinate · indeterminate ·
+>     sizes · colors · percentage · custom max · 0%/100% · disabled ·
+>     loading · responsive · RTL · long values; desktop/tablet/mobile +
+>     RTL captures; programmatic assertions for role/aria-valuemin/
+>     aria-valuemax/aria-valuenow/aria-valuetext, indeterminate never
+>     setting aria-valuenow, custom max, 0%/100% edges, strictly
+>     increasing size diameters, 6 distinct color strokes, disabled
+>     `aria-disabled` + frozen spin, intrinsic size independent of
+>     viewport, and large-number percentage math. **Built, not frozen** —
+>     no automatic freeze; awaiting explicit visual validation before any
+>     Freeze phase.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

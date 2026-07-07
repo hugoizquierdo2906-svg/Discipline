@@ -197,6 +197,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **CircularProgress — a flat primitive (token system, no glass role),
+  direct sibling of Progress (Built, not frozen).** The same known
+  fraction of completion as Progress, in a ring — reserved for compact/
+  circular spaces (an avatar mid-upload, a sync tile, a dashboard KPI)
+  where a linear bar has no natural home. A geometry choice, not a
+  different UX problem: stroke-dasharray/circumference math is
+  fundamentally different code from a bar's `width`, exactly why MUI/
+  Chakra/Radix ship Linear and Circular as two separate components, never
+  one `variant`. Not Progress, Spinner, Skeleton, Gauge, Meter, Chart,
+  Badge, Stepper, Timeline, Counter, Toast, an Avatar progress ring, or a
+  Donut Chart (each covers a different responsibility; see the component's
+  own doc comment for the full comparison). Composes
+  `@radix-ui/react-progress` directly for the identical ARIA contract
+  Progress relies on: `role="progressbar"`, `aria-valuemin`/
+  `aria-valuemax`, `aria-valuenow` set for a numeric value and never
+  present for `indeterminate`. Two SVG `<circle>` elements (track +
+  indicator) are the only new visual code. Determinate value changes are
+  an instant `strokeDashoffset` change — zero transition/animation;
+  `indeterminate` reuses the frozen Spinner's own `animate-spin` verbatim,
+  rotating a constant-length arc, frozen when `disabled`. `label` is a
+  plain boolean — a centered `{percent}%` inside the ring. API: `value` ·
+  `max` · `indeterminate` · `size` (sm/md/lg) · `color`
+  (accent/success/warning/error/info/neutral) · `label` · `disabled` ·
+  `className`. Zero frozen files modified. Proof:
+  `/dev/circular-progress`.
+
 - **Progress — a flat primitive (token system, no glass role), sibling of
   Spinner/Skeleton/Badge, rebuilt onto the full analysis/build/proof
   process from a pre-methodology implementation (Built, not frozen).** The
