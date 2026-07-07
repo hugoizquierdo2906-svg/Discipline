@@ -1009,6 +1009,95 @@
    contrôlé (comme le précédent contrôlé-seulement de MUI). Preuve :
    `/dev/pagination`. **GELÉ (2026-07-06)** — plus de redesign, changements
    seulement pour un bug objectif désormais.
+   **Tabs : Built, non gelé** — bascule entre un petit ensemble nommé et
+   toujours visible de vues de contenu alternatives pour LE MÊME
+   enregistrement, sans quitter la page : « quelle facette de CECI je
+   regarde » — jamais « où suis-je dans la hiérarchie » (Breadcrumb),
+   jamais « quelle page de CETTE liste » (Pagination). Pas un Accordion
+   (empile des sections VERTICALEMENT dans une page qui coule, plusieurs
+   ouvertes à la fois, hauteur croissante — Tabs montre EXACTEMENT un
+   panneau, remplaçant totalement le précédent, hauteur constante), pas
+   une Navigation Menu (destinations PRINCIPALES de l'app, souvent un
+   vrai changement de page/routage — Tabs bascule un contenu LOCAL sur la
+   même vue), pas un Segmented Control (gelé : change une valeur
+   EXTERNE que le consommateur interprète, ne possède aucun panneau — pas
+   de `role="tabpanel"`, pas de `aria-controls`/`aria-labelledby`
+   intégré ; Tabs POSSÈDE structurellement le panneau via `TabsContent`,
+   exactement la distinction déjà actée dans la doc de FullscreenOverlay :
+   « Tabs... owns a content panel »), pas une Sidebar (région de LAYOUT
+   persistante, souvent multi-niveaux — Tabs est une bande compacte,
+   locale à un bloc de contenu), pas un Breadcrumb (rapporte une position
+   STRUCTURELLE parmi des ancêtres, jamais des panneaux), pas un Stepper
+   (une progression SÉQUENTIELLE, généralement validée — chaque onglet
+   est librement atteignable à tout moment, dans n'importe quel ordre),
+   pas Pagination (pages STRUCTURELLEMENT IDENTIQUES d'une séquence
+   souvent énorme, collapsible — Tabs est un petit ensemble fixe,
+   toujours entièrement visible, de vues SÉMANTIQUEMENT DIFFÉRENTES,
+   jamais collapsé), pas un Select (une valeur d'une liste fermée mais
+   souvent LONGUE, cachée derrière un menu — Tabs garde chaque option
+   visible en permanence, ce qui ne passe à l'échelle que pour une
+   poignée), pas un Dropdown Menu (commandes transitoires, jamais un
+   ensemble lié à un panneau en permanence visible), pas une Command
+   Palette (surface de recherche-et-action globale, orthogonale), pas un
+   Carousel (une SÉQUENCE de slides/médias PARCOURUS dans l'ordre, souvent
+   auto-défilants/swipés/bouclés, sans identité nommée persistante par
+   slide — Tabs est choisi EXPLICITEMENT par son nom, jamais défilé).
+   Un primitif PLAT, sans rôle matériel (zéro GlassSurface, zéro budget
+   de mouvement) — mais architecturalement une famille DIFFÉRENTE du
+   Breadcrumb/Pagination gelés (listes simples de contrôles indépendants,
+   ordre Tab natif, aucun roving tabindex). Tabs est un WIDGET ARIA
+   COMPOSITE : le pattern WAI-ARIA Tabs impose un roving tabindex entre
+   les triggers avec navigation Flèches/Home/End — LE MÊME modèle clavier
+   que RadioGroup/Segmented Control gelés. Malgré ce modèle clavier
+   partagé, Tabs NE dérive PAS de Control Surface / ne réutilise PAS le
+   verre de Segmented Control : son identité visuelle universelle, la
+   plus précédentée (Material Design 3 et son propre « tab indicator »,
+   MUI, GitHub, Linear), est un libellé texte plus une fine barre
+   indicatrice, jamais une pastille de verre ; habiller chaque trigger de
+   verre Micro-tuned comme le fait Segmented Control trahirait un pattern
+   dont tout le langage visuel est délibérément discret. L'indicateur est
+   un changement de couleur de bordure instantané sur le trigger actif
+   (`data-state=active`) — jamais une barre glissante animée, puisque ce
+   fichier ne porte aucun transition/animation.
+   Compose `@radix-ui/react-tabs` DIRECTEMENT — le premier composant de
+   cette session pour lequel Radix fournit réellement une primitive
+   (Sheet/Spotlight/Breadcrumb/Pagination n'en avaient aucune) — héritant
+   tout son contrat comportemental verbatim : état contrôlé/non contrôlé,
+   `role="tablist"`/`"tab"`/`"tabpanel"`, `aria-selected`,
+   `aria-controls`, `aria-labelledby`, roving tabindex sensible à
+   l'orientation, direction des flèches sensible à `dir` (se retourne
+   correctement en RTL), et un tabpanel focusable. Ce fichier n'ajoute
+   QUE géométrie, espacement et style d'état actif piloté par tokens —
+   zéro code comportemental, zéro appel `.focus()` littéral nulle part.
+   Une divergence délibérée du défaut brut de Radix : `activationMode`
+   vaut par défaut `"manual"` ici, pas `"automatic"` de Radix — le
+   WAI-ARIA APG lui-même : « Authors should consider implementing
+   automatic activation of tabs only in circumstances where panels can
+   be displayed instantly... Otherwise, automatic activation slows focus
+   movement ». En tant que primitif générique et réutilisable,
+   DISCIPLINE ne peut pas garantir un contenu de panneau sans latence
+   pour de futurs consommateurs — manual est le défaut universellement
+   sûr ; automatic reste à une prop de distance. RTL : la prop `dir` de
+   Radix retourne la sémantique des flèches pour correspondre au sens de
+   lecture ; flexbox inverse la ligne nativement — vérifié visuellement
+   (ordre DOM/logique préservé : le premier onglet, Overview, se rend le
+   plus à droite dans un conteneur `dir="rtl"`).
+   Dépendance additive : `@radix-ui/react-tabs@1.1.17` (épinglée
+   exactement, conforme à la convention de dépendances de ce dépôt) —
+   authentiquement nécessaire puisque Radix ne fournit aucun substitut
+   Tabs ; le premier nouveau paquet ajouté cette session. grep zéro
+   GlassSurface/blur/backdrop-filter/rgba/shadow/transition/animation en
+   dehors de la prose des commentaires. ZÉRO fichier gelé modifié.
+   Preuve : `/dev/tabs` — basic · controlled · uncontrolled · horizontal
+   · vertical · activation automatique/manuelle · trigger disabled ·
+   force mount · longs libellés · responsive · RTL · clavier ;
+   desktop/tablet/mobile + captures RTL ; assertions programmatiques pour
+   structure tablist/tab/tabpanel, changement d'onglet, liaison
+   aria-selected/aria-controls/aria-labelledby, activation automatique vs
+   manuelle (Enter requis en manuel), Home/End, boucle des flèches,
+   Flèches Haut/Bas en vertical, trigger disabled sauté au clavier, panel
+   forceMount présent-mais-caché dans le DOM, et direction des flèches en
+   RTL. À geler sur validation visuelle explicite.
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +

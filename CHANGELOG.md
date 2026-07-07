@@ -161,6 +161,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Tabs — a flat primitive with no Material Role, composing
+  `@radix-ui/react-tabs` directly (Built, not frozen).** Switch between a
+  small, named, always-visible set of alternate content views for the
+  same record, without leaving the page. Not an Accordion (stacks
+  sections vertically, any number open, growing height — Tabs shows
+  exactly one panel, constant height), not a Navigation Menu (the app's
+  primary destinations, usually real page navigation), not a Segmented
+  Control (frozen: changes an external value, owns no panel at all — no
+  `role="tabpanel"`, no built-in `aria-controls`/`aria-labelledby`; Tabs
+  structurally owns the panel via `TabsContent`), not a Sidebar (a
+  persistent layout region), not a Breadcrumb (reports a structural
+  position, never panels), not a Stepper (sequential, validated
+  progression — every tab is freely reachable at any time), not
+  Pagination (structurally identical, collapsible pages of a large
+  sequence — Tabs is a small, fixed, always-visible set of semantically
+  different views), not a Select (hidden behind a menu to save space —
+  Tabs keeps every option visible permanently), not a Dropdown Menu, not
+  a Command Palette, not a Carousel (a browsed sequence with no
+  persistent named identity per slide — Tabs is chosen explicitly by
+  name). A flat primitive with no Material Role, but architecturally a
+  different sub-family from the frozen Breadcrumb/Pagination (plain
+  lists, native Tab order, no roving tabindex): Tabs is a composite ARIA
+  widget (roving tabindex, Arrow/Home/End — the same keyboard model as
+  the frozen RadioGroup/Segmented Control), yet it does not derive from
+  Control Surface or reuse Segmented Control's glass, since its
+  universal, most-precedented visual identity (Material Design 3's own
+  "tab indicator," MUI, GitHub, Linear) is a text label plus a thin
+  indicator bar, never a glass pill. The indicator is a plain instant
+  border-color swap on the active trigger — never an animated sliding
+  bar (zero transition/animation in this file). Composes
+  `@radix-ui/react-tabs` directly — the first component this session for
+  which Radix genuinely ships a primitive (Sheet/Spotlight/Breadcrumb/
+  Pagination all had none) — inheriting its entire behavioral contract
+  verbatim: controlled/uncontrolled state, full ARIA, orientation-aware
+  roving tabindex, `dir`-aware Arrow-key direction, a focusable tabpanel.
+  One deliberate divergence from Radix's own raw default:
+  `activationMode` defaults to `"manual"` here, not Radix's
+  `"automatic"`, per the WAI-ARIA APG's own explicit recommendation that
+  automatic activation only suits panels displayable with zero latency —
+  a guarantee a generic, reusable primitive cannot make. RTL: Radix's
+  own `dir` prop flips Arrow-key semantics; flexbox reverses natively.
+  Additive dependency: `@radix-ui/react-tabs@1.1.17` (exact-pinned,
+  matching this repo's convention) — the first new package added this
+  session, genuinely necessary. Zero literal `.focus()` calls anywhere.
+  ZERO frozen files modified.
+
 - **Pagination — a flat primitive with no Material Role, composing only the
   frozen Icon + Spinner (Built, not frozen).** Random-access navigation
   across a flat, ordered collection split into fixed-size pages — jump

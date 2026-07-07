@@ -1168,6 +1168,115 @@
 >     shown)/compact/sibling-count scaling/responsive breakpoint/keyboard
 >     (Tab+Enter, native)/RTL. `'use client'`. **FROZEN (2026-07-06)** — no
 >     further redesign; changes only for an objective bug from here on.
+>   - **Tabs — Navigation, a FLAT primitive with NO Material Role, the
+>     first component this session to compose a real Radix primitive
+>     directly (`@radix-ui/react-tabs`). Built (not frozen).**
+>     ```text
+>     Navigation (flat, no Material Role) — composite ARIA widget sub-family
+>     (distinct from Breadcrumb/Pagination's plain-list sub-family)
+>     no GlassSurface / .ds-micro / .ds-control / .ds-card / .ds-floating / .ds-immersive
+>     → Tabs (@radix-ui/react-tabs + Typography tokens)
+>     Status: Built (non frozen)
+>     ```
+>     Switch between a small, named, always-visible set of alternate
+>     content views for the SAME record, without leaving the page: "which
+>     facet of THIS am I looking at" — never "where am I in the
+>     hierarchy" (Breadcrumb), never "which page of THIS list"
+>     (Pagination). Not an Accordion (stacks sections VERTICALLY in one
+>     flowing page, any number open at once, growing height — Tabs shows
+>     EXACTLY one panel, fully replacing the last, constant height), not a
+>     Navigation Menu (the app's PRIMARY destinations, usually real page
+>     navigation/routing — Tabs switches LOCAL content on the same view),
+>     not a Segmented Control (frozen: changes an EXTERNAL value the
+>     consumer reacts to, owns no panel at all — no `role="tabpanel"`, no
+>     built-in `aria-controls`/`aria-labelledby`; Tabs structurally OWNS
+>     the panel via `TabsContent`, exactly the distinction already on
+>     record in FullscreenOverlay's own docs: "Tabs... owns a content
+>     panel" where Segmented Control does not), not a Sidebar (a
+>     persistent LAYOUT region, often multi-level, always on screen —
+>     Tabs is a compact strip local to one content block), not a
+>     Breadcrumb (reports a STRUCTURAL position among ancestors, never
+>     panels), not a Stepper (a SEQUENTIAL, usually validated progression
+>     — every tab is freely reachable at any time, in any order, nothing
+>     to complete first), not Pagination (structurally IDENTICAL pages of
+>     a large, often huge sequence, collapsible — Tabs is a small, fixed,
+>     always-fully-visible set of SEMANTICALLY DIFFERENT views, never
+>     collapsed), not a Select (a value from a CLOSED but often LONG
+>     list, hidden behind a menu to save space — Tabs keeps every option
+>     visible permanently, which only scales to a handful), not a
+>     Dropdown Menu (transient commands, never a permanently visible,
+>     panel-bound set of views), not a Command Palette (a global
+>     search-and-act surface, orthogonal), not a Carousel (a SEQUENCE of
+>     slides/media BROWSED in order, often auto-advancing/swiped/looped,
+>     no persistent named identity per slide — Tabs is chosen EXPLICITLY
+>     by name, never scrolled through, and each view has a durable label,
+>     not an ordinal position).
+>
+>     A FLAT primitive with NO Material Role (zero GlassSurface, zero
+>     `.ds-micro`/`.ds-control`/`.ds-card`/`.ds-floating`/`.ds-immersive`,
+>     zero motion budget) — but architecturally a DIFFERENT sub-family
+>     from the frozen Breadcrumb/Pagination (plain lists of independent
+>     controls, native Tab order, no roving tabindex). Tabs is a
+>     COMPOSITE ARIA WIDGET: the WAI-ARIA Tabs pattern mandates roving
+>     tabindex among triggers with Arrow/Home/End navigation — the SAME
+>     keyboard model as the frozen RadioGroup/Segmented Control. Despite
+>     that shared keyboard model, Tabs does NOT derive from Control
+>     Surface / reuse Segmented Control's glass: its universal, most-
+>     precedented visual identity — Material Design 3's own "tab
+>     indicator," MUI, GitHub, Linear — is a text label plus a thin
+>     indicator bar, never a glass pill; wearing Micro-tuned glass on
+>     every trigger the way Segmented Control does would misrepresent a
+>     pattern whose entire visual language is deliberately quiet. The
+>     indicator is a plain instant border-color swap on the active
+>     trigger (`data-state=active`) — never an animated sliding bar,
+>     since this file carries zero transition/animation.
+>
+>     Composes `@radix-ui/react-tabs` DIRECTLY — the first component this
+>     session for which Radix genuinely ships a primitive (Sheet/
+>     Spotlight/Breadcrumb/Pagination all had none) — inheriting its
+>     entire behavioral contract verbatim: controlled/uncontrolled state,
+>     `role="tablist"`/`"tab"`/`"tabpanel"`, `aria-selected`,
+>     `aria-controls`, `aria-labelledby`, orientation-aware roving
+>     tabindex, `dir`-aware Arrow-key direction (flips correctly in RTL),
+>     and a focusable tabpanel (Tab from the active trigger lands
+>     directly on the panel). This file adds ONLY geometry, spacing and
+>     token-only active-state styling — zero behavioral code, zero
+>     literal `.focus()` calls anywhere. One deliberate divergence from
+>     Radix's own raw default: `activationMode` defaults to `"manual"`
+>     here, not Radix's `"automatic"` — the WAI-ARIA APG itself:
+>     "Authors should consider implementing automatic activation of tabs
+>     only in circumstances where panels can be displayed instantly...
+>     Otherwise, automatic activation slows focus movement, which
+>     significantly hampers users' ability to navigate efficiently." As a
+>     generic, reusable primitive, DISCIPLINE cannot guarantee a future
+>     consumer's panel content has zero latency — manual is the
+>     universally safe default; automatic remains one prop away. RTL:
+>     Radix's own `dir` prop flips Arrow-key semantics to match reading
+>     direction; flexbox reverses the row natively — verified visually
+>     (DOM/logical order preserved: the first tab, Overview, renders
+>     rightmost in a `dir="rtl"` container).
+>
+>     Additive dependency: `@radix-ui/react-tabs@1.1.17` (exact-pinned,
+>     matching this repo's dependency convention) — genuinely necessary
+>     since Radix ships no Tabs substitute; the first new package added
+>     this session. tabs.tsx grep: zero `GlassSurface`/`blur`/
+>     `backdrop-filter`/`rgba`/`shadow`/`transition`/`animation` string
+>     outside prose doc comments. API: `Tabs` (value · defaultValue ·
+>     onValueChange · orientation · activationMode · dir · className) ·
+>     `Tabs.List` (className) · `Tabs.Trigger` (value · disabled ·
+>     className) · `Tabs.Content` (value · forceMount · className) — plus
+>     each part's native HTML/Radix attributes, matching how every other
+>     component in this library extends its host element's attributes.
+>     ZERO frozen files modified. Proof: `/dev/tabs` — basic · controlled
+>     · uncontrolled · horizontal · vertical · automatic/manual
+>     activation · disabled trigger · force mount · long labels ·
+>     responsive · RTL · keyboard; desktop/tablet/mobile + RTL captures;
+>     programmatic assertions for tablist/tab/tabpanel structure, tab
+>     change, aria-selected/aria-controls/aria-labelledby linkage,
+>     automatic vs manual activation (Enter required in manual), Home/End,
+>     Arrow-key loop, vertical Arrow Up/Down, disabled trigger skipped by
+>     keyboard, forceMount panel present-but-hidden in the DOM, and RTL
+>     Arrow-key direction. `'use client'`.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text
