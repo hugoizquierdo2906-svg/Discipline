@@ -38,33 +38,27 @@
    desaturated: the colour must never envelop the fragment. */
 .ds-badge[data-variant='neutral'] {
   --bd-accent: var(--ds-color-text-secondary);
-  --bd-tint: rgba(17, 17, 17, 0.05);
-  --bd-line: rgba(17, 17, 17, 0.16);
-  --bd-solid: #1c1c1c;
+  --bd-tint: rgba(17, 17, 17, 0.04);
+  --bd-line: rgba(17, 17, 17, 0.14);
+  --bd-solid: #1a1a1a;
 }
 .ds-badge[data-variant='success'] {
   --bd-accent: var(--ds-color-success);
-  --bd-tint: rgba(21, 128, 61, 0.06);
-  --bd-line: rgba(21, 128, 61, 0.22);
-  --bd-solid: #15803d;
+  --bd-tint: rgba(21, 128, 61, 0.05);
+  --bd-line: rgba(21, 128, 61, 0.18);
+  --bd-solid: #124d2b;
 }
 .ds-badge[data-variant='warning'] {
   --bd-accent: var(--ds-color-warning);
-  --bd-tint: rgba(180, 83, 9, 0.06);
-  --bd-line: rgba(180, 83, 9, 0.2);
-  --bd-solid: #b45309;
+  --bd-tint: rgba(180, 83, 9, 0.05);
+  --bd-line: rgba(180, 83, 9, 0.18);
+  --bd-solid: #6d3f0c;
 }
 .ds-badge[data-variant='error'] {
   --bd-accent: var(--ds-color-error);
-  --bd-tint: rgba(185, 28, 28, 0.055);
-  --bd-line: rgba(185, 28, 28, 0.18);
-  --bd-solid: #b21f1f;
-}
-.ds-badge[data-variant='info'] {
-  --bd-accent: var(--ds-color-info);
-  --bd-tint: rgba(108, 92, 231, 0.06);
-  --bd-line: rgba(108, 92, 231, 0.2);
-  --bd-solid: #6c5ce7;
+  --bd-tint: rgba(185, 28, 28, 0.045);
+  --bd-line: rgba(185, 28, 28, 0.16);
+  --bd-solid: #7f1d1d;
 }
 
 /* Soft (default) — near-neutral translucent glass + a whisper of tint; the

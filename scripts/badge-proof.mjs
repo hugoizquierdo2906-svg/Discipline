@@ -1,9 +1,9 @@
 // Badge proof — the Data Display property label. Captures (desktop/tablet/
-// mobile) plus programmatic assertions for rendering, the semantic variants,
-// the soft/solid/outline appearances, sizes, shapes, icon present/absence, the
-// static NON-INTERACTIVE contract (a <span> with no role, no tabindex, not
-// focusable), size-stability (it never resizes), and RTL. Requires the dev
-// server on :3000.
+// mobile) plus programmatic assertions for rendering, the four semantic
+// variants, the soft/solid/outline appearances, the two sizes (sm/md), the
+// always-pill shape, icon present/absence, the static NON-INTERACTIVE contract
+// (a <span> with no role, no tabindex, not focusable), size-stability (it never
+// resizes), and RTL. Requires the dev server on :3000.
 import { mkdirSync } from 'node:fs'
 
 import { chromium } from '@playwright/test'
@@ -73,8 +73,8 @@ for (const [w, h, suffix] of [
 {
   const { context, page } = await newPage(1280, 900)
   const list = badges(page, 'bd-variants')
-  if ((await list.count()) !== 5)
-    issues.push('[assert] Variants should render five badges')
+  if ((await list.count()) !== 4)
+    issues.push('[assert] Variants should render the four semantic badges')
   const colorOf = (i) => list.nth(i).evaluate((e) => getComputedStyle(e).color)
   const neutral = await colorOf(0)
   const success = await colorOf(1)
@@ -136,42 +136,40 @@ for (const [w, h, suffix] of [
   await context.close()
 }
 
-// Sizes: height increases xs < sm < md < lg.
+// Sizes: two sizes only, height increases sm < md.
 {
   const { context, page } = await newPage(1280, 900)
   const list = badges(page, 'bd-sizes')
+  if ((await list.count()) !== 2)
+    issues.push('[assert] Sizes should render exactly two badges (sm, md)')
   const heights = []
-  for (let i = 0; i < 4; i++)
+  for (let i = 0; i < 2; i++)
     heights.push(
       await list.nth(i).evaluate((e) => e.getBoundingClientRect().height),
     )
-  if (!(
-    heights[0] < heights[1] &&
-    heights[1] < heights[2] &&
-    heights[2] < heights[3]
-  ))
+  if (!(heights[0] < heights[1]))
     issues.push(
-      `[assert] sizes should increase xs<sm<md<lg, got ${JSON.stringify(heights)}`,
+      `[assert] sizes should increase sm<md, got ${JSON.stringify(heights)}`,
     )
   await context.close()
 }
 
-// Shapes: square ≈ 0 radius, rounded a moderate radius, pill a large radius.
+// Shape: the Badge is ALWAYS a pill — a large (capsule) border-radius, never a
+// tight/square corner. Identity over API surface.
 {
   const { context, page } = await newPage(1280, 900)
-  const list = badges(page, 'bd-shapes')
-  const radiusOf = (i) =>
-    list
-      .nth(i)
-      .evaluate((e) => parseFloat(getComputedStyle(e).borderTopLeftRadius))
-  const rounded = await radiusOf(0)
-  const pill = await radiusOf(1)
-  const square = await radiusOf(2)
-  if (square > 0.5)
-    issues.push(`[assert] square shape should have ~0 radius, got ${square}`)
-  if (!(rounded > square && pill > rounded))
+  const b = badges(page, 'bd-basic').first()
+  const { radius, height } = await b.evaluate((e) => {
+    const s = getComputedStyle(e)
+    return {
+      radius: parseFloat(s.borderTopLeftRadius),
+      height: e.getBoundingClientRect().height,
+    }
+  })
+  // A pill's corner radius is at least half the height (fully rounded ends).
+  if (radius < height / 2 - 0.5)
     issues.push(
-      `[assert] radius should increase square<rounded<pill, got ${JSON.stringify({ square, rounded, pill })}`,
+      `[assert] Badge should always be a pill (radius≥height/2), got radius=${radius} height=${height}`,
     )
   await context.close()
 }
@@ -240,7 +238,7 @@ for (const [w, h, suffix] of [
   const measures = {}
   for (const w of [1280, 390]) {
     const { context, page } = await newPage(w, 900)
-    measures[w] = await badges(page, 'bd-responsive')
+    measures[w] = await badges(page, 'bd-variants')
       .first()
       .evaluate((e) => {
         const r = e.getBoundingClientRect()

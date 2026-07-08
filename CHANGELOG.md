@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Badge — simplification pass, not frozen (Data Display primitive).** A
+  final craft pass dedicated to design-system coherence: fewer variants, fewer
+  colours, a stronger identity. The palette is reduced to the four TRUE
+  semantic colours — neutral, success, warning, error (`info` dropped);
+  business properties (Coach, Premium, Draft, Hypertrophy…) now all wear the
+  neutral glass, their meaning carried by the word, so a screen of badges reads
+  as one restrained material rather than a swatch board. The `solid` fills were
+  deepened and desaturated (near-black neutral, deep forest, deep amber, deep
+  oxblood — Apple/Linear/GitHub, never Bootstrap). The `shape` prop was removed
+  — the Badge is ALWAYS a pill (DISCIPLINE's natural micro-geometry); identity
+  over API surface. Sizes were cut to two (`sm`/`md`, covering 99% of usages).
+  The icon is ~1px larger for presence while the text stays dominant. The demo
+  page was pruned to only behaviourally-distinct sections. **API reduced (this
+  is the intentional simplification, not a break):** `variant`
+  neutral/success/warning/error · `appearance` soft/solid/outline · `size`
+  sm/md · `icon` · `className` — `info`, `shape`, and the `xs`/`lg` sizes are
+  gone. The one demo consumer on the dropped `variant="info"` (the
+  `/dev/components` gallery) was migrated to neutral; no other consumer used
+  the removed surface. Responsibilities, composition, accessibility, logic and
+  the non-interactive contract are unchanged. Proof re-run green (34 badges
+  verified non-interactive; variants/appearances/sizes/always-pill/RTL pass).
+  Awaiting visual validation before any freeze.
+
 - **Badge — Liquid-Glass craft pass, not frozen (Data Display primitive).**
   A complete visual refonte so the Badge reads as a micro-fragment of
   DISCIPLINE's Liquid Glass — cut from the same material as the Drawers /

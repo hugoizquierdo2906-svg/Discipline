@@ -2191,6 +2191,19 @@
 >     → Badge (caller's icon verbatim; static <span>, never interactive)
 >     Status: Built (non frozen) — awaiting explicit visual validation
 >     ```
+>     **Simplification pass (2026-07-08): coherence over API surface.**
+>     Palette reduced to the four TRUE semantic colours (neutral/success/
+>     warning/error; `info` dropped) — business properties (Coach/Premium/
+>     Draft/Hypertrophy) all wear the neutral glass, so a screen reads as one
+>     restrained material, not a swatch board. Solid fills deepened +
+>     desaturated (near-black/deep forest/deep amber/deep oxblood —
+>     Apple/Linear/GitHub). `shape` prop removed (ALWAYS a pill). Sizes cut to
+>     `sm`/`md`. Icon ~1px larger, text still dominant. Demo pruned to
+>     behaviourally-distinct sections. API now `variant` (neutral/success/
+>     warning/error) · `appearance` (soft/solid/outline) · `size` (sm/md) ·
+>     `icon` · `className`. Responsibilities/composition/accessibility/logic/
+>     non-interactive contract unchanged. Proof re-run green (34 badges).
+>
 >     **Craft pass (2026-07-08): full Liquid-Glass refonte.** The material was
 >     moved into a dedicated `.ds-badge` class in the new
 >     `src/styles/badge.css` (Construction rule, like `.ds-glass`/`.ds-micro`)

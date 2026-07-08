@@ -1936,7 +1936,22 @@
    `icon`/`action`/`dismissible`/`onDismiss`/`size`/`align`/`className`) ;
    plus de redesign ni de changement d'API sans ADR.
 
-   **Badge : CRAFT PASS Liquid Glass (2026-07-08), NON GELÉ.** Refonte
+   **Badge : PASSE DE SIMPLIFICATION (2026-07-08), NON GELÉ.** Cohérence du
+   design system plutôt que surface d'API. Palette réduite aux quatre vraies
+   couleurs sémantiques (neutral/success/warning/error ; `info` supprimé) — les
+   propriétés métier (Coach/Premium/Draft/Hypertrophy) portent toutes le verre
+   neutre, donc un écran se lit comme une seule matière retenue, pas un nuancier.
+   Solids approfondis + désaturés (quasi-noir / vert forêt / ambre / oxblood
+   profonds — Apple/Linear/GitHub). Prop `shape` supprimée (TOUJOURS un pill).
+   Tailles réduites à `sm`/`md`. Icône ~1px plus présente, texte toujours
+   dominant. Démo élaguée aux sections vraiment distinctes. API désormais :
+   `variant` (neutral/success/warning/error) · `appearance` (soft/solid/outline)
+   · `size` (sm/md) · `icon` · `className`. Responsabilités/composition/
+   accessibilité/logique/contrat non-interactif inchangés. Preuve re-run verte
+   (34 badges). **Reste NON GELÉ tant que la validation visuelle explicite n'a
+   pas eu lieu.**
+
+   Historique — **CRAFT PASS Liquid Glass (2026-07-08).** Refonte
    visuelle complète : le Badge est désormais un MICRO-FRAGMENT du Liquid
    Glass DISCIPLINE (matière déplacée dans `.ds-badge` du nouveau
    `src/styles/badge.css`, règle de Construction comme `.ds-glass`/`.ds-micro`)

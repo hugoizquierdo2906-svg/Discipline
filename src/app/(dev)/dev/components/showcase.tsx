@@ -200,7 +200,6 @@ export function Showcase() {
           <Badge variant="success">Success</Badge>
           <Badge variant="warning">Warning</Badge>
           <Badge variant="error">Error</Badge>
-          <Badge variant="info">Info</Badge>
         </Block>
 
         <Block title="Avatar">

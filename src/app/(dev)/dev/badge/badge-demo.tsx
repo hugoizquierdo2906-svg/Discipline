@@ -1,6 +1,6 @@
 'use client'
 
-import { BadgeCheck, Circle, Crown, Dumbbell, Flame, Star } from 'lucide-react'
+import { BadgeCheck, Circle, Crown } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { GlassCard } from '@/components/ui/glass-card'
@@ -11,8 +11,9 @@ import { Text } from '@/components/ui/text'
 /**
  * Badge is a Data Display primitive — a compact, static property attached to a
  * datum. It always accompanies existing content, so the demos show it inside
- * real data surfaces (a GlassCard, a table, a list) on the shared capture
- * wallpaper, never floating alone.
+ * real data surfaces (a GlassCard, a table) on the shared capture wallpaper,
+ * never floating alone. The page is deliberately lean: each section
+ * demonstrates a genuinely distinct behaviour, not a swatch of every colour.
  */
 function Section({
   title,
@@ -54,10 +55,11 @@ export function BadgeScene() {
             Badge
           </Heading>
           <Text tone="secondary">
-            A small, static property attached to a datum — Active, Premium,
-            Draft, a role, a priority, a count. Purely informative, never
-            interactive, never alone. Built only from the design system&apos;s
-            color and typography tokens.
+            The smallest representation of a property — a compact, static label
+            attached to a datum. Cut from DISCIPLINE&apos;s Liquid Glass, it
+            almost disappears until you need it: the colour is carried by the
+            text, never an aggressive fill. Purely informative, never
+            interactive, never alone.
           </Text>
         </div>
 
@@ -66,20 +68,19 @@ export function BadgeScene() {
         </Section>
 
         <Section
-          title="Variants (semantic color)"
-          description="neutral · success · warning · error · info"
+          title="Variants"
+          description="The four true semantic colours — everything else is neutral."
           data-testid="bd-variants"
         >
           <Badge variant="neutral">Neutral</Badge>
           <Badge variant="success">Success</Badge>
           <Badge variant="warning">Warning</Badge>
           <Badge variant="error">Error</Badge>
-          <Badge variant="info">Info</Badge>
         </Section>
 
         <Section
           title="Soft (default)"
-          description="Tinted background — the calm default."
+          description="Near-neutral glass; the colour lives in the text and a faint hairline."
           data-testid="bd-soft"
         >
           <Badge appearance="soft" variant="success">
@@ -95,7 +96,7 @@ export function BadgeScene() {
 
         <Section
           title="Solid"
-          description="Filled — for the strongest emphasis."
+          description="The single strong voice — a deep, desaturated fill for the rare case that must dominate."
           data-testid="bd-solid"
         >
           <Badge appearance="solid" variant="neutral">
@@ -111,130 +112,68 @@ export function BadgeScene() {
 
         <Section
           title="Outline"
-          description="Border only — the lightest weight."
+          description="The lightest weight — bare glass and a coloured hairline."
           data-testid="bd-outline"
         >
           <Badge appearance="outline" variant="neutral">
             Draft
-          </Badge>
-          <Badge appearance="outline" variant="info">
-            Beta
           </Badge>
           <Badge appearance="outline" variant="success">
             Active
           </Badge>
         </Section>
 
-        <Section title="With icon" data-testid="bd-icon">
+        <Section
+          title="With / without icon"
+          description="An icon may carry the colour; the text always stays dominant."
+          data-testid="bd-icon"
+        >
           <Badge variant="success" icon={<Icon icon={BadgeCheck} />}>
             Verified
           </Badge>
-          <Badge variant="warning" icon={<Icon icon={Flame} />}>
-            Streak
+          <Badge variant="neutral" icon={<Icon icon={Circle} />}>
+            Active
           </Badge>
-          <Badge appearance="solid" variant="info" icon={<Icon icon={Crown} />}>
-            Premium
+          <Badge variant="neutral" icon={<Icon icon={Crown} />}>
+            Coach
           </Badge>
         </Section>
 
         <Section title="Without icon" data-testid="bd-no-icon">
           <Badge variant="success">Verified</Badge>
-          <Badge variant="warning">Streak</Badge>
+          <Badge variant="neutral">Coach</Badge>
         </Section>
 
         <Section
           title="Sizes"
-          description="xs · sm · md · lg — the Badge keeps its size, it never resizes."
+          description="Small and medium cover 99% of usages; the Badge keeps its size, it never resizes."
           data-testid="bd-sizes"
         >
-          <Badge size="xs" variant="info">
-            xs
-          </Badge>
-          <Badge size="sm" variant="info">
-            sm
-          </Badge>
-          <Badge size="md" variant="info">
-            md
-          </Badge>
-          <Badge size="lg" variant="info">
-            lg
-          </Badge>
+          <Badge size="sm">Small</Badge>
+          <Badge size="md">Medium</Badge>
         </Section>
 
         <Section
-          title="Shapes"
-          description="rounded · pill · square"
-          data-testid="bd-shapes"
+          title="Business properties"
+          description="Roles, plans, categories — all wear the neutral glass. The meaning is in the word, not a bespoke colour."
+          data-testid="bd-business"
         >
-          <Badge shape="rounded" variant="neutral">
-            Rounded
-          </Badge>
-          <Badge shape="pill" variant="neutral">
-            Pill
-          </Badge>
-          <Badge shape="square" variant="neutral">
-            Square
-          </Badge>
-        </Section>
-
-        <Section
-          title="Status"
-          description="A status property of a datum."
-          data-testid="bd-status"
-        >
-          <Badge variant="success" icon={<Icon icon={Circle} />}>
-            Active
-          </Badge>
-          <Badge variant="neutral" icon={<Icon icon={Circle} />}>
-            Archived
-          </Badge>
-          <Badge variant="warning" icon={<Icon icon={Circle} />}>
-            Draft
-          </Badge>
-        </Section>
-
-        <Section title="Role" data-testid="bd-role">
-          <Badge appearance="solid" variant="info" icon={<Icon icon={Crown} />}>
-            Coach
-          </Badge>
-          <Badge variant="neutral">Client</Badge>
-          <Badge variant="info">Admin</Badge>
-        </Section>
-
-        <Section
-          title="Priority"
-          description="soft → solid encodes rising urgency."
-          data-testid="bd-priority"
-        >
-          <Badge appearance="soft" variant="neutral">
-            Low
-          </Badge>
-          <Badge appearance="soft" variant="warning">
-            Medium
-          </Badge>
-          <Badge appearance="solid" variant="error">
-            High
-          </Badge>
-        </Section>
-
-        <Section title="Category" data-testid="bd-category">
-          <Badge variant="info" icon={<Icon icon={Dumbbell} />}>
-            Hypertrophy
-          </Badge>
-          <Badge variant="info">Strength</Badge>
-          <Badge variant="info">Mobility</Badge>
+          <Badge>Coach</Badge>
+          <Badge>Premium</Badge>
+          <Badge>Client</Badge>
+          <Badge>Admin</Badge>
+          <Badge>Hypertrophy</Badge>
+          <Badge>Strength</Badge>
         </Section>
 
         <Section
           title="Count"
-          description="A numeric property — inline, not a floating overlay."
+          description="A numeric property in the same restrained material as the rest — inline, not a floating overlay."
           data-testid="bd-count"
         >
-          <Badge variant="neutral">12 clients</Badge>
+          <Badge>12 clients</Badge>
           <Badge variant="success">3 new</Badge>
-          <Badge size="xs" variant="error">
-            9+
-          </Badge>
+          <Badge size="sm">99+</Badge>
         </Section>
 
         <Section
@@ -250,9 +189,7 @@ export function BadgeScene() {
                   12 clients · updated today
                 </Text>
               </div>
-              <Badge variant="success" icon={<Icon icon={Star} />}>
-                Published
-              </Badge>
+              <Badge variant="success">Published</Badge>
             </div>
           </GlassCard>
         </Section>
@@ -296,41 +233,6 @@ export function BadgeScene() {
         </Section>
 
         <Section
-          title="Inside a List"
-          description="A Badge tagging each list item."
-          data-testid="bd-in-list"
-        >
-          <GlassCard className="w-full p-2">
-            <ul className="flex flex-col">
-              <li className="flex items-center justify-between gap-3 px-2 py-2">
-                <Text size="body-sm">Back Squat</Text>
-                <Badge size="sm" variant="neutral">
-                  Compound
-                </Badge>
-              </li>
-              <li className="flex items-center justify-between gap-3 px-2 py-2">
-                <Text size="body-sm">Face Pull</Text>
-                <Badge size="sm" appearance="outline" variant="neutral">
-                  Accessory
-                </Badge>
-              </li>
-            </ul>
-          </GlassCard>
-        </Section>
-
-        <Section
-          title="Responsive (keeps its size)"
-          description="The Badge does not resize; the row wraps around it."
-          data-testid="bd-responsive"
-        >
-          <Badge variant="success">Active</Badge>
-          <Badge variant="info">Premium</Badge>
-          <Badge variant="warning">Draft</Badge>
-          <Badge variant="error">Overdue</Badge>
-          <Badge variant="neutral">Archived</Badge>
-        </Section>
-
-        <Section
           title="RTL"
           description='dir="rtl" — the icon flips to the start edge naturally via flex.'
           data-testid="bd-rtl"
@@ -339,9 +241,7 @@ export function BadgeScene() {
             <Badge variant="success" icon={<Icon icon={BadgeCheck} />}>
               موثّق
             </Badge>
-            <Badge variant="info" icon={<Icon icon={Crown} />}>
-              مميّز
-            </Badge>
+            <Badge icon={<Icon icon={Crown} />}>مدرّب</Badge>
           </div>
         </Section>
       </div>
