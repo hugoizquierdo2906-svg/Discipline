@@ -2098,6 +2098,85 @@
 >     `action`/`dismissible`/`onDismiss`/`size`/`align`/`className`); no
 >     further redesign or API change without an ADR; changes only for an
 >     objective bug from here on.
+>   - **ErrorBanner — Feedback primitive that OWNS its surface, the third
+>     banner sibling (Built, not frozen).**
+>     ```text
+>     Feedback (owns its surface — built from error tokens, not a glass role)
+>     error-tint fill + error-border + text-error icon (all tokens)
+>     → ErrorBanner (frozen Icon + Text + IconButton; caller's icon/action verbatim)
+>     Status: Built (non frozen) — awaiting explicit visual validation
+>     ```
+>     The third sibling of the Feedback banner family (SuccessBanner +
+>     WarningBanner, both frozen); same in-flow banner behavior, a graver
+>     polarity. A PERSISTENT, IN-FLOW, NON-MODAL error: an important failure
+>     about the CURRENT context, surfaced in the flow, that does NOT warrant
+>     a modal interruption (couldn't publish, payment declined, sync failed,
+>     import interrupted, save failed, quota exceeded). Exactly ONE
+>     responsibility: durably inform of an error tied to the current context
+>     WITHOUT interrupting the flow. Not an ErrorState (a CONTENT state that
+>     REPLACES a whole region that could not load — it IS the view;
+>     ErrorBanner sits ALONGSIDE content that IS present and working,
+>     reporting one failed operation, and unlike the surface-less ErrorState
+>     it OWNS its error-tinted surface), not a WarningBanner (a RISK —
+>     nothing failed yet; ErrorBanner is an actual failure), not a
+>     SuccessBanner (opposite polarity), not a Toast/Snackbar (TRANSIENT,
+>     floating, auto-dismissing, outside the flow — an error must not vanish
+>     on its own; ErrorBanner persists until resolved or dismissed), not an
+>     Alert (the generic multi-variant strip ABOUT the view — ErrorBanner is
+>     the single error-only signal with its own error tokens and an optional
+>     recovery action; the brief scopes it to NOT be/compose an Alert), not
+>     an AlertDialog/Dialog (blocking/modal, demanding a decision first —
+>     ErrorBanner never blocks or traps focus, important but NON-MODAL), not
+>     an OfflineState (a connectivity CONTENT state that REPLACES a region),
+>     not a Spinner (in-flight — ErrorBanner is the terminal state AFTER the
+>     attempt failed), not a Notification Center (a historical list — a
+>     single present error in situ). Variants (save failed, payment
+>     declined, publish failed, import failed, sync failed, quota exceeded)
+>     collapse to ONE responsibility. **A Feedback primitive that OWNS its
+>     surface — like its frozen banner siblings and unlike the content-only
+>     states: an error-tinted strip built ONLY from error tokens
+>     (`bg-[var(--ds-color-error-tint)]`,
+>     `border-[var(--ds-color-error-border)]`, `text-error` icon), a token
+>     radius (`rounded-lg`) and token spacing — never a hard-coded color,
+>     never GlassSurface/blur/backdrop-filter/shadow, never motion.**
+>     Composes only the frozen Icon (caller supplies the error icon), Text,
+>     and IconButton (dismiss) — never Toast/Alert/Card/Dialog; deliberately
+>     does NOT compose the frozen SuccessBanner/WarningBanner despite the
+>     identical layout (distinct polarity: failure vs. risk vs. success; both
+>     frozen — coupling would block their evolution behind an ADR). `w-full`
+>     (follows parent width, no JS — verified: full vs. half column tracked
+>     exactly); horizontal flex so the dismiss control flips under `dir="rtl"`
+>     (verified: `direction: rtl`, action + dismiss render). **`role="alert"`
+>     (aria-live assertive) is the appropriate role for a persistent,
+>     non-modal error — announced assertively without seizing focus or
+>     blocking, completing the three-tier semantic (Success/Warning polite
+>     `role="status"` → Error assertive `role="alert"`; verified the banner
+>     uses `role="alert"`, NOT `role="status"`).** The dismiss IconButton
+>     keeps native button semantics (no auto-focus, no trap) and self-hides
+>     the banner (verified) + fires `onDismiss`. Icon tinted `text-error`
+>     (red) — a meaningful, non-decorative token distinct from the neutral
+>     body color (verified), the graver tier below WarningBanner's amber. Two
+>     additive props, both justified: `align` (left/center, the brief's
+>     Alignement section) and `onDismiss`. Sizes sm/md/lg scale icon/title/
+>     description/padding together (verified: title font-size strictly
+>     increases). Static: zero animation on the root, ignoring composed
+>     buttons (verified). grep: zero `GlassSurface`/`blur`/`backdrop-filter`/
+>     `rgba`/`shadow`/`transition`/`animation`/`animate-`/`.focus()` string
+>     in the component (only in doc-comment prose describing what it is NOT);
+>     zero TODO/FIXME/`console.*`/unused imports; zero hard-coded hex/px/ms.
+>     API: `title` · `description` · `icon` · `action` · `dismissible` ·
+>     `onDismiss` · `size` (sm/md/lg) · `align` (left/center) · `className`
+>     (+ native div attributes). ZERO frozen files modified. Proof:
+>     `/dev/error-banner` (on the capture wallpaper, shown directly in flow
+>     since it owns its surface) — basic · with/without description ·
+>     dismissible · with/without action · dismissible+action · sm/md/lg ·
+>     dashboard · payment failed · import failed · publish failed · sync
+>     failed · quota exceeded · responsive width · RTL, plus
+>     `scripts/error-banner-proof.mjs` (desktop/tablet/mobile + RTL captures;
+>     assertions for rendering, `role="alert"` not `role="status"`, tinted
+>     surface + tinted icon, dismiss self-hide, action button, strictly
+>     increasing sizes, responsive width, RTL direction, static). **Built,
+>     non frozen** — freeze forbidden until explicit visual validation.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

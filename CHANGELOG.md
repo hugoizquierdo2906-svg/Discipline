@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **ErrorBanner — built, not frozen (Feedback primitive that owns its
+  surface).** The third sibling of the Feedback banner family (SuccessBanner +
+  WarningBanner, both frozen). A PERSISTENT, IN-FLOW, NON-MODAL error: an
+  important failure about the current context, surfaced in the flow, that does
+  NOT warrant a modal interruption (couldn't publish, payment declined, sync
+  failed, import interrupted, save failed, quota exceeded). Exactly one
+  responsibility: durably inform of a contextual error WITHOUT interrupting the
+  flow — it pushes surrounding content and persists until the error is resolved
+  or the user dismisses it. Deliberately NOT an ErrorState (a content state
+  that REPLACES a whole region — ErrorBanner sits ALONGSIDE present, working
+  content and, unlike the surface-less ErrorState, OWNS its error-tinted
+  surface), NOT a WarningBanner (a risk — nothing failed yet), NOT a
+  Toast/Snackbar (transient, floating, auto-dismissing — an error must not
+  vanish on its own), NOT an Alert (generic, multi-variant), NOT an
+  AlertDialog/Dialog (blocking/modal — ErrorBanner is important but non-modal),
+  NOT an OfflineState/Spinner/Notification Center. Like its banner siblings it
+  OWNS its surface, built ONLY from error tokens
+  (`bg-[var(--ds-color-error-tint)]`, `border-[var(--ds-color-error-border)]`,
+  `text-error` icon), token radius and spacing — no hard-coded color, no
+  GlassSurface/blur/shadow, no motion. Composes only the frozen Icon, Text, and
+  IconButton (dismiss); does NOT compose the frozen SuccessBanner/WarningBanner
+  (distinct polarity). `w-full` (follows parent width, no JS); **`role="alert"`
+  (aria-live assertive) — the appropriate role for a persistent, non-modal
+  error, announced assertively without seizing focus, completing the three-tier
+  semantic (Success/Warning polite `role="status"` → Error assertive
+  `role="alert"`).** Horizontal flex so the dismiss control flips under
+  `dir="rtl"`; the dismiss button self-hides the banner and fires `onDismiss`.
+  API: `title` · `description` · `icon` · `action` · `dismissible` ·
+  `onDismiss` · `size` (sm/md/lg) · `align` (left/center) · `className`. Proof
+  `/dev/error-banner` + `scripts/error-banner-proof.mjs` (rendering,
+  `role="alert"` not `role="status"`, tinted surface + tinted icon, dismiss
+  self-hide, action button, sizes, responsive width, RTL, static). Awaiting
+  visual validation before any freeze.
+
 ### Changed
 
 - **WarningBanner — frozen (Feedback primitive that owns its surface).**

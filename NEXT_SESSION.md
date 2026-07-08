@@ -1861,6 +1861,76 @@
    `description`/`icon`/`action`/`dismissible`/`onDismiss`/`size`/`align`/
    `className`) ; plus de redesign ni de changement d'API sans ADR.
 
+   **ErrorBanner : CONSTRUIT, NON GELÉ (2026-07-08).** Le troisième frère de
+   la famille bannière Feedback (SuccessBanner + WarningBanner, tous deux
+   gelés) — même comportement de bande dans le flux, polarité plus grave.
+   Une erreur PERSISTANTE, DANS LE FLUX, NON MODALE : un échec important
+   concernant le contexte courant, visible dans le flux, qui ne nécessite
+   PAS une interruption modale (publication impossible, paiement refusé,
+   sync échouée, import interrompu, sauvegarde impossible, quota dépassé).
+   UNE seule responsabilité : informer DURABLEMENT d'une erreur liée au
+   contexte courant SANS interrompre le flux. Pas un ErrorState (un état
+   content-only qui REMPLACE toute une région qui n'a pas pu charger — il
+   EST la vue ; ErrorBanner est À CÔTÉ d'un contenu présent qui fonctionne,
+   et à l'inverse de l'ErrorState sans surface il POSSÈDE sa surface teintée
+   error), pas un WarningBanner (un RISQUE — rien n'a échoué ; ErrorBanner
+   est un échec réel), pas un SuccessBanner (polarité opposée), pas un
+   Toast/Snackbar (transitoire, flottant, auto-fermant — une erreur ne doit
+   pas disparaître seule ; ErrorBanner persiste jusqu'à résolution ou
+   fermeture), pas un Alert (la bande générique multi-variantes ; le brief
+   interdit d'être/composer un Alert), pas un AlertDialog/Dialog
+   (bloquant/modal — ErrorBanner ne bloque jamais, important mais NON
+   MODAL), pas un OfflineState (un état content-only réseau qui REMPLACE une
+   région), pas un Spinner (en cours — ErrorBanner est l'état terminal APRÈS
+   l'échec), pas un Notification Center (une liste historique — une erreur
+   unique in situ). Les variantes (sauvegarde impossible, paiement refusé,
+   publication échouée, import échoué, sync échouée, quota dépassé) se
+   ramènent à UNE responsabilité. **Possède sa surface — comme ses frères
+   gelés et à l'inverse des états content-only : une bande teintée error
+   bâtie UNIQUEMENT sur les tokens error (`bg-[var(--ds-color-error-tint)]`,
+   `border-[var(--ds-color-error-border)]`, icône `text-error`), un rayon
+   token (`rounded-lg`) et un espacement token — jamais de couleur en dur,
+   jamais de GlassSurface/blur/backdrop-filter/shadow, jamais de
+   mouvement.** Compose uniquement l'Icon gelé (le caller fournit l'icône
+   d'erreur), Text, et l'IconButton gelé (fermeture) — jamais
+   Toast/Alert/Card/Dialog ; ne compose PAS les SuccessBanner/WarningBanner
+   gelés malgré la mise en page identique (polarité distincte : échec vs.
+   risque vs. succès ; tous deux gelés — le coupler bloquerait leur
+   évolution derrière un ADR). `w-full` (suit la largeur du parent sans JS —
+   vérifié : colonnes pleine vs demi-largeur suivies exactement) ; flex
+   horizontal → la fermeture se retourne sous `dir="rtl"` (vérifié :
+   `direction: rtl`, action + fermeture rendues). **`role="alert"` (aria-live
+   assertive) est le rôle approprié pour une erreur persistante non modale —
+   annoncée de façon assertive sans capturer le focus ni bloquer, complétant
+   la hiérarchie à trois niveaux (Success/Warning polis `role="status"` →
+   Error assertif `role="alert"` ; vérifié : la bande utilise `role="alert"`,
+   PAS `role="status"`).** L'IconButton de fermeture garde sa sémantique
+   native (aucun focus auto, aucun piège) et auto-masque la bande (vérifié)
+   + déclenche `onDismiss`. Icône teintée `text-error` (rouge) — un token
+   signifiant, non décoratif, distinct de la couleur du corps (vérifié), le
+   niveau plus grave sous l'ambre du WarningBanner. Deux props additives
+   justifiées : `align` (left/center, la section Alignement du brief) et
+   `onDismiss`. Tailles sm/md/lg échelonnées ensemble (vérifié : la taille
+   du titre croît strictement). Statique : zéro animation sur la racine,
+   hors boutons composés (vérifié). grep zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition/animation/animate-/`.focus()` dans
+   le composant (uniquement dans la prose du doc-comment décrivant ce qu'il
+   n'est PAS) ; zéro TODO/FIXME/`console.*`/import inutilisé ; zéro hex/px/ms
+   en dur. API : `title` · `description` · `icon` · `action` · `dismissible`
+   · `onDismiss` · `size` (sm/md/lg) · `align` (left/center) · `className`
+   (+ attributs natifs du div). ZÉRO fichier gelé modifié. Preuve :
+   `/dev/error-banner` (sur le fond d'écran, la bande montrée directement
+   dans le flux puisqu'elle possède sa surface) — basic · with/without
+   description · dismissible · with/without action · dismissible+action ·
+   sm/md/lg · dashboard · payment failed · import failed · publish failed ·
+   sync failed · quota exceeded · responsive width · RTL, plus
+   `scripts/error-banner-proof.mjs` (captures desktop/tablet/mobile + RTL ;
+   assertions rendu, `role="alert"` pas `role="status"`, surface teintée +
+   icône teintée, auto-masquage à la fermeture, bouton d'action, tailles
+   strictement croissantes, largeur responsive, direction RTL, statique).
+   **Built, non frozen** — gel interdit tant que la validation visuelle
+   explicite n'a pas eu lieu.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
