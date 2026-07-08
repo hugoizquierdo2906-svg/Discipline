@@ -2099,12 +2099,15 @@
 >     further redesign or API change without an ADR; changes only for an
 >     objective bug from here on.
 >   - **ErrorBanner — Feedback primitive that OWNS its surface, the third
->     banner sibling (Built, not frozen).**
+>     banner sibling. FROZEN (visually validated 2026-07-08, after a
+>     Frozen-review pass — token-clean from the build; no dead code, no unused
+>     imports/props, no internal duplication, no arbitrary style; locked
+>     unchanged).**
 >     ```text
 >     Feedback (owns its surface — built from error tokens, not a glass role)
 >     error-tint fill + error-border + text-error icon (all tokens)
 >     → ErrorBanner (frozen Icon + Text + IconButton; caller's icon/action verbatim)
->     Status: Built (non frozen) — awaiting explicit visual validation
+>     Status: FROZEN
 >     ```
 >     The third sibling of the Feedback banner family (SuccessBanner +
 >     WarningBanner, both frozen); same in-flow banner behavior, a graver
@@ -2175,8 +2178,11 @@
 >     `scripts/error-banner-proof.mjs` (desktop/tablet/mobile + RTL captures;
 >     assertions for rendering, `role="alert"` not `role="status"`, tinted
 >     surface + tinted icon, dismiss self-hide, action button, strictly
->     increasing sizes, responsive width, RTL direction, static). **Built,
->     non frozen** — freeze forbidden until explicit visual validation.
+>     increasing sizes, responsive width, RTL direction, static). **FROZEN
+>     (2026-07-08)** — public API locked (`title`/`description`/`icon`/
+>     `action`/`dismissible`/`onDismiss`/`size`/`align`/`className`); no
+>     further redesign or API change without an ADR; changes only for an
+>     objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

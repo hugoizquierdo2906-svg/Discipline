@@ -1861,7 +1861,11 @@
    `description`/`icon`/`action`/`dismissible`/`onDismiss`/`size`/`align`/
    `className`) ; plus de redesign ni de changement d'API sans ADR.
 
-   **ErrorBanner : CONSTRUIT, NON GELÉ (2026-07-08).** Le troisième frère de
+   **ErrorBanner : GELÉ (validé visuellement 2026-07-08, après une passe
+   Frozen-review — token-clean dès la construction ; aucun code mort, aucun
+   import/prop inutilisé, aucune duplication interne, aucun style arbitraire ;
+   verrouillé sans changement ; API publique verrouillée, plus de changement
+   sans ADR).** Le troisième frère de
    la famille bannière Feedback (SuccessBanner + WarningBanner, tous deux
    gelés) — même comportement de bande dans le flux, polarité plus grave.
    Une erreur PERSISTANTE, DANS LE FLUX, NON MODALE : un échec important
@@ -1928,8 +1932,9 @@
    assertions rendu, `role="alert"` pas `role="status"`, surface teintée +
    icône teintée, auto-masquage à la fermeture, bouton d'action, tailles
    strictement croissantes, largeur responsive, direction RTL, statique).
-   **Built, non frozen** — gel interdit tant que la validation visuelle
-   explicite n'a pas eu lieu.
+   **GELÉ (2026-07-08)** — API publique verrouillée (`title`/`description`/
+   `icon`/`action`/`dismissible`/`onDismiss`/`size`/`align`/`className`) ;
+   plus de redesign ni de changement d'API sans ADR.
 
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
