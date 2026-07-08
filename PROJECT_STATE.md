@@ -1948,13 +1948,15 @@
 >     public API locked (`title`/`description`/`icon`/`action`/`size`/
 >     `align`/`className`); no further redesign or API change without an
 >     ADR; changes only for an objective bug from here on.
->   - **SuccessBanner — Feedback primitive that OWNS its surface (Built,
->     not frozen).**
+>   - **SuccessBanner — Feedback primitive that OWNS its surface. FROZEN
+>     (visually validated 2026-07-08, after a Frozen-review pass — token-clean
+>     from the build; no dead code, no unused imports/props, no internal
+>     duplication, no arbitrary style; locked unchanged).**
 >     ```text
 >     Feedback (owns its surface — built from success tokens, not a glass role)
 >     success-tint fill + success-border + text-success icon (all tokens)
 >     → SuccessBanner (frozen Icon + Text + IconButton; caller's icon/action verbatim)
->     Status: Built (non frozen) — awaiting explicit visual validation
+>     Status: FROZEN
 >     ```
 >     A PERSISTENT, IN-FLOW confirmation that an operation the user just
 >     took SUCCEEDED and deserves to stay visible (a program published, a
@@ -2011,8 +2013,10 @@
 >     `scripts/success-banner-proof.mjs` (desktop/tablet/mobile + RTL
 >     captures; assertions for rendering, `role="status"`, tinted surface,
 >     dismiss self-hide, action button, strictly increasing sizes,
->     responsive width, RTL direction, static). **Built, non frozen** —
->     freeze forbidden until explicit visual validation.
+>     responsive width, RTL direction, static). **FROZEN (2026-07-08)** —
+>     public API locked (`title`/`description`/`icon`/`action`/`dismissible`/
+>     `onDismiss`/`size`/`align`/`className`); no further redesign or API
+>     change without an ADR; changes only for an objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

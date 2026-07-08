@@ -1721,7 +1721,11 @@
    verrouillée (`title`/`description`/`icon`/`action`/`size`/`align`/
    `className`) ; plus de redesign ni de changement d'API sans ADR.
 
-   **SuccessBanner : CONSTRUIT, NON GELÉ (2026-07-07).** Une primitive
+   **SuccessBanner : GELÉ (validé visuellement 2026-07-08, après une passe
+   Frozen-review — token-clean dès la construction ; aucun code mort, aucun
+   import/prop inutilisé, aucune duplication interne, aucun style arbitraire ;
+   verrouillé sans changement ; API publique verrouillée, plus de changement
+   sans ADR).** Une primitive
    Feedback qui POSSÈDE sa propre surface — l'inverse délibéré des états
    content-only. Une confirmation PERSISTANTE, DANS LE FLUX, qu'une
    opération que l'utilisateur vient d'effectuer a RÉUSSI et mérite de
@@ -1777,8 +1781,10 @@
    `scripts/success-banner-proof.mjs` (captures desktop/tablet/mobile + RTL
    ; assertions rendu, `role="status"`, surface teintée, auto-masquage à la
    fermeture, bouton d'action, tailles strictement croissantes, largeur
-   responsive, direction RTL, statique). **Built, non frozen** — gel
-   interdit tant que la validation visuelle explicite n'a pas eu lieu.
+   responsive, direction RTL, statique). **GELÉ (2026-07-08)** — API publique
+   verrouillée (`title`/`description`/`icon`/`action`/`dismissible`/
+   `onDismiss`/`size`/`align`/`className`) ; plus de redesign ni de
+   changement d'API sans ADR.
 
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
