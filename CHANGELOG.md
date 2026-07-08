@@ -9,6 +9,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Badge — rebuilt to the full process, not frozen (Data Display
+  primitive).** Rebuilt from a pre-methodology implementation (previously
+  undocumented, bundled with Alert/Avatar/Code/…) to the full analysis/build/
+  proof process. A small, static property attached to a datum (Active,
+  Premium, Draft, a role, a priority, a count). Purely informative, NEVER
+  interactive, never alone. Deliberately NOT a Chip (interactive/removable),
+  NOT a Tag (input), NOT a Pill (a shape), NOT a Label (a form caption), NOT a
+  StatusDot (no text — Badge always labels, color is never alone), NOT a
+  Counter/Notification badge (a floating overlay), NOT an Avatar/Button/Tabs/
+  Stepper/Progress. Built only from color + typography tokens; three orthogonal
+  token-driven axes — `variant` (neutral/success/warning/error/info),
+  `appearance` (soft/solid/outline), `shape` (rounded/pill/square) — plus
+  `size` (xs/sm/md/lg) and an optional `icon`. Entirely static: no glass, no
+  shadow, no transition/animation, no role, no tabindex, not focusable (a
+  `<span>` that must never be made clickable; verified across 54 badges). The
+  icon sits before the label and flips under `dir="rtl"` via flex. **API
+  change (rebuild):** the pre-methodology `variant` set (`default`/`accent`/
+  success/warning/error/info) + `size` (sm/md) + `leadingIcon` becomes
+  `variant` (neutral/success/warning/error/info) + `appearance` + `size`
+  (xs/sm/md/lg) + `shape` + `icon`. The only consumer on the dropped surface —
+  the `/dev/components` gallery's `variant="accent"` — was migrated to `info`
+  (same `#6c5ce7` token); all other consumers already used only the preserved
+  surface and are unaffected. Proof `/dev/badge` + `scripts/badge-proof.mjs`
+  (rendering, variants, appearances, sizes, shapes, icon presence, the
+  non-interactive contract, size-stability, RTL). Awaiting visual validation
+  before any freeze.
+
 - **ErrorBanner — frozen (Feedback primitive that owns its surface).**
   Visually validated 2026-07-08; Frozen-review pass found no dead code, no
   unused imports/props, no internal duplication, and no arbitrary style —

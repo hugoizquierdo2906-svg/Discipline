@@ -196,8 +196,7 @@ export function Showcase() {
         </Block>
 
         <Block title="Badge">
-          <Badge>Default</Badge>
-          <Badge variant="accent">Accent</Badge>
+          <Badge>Neutral</Badge>
           <Badge variant="success">Success</Badge>
           <Badge variant="warning">Warning</Badge>
           <Badge variant="error">Error</Badge>

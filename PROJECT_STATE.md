@@ -2183,6 +2183,67 @@
 >     `action`/`dismissible`/`onDismiss`/`size`/`align`/`className`); no
 >     further redesign or API change without an ADR; changes only for an
 >     objective bug from here on.
+>   - **Badge — Data Display primitive, REBUILT to the full process (Built,
+>     not frozen).**
+>     ```text
+>     Data Display (token system, no glass role)
+>     color tokens (neutral/success/warning/error/info) + typography tokens
+>     → Badge (caller's icon verbatim; static <span>, never interactive)
+>     Status: Built (non frozen) — awaiting explicit visual validation
+>     ```
+>     Rebuilt from a pre-methodology implementation (previously undocumented,
+>     bundled with Alert/Avatar/Code/…) to the full analysis/build/proof
+>     process. A SMALL, STATIC piece of information ATTACHED to a datum: a
+>     short property that qualifies existing content (Active, Premium, Draft,
+>     Paid, Coach, Beginner, Hypertrophy, "12 clients"). Exactly ONE
+>     responsibility: display a compact property tied to a datum. Purely
+>     informative, NEVER interactive, never stands alone. Not a Chip
+>     (INTERACTIVE — selectable/removable/filter, focus+keyboard+close; Badge
+>     is never clickable, no tabindex/focus/role), not a Tag (an input Chip —
+>     typed keywords; Badge is not entered/removed), not a Pill (a SHAPE, not
+>     a responsibility — Badge offers `shape="pill"` but isn't defined by it),
+>     not a Label (a form caption `<label for>`; Badge describes a datum, not
+>     a field), not a StatusDot (a bare dot with no text — Badge always
+>     labels, color is never alone), not a Counter/Notification badge (a
+>     number OVERLAID in a corner — a numeric Badge is inline, not a floating
+>     overlay), not an Avatar (a person), not a Button (an ACTION), not
+>     Tabs/Stepper/Breadcrumb (navigation/progression/position), not a
+>     Progress (an evolving fraction — Badge is static, no track/value).
+>     Families (status, category, numeric, role, priority, version) collapse
+>     to ONE responsibility. Composes only typography tokens, a caller-
+>     supplied `icon` (typically the frozen Icon), and color tokens — never
+>     Button/Card/Alert/Toast/Chip. Three orthogonal token-driven axes:
+>     `variant` (semantic color), `appearance` (soft tint / solid fill /
+>     outline), `shape` (rounded / pill / square). Draws NO glass/blur/shadow,
+>     never a hard-coded color, entirely STATIC — no transition, no animation,
+>     no focus (verified: 54 badges carry no role, no tabindex, are `<span>`s,
+>     not focusable, `animation-name: none`; a Badge must never be made
+>     clickable). `inline-flex` on the datum's baseline; the optional icon
+>     precedes the label and flips under `dir="rtl"` via flex (verified:
+>     `direction: rtl`). Appearances verified (soft translucent 0<alpha<1,
+>     solid opaque alpha 1, outline no bg + visible border); sizes xs/sm/md/lg
+>     scale height (verified strictly increasing) and the Badge keeps its
+>     exact size across viewports — never resizes (verified: identical height
+>     at 1280px/390px); shapes verified (square ≈0 < rounded < pill). Rebuild
+>     migration: the sole non-frozen demo on the dropped legacy
+>     `variant="accent"` (`/dev/components` gallery) → `info` (same `#6c5ce7`
+>     token); every other consumer used only the preserved surface and is
+>     unaffected. grep: zero `GlassSurface`/`blur`/`backdrop-filter`/`rgba`/
+>     `shadow`/`transition`/`animation`/`animate-`/`.focus()` string in the
+>     component (only in doc-comment prose); zero TODO/FIXME/`console.*`/
+>     unused imports; zero hard-coded hex/px/ms. API: `variant`
+>     (neutral/success/warning/error/info) · `appearance` (soft/solid/outline)
+>     · `size` (xs/sm/md/lg) · `shape` (rounded/pill/square) · `icon` ·
+>     `className` (+ native span attributes). ONE non-frozen demo migrated
+>     (showcase gallery); ZERO frozen files modified. Proof: `/dev/badge` (on
+>     the capture wallpaper, badges inside real GlassCard/table/list surfaces)
+>     — basic · variants · soft/solid/outline · with/without icon · sizes ·
+>     shapes · status · role · priority · category · count · inside
+>     Card/Table/List · responsive · RTL, plus `scripts/badge-proof.mjs`
+>     (desktop/tablet/mobile + RTL captures; assertions for rendering,
+>     variants, appearances, sizes, shapes, icon presence, the non-interactive
+>     contract, size-stability, RTL). **Built, non frozen** — freeze forbidden
+>     until explicit visual validation.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

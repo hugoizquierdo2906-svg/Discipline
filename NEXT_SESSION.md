@@ -1936,6 +1936,61 @@
    `icon`/`action`/`dismissible`/`onDismiss`/`size`/`align`/`className`) ;
    plus de redesign ni de changement d'API sans ADR.
 
+   **Badge : CONSTRUIT (RECONSTRUIT), NON GELÉ (2026-07-08).** Primitive Data
+   Display reconstruite depuis une implémentation pré-méthodologie (non
+   documentée, groupée avec Alert/Avatar/Code/…) au processus complet
+   analyse/build/preuve. Une petite information STATIQUE ATTACHÉE à une donnée
+   : une propriété courte qui qualifie un contenu existant (Active, Premium,
+   Draft, Paid, Coach, Beginner, Hypertrophy, « 12 clients »). UNE seule
+   responsabilité : afficher une propriété compacte liée à une donnée.
+   Purement informatif, JAMAIS interactif, n'existe jamais seul. Pas un Chip
+   (INTERACTIF — sélectionnable/supprimable/filtre, focus+clavier+close ;
+   Badge n'est jamais cliquable, ni tabindex/focus/rôle), pas un Tag (un Chip
+   d'entrée — mots-clés saisis ; Badge ne se saisit/supprime pas), pas un Pill
+   (une FORME, pas une responsabilité — Badge propose `shape="pill"` sans en
+   être défini), pas un Label (une légende de champ `<label for>` ; Badge
+   décrit une donnée, pas un champ), pas un StatusDot (un point sans texte —
+   Badge porte toujours un texte, la couleur n'est jamais seule), pas un
+   Counter/Notification badge (un nombre SUPERPOSÉ dans un coin — un Badge
+   numérique est inline, pas une surcharge flottante), pas un Avatar (une
+   personne), pas un Button (une ACTION), pas Tabs/Stepper/Breadcrumb
+   (navigation/progression/position), pas un Progress (une fraction qui évolue
+   — Badge est statique, sans piste/valeur). Les familles (statut, catégorie,
+   numérique, rôle, priorité, version) se ramènent à UNE responsabilité.
+   Compose uniquement les tokens typographiques, un `icon` fourni par le
+   caller (typiquement l'Icon gelé), et les tokens de couleur — jamais
+   Button/Card/Alert/Toast/Chip. Trois axes orthogonaux pilotés par tokens :
+   `variant` (couleur sémantique), `appearance` (soft tint / solid fill /
+   outline), `shape` (rounded / pill / square). Aucun glass/blur/shadow,
+   jamais de couleur en dur, entièrement STATIQUE — aucune transition, aucune
+   animation, aucun focus (vérifié : 54 badges sans rôle, sans tabindex, des
+   `<span>`, non focusables, `animation-name: none` ; un Badge ne doit jamais
+   devenir cliquable). `inline-flex` sur la ligne de base de la donnée ;
+   l'icône optionnelle précède le texte et se retourne sous `dir="rtl"` via
+   flex (vérifié : `direction: rtl`). Appearances vérifiées (soft translucide
+   0<alpha<1, solid opaque alpha 1, outline sans fond + bordure visible) ;
+   tailles xs/sm/md/lg (hauteur strictement croissante) et le Badge garde sa
+   taille exacte à travers les viewports — ne se redimensionne jamais
+   (vérifié : hauteur identique à 1280px/390px) ; formes (square ≈0 < rounded
+   < pill). Migration du rebuild : le seul démo non gelé sur l'ancien
+   `variant="accent"` (galerie `/dev/components`) → `info` (même token
+   `#6c5ce7`) ; tous les autres consommateurs n'utilisaient que la surface
+   préservée et sont intacts. grep zéro GlassSurface/blur/backdrop-filter/
+   rgba/shadow/transition/animation/animate-/`.focus()` dans le composant
+   (uniquement dans la prose du doc-comment) ; zéro TODO/FIXME/`console.*`/
+   import inutilisé ; zéro hex/px/ms en dur. API : `variant`
+   (neutral/success/warning/error/info) · `appearance` (soft/solid/outline) ·
+   `size` (xs/sm/md/lg) · `shape` (rounded/pill/square) · `icon` · `className`
+   (+ attributs natifs du span). UN démo non gelé migré ; ZÉRO fichier gelé
+   modifié. Preuve : `/dev/badge` (sur le fond d'écran, badges dans de vraies
+   surfaces GlassCard/table/list) — basic · variants · soft/solid/outline ·
+   with/without icon · sizes · shapes · status · role · priority · category ·
+   count · inside Card/Table/List · responsive · RTL, plus
+   `scripts/badge-proof.mjs` (captures desktop/tablet/mobile + RTL ;
+   assertions rendu, variants, appearances, tailles, formes, présence d'icône,
+   contrat non-interactif, stabilité de taille, RTL). **Built, non frozen** —
+   gel interdit tant que la validation visuelle explicite n'a pas eu lieu.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
