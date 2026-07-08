@@ -2018,12 +2018,15 @@
 >     `onDismiss`/`size`/`align`/`className`); no further redesign or API
 >     change without an ADR; changes only for an objective bug from here on.
 >   - **WarningBanner — Feedback primitive that OWNS its surface, the frozen
->     SuccessBanner's sibling (Built, not frozen).**
+>     SuccessBanner's sibling. FROZEN (visually validated 2026-07-08, after a
+>     Frozen-review pass — token-clean from the build; no dead code, no unused
+>     imports/props, no internal duplication, no arbitrary style; locked
+>     unchanged).**
 >     ```text
 >     Feedback (owns its surface — built from warning tokens, not a glass role)
 >     warning-tint fill + warning-border + text-warning icon (all tokens)
 >     → WarningBanner (frozen Icon + Text + IconButton; caller's icon/action verbatim)
->     Status: Built (non frozen) — awaiting explicit visual validation
+>     Status: FROZEN
 >     ```
 >     Same Feedback family, same in-flow banner behavior as SuccessBanner,
 >     opposite polarity. A PERSISTENT, IN-FLOW warning: a situation that
@@ -2090,8 +2093,11 @@
 >     RTL, plus `scripts/warning-banner-proof.mjs` (desktop/tablet/mobile +
 >     RTL captures; assertions for rendering, `role="status"`, tinted
 >     surface + tinted icon, dismiss self-hide, action button, strictly
->     increasing sizes, responsive width, RTL direction, static). **Built,
->     non frozen** — freeze forbidden until explicit visual validation.
+>     increasing sizes, responsive width, RTL direction, static). **FROZEN
+>     (2026-07-08)** — public API locked (`title`/`description`/`icon`/
+>     `action`/`dismissible`/`onDismiss`/`size`/`align`/`className`); no
+>     further redesign or API change without an ADR; changes only for an
+>     objective bug from here on.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text
