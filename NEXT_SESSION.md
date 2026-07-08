@@ -1950,6 +1950,23 @@
    DISCIPLINE** — spécification produit/UX/interaction dans
    `docs/DISCIPLINE_AVATAR_EXPERIENCE.md` (design uniquement, aucun code).
 
+   **Sprint 1 — AvatarLauncher : CONSTRUIT, NON GELÉ (2026-07-08).** La porte
+   d'entrée unique et calme vers le Guide (`src/components/avatar/avatar-launcher.tsx`)
+   — première brique du module Avatar, pas du DS. Compose UNIQUEMENT des
+   primitives gelées (IconButton pour la matière glass, Icon = boussole,
+   Spinner, Badge non-lus neutre, Avatar présence coach, Tooltip) ; aucune
+   nouvelle matière/surface/animation. États : `state`
+   (idle/loading/active/coach/unavailable) + `unread` + `disabled` natif ;
+   hover/press/focus natifs ; « waiting » = Badge non-lus discret. UNE seule
+   taille considérée (56px — un launcher garde une cible constante partout ; le
+   responsive = placement, pas rétrécissement ; contourne aussi l'échelle
+   non-monotone de l'IconButton gelé). Clavier + ARIA complets
+   (`aria-haspopup="dialog"`/`aria-expanded`/`aria-busy`/nom accessible), RTL
+   correct via propriétés logiques. API : `state` · `unread` · `coach` ·
+   `label` · `className`. Preuve `/dev/avatar-launcher` +
+   `scripts/avatar-launcher-proof.mjs` verte. **Aucune autre brique Avatar tant
+   que le Launcher n'est pas gelé.**
+
    Historique — **Badge : PASSE DE SIMPLIFICATION (2026-07-08).** Cohérence du
    design system plutôt que surface d'API. Palette réduite aux quatre vraies
    couleurs sémantiques (neutral/success/warning/error ; `info` supprimé) — les

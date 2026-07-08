@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **AvatarLauncher — built, not frozen (Avatar module, Sprint 1).** The single,
+  calm entry point to the DISCIPLINE Guide — the first brick of the Avatar
+  module (`src/components/avatar/`), not the Design System. It is the door, not
+  the room: it opens nothing itself (no Drawer, no conversation, no AI) — only
+  the persistent presence a member reaches for. Deliberately NOT a Floating
+  Action Button (a per-screen primary action), NOT a bare IconButton (no
+  identity or product states), NOT a Speed Dial (one entry point, not a fan),
+  NOT a Help/Support button (not a utility or incident channel), NOT a Chat
+  Launcher / Assistant Bubble / Notification FAB (it refuses the Messenger
+  bubble, the alarm count and attention animations). Composes ONLY frozen
+  primitives — IconButton (its glass), Icon (a compass = orient/guide, never a
+  chat bubble), Spinner (loading), Badge (discreet neutral unread), Avatar (the
+  coach's presence), Tooltip (a calm hint) — and creates no new material,
+  surface or animation. State model: a single `state`
+  (idle/loading/active/coach/unavailable) + `unread` + native `disabled`;
+  hover/press/focus are native; "waiting" is a discreet unread Badge, never a
+  colour-only dot. One considered size (a launcher stays a consistent
+  thumb-target everywhere — responsiveness is placement, not shrinking), full
+  keyboard + ARIA (`aria-haspopup="dialog"`, `aria-expanded`, `aria-busy`,
+  descriptive accessible name), and RTL-correct corner markers via logical
+  inset. API: `state` · `unread` · `coach` · `label` · `className` (+ native
+  button attributes). Proof `/dev/avatar-launcher` +
+  `scripts/avatar-launcher-proof.mjs` (every state, keyboard activation +
+  no-trap, ARIA, touch target on desktop/mobile, RTL). Awaiting visual
+  validation before any freeze.
+
 ### Changed
 
 - **DISCIPLINE visual identity — officially FROZEN.** This version becomes the
