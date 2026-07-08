@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Avatar — rebuilt to a compound Data Display primitive, not frozen.**
+  Rebuilt the pre-methodology single-element `<Avatar name src size/>` into the
+  proper compound (`Avatar` · `Avatar.Image` · `Avatar.Fallback` ·
+  `Avatar.Group`) to the full analysis/build/proof process. A foundational Data
+  Display primitive answering only "who is this object?" — no domain knowledge
+  (it does not know DISCIPLINE, a client, a coach, an AI or a guide). It
+  reserves a surface, shows a cropped image, and GUARANTEES a strict fallback
+  (image → initials → generic user icon), so it is never empty. Strictly
+  forbidden here (they belong to higher-level components): online presence,
+  notification/AI badges, halo, pulse, launcher behaviour, integrated
+  tooltip/menu, animation, coach/guide/chatbot. Composes only Avatar (Radix),
+  Icon and Typography — no glass/floating/overlay. Sizes xs/sm/md/lg/xl are one
+  monotonic token scale (24·32·40·48·64px); shapes circle/rounded/square; the
+  shape never changes responsively, only the size. `Avatar.Group` is
+  composition-only: RTL-correct overlap via a negative logical margin, a token
+  ring, and a calm `+N` overflow chip. Exports `getInitials(name)` (≤2 upper
+  letters). **API change (rebuild):** `<Avatar size shape className children>` +
+  `<Avatar.Image>` / `<Avatar.Fallback>` / `<Avatar.Group max spacing>` — no
+  domain props. Consumers on the old `<Avatar name src size/>` (AvatarLauncher +
+  the command-palette/showcase/navbar/hover-card demos) were migrated to the
+  compound form. Proof `/dev/avatar` + `scripts/avatar-proof.mjs` (image render,
+  automatic fallback, initials, icon fallback, sizes, shapes, group overlap,
+  overflow, responsive-size-only, RTL). Awaiting visual validation before any
+  freeze.
+
 ### Added
 
 - **AvatarLauncher — built, not frozen (Avatar module, Sprint 1).** The single,

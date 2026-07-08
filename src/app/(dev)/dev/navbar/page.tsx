@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 
-import { Avatar } from '@/components/ui/avatar'
+import { Avatar, getInitials } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { GlassPanel } from '@/components/ui/glass-panel'
 import { Navbar } from '@/components/ui/navbar'
@@ -51,7 +51,9 @@ function NavSample({ attached, dark }: { attached?: boolean; dark?: boolean }) {
           Sign in
         </Button>
         <Button size="sm">Start</Button>
-        <Avatar size="sm" name="Alex Rivera" />
+        <Avatar size="sm">
+          <Avatar.Fallback>{getInitials('Alex Rivera')}</Avatar.Fallback>
+        </Avatar>
       </Navbar.Actions>
     </Navbar>
   )

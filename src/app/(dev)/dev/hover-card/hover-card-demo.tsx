@@ -3,7 +3,7 @@
 import { BookOpen, Calendar, Dumbbell, MapPin } from 'lucide-react'
 import { forwardRef } from 'react'
 
-import { Avatar } from '@/components/ui/avatar'
+import { Avatar, getInitials } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -146,7 +146,11 @@ function Demo({ dark }: { dark: boolean }) {
                 data-preview="user"
               >
                 <div className="flex items-start gap-3">
-                  <Avatar name="Hugo Izquierdo" />
+                  <Avatar>
+                    <Avatar.Fallback>
+                      {getInitials('Hugo Izquierdo')}
+                    </Avatar.Fallback>
+                  </Avatar>
                   <div className="flex min-w-0 flex-col gap-1">
                     <span className="text-body-sm font-medium">
                       Hugo Izquierdo
@@ -250,7 +254,11 @@ function Demo({ dark }: { dark: boolean }) {
                   <p className={sub}>Split: upper / lower / conditioning</p>
                   <p className={sub}>Duration: 60–75 min · 4×/week</p>
                   <div className="flex items-center gap-2 pt-1">
-                    <Avatar name="Hugo Izquierdo" size="sm" />
+                    <Avatar size="sm">
+                      <Avatar.Fallback>
+                        {getInitials('Hugo Izquierdo')}
+                      </Avatar.Fallback>
+                    </Avatar>
                     <span className={sub}>Coached by Hugo</span>
                   </div>
                 </div>

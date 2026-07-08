@@ -3,7 +3,7 @@
 import { Compass } from 'lucide-react'
 import { forwardRef } from 'react'
 
-import { Avatar } from '@/components/ui/avatar'
+import { Avatar, getInitials } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Icon } from '@/components/ui/icon'
 import { IconButton } from '@/components/ui/icon-button'
@@ -172,12 +172,13 @@ export const AvatarLauncher = forwardRef<
 
         {showCoach && (
           <Avatar
-            name={coach.name}
-            src={coach.src}
             size="sm"
             aria-hidden
             className="pointer-events-none absolute -top-0.5 -end-0.5 h-6 w-6 border-surface-raised"
-          />
+          >
+            {coach.src && <Avatar.Image src={coach.src} alt={coach.name} />}
+            <Avatar.Fallback>{getInitials(coach.name)}</Avatar.Fallback>
+          </Avatar>
         )}
         {showUnread && (
           <Badge

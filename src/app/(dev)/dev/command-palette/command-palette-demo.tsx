@@ -16,7 +16,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 
-import { Avatar } from '@/components/ui/avatar'
+import { Avatar, getInitials } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -46,7 +46,11 @@ const mainGroups: CommandGroup[] = [
         id: 'r2',
         label: 'Hugo Izquierdo',
         description: 'Client · Madrid',
-        icon: <Avatar name="Hugo Izquierdo" size="sm" />,
+        icon: (
+          <Avatar size="sm">
+            <Avatar.Fallback>{getInitials('Hugo Izquierdo')}</Avatar.Fallback>
+          </Avatar>
+        ),
         keywords: ['client', 'coach'],
       },
     ],

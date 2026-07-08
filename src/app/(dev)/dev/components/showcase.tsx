@@ -6,6 +6,7 @@ import { useState } from 'react'
 import {
   Alert,
   Avatar,
+  getInitials,
   Badge,
   Button,
   Checkbox,
@@ -203,10 +204,18 @@ export function Showcase() {
         </Block>
 
         <Block title="Avatar">
-          <Avatar size="sm" name="Hugo Izquierdo" />
-          <Avatar size="md" name="Hugo Izquierdo" />
-          <Avatar size="lg" name="Marie Curie" />
-          <Avatar size="xl" name="A" />
+          <Avatar size="sm">
+            <Avatar.Fallback>{getInitials('Hugo Izquierdo')}</Avatar.Fallback>
+          </Avatar>
+          <Avatar size="md">
+            <Avatar.Fallback>{getInitials('Hugo Izquierdo')}</Avatar.Fallback>
+          </Avatar>
+          <Avatar size="lg">
+            <Avatar.Fallback>{getInitials('Marie Curie')}</Avatar.Fallback>
+          </Avatar>
+          <Avatar size="xl">
+            <Avatar.Fallback>{getInitials('A')}</Avatar.Fallback>
+          </Avatar>
         </Block>
 
         <Block title="Icon, Spinner, Skeleton, Separator">

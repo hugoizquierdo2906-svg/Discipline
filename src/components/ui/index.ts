@@ -2,7 +2,7 @@
 // Generic, stateless, token-driven. No business logic lives here.
 
 export { Alert } from './alert'
-export { Avatar } from './avatar'
+export { Avatar, getInitials } from './avatar'
 export { Badge } from './badge'
 export { BottomNav } from './bottom-nav'
 export { Button, buttonVariants } from './button'

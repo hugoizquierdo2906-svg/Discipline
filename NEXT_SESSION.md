@@ -1950,6 +1950,21 @@
    DISCIPLINE** — spécification produit/UX/interaction dans
    `docs/DISCIPLINE_AVATAR_EXPERIENCE.md` (design uniquement, aucun code).
 
+   **Avatar (Data Display) : RECONSTRUIT EN COMPOUND, NON GELÉ (2026-07-08).**
+   L'Avatar simple pré-méthodologie (`<Avatar name src size/>`) devient le vrai
+   primitif compound (`Avatar`·`Avatar.Image`·`Avatar.Fallback`·`Avatar.Group`).
+   Primitif fondamental Data Display : répond seulement « qui est cet objet ? »,
+   aucune connaissance métier. Fallback strict image→initiales→icône
+   utilisateur (jamais vide). Tailles xs/sm/md/lg/xl = une échelle de tokens
+   monotone (24·32·40·48·64px — évite les paliers non définis type `h-16`) ;
+   formes circle/rounded/square ; la forme ne change jamais en responsive, seule
+   la taille. `Avatar.Group` = composition pure (overlap RTL-correct via marge
+   logique négative, ring token, chip `+N`). Export `getInitials`. INTERDITS :
+   presence online, badge notif/IA, halo, pulse, launcher, tooltip/menu intégré,
+   animation, coach/guide/chatbot. Consommateurs migrés (AvatarLauncher +
+   démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
+   — attendre validation visuelle.
+
    **Sprint 1 — AvatarLauncher : CONSTRUIT, NON GELÉ (2026-07-08).** La porte
    d'entrée unique et calme vers le Guide (`src/components/avatar/avatar-launcher.tsx`)
    — première brique du module Avatar, pas du DS. Compose UNIQUEMENT des
