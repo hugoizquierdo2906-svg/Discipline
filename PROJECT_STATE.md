@@ -3,9 +3,11 @@
 > Living record of build progress against `DISCIPLINE_BUILD_PLAN.md`.
 > Updated at the close of each phase.
 
-**Last updated:** 2026-07-01
-**Current phase:** Phase 04 — Component Library (Level 2 Glass & Composite) — the five Material Roles are FROZEN and promoted to `glass.css`; library generalization has begun (GlassCard built).
-**Next phase:** continue Phase 04 generalization (Structural family next), then Phase 05.
+**Last updated:** 2026-07-08
+**Current phase:** **VISUAL IDENTITY OFFICIALLY FROZEN (2026-07-08).** This version is the visual reference of DISCIPLINE — art direction, palette, typography, global spacing, existing components, card style, animations and identity are locked (change only for a strictly necessary UX fix). We now enter **product development**: the goal is no longer a more beautiful interface, but a smarter product. First feature: the **DISCIPLINE Avatar** — product/UX/interaction specification in `docs/DISCIPLINE_AVATAR_EXPERIENCE.md` (design-only, no code).
+**Next phase:** build the Avatar experience from its specification, feature by feature.
+
+> _Historical (component-library phase):_ Phase 04 — the five Material Roles are FROZEN and promoted to `glass.css`; the component library was built and progressively frozen (the Feedback banner family and Badge frozen 2026-07-08).
 
 > ### ✅ Validated today — the material language is locked
 > - **All FIVE Material Roles are DEFINITIVELY FROZEN** (reopen only for an
@@ -2189,8 +2191,12 @@
 >     Data Display — a MICRO-FRAGMENT of Liquid Glass (material in badge.css)
 >     .ds-badge (translucent glass + hairline machined edge) + data-variant/appearance
 >     → Badge (caller's icon verbatim; static <span>, never interactive)
->     Status: Built (non frozen) — awaiting explicit visual validation
+>     Status: FROZEN (visually validated 2026-07-08)
 >     ```
+>     **FROZEN (2026-07-08)** after the rebuild + Liquid-Glass craft pass +
+>     simplification pass. Public API locked (`variant` neutral/success/
+>     warning/error · `appearance` soft/solid/outline · `size` sm/md · `icon`
+>     · `className`); no further redesign or API change without an ADR.
 >     **Simplification pass (2026-07-08): coherence over API surface.**
 >     Palette reduced to the four TRUE semantic colours (neutral/success/
 >     warning/error; `info` dropped) — business properties (Coach/Premium/

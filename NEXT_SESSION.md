@@ -1936,7 +1936,21 @@
    `icon`/`action`/`dismissible`/`onDismiss`/`size`/`align`/`className`) ;
    plus de redesign ni de changement d'API sans ADR.
 
-   **Badge : PASSE DE SIMPLIFICATION (2026-07-08), NON GELÉ.** Cohérence du
+   **Badge : GELÉ (2026-07-08)** — validé visuellement après rebuild + craft
+   pass Liquid Glass + passe de simplification. API publique verrouillée
+   (`variant` neutral/success/warning/error · `appearance` soft/solid/outline ·
+   `size` sm/md · `icon` · `className`) ; plus de changement sans ADR.
+
+   **IDENTITÉ VISUELLE OFFICIELLEMENT GELÉE (2026-07-08).** Cette version
+   devient la référence visuelle de DISCIPLINE (direction artistique, palette,
+   typographie, espacements globaux, composants existants, style des cartes,
+   animations, identité — verrouillés ; changement uniquement pour un vrai
+   problème UX). On entre en **développement produit** : rendre le produit plus
+   intelligent, pas l'interface plus belle. Première fonctionnalité : l'**Avatar
+   DISCIPLINE** — spécification produit/UX/interaction dans
+   `docs/DISCIPLINE_AVATAR_EXPERIENCE.md` (design uniquement, aucun code).
+
+   Historique — **Badge : PASSE DE SIMPLIFICATION (2026-07-08).** Cohérence du
    design system plutôt que surface d'API. Palette réduite aux quatre vraies
    couleurs sémantiques (neutral/success/warning/error ; `info` supprimé) — les
    propriétés métier (Coach/Premium/Draft/Hypertrophy) portent toutes le verre

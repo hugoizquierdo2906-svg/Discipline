@@ -9,7 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Badge — simplification pass, not frozen (Data Display primitive).** A
+- **DISCIPLINE visual identity — officially FROZEN.** This version becomes the
+  visual reference of DISCIPLINE. The art direction, palette, typography, global
+  spacing, existing components, card style, animations and visual identity are
+  locked — no change except one strictly necessary to fix a real UX problem. The
+  project now enters a product-development phase: the goal is no longer to make
+  the interface more beautiful, but to make the product smarter. First feature:
+  the DISCIPLINE Avatar (product/UX/interaction spec in
+  `docs/DISCIPLINE_AVATAR_EXPERIENCE.md`).
+
+- **Badge — frozen (Data Display primitive).** Visually validated 2026-07-08
+  after the rebuild + Liquid-Glass craft pass + simplification pass; the palette
+  (neutral/success/warning/error), the always-pill geometry, the two sizes and
+  the `.ds-badge` material are locked. No functional, visual or architectural
+  change again except an objective bug; the public API (`variant`/`appearance`/
+  `size`/`icon`/`className`) requires an ADR to change.
+
+- **Badge — simplification pass (Data Display primitive).** A
   final craft pass dedicated to design-system coherence: fewer variants, fewer
   colours, a stronger identity. The palette is reduced to the four TRUE
   semantic colours — neutral, success, warning, error (`info` dropped);
