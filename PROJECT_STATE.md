@@ -2017,6 +2017,81 @@
 >     public API locked (`title`/`description`/`icon`/`action`/`dismissible`/
 >     `onDismiss`/`size`/`align`/`className`); no further redesign or API
 >     change without an ADR; changes only for an objective bug from here on.
+>   - **WarningBanner — Feedback primitive that OWNS its surface, the frozen
+>     SuccessBanner's sibling (Built, not frozen).**
+>     ```text
+>     Feedback (owns its surface — built from warning tokens, not a glass role)
+>     warning-tint fill + warning-border + text-warning icon (all tokens)
+>     → WarningBanner (frozen Icon + Text + IconButton; caller's icon/action verbatim)
+>     Status: Built (non frozen) — awaiting explicit visual validation
+>     ```
+>     Same Feedback family, same in-flow banner behavior as SuccessBanner,
+>     opposite polarity. A PERSISTENT, IN-FLOW warning: a situation that
+>     needs the user's ATTENTION without immediately blocking their work (a
+>     subscription about to expire, an incomplete profile, storage almost
+>     full, a payment renewing soon, an unpublished program, partially
+>     synced data). Exactly ONE responsibility: warn of a RISK or a
+>     recommended action, in the flow, without blocking. NEVER a failure,
+>     never a block, never transient. Not a Toast/Snackbar (TRANSIENT,
+>     floating, auto-dismissing, outside the flow — WarningBanner lives IN
+>     the flow and persists until the risk is resolved or dismissed), not an
+>     Alert (the generic multi-variant strip ABOUT the view — WarningBanner
+>     is the single warning-only signal with its own warning tokens and an
+>     optional recommended action; the brief scopes it to NOT be/compose an
+>     Alert), not an Error Banner/ErrorState (a FAILURE, often blocking/
+>     retryable — WarningBanner is the opposite: nothing failed, the work
+>     continues), not an Info Banner (a neutral note with no notion of risk
+>     — WarningBanner carries the amber "attention" charge and usually a
+>     next step), not a Dialog (blocking/modal — never blocks or traps
+>     focus), not an OfflineState (a CONTENT state that REPLACES a region —
+>     WarningBanner sits ALONGSIDE content that IS present), not a Spinner
+>     (in-flight — a stable condition), not an EmptyState (a meaningful
+>     absence — accompanies present content), not a Notification Center (a
+>     historical list — a single present warning in situ). Variants
+>     (subscription expiring, storage almost full, profile incomplete, email
+>     unverified, partial sync, program unpublished) collapse to ONE
+>     responsibility. **A Feedback primitive that OWNS its surface — like
+>     the frozen SuccessBanner and unlike the content-only states: a
+>     warning-tinted strip built ONLY from warning tokens
+>     (`bg-[var(--ds-color-warning-tint)]`,
+>     `border-[var(--ds-color-warning-border)]`, `text-warning` icon), a
+>     token radius (`rounded-lg`) and token spacing — never a hard-coded
+>     color, never GlassSurface/blur/backdrop-filter/shadow, never
+>     motion.** Composes only the frozen Icon (caller supplies the warning
+>     icon), Text, and IconButton (dismiss) — never Alert/Toast/Card/Dialog;
+>     deliberately does NOT compose the frozen SuccessBanner despite the
+>     identical layout (distinct polarity: success vs. risk; SuccessBanner
+>     frozen — coupling would block its evolution behind an ADR). `w-full`
+>     (follows parent width, no JS — verified: full vs. half column tracked
+>     exactly); `role="status"` (aria-live polite) surfaces the warning
+>     WITHOUT the interrupting urgency of `role="alert"`, matching its
+>     non-blocking nature; horizontal flex so the dismiss control flips
+>     under `dir="rtl"` (verified: `direction: rtl`, action + dismiss
+>     render); the dismiss IconButton keeps native button semantics (no
+>     auto-focus, no trap) and self-hides the banner (verified) + fires
+>     `onDismiss`. Icon tinted `text-warning` (amber) — a meaningful,
+>     non-decorative token distinct from the neutral body color (verified).
+>     Two additive props, both justified: `align` (left/center, the brief's
+>     Alignement section) and `onDismiss`. Sizes sm/md/lg scale icon/title/
+>     description/padding together (verified: title font-size strictly
+>     increases). Static: zero animation on the root, ignoring composed
+>     buttons (verified). grep: zero `GlassSurface`/`blur`/`backdrop-filter`/
+>     `rgba`/`shadow`/`transition`/`animation`/`animate-`/`.focus()` string
+>     in the component (only in doc-comment prose describing what it is NOT);
+>     zero TODO/FIXME/`console.*`/unused imports; zero hard-coded hex/px/ms.
+>     API: `title` · `description` · `icon` · `action` · `dismissible` ·
+>     `onDismiss` · `size` (sm/md/lg) · `align` (left/center) · `className`
+>     (+ native div attributes). ZERO frozen files modified. Proof:
+>     `/dev/warning-banner` (on the capture wallpaper, shown directly in
+>     flow since it owns its surface) — basic · with/without description ·
+>     dismissible · with/without action · dismissible+action · sm/md/lg ·
+>     dashboard · subscription expiring · storage almost full · profile
+>     incomplete · program unpublished · partial sync · responsive width ·
+>     RTL, plus `scripts/warning-banner-proof.mjs` (desktop/tablet/mobile +
+>     RTL captures; assertions for rendering, `role="status"`, tinted
+>     surface + tinted icon, dismiss self-hide, action button, strictly
+>     increasing sizes, responsive width, RTL direction, static). **Built,
+>     non frozen** — freeze forbidden until explicit visual validation.
 >   - **Bottom Sheet — Immersive, composes the Modal foundation + the frozen
 >     Spinner (Built, not frozen).**
 >     ```text

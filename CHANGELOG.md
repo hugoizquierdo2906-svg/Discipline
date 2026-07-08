@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **WarningBanner — built, not frozen (Feedback primitive that owns its
+  surface).** The frozen SuccessBanner's sibling — same Feedback family, same
+  in-flow banner behavior, opposite polarity. A PERSISTENT, IN-FLOW warning: a
+  situation that needs the user's ATTENTION without immediately blocking their
+  work (subscription about to expire, incomplete profile, storage almost full,
+  payment renewing soon, unpublished program, partially synced data). Exactly
+  one responsibility: warn of a risk or a recommended action, in the flow,
+  without blocking — it pushes surrounding content and persists until the risk
+  is resolved or the user dismisses it. Deliberately NOT a Toast/Snackbar
+  (transient, floating, outside the flow), NOT an Alert (generic multi-variant
+  message ABOUT the view), NOT an Error Banner/ErrorState (a failure —
+  WarningBanner is the opposite: nothing failed), NOT an Info Banner (neutral,
+  no risk charge), NOT a Dialog (blocking/modal), NOT the content-only states
+  (which REPLACE a region), NOT a Spinner/EmptyState/Notification Center. Like
+  SuccessBanner it OWNS its surface, built ONLY from warning tokens
+  (`bg-[var(--ds-color-warning-tint)]`, `border-[var(--ds-color-warning-border)]`,
+  `text-warning` icon), token radius and spacing — no hard-coded color, no
+  GlassSurface/blur/shadow, no motion. Composes only the frozen Icon, Text, and
+  IconButton (dismiss); does NOT compose the frozen SuccessBanner (distinct
+  polarity). `w-full` (follows parent width, no JS), `role="status"` (aria-live
+  polite — surfaces the warning without an alert's interrupting urgency,
+  matching its non-blocking nature), horizontal flex so the dismiss control
+  flips under `dir="rtl"`; the dismiss button self-hides the banner and fires
+  `onDismiss`. API: `title` · `description` · `icon` · `action` ·
+  `dismissible` · `onDismiss` · `size` (sm/md/lg) · `align` (left/center) ·
+  `className`. Proof `/dev/warning-banner` + `scripts/warning-banner-proof.mjs`
+  (rendering, `role="status"`, tinted surface + tinted icon, dismiss self-hide,
+  action button, sizes, responsive width, RTL, static). Awaiting visual
+  validation before any freeze.
+
 ### Changed
 
 - **SuccessBanner — frozen (Feedback primitive that owns its surface).**

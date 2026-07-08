@@ -1786,6 +1786,76 @@
    `onDismiss`/`size`/`align`/`className`) ; plus de redesign ni de
    changement d'API sans ADR.
 
+   **WarningBanner : CONSTRUIT, NON GELÉ (2026-07-08).** Le frère du
+   SuccessBanner gelé — même famille Feedback, même comportement de bande
+   dans le flux, polarité inverse. Une confirmation PERSISTANTE, DANS LE
+   FLUX, d'une situation qui nécessite l'ATTENTION de l'utilisateur sans
+   bloquer immédiatement son travail (un abonnement bientôt expiré, un
+   profil incomplet, un stockage presque plein, un paiement bientôt
+   renouvelé, un programme non publié, des données partiellement
+   synchronisées). UNE seule responsabilité : prévenir d'un RISQUE ou d'une
+   action recommandée, dans le flux, sans bloquer. JAMAIS un échec, jamais
+   un blocage, jamais transitoire. Pas un Toast/Snackbar (transitoire,
+   flottant, auto-fermant, hors-flux — WarningBanner vit DANS le flux et
+   persiste jusqu'à résolution ou fermeture), pas un Alert (la bande
+   générique multi-variantes AU SUJET de la vue — WarningBanner est le
+   signal unique warning-only avec ses propres tokens et une action
+   recommandée optionnelle ; le brief interdit d'être/composer un Alert),
+   pas un Error Banner/ErrorState (un ÉCHEC, souvent bloquant/à réessayer —
+   WarningBanner est l'inverse : rien n'a échoué, le travail continue), pas
+   un Info Banner (une note neutre sans notion de risque — WarningBanner
+   porte la charge ambre « attention » et souvent une étape suivante), pas
+   un Dialog (bloquant/modal — ne bloque jamais, ne piège pas le focus),
+   pas un OfflineState (un état content-only qui REMPLACE une région —
+   WarningBanner est À CÔTÉ d'un contenu PRÉSENT), pas un Spinner (en cours
+   — un état stable), pas un EmptyState (une absence — accompagne un contenu
+   présent), pas un Notification Center (une liste historique — un
+   avertissement unique in situ). Les variantes (abonnement expirant,
+   stockage faible, profil incomplet, email non vérifié, sync partielle,
+   programme non publié) se ramènent à UNE responsabilité. **Possède sa
+   surface — comme le SuccessBanner gelé et à l'inverse des états
+   content-only : une bande teintée warning bâtie UNIQUEMENT sur les tokens
+   warning (`bg-[var(--ds-color-warning-tint)]`,
+   `border-[var(--ds-color-warning-border)]`, icône `text-warning`), un
+   rayon token (`rounded-lg`) et un espacement token — jamais de couleur en
+   dur, jamais de GlassSurface/blur/backdrop-filter/shadow, jamais de
+   mouvement.** Compose uniquement l'Icon gelé (le caller fournit l'icône
+   d'avertissement), Text, et l'IconButton gelé (fermeture) — jamais
+   Alert/Toast/Card/Dialog ; ne compose PAS le SuccessBanner gelé malgré la
+   mise en page identique (polarité distincte : succès vs. risque ;
+   SuccessBanner gelé — le coupler bloquerait son évolution derrière un
+   ADR). `w-full` (suit la largeur du parent sans JS — vérifié : colonnes
+   pleine vs demi-largeur suivies exactement) ; `role="status"` (aria-live
+   polite) fait remonter l'avertissement SANS l'urgence interruptive de
+   `role="alert"`, en accord avec sa nature non bloquante ; flex horizontal
+   → la fermeture se retourne sous `dir="rtl"` (vérifié : `direction: rtl`,
+   action + fermeture rendues) ; l'IconButton de fermeture garde sa
+   sémantique native (aucun focus auto, aucun piège) et auto-masque la
+   bande (vérifié) + déclenche `onDismiss`. Icône teintée `text-warning`
+   (ambre) — un token signifiant, non décoratif, distinct de la couleur du
+   corps (vérifié). Deux props additives justifiées : `align` (left/center,
+   la section Alignement du brief) et `onDismiss`. Tailles sm/md/lg
+   échelonnées ensemble (vérifié : la taille du titre croît strictement).
+   Statique : zéro animation sur la racine, hors boutons composés
+   (vérifié). grep zéro GlassSurface/blur/backdrop-filter/rgba/shadow/
+   transition/animation/animate-/`.focus()` dans le composant (uniquement
+   dans la prose du doc-comment décrivant ce qu'il n'est PAS) ; zéro
+   TODO/FIXME/`console.*`/import inutilisé ; zéro hex/px/ms en dur. API :
+   `title` · `description` · `icon` · `action` · `dismissible` ·
+   `onDismiss` · `size` (sm/md/lg) · `align` (left/center) · `className`
+   (+ attributs natifs du div). ZÉRO fichier gelé modifié. Preuve :
+   `/dev/warning-banner` (sur le fond d'écran, la bande montrée directement
+   dans le flux puisqu'elle possède sa surface) — basic · with/without
+   description · dismissible · with/without action · dismissible+action ·
+   sm/md/lg · dashboard · subscription expiring · storage almost full ·
+   profile incomplete · program unpublished · partial sync · responsive
+   width · RTL, plus `scripts/warning-banner-proof.mjs` (captures
+   desktop/tablet/mobile + RTL ; assertions rendu, `role="status"`, surface
+   teintée + icône teintée, auto-masquage à la fermeture, bouton d'action,
+   tailles strictement croissantes, largeur responsive, direction RTL,
+   statique). **Built, non frozen** — gel interdit tant que la validation
+   visuelle explicite n'a pas eu lieu.
+
    CommandPalette est GELÉE (Modal reste Built — sera gelé avec sa première
    validation dédiée, ex. Dialog). Ensuite : Dialog/ConfirmationDialog (← Modal),
    UserMenu (← DropdownMenu + Avatar). Le rôle Immersive est fondé : **ImmersiveSurface** (base) +
