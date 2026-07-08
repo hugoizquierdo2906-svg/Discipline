@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Badge — Liquid-Glass craft pass, not frozen (Data Display primitive).**
+  A complete visual refonte so the Badge reads as a micro-fragment of
+  DISCIPLINE's Liquid Glass — cut from the same material as the Drawers /
+  Banners — rather than a Tailwind/Bootstrap/shadcn pill. The material was
+  moved out of the component into a dedicated `.ds-badge` class in the new
+  `src/styles/badge.css` (the Construction rule, exactly like `.ds-glass` and
+  `.ds-micro`): a translucent, faintly-lit glass surface with a hairline
+  machined edge (inset top highlight + lower inner wall + a barely-there
+  contact shadow) and a light backdrop `blur(5px) saturate(1.3)`. The colour is
+  now carried mostly by the text/icon and a whisper of tint, never an
+  aggressive fill: `soft` (default) keeps the surface near-neutral; `outline`
+  is the bare translucent glass with a coloured hairline; `solid` is the single
+  strong voice — a deep, confident fill (near-black neutral, deep red error;
+  GitHub/Linear/Apple). The semantic palette is desaturated; `info` is the
+  restrained DISCIPLINE primary. Geometry now breathes (taller box, more
+  horizontal padding), the type is `font-semibold` for presence, and `rounded`
+  is a crisp 8px (no more "candy" 20px). **The public API, props, logic,
+  behaviour, accessibility and variants are unchanged** — this is purely the
+  visual language. The component only carries `.ds-badge` + `data-variant` +
+  `data-appearance` and stays grep-clean (no glass/blur/shadow/rgba in the
+  `.tsx`; all in `badge.css`). Proof re-run green (54 badges verified
+  non-interactive; appearances/sizes/shapes/RTL all pass). Awaiting visual
+  validation before any freeze.
+
 - **Badge — rebuilt to the full process, not frozen (Data Display
   primitive).** Rebuilt from a pre-methodology implementation (previously
   undocumented, bundled with Alert/Avatar/Code/…) to the full analysis/build/

@@ -7,6 +7,7 @@
 @import '../styles/typography.css';
 @import '../styles/glass.css';
 @import '../styles/micro.css';
+@import '../styles/badge.css';
 
 @tailwind base;
 @tailwind components;

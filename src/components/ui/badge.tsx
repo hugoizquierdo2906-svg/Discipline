@@ -27,20 +27,27 @@ import { cn } from '@/lib/cn'
  * are ONE responsibility (a compact property of a datum) wearing different
  * copy/color/icon, content a consumer passes in, never separate components.
  *
- * A Data Display primitive (token system, no glass role) — composes only the
- * design system's typography tokens, a caller-supplied `icon` (typically the
- * frozen Icon), and color tokens (neutral/success/warning/error/info); never
- * Button/Card/Alert/Toast/Chip. Three orthogonal axes, all from tokens:
- * `variant` (the semantic color), `appearance` (soft tint / solid fill /
- * outline), and `shape` (rounded / pill / square). It draws NO glass/blur/
- * shadow, never a hard-coded color, and is entirely STATIC — no transition, no
- * animation, no focus (it is not focusable and must never be made clickable).
- * `inline-flex` keeps it on the text baseline of the datum it qualifies; the
- * optional icon sits before the label and flips naturally under `dir="rtl"` via
- * flex, with no directional code. A `<span>` with no interactive role or
- * tabindex — purely informative. Future consumers: Client Card, Program Card,
- * Exercise Card, Tables, Lists, Dashboard, Calendar, Search Results, Drawer,
- * Dialog — any surface that qualifies a datum with a compact label.
+ * A Data Display primitive cut from DISCIPLINE's Liquid Glass — NOT a flat
+ * Bootstrap fill. It reads as a MICRO-FRAGMENT of the same material as the
+ * Drawers/Banners: a translucent, faintly-lit surface with a hairline machined
+ * edge and a whisper of depth, carrying its colour mostly in the text/icon and
+ * an extremely light tint, never an aggressive fill. The material lives ONCE in
+ * `src/styles/badge.css` (the Construction rule, exactly like `.ds-glass` /
+ * `.ds-micro`); the component only carries the `ds-badge` class plus
+ * `data-variant` (the semantic colour) and `data-appearance` (soft tint / solid
+ * fill / outline), and sets its own geometry (size, shape) from tokens. It
+ * never draws glass/blur/shadow/rgba in this file, never a hard-coded colour,
+ * and is entirely STATIC — no transition, no animation, no focus (it is not
+ * focusable and must never be made clickable). `soft` keeps the surface
+ * near-neutral and lets the text/icon speak; `outline` is lighter still;
+ * `solid` is the single strong voice — a deep, confident fill (GitHub / Linear
+ * / Apple), never flashy. `inline-flex` keeps it on the text baseline of the
+ * datum it qualifies; the optional icon sits before the label and flips
+ * naturally under `dir="rtl"` via flex, with no directional code. A `<span>`
+ * with no interactive role or tabindex — purely informative. Future consumers:
+ * Client Card, Program Card, Exercise Card, Tables, Lists, Dashboard, Calendar,
+ * Search Results, Drawer, Dialog — any surface that qualifies a datum with a
+ * compact label.
  */
 
 type BadgeVariant = 'neutral' | 'success' | 'warning' | 'error' | 'info'
@@ -57,56 +64,21 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   icon?: React.ReactNode
 }
 
-// Each cell is built ONLY from color tokens. `soft` = tint background + tinted
-// text + token border; `solid` = solid token fill + on-color text; `outline` =
-// transparent background + tinted text + token border. Every cell carries a
-// border colour (transparent for solid) so the box height is identical across
-// appearances.
-const variantAppearance: Record<
-  BadgeVariant,
-  Record<BadgeAppearance, string>
-> = {
-  neutral: {
-    soft: 'border-transparent bg-[var(--ds-color-border)] text-text-secondary',
-    solid:
-      'border-transparent bg-[var(--ds-color-text)] text-[var(--ds-color-surface-raised)]',
-    outline: 'border-[var(--ds-color-border-strong)] text-text-secondary',
-  },
-  success: {
-    soft: 'border-[var(--ds-color-success-border)] bg-[var(--ds-color-success-tint)] text-success',
-    solid:
-      'border-transparent bg-[var(--ds-color-success)] text-[var(--ds-color-text-on-accent)]',
-    outline: 'border-[var(--ds-color-success-border)] text-success',
-  },
-  warning: {
-    soft: 'border-[var(--ds-color-warning-border)] bg-[var(--ds-color-warning-tint)] text-warning',
-    solid:
-      'border-transparent bg-[var(--ds-color-warning)] text-[var(--ds-color-text-on-accent)]',
-    outline: 'border-[var(--ds-color-warning-border)] text-warning',
-  },
-  error: {
-    soft: 'border-[var(--ds-color-error-border)] bg-[var(--ds-color-error-tint)] text-error',
-    solid:
-      'border-transparent bg-[var(--ds-color-error)] text-[var(--ds-color-text-on-accent)]',
-    outline: 'border-[var(--ds-color-error-border)] text-error',
-  },
-  info: {
-    soft: 'border-[var(--ds-color-info-border)] bg-[var(--ds-color-info-tint)] text-info',
-    solid:
-      'border-transparent bg-[var(--ds-color-info)] text-[var(--ds-color-text-on-accent)]',
-    outline: 'border-[var(--ds-color-info-border)] text-info',
-  },
-}
-
+// Geometry only — the material (fill / edge / tint / colour) is delegated to
+// `.ds-badge` in badge.css. Sizes give the fragment room to breathe (a taller
+// box, more horizontal padding) and set the type scale/weight for presence; the
+// height increases strictly xs<sm<md<lg. The icon tracks the label size.
 const sizeClasses: Record<BadgeSize, string> = {
-  xs: 'h-4 gap-0.5 px-1.5 text-caption [&>svg]:h-3 [&>svg]:w-3',
-  sm: 'h-5 gap-1 px-2 text-caption [&>svg]:h-3 [&>svg]:w-3',
-  md: 'h-6 gap-1 px-2.5 text-caption [&>svg]:h-3.5 [&>svg]:w-3.5',
-  lg: 'h-7 gap-1.5 px-3 text-body-sm [&>svg]:h-4 [&>svg]:w-4',
+  xs: 'h-5 gap-1 px-2 text-caption [&>svg]:h-3 [&>svg]:w-3',
+  sm: 'h-6 gap-1 px-2.5 text-caption [&>svg]:h-3.5 [&>svg]:w-3.5',
+  md: 'h-7 gap-1.5 px-3 text-body-sm [&>svg]:h-4 [&>svg]:w-4',
+  lg: 'h-8 gap-1.5 px-3.5 text-body-sm [&>svg]:h-4 [&>svg]:w-4',
 }
 
+// Crisp, machined radii — `rounded` is a tight 8px (never the "candy" 20px),
+// `pill` a full capsule, `square` a hard corner.
 const shapeClasses: Record<BadgeShape, string> = {
-  rounded: 'rounded-md',
+  rounded: 'rounded-xs',
   pill: 'rounded-pill',
   square: 'rounded-none',
 }
@@ -123,9 +95,10 @@ export function Badge({
 }: BadgeProps) {
   return (
     <span
+      data-variant={variant}
+      data-appearance={appearance}
       className={cn(
-        'inline-flex items-center whitespace-nowrap border font-medium',
-        variantAppearance[variant][appearance],
+        'ds-badge inline-flex items-center whitespace-nowrap font-semibold leading-none',
         sizeClasses[size],
         shapeClasses[shape],
         className,

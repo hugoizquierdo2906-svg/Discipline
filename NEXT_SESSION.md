@@ -1936,8 +1936,23 @@
    `icon`/`action`/`dismissible`/`onDismiss`/`size`/`align`/`className`) ;
    plus de redesign ni de changement d'API sans ADR.
 
-   **Badge : CONSTRUIT (RECONSTRUIT), NON GELÉ (2026-07-08).** Primitive Data
-   Display reconstruite depuis une implémentation pré-méthodologie (non
+   **Badge : CRAFT PASS Liquid Glass (2026-07-08), NON GELÉ.** Refonte
+   visuelle complète : le Badge est désormais un MICRO-FRAGMENT du Liquid
+   Glass DISCIPLINE (matière déplacée dans `.ds-badge` du nouveau
+   `src/styles/badge.css`, règle de Construction comme `.ds-glass`/`.ds-micro`)
+   — surface de verre translucide légèrement éclairée, bordure machined
+   ultra-fine, léger backdrop blur, couleur portée par le texte/icône + une
+   très légère teinte (jamais un aplat agressif). `soft` quasi-neutre,
+   `outline` verre nu + hairline coloré, `solid` la seule voix forte
+   (noir profond / rouge profond, GitHub/Linear/Apple). Palette désaturée ;
+   `info` = primaire DISCIPLINE retenue. Géométrie qui respire davantage, type
+   `font-semibold`, rayon `rounded` net à 8px (fini le « bonbon »).
+   API/props/logique/comportement/accessibilité/variantes INCHANGÉS ; le
+   composant reste grep-clean (matière dans badge.css). Preuve re-run verte.
+   **Reste NON GELÉ tant que la validation visuelle explicite n'a pas eu lieu.**
+
+   Historique : primitive Data Display reconstruite depuis une implémentation
+   pré-méthodologie (non
    documentée, groupée avec Alert/Avatar/Code/…) au processus complet
    analyse/build/preuve. Une petite information STATIQUE ATTACHÉE à une donnée
    : une propriété courte qui qualifie un contenu existant (Active, Premium,

@@ -88,40 +88,51 @@ for (const [w, h, suffix] of [
   await context.close()
 }
 
-// Appearances: soft has a translucent tint, solid an opaque fill, outline a
-// transparent background with a visible border.
+// Appearances (the Liquid-Glass micro-material): soft sits on a translucent
+// glass base AND carries a colour tint layer; outline is the bare translucent
+// glass (no tint) with a visible coloured hairline; solid is an opaque fill.
 {
   const { context, page } = await newPage(1280, 900)
   const soft = badges(page, 'bd-soft').first()
   const solid = badges(page, 'bd-solid').first()
   const outline = badges(page, 'bd-outline').first()
-  const bg = (loc) =>
+  const styleOf = (loc) =>
     loc.evaluate((e) => {
-      const c = (
-        getComputedStyle(e).backgroundColor.match(/[\d.]+/g) ?? []
-      ).map(Number)
-      return c.length === 4 ? c[3] : c.length === 3 ? 1 : 0
+      const s = getComputedStyle(e)
+      const bg = (s.backgroundColor.match(/[\d.]+/g) ?? []).map(Number)
+      const border = (s.borderTopColor.match(/[\d.]+/g) ?? []).map(Number)
+      const alpha = (c) => (c.length === 4 ? c[3] : c.length === 3 ? 1 : 0)
+      return {
+        bgAlpha: alpha(bg),
+        borderAlpha: alpha(border),
+        hasTint: s.backgroundImage !== 'none',
+        borderW: parseFloat(s.borderTopWidth),
+      }
     })
-  const softA = await bg(soft)
-  const solidA = await bg(solid)
-  const outlineA = await bg(outline)
-  if (!(softA > 0 && softA < 1))
+  const softS = await styleOf(soft)
+  const solidS = await styleOf(solid)
+  const outlineS = await styleOf(outline)
+  // Soft: translucent glass base + a tint gradient layer.
+  if (!(softS.bgAlpha > 0 && softS.bgAlpha < 1))
     issues.push(
-      `[assert] soft appearance should have a translucent tint, alpha=${softA}`,
+      `[assert] soft should sit on a translucent glass base, bgAlpha=${softS.bgAlpha}`,
     )
-  if (solidA !== 1)
+  if (!softS.hasTint)
     issues.push(
-      `[assert] solid appearance should have an opaque fill, alpha=${solidA}`,
+      '[assert] soft should carry a colour tint layer (background-image)',
     )
-  if (outlineA !== 0)
+  // Outline: the bare translucent glass (no tint layer) with a visible hairline.
+  if (outlineS.hasTint)
     issues.push(
-      `[assert] outline appearance should have no background, alpha=${outlineA}`,
+      '[assert] outline should have no tint layer, just the glass base',
     )
-  const borderW = await outline.evaluate((e) =>
-    parseFloat(getComputedStyle(e).borderTopWidth),
-  )
-  if (borderW <= 0)
-    issues.push('[assert] outline appearance should draw a visible border')
+  if (!(outlineS.borderW > 0 && outlineS.borderAlpha > 0))
+    issues.push('[assert] outline should draw a visible coloured hairline')
+  // Solid: an opaque, confident fill.
+  if (solidS.bgAlpha !== 1)
+    issues.push(
+      `[assert] solid should have an opaque fill, bgAlpha=${solidS.bgAlpha}`,
+    )
   await context.close()
 }
 

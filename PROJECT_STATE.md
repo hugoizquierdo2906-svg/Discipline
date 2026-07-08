@@ -2186,11 +2186,22 @@
 >   - **Badge — Data Display primitive, REBUILT to the full process (Built,
 >     not frozen).**
 >     ```text
->     Data Display (token system, no glass role)
->     color tokens (neutral/success/warning/error/info) + typography tokens
+>     Data Display — a MICRO-FRAGMENT of Liquid Glass (material in badge.css)
+>     .ds-badge (translucent glass + hairline machined edge) + data-variant/appearance
 >     → Badge (caller's icon verbatim; static <span>, never interactive)
 >     Status: Built (non frozen) — awaiting explicit visual validation
 >     ```
+>     **Craft pass (2026-07-08): full Liquid-Glass refonte.** The material was
+>     moved into a dedicated `.ds-badge` class in the new
+>     `src/styles/badge.css` (Construction rule, like `.ds-glass`/`.ds-micro`)
+>     — a translucent, faintly-lit glass surface with a hairline machined edge
+>     and a light backdrop blur, colour carried by the text/icon + a whisper of
+>     tint. `soft` near-neutral, `outline` bare glass + coloured hairline,
+>     `solid` the one strong voice (near-black/deep). Desaturated palette;
+>     `info` = restrained DISCIPLINE primary. Geometry breathes more,
+>     `font-semibold` type, crisp 8px `rounded` (no candy). API/props/logic/
+>     behaviour/accessibility/variants UNCHANGED; component stays grep-clean
+>     (material in badge.css). Proof re-run green.
 >     Rebuilt from a pre-methodology implementation (previously undocumented,
 >     bundled with Alert/Avatar/Code/…) to the full analysis/build/proof
 >     process. A SMALL, STATIC piece of information ATTACHED to a datum: a
