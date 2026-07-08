@@ -1950,7 +1950,12 @@
    DISCIPLINE** — spécification produit/UX/interaction dans
    `docs/DISCIPLINE_AVATAR_EXPERIENCE.md` (design uniquement, aucun code).
 
-   **Avatar (Data Display) : RECONSTRUIT EN COMPOUND, NON GELÉ (2026-07-08).**
+   **Avatar (Data Display) : GELÉ (2026-07-08).** Reconstruit en compound puis
+   validé visuellement ; passe Frozen-review sans rien à changer (aucun code
+   mort, duplication, import/prop inutile, incohérence token/taille/spacing/
+   radius/fallback). API publique verrouillée (ADR pour changer). Détail :
+
+   **Avatar (Data Display) : RECONSTRUIT EN COMPOUND (2026-07-08).**
    L'Avatar simple pré-méthodologie (`<Avatar name src size/>`) devient le vrai
    primitif compound (`Avatar`·`Avatar.Image`·`Avatar.Fallback`·`Avatar.Group`).
    Primitif fondamental Data Display : répond seulement « qui est cet objet ? »,

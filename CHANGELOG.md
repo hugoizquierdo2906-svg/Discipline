@@ -9,7 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Avatar — rebuilt to a compound Data Display primitive, not frozen.**
+- **Avatar — frozen (compound Data Display primitive).** Visually validated
+  2026-07-08 after a Frozen-review pass: no dead code, no duplication, no
+  unused imports/props, no redundant logic, and no token/size/spacing/radius/
+  fallback inconsistency — the component was already clean, so the freeze locks
+  it unchanged (no code modified). Confirmed: the strict fallback (image →
+  initials → user icon) holds, a broken image falls back automatically,
+  initials never exceed two letters, groups and the `+N` overflow stay correct,
+  sizes are monotone, shapes are coherent, responsive changes size only, and
+  RTL is correct. It answers only "who is this object?" and holds no domain
+  logic. No functional, visual or architectural change again except an
+  objective bug; the public API (`Avatar` / `Avatar.Image` / `Avatar.Fallback`
+  / `Avatar.Group`, plus `getInitials`) requires an ADR to change.
+
+- **Avatar — rebuilt to a compound Data Display primitive.**
   Rebuilt the pre-methodology single-element `<Avatar name src size/>` into the
   proper compound (`Avatar` · `Avatar.Image` · `Avatar.Fallback` ·
   `Avatar.Group`) to the full analysis/build/proof process. A foundational Data
