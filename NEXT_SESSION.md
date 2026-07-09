@@ -1970,7 +1970,14 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
-   **Separator (Layout) : CONSTRUIT au processus complet, NON GELÉ
+   **Separator (Layout) : GELÉ (2026-07-09).** Frozen Review complète
+   (composant, code mort, imports/props/branches inutilisés, captures,
+   preuve Playwright, API, tokens, dépendances) — aucun défaut objectif
+   trouvé, zéro code modifié, gel tel quel. API publique
+   (`orientation`/`decorative`/`className`) nécessite désormais un ADR pour
+   être modifiée. Détail de la construction :
+
+   **Separator (Layout) : CONSTRUIT au processus complet
    (2026-07-09).** Le composant pré-méthodologie (bundlé avec Alert/Icon)
    était déjà très proche de la cible (Radix Separator, `orientation`/
    `decorative`/`className`, token `bg-divider`, épaisseur hairline) — la

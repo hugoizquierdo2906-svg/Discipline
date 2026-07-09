@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Separator — frozen (Layout primitive).** Visually validated 2026-07-09
+  after a Frozen Review (component, dead code, unused imports/props/branches,
+  captures, Playwright proof, API, tokens, dependencies) found no objective
+  defect — zero code changed, the freeze locks it as-is. No functional,
+  visual or architectural change again except an objective bug; the public
+  API (`orientation`/`decorative`/`className`) requires an ADR to change.
+
 - **Separator — built to the full process, not frozen (Layout primitive).**
   Took the pre-methodology component (previously bundled with Alert/Icon) —
   already Radix Separator with `orientation`/`decorative`/`className` and a
