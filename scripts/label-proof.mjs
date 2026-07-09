@@ -104,17 +104,29 @@ for (const [w, h, suffix] of [
   await context.close()
 }
 
-// Disabled: dimmed (opacity < 1) but still visible (> 0), cursor not-allowed.
+// Disabled: a REAL accessibility relationship — the <label> references, via
+// htmlFor, a control that is genuinely `disabled` (not just lighter text) — and
+// the label itself is dimmed but still visible, cursor not-allowed.
 {
   const { context, page } = await newPage(1280, 900)
   const l = label(page, 'lb-disabled')
+  const forId = await l.getAttribute('for')
+  if (forId !== 'lb-dis')
+    issues.push(`[assert] disabled label should bind its control, got ${forId}`)
+  // The referenced control is really disabled (a genuine, testable relation).
+  const control = page.locator(`#${forId}`)
+  const reallyDisabled = await control.evaluate((e) => e.disabled === true)
+  if (!reallyDisabled)
+    issues.push(
+      '[assert] the label must reference a control that is really disabled',
+    )
+  if (await control.isEnabled())
+    issues.push(
+      '[assert] the referenced control should not be interactive when disabled',
+    )
   const s = await l.evaluate((e) => {
     const cs = getComputedStyle(e)
-    return {
-      opacity: parseFloat(cs.opacity),
-      cursor: cs.cursor,
-      display: cs.display,
-    }
+    return { opacity: parseFloat(cs.opacity), cursor: cs.cursor }
   })
   if (!(s.opacity > 0 && s.opacity < 1))
     issues.push(

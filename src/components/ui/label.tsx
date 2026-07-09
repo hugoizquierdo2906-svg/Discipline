@@ -59,7 +59,10 @@ export const Label = forwardRef<
       ref={ref}
       data-disabled={disabled || undefined}
       className={cn(
-        'text-body-sm font-medium text-text',
+        // A hair of positive tracking gives the label a crisp "form-label"
+        // identity so it registers before its field — without touching its
+        // size, weight or colour (all already at their maximum useful value).
+        'text-body-sm font-medium tracking-[0.01em] text-text',
         disabled && 'cursor-not-allowed opacity-40',
         'peer-disabled:cursor-not-allowed peer-disabled:opacity-40',
         className,
@@ -68,7 +71,10 @@ export const Label = forwardRef<
     >
       {children}
       {required && (
-        <span aria-hidden className="ms-0.5 text-text-tertiary">
+        // Discreet and token-driven, one step more legible than tertiary so it
+        // is identifiable at a glance, yet still secondary to the text. Never
+        // red, never a semantic colour, never animated.
+        <span aria-hidden className="ms-0.5 text-text-secondary">
           *
         </span>
       )}

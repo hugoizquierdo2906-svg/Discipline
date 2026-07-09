@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Label — polish pass, not frozen (no API/variant/behaviour change).** A
+  pre-freeze craft pass, purely visual + test-hardening. (1) Slightly
+  strengthened the label's presence with a hair of positive letter-spacing
+  (`tracking-[0.01em]`) — a crisp form-label identity so it registers before its
+  field — without changing its size, weight or colour (all already at their
+  maximum useful value). (2) Bumped the required marker one step more legible,
+  from `text-text-tertiary` to `text-text-secondary` — identifiable at a glance
+  yet still secondary to the text, still neutral (never red), never animated.
+  (3) Hardened the disabled demo + proof to prove a REAL accessibility relation:
+  the `<label>` references, via `htmlFor`, a control that is genuinely `disabled`
+  (asserted `control.disabled === true` and non-interactive), not merely lighter
+  text. No new API, variant or behaviour; the icon rejection stands.
+
 - **Label — built to the full process, not frozen (Forms accessibility
   primitive).** Took the pre-methodology Label to the full analysis/build/proof
   process and fixed two objective defects. A Forms ACCESSIBILITY primitive (not
