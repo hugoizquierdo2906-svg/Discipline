@@ -10,7 +10,7 @@ the Glass Grammar (roles). Legend:
   component is exported yet.
 - **Planned** — not started.
 
-Last updated: 2026-07-09 (Separator FROZEN; Accordion built to the full process, not frozen).
+Last updated: 2026-07-09 (Separator FROZEN; Accordion (Disclosure) built to the full process, not frozen).
 
 ---
 
@@ -152,6 +152,18 @@ real Radix primitive directly (Tabs).
 
 ---
 
+## Disclosure primitives (flat, NO Material Role)
+
+Content that stays IN the page's own flow and is progressively revealed or
+hidden — never an overlay, never a navigation destination, never a change of
+which view is on screen.
+
+| Component | Status | Notes |
+|---|---|---|
+| `Accordion` | Built (not frozen) | Built 2026-07-09. A Disclosure primitive answering exactly ONE thing: "what additional content can I reveal?" — never "where am I" (Navigation), "what happened" (Feedback), "what's on top" (Overlay), "what is this value" (Data Display) or "what do I submit" (Form). Not Collapsible (a single togglable section with no relationship to siblings; Accordion is a GROUP of Collapsibles with coordinated behaviour — `type="single"` enforces at most one open, `type="multiple"` allows several, plus shared keyboard nav across the group; Radix's own Accordion is literally built on Collapsible internally). Not Tabs (frozen: Tabs SWITCH the visible region — inactive panels vanish entirely and the trigger row is a permanent strip; Accordion reveals ADDITIONAL content in place, every trigger stays visible, collapsed items are simply shorter). Not TreeView (hierarchical DATA — files, categories — usually with selection, browsed/chosen; Accordion discloses independent CONTENT SECTIONS, no selection concept). Not Drawer/Sheet/BottomSheet (OVERLAY surfaces: portaled, scrimmed, dismissible by Escape/outside-click, transiently covering the page; Accordion has no overlay, no scrim, no portal, no dismiss gesture — a permanent part of the page's own layout). Not Popover/Tooltip (transient, anchored, dismissed on blur/outside-click). Not Dialog (a blocking modal demanding a decision; Accordion never blocks). Not NavigationMenu (triggers flyouts to different DESTINATIONS; Accordion reveals content INLINE on the current page). Composes DIRECTLY `@radix-ui/react-accordion` — no intermediate wrapper, no `AccordionCard`/`AccordionPanel`/`DisclosureCard`/`ExpandableCard`/`AccordionContainer`. `Accordion.Trigger` internally pairs Radix's `Header` with its `Trigger` (Radix's own accessibility contract requires the interactive control inside a heading element) — an implementation detail of `Trigger`, never a separate public API piece. `Accordion.Item` decides no border/background/spacing of its own (Invariant A1 — a divided look is composed with the frozen `Separator` at the point of use, never baked into Item). `Accordion.Content` draws no card and no new surface: content appears directly under the Trigger, on whatever surface already contains the Accordion — never a `GlassSurface`. The Trigger's only affordance is a flat, token-driven hover/focus background (never glass/blur/shadow) plus a small chevron rotating a flat 180° with the same calm, instant `duration-fast`/`ease-standard` transition already used by the frozen Select/DropdownMenu chevrons — no bounce, no spring. `Accordion.Content` never constrains height: no `max-h-*`, no fixed height, no internal scroll — verified: `max-height: none`, `overflow-y` never `scroll`/`auto`, long content renders at its natural larger height. 100% of Radix's behaviour is kept as-is: ARIA (`aria-expanded`/`aria-controls`/`aria-disabled`), full keyboard (ArrowUp/ArrowDown/Home/End/Enter/Space, verified moving focus and toggling), focus management, RTL (`dir`, verified `direction: rtl` + functional open/close) and `orientation` — no custom behaviour layered on top. Verified: `type="single"` opening one item closes any other open item in the group; `type="multiple"` keeps several open independently; `collapsible` lets the open item close to none; non-`collapsible` marks the sole open item `aria-disabled="true"` (Radix's own strongest enforcement of "always exactly one open" — clicking a different item still switches normally, and the previously-open item becomes clickable again once no longer the sole open one); `disabled` on one Item blocks only that item, siblings work normally; `disabled` on the Root blocks every trigger; `value`/`onValueChange` externally drives the open panel (controlled) alongside `defaultValue` (uncontrolled); a nested inner Accordion inside an outer Item's content opens/closes independently of the outer one. API: `Accordion` (`type` · `value` · `defaultValue` · `onValueChange` · `collapsible` · `disabled` · `orientation` · `dir` · `className`) · `Accordion.Item` (`value` · `disabled` · `className`) · `Accordion.Trigger` (`className` + native button attributes) · `Accordion.Content` (`forceMount` · `className`) — plus each part's native Radix/HTML attributes, matching every other compound in this library. New pinned dependency: `@radix-ui/react-accordion@1.2.16` (exact-pinned, matching the repo's convention — Radix ships no Accordion substitute). grep: zero `GlassSurface`/blur/shadow/transition(complex)/gradient/glow string in the component (only in doc-comment prose listing what it forbids); zero hard-coded hex/px/ms. ZERO other files modified beyond the new component/demo/proof files and the `index.ts`/`package.json` export/dependency additions. Proof: `/dev/accordion` — basic · multiple · single · collapsible · non collapsible · controlled · uncontrolled · disabled item · disabled accordion · long content · nested · icons · RTL · responsive · keyboard navigation, plus `scripts/accordion-proof.mjs` asserting ARIA, the single/multiple/collapsible state machine, controlled/uncontrolled, disabled item/group, long-content height, nested independence, chevron rotation timing, RTL, full keyboard (Arrow/Home/End/Enter/Space) and a no-regression spot check. Built, non frozen — freeze forbidden until explicit visual validation. |
+
+---
+
 ## Composite / business components (← frozen roles, no new material)
 
 | Component | Derives from | Status |
@@ -162,7 +174,7 @@ real Radix primitive directly (Tabs).
 | `ChartWrapper` | GlassCard | Planned |
 | `MobileMenu` | GlassPanel + Immersive scrim | Planned (Navbar/BottomNav already reserve its place) |
 | `CommandPalette` | Immersive + Control | Planned |
-| `Accordion` · `Table` | Structural / flat | Planned |
+| `Table` | Structural / flat | Planned |
 | Domain cards (Workout · Meal · Progress · Subscription · Coach · Notification · Exercise) | GlassCard | Planned |
 
 ---

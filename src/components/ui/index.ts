@@ -1,6 +1,7 @@
 // DISCIPLINE — Level 1 UI primitives (Phase 03).
 // Generic, stateless, token-driven. No business logic lives here.
 
+export { Accordion } from './accordion'
 export { Alert } from './alert'
 export { Avatar, getInitials } from './avatar'
 export { Badge } from './badge'

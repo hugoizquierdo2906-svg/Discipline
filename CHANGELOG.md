@@ -251,6 +251,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Accordion — built, not frozen (Disclosure primitive).** The first
+  component in a new Disclosure category. Answers exactly ONE thing: "what
+  additional content can I reveal?" — never "where am I" (Navigation), "what
+  happened" (Feedback), "what's on top" (Overlay), "what is this value"
+  (Data Display) or "what do I submit" (Form). Not Collapsible (a single
+  togglable section with no relationship to siblings; Accordion is a GROUP
+  of Collapsibles with coordinated behaviour), not Tabs (SWITCHES the
+  visible region, inactive panels vanish entirely; Accordion reveals
+  ADDITIONAL content in place, every trigger stays visible), not TreeView
+  (hierarchical data with selection; Accordion discloses independent content
+  sections), not Drawer/Sheet/BottomSheet (overlay surfaces: portaled,
+  scrimmed, dismissible; Accordion has none of that — a permanent part of
+  the page), not Popover/Tooltip (transient, anchored), not Dialog
+  (blocking modal), not NavigationMenu (leads to different destinations;
+  Accordion reveals content inline on the current page). A real compound
+  (`Accordion`/`Accordion.Item`/`Accordion.Trigger`/`Accordion.Content`)
+  composing `@radix-ui/react-accordion@1.2.16` (new pinned dependency)
+  directly — no wrapper, no `AccordionCard`/`AccordionPanel`/
+  `DisclosureCard`/`ExpandableCard`/`AccordionContainer`. `Trigger`
+  internally pairs Radix's `Header` with its `Trigger` (an implementation
+  detail, never a separate public API piece). `Item` decides no border,
+  background or spacing of its own (Invariant A1 — a divided list is
+  composed with the frozen `Separator` at the point of use). `Content` draws
+  no card and no new surface — content appears directly under the Trigger,
+  never a `GlassSurface`, and never constrains height (no fixed height, no
+  internal scroll — long content grows the page naturally). The chevron
+  rotates a flat 180° with the same calm, instant transition already used by
+  the frozen Select/DropdownMenu — no bounce, no spring. 100% of Radix's
+  ARIA/keyboard (Arrow/Home/End/Enter/Space)/focus/RTL behaviour kept as-is,
+  no custom behaviour layered on top. Proof `/dev/accordion` +
+  `scripts/accordion-proof.mjs` (single/multiple/collapsible state machine,
+  controlled/uncontrolled, disabled item/group, long-content height, nested
+  independence, chevron rotation timing, RTL, full keyboard, ARIA, and a
+  no-regression spot check). Awaiting visual validation before any freeze.
+
 - **AvatarLauncher — built, not frozen (Avatar module, Sprint 1).** The single,
   calm entry point to the DISCIPLINE Guide — the first brick of the Avatar
   module (`src/components/avatar/`), not the Design System. It is the door, not

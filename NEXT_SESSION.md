@@ -1970,6 +1970,61 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
+   **Accordion (Disclosure) : CONSTRUIT au processus complet, NON GELÉ
+   (2026-07-09).** Première brique de la nouvelle catégorie Disclosure.
+   Répond à UNE seule chose : « quel contenu supplémentaire puis-je
+   révéler ? » — jamais une navigation, un feedback, un overlay, une
+   donnée ou une action. Pas Collapsible (une seule section togglable sans
+   relation aux frères ; Accordion est un GROUPE de Collapsibles coordonnés
+   — `type="single"` impose au plus un ouvert, `type="multiple"` en
+   autorise plusieurs, plus la navigation clavier partagée sur tout le
+   groupe). Pas Tabs (gelé : Tabs COMMUTE la région visible — les panneaux
+   inactifs disparaissent entièrement ; Accordion révèle du contenu
+   SUPPLÉMENTAIRE sur place, chaque déclencheur reste visible). Pas
+   TreeView (données hiérarchiques avec sélection ; Accordion divulgue des
+   SECTIONS DE CONTENU indépendantes, aucune sélection). Pas
+   Drawer/Sheet/BottomSheet (surfaces OVERLAY : portées, scrim,
+   dismissibles — Accordion n'a ni overlay, ni scrim, ni portail, ni geste
+   de fermeture). Pas Popover/Tooltip (transitoires, ancrés). Pas Dialog
+   (modal bloquant). Pas NavigationMenu (mène vers d'autres
+   DESTINATIONS ; Accordion révèle du contenu EN LIGNE sur la page
+   actuelle). Compose DIRECTEMENT `@radix-ui/react-accordion` (nouvelle
+   dépendance épinglée `1.2.16`) — aucun wrapper intermédiaire. `Trigger`
+   associe en interne le `Header` de Radix à son `Trigger` (contrat
+   d'accessibilité de Radix exigeant le contrôle interactif à l'intérieur
+   d'un titre) — un détail d'implémentation de `Trigger`, jamais une pièce
+   séparée de l'API publique. `Item` ne décide d'aucune bordure/fond/
+   espacement propre (Invariant A1 — une liste divisée se compose avec le
+   `Separator` gelé, au point d'usage). `Content` ne dessine aucune carte
+   ni nouvelle surface : le contenu apparaît directement sous le Trigger,
+   jamais un `GlassSurface`. Seule affordance du Trigger : un fond
+   hover/focus plat piloté par tokens (jamais de verre/flou/ombre) plus un
+   petit chevron qui pivote de 180° avec la même transition calme et
+   instantanée `duration-fast`/`ease-standard` déjà utilisée par les
+   chevrons gelés de Select/DropdownMenu — aucun rebond, aucun spring.
+   `Content` ne contraint jamais la hauteur : aucun `max-h-*`, aucune
+   hauteur fixe, aucun scroll interne — vérifié. 100 % du comportement
+   Radix conservé tel quel : ARIA, clavier complet (Arrow/Home/End/Enter/
+   Space, vérifié), focus, RTL. Vérifié : `single` ferme les autres
+   panneaux ; `multiple` en garde plusieurs ouverts indépendamment ;
+   `collapsible` permet de refermer à rien ; non-`collapsible` marque le
+   seul panneau ouvert `aria-disabled="true"` (l'application la plus
+   stricte possible de « toujours un panneau ouvert », sans empêcher de
+   basculer vers un autre panneau) ; `disabled` sur un Item ne bloque que
+   lui ; `disabled` sur le Root bloque tout ; contrôlé/non contrôlé via
+   `value`/`onValueChange`/`defaultValue` ; un Accordion imbriqué dans le
+   contenu d'un Item s'ouvre/ferme indépendamment de l'extérieur. API :
+   `Accordion` (`type`/`value`/`defaultValue`/`onValueChange`/
+   `collapsible`/`disabled`/`orientation`/`dir`/`className`) ·
+   `Accordion.Item` (`value`/`disabled`/`className`) · `Accordion.Trigger`
+   (`className` + attributs natifs) · `Accordion.Content`
+   (`forceMount`/`className`). Preuve `/dev/accordion` +
+   `scripts/accordion-proof.mjs` verte (ARIA, machine d'état single/
+   multiple/collapsible, contrôlé/non contrôlé, item/groupe désactivé,
+   hauteur du contenu long, indépendance imbriquée, timing de rotation du
+   chevron, RTL, clavier complet, vérification anti-régression). **NON
+   GELÉ** — attendre validation visuelle.
+
    **Separator (Layout) : GELÉ (2026-07-09).** Frozen Review complète
    (composant, code mort, imports/props/branches inutilisés, captures,
    preuve Playwright, API, tokens, dépendances) — aucun défaut objectif
