@@ -9,6 +9,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Code — rebuilt to the full process, not frozen (Data Display primitive).**
+  Rebuilt the pre-methodology `<Code variant="inline"|"block">` to the full
+  analysis/build/proof process. A Data Display primitive for exactly ONE
+  thing: "this run of text is a technical value, not prose" (a command, a
+  variable, an endpoint, an HTTP method, a CSS token, a shortcut) — rendered
+  verbatim, monospace, character-for-character. Not Text/Heading (proportional
+  prose, no `<code>` semantics), not Badge (a property ATTACHED to a datum —
+  Code IS the value, no colour-coded meaning, no surface), not Label (names a
+  form field), not Link/Button (interactive), not Tooltip (transient), not a
+  dedicated Keyboard-Shortcut/Kbd primitive (per the HTML spec `<code>` is "a
+  fragment of computer code" and `<kbd>` is "user input" — two semantics;
+  Code defaults to `<code>` and exposes `asChild` so a caller renders the
+  identical material on a real `<kbd>` instead), not CodeBlock/Terminal/
+  Monaco/CodeMirror (multi-line, scrollable, often syntax-highlighted
+  SURFACES — a different, larger responsibility; a CodeBlock is a legitimate
+  future sibling, never a mode of this component), not Markdown (a renderer
+  that may itself use Code for its own inline spans). **API change (rebuild):**
+  the `variant` prop (`inline`/`block`) is removed entirely — Code is always
+  one line, never a `<pre>` wrapper; `asChild` (Radix Slot) replaces it as the
+  only escape hatch. Sets no font-size of its own (kept at the browser default
+  `font-size: inherit`), so it always matches whatever text context it sits
+  inside — no `size`/`variant`/`color`/`weight` prop. Composes ONLY Typography
+  tokens: a low-radius (`rounded-xs`), neutral (`bg-surface`) background and
+  `font-mono` — no GlassSurface/Card/Badge/Tooltip/Popover/Dropdown/Button/
+  Link, no hover/active/focus styling, no transition/animation, no icon, no
+  copy button, no syntax highlighting, no language selector. Non-interactive:
+  no role, not in the tab order, never a link. Long values wrap inside their
+  container via `break-words` — never overflow, never truncate. The sole
+  consumer using the dropped `variant="block"` (the generic dev components
+  gallery, `showcase.tsx` — not a tracked/frozen component) had that example
+  removed; the other consumers (`drawer-demo.tsx`'s `<Code>RPE 8</Code>`,
+  `showcase.tsx`'s inline example) were already on the preserved default and
+  are unaffected. Proof `/dev/code` + `scripts/code-proof.mjs` (basic,
+  monospace + neutral background + non-interactive, font-size inheritance
+  across three ambient sizes, `asChild` → real `<kbd>` with the identical
+  material, HTTP methods as separate elements, long-value wrap with no
+  overflow, responsive size inheritance, RTL). Awaiting visual validation
+  before any freeze.
+
 - **Label — polish pass, not frozen (no API/variant/behaviour change).** A
   pre-freeze craft pass, purely visual + test-hardening. (1) Slightly
   strengthened the label's presence with a hair of positive letter-spacing

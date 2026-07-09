@@ -253,7 +253,6 @@ export function Showcase() {
             <Text>
               Inline <Code>const x = 1</Code> code.
             </Text>
-            <Code variant="block">{`function hello() {\n  return 'DISCIPLINE'\n}`}</Code>
           </div>
         </Block>
 

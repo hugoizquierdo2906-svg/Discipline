@@ -1970,15 +1970,56 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
-   **Label (Forms accessibilité) : CONSTRUIT au processus complet, NON GELÉ
-   (2026-07-08).** Primitif d'ACCESSIBILITÉ, pas de présentation : répond
-   seulement « quel est le nom de ce champ ? » via un vrai `<label>` lié par
-   `htmlFor`. Ne valide jamais, n'affiche ni erreur/succès/aide, ne gère aucun
-   état. **Deux défauts objectifs corrigés :** (1) le marqueur `required`
-   n'est plus rouge (rouge = signal d'erreur prématuré) → `text-text-tertiary`
-   discret, `aria-hidden` ; (2) vrai prop `disabled` (atténué, jamais
-   invisible), en gardant `peer-disabled`. Layout inline → long/multiline se
-   replient proprement, marqueur attaché même en RTL. Icône REJETÉE (documenté).
+   **Code (Data Display) : RECONSTRUIT au processus complet, NON GELÉ
+   (2026-07-09).** Le `<Code variant="inline"|"block">` pré-méthodologie
+   (bundlé avec Alert/Heading/Icon/Separator/Text) devient un vrai primitif
+   analysé. Répond à UNE seule chose : « ce texte est une valeur technique, pas
+   de la prose » (commande, variable, endpoint, méthode HTTP, token CSS,
+   raccourci) — rendu verbatim, monospace. Pas Text/Heading (prose
+   proportionnelle, aucune sémantique `<code>`), pas Badge (une propriété
+   ATTACHÉE à une donnée — Code EST la valeur, sans couleur ni surface), pas
+   Label (nomme un champ de formulaire), pas Link/Button (interactif — Code
+   est inerte), pas un primitif Kbd dédié (`<code>` = « fragment de code » vs
+   `<kbd>` = « saisie utilisateur » selon la spec HTML — Code ne se scinde pas
+   pour autant : il reste `<code>` par défaut et expose `asChild` pour rendre
+   la même matière sur un vrai `<kbd>`, prouvé sur la démo Keyboard Shortcut),
+   pas CodeBlock/Terminal/Monaco/CodeMirror (surfaces multi-lignes,
+   scrollables, souvent éditables — une AUTRE responsabilité ; CodeBlock reste
+   un futur frère légitime, jamais un mode de ce composant). **Changement
+   d'API (reconstruction) : le prop `variant` (`inline`/`block`) est
+   entièrement supprimé** — Code est toujours une ligne, jamais un `<pre>` ;
+   `asChild` (Radix Slot, même convention que le Button gelé) le remplace comme
+   seule échappatoire. Aucun prop `size`/`variant`/`color`/`weight` : Code ne
+   fixe aucune taille de police (garde `font-size: inherit`), donc s'aligne
+   toujours sur le contexte de texte environnant — vérifié sur trois tailles
+   ambiantes différentes. Composent UNIQUEMENT les tokens Typography : fond
+   neutre discret (`bg-surface`), rayon faible (`rounded-xs`), `font-mono` —
+   aucun verre/ombre/transition/animation/icône/bouton copier/coloration
+   syntaxique. Non interactif partout (aucun `role`, hors tab order, jamais un
+   lien) ; les valeurs longues se replient dans leur conteneur
+   (`break-words`, zéro débordement). **Migration consommateur :** la seule
+   utilisation de `variant="block"` (`showcase.tsx`, galerie dev générique, pas
+   un composant gelé) a été retirée ; `drawer-demo.tsx` et le reste de
+   `showcase.tsx` utilisaient déjà le défaut préservé et compilent sans
+   changement. Preuve `/dev/code` + `scripts/code-proof.mjs` verte (monospace,
+   fond neutre, contrat non-interactif, héritage de taille, `asChild`→`<kbd>`,
+   méthodes HTTP en éléments séparés, repli des valeurs longues, responsive,
+   RTL). **NON GELÉ** — attendre validation visuelle.
+
+   **Label (Forms accessibilité) : CONSTRUIT au processus complet, puis PASSE
+   DE POLISH (2026-07-08), NON GELÉ.** Primitif d'ACCESSIBILITÉ, pas de
+   présentation : répond seulement « quel est le nom de ce champ ? » via un
+   vrai `<label>` lié par `htmlFor`. Ne valide jamais, n'affiche ni
+   erreur/succès/aide, ne gère aucun état. **Deux défauts objectifs
+   corrigés :** (1) le marqueur `required` n'est plus rouge (rouge = signal
+   d'erreur prématuré) → discret, `aria-hidden`, poussé à `text-text-secondary`
+   lors du polish pass (un cran plus lisible que `text-text-tertiary`) ; (2)
+   vrai prop `disabled` (atténué, jamais invisible), en gardant
+   `peer-disabled` — la preuve du polish pass vérifie désormais une VRAIE
+   relation DOM (`control.disabled === true`, non-interactif), pas seulement
+   l'opacité. Layout inline → long/multiline se replient proprement, marqueur
+   attaché même en RTL ; un soupçon de `tracking-[0.01em]` ajouté au polish
+   pass pour une présence de label plus nette. Icône REJETÉE (documenté).
    API : `htmlFor` · `required` · `disabled` · `className` · `children`. Le
    changement de couleur de l'astérisque s'applique aux ~28 consommateurs de la
    famille Input (tous compilent). Preuve `/dev/label` +
