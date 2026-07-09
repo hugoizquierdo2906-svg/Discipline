@@ -1970,6 +1970,43 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
+   **Heading (Typography) : RECONSTRUIT au processus complet, NON GELÉ
+   (2026-07-09).** Le `<Heading level="h1".."h5"|"display-1".."display-3">`
+   pré-méthodologie (bundlé avec Alert/Icon/Separator/Text) devient un vrai
+   primitif analysé. Répond à UNE seule chose : « cette information est un
+   titre » — jamais une mise en page, une section, une hiérarchie métier, une
+   navigation ou une action. Pas Text (aucune place dans le plan de titres du
+   document — l'effacer en prose stylée est une perte SÉMANTIQUE, pas de
+   taille), pas Label/Code/Badge/Button (axes différents), pas
+   CardHeader/PageHeader (composites de mise en page qui UTILISENT un
+   Heading), pas Hero (section marketing avec décisions de layout que
+   l'Invariant A1 interdit à un composant de base), pas « Title » (terme
+   ambigu ailleurs), pas Caption (hors hiérarchie de titres). **Changement
+   d'API (reconstruction) : `level` passe d'une chaîne à un NOMBRE 1–6**
+   (`level={2}`), découplé de `as` (le tag sémantique) — exactement comme
+   Primer `Heading` et `@atlaskit/heading` : `<Heading as="div" level={2}>`
+   garde la taille visuelle h2 tout en sortant complètement de la sémantique
+   de titre. `display-1/2/3` sont retirés du périmètre de Heading (un rôle
+   d'affichage Hero n'est pas un titre de document). **Conflit signalé, pas
+   corrigé en silence :** l'échelle typographique canonique de DISCIPLINE ne
+   définit que cinq tailles de titre — aucun token `--ds-text-h6` n'existe, et
+   l'identité visuelle gelée interdit d'en inventer un hors correctif UX
+   strictement nécessaire. Résolution : `level={6}` rend un vrai `<h6>`
+   (plan de titres correct) qui réutilise la taille visuelle de `h5`, comme
+   Material Design 3 et Carbon qui n'inventent pas un palier toujours plus
+   petit par niveau. Zéro marge interne, jamais. **Migration
+   consommateur :** ~48 sites d'appel sur 23 fichiers de démo dev migrés de
+   `level="hN"` vers `level={N}` ; les trois primitifs d'état gelés
+   (EmptyState/ErrorState/OfflineState) ont eu leur champ de config interne
+   `title: 'h5'|'h4'|'h3'` retypé en `title: 5|4|3` — un changement de type
+   interne pur, aucun changement visuel/comportemental, les trois compilent
+   toujours et leur API publique gelée reste intacte. Preuve `/dev/heading` +
+   `scripts/heading-proof.mjs` verte (vrais tags h1–h6, échelle strictement
+   décroissante, réutilisation h6→h5, découplage level/as, marge zéro, repli
+   du titre long, rendu correct dans un vrai Card/Drawer/Modal, stabilité du
+   tag en responsive, RTL, vérification anti-régression). **NON GELÉ** —
+   attendre validation visuelle.
+
    **Code (Data Display) : RECONSTRUIT au processus complet, NON GELÉ
    (2026-07-09).** Le `<Code variant="inline"|"block">` pré-méthodologie
    (bundlé avec Alert/Heading/Icon/Separator/Text) devient un vrai primitif

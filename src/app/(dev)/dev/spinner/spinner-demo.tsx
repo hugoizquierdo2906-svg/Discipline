@@ -22,7 +22,7 @@ function Section({
   return (
     <section className="flex flex-col gap-3" data-testid={dataTestId}>
       <div className="flex flex-col gap-1">
-        <Heading as="h3" level="h5">
+        <Heading as="h3" level={5}>
           {title}
         </Heading>
         {description && (
@@ -43,7 +43,7 @@ export function SpinnerScene() {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-6 py-12">
       <div className="flex flex-col gap-2">
-        <Heading as="h2" level="h3">
+        <Heading as="h2" level={3}>
           Spinner
         </Heading>
         <Text tone="secondary">

@@ -71,7 +71,7 @@ const sizeConfig: Record<
     padding: string
     gap: string
     icon: string
-    title: 'h5' | 'h4' | 'h3'
+    title: 5 | 4 | 3
     description: 'body-sm' | 'body' | 'body-lg'
     measure: string
   }
@@ -80,7 +80,7 @@ const sizeConfig: Record<
     padding: 'px-4 py-8',
     gap: 'gap-2',
     icon: '[&>svg]:h-7 [&>svg]:w-7',
-    title: 'h5',
+    title: 5,
     description: 'body-sm',
     measure: 'max-w-sm',
   },
@@ -88,7 +88,7 @@ const sizeConfig: Record<
     padding: 'px-6 py-12',
     gap: 'gap-3',
     icon: '[&>svg]:h-10 [&>svg]:w-10',
-    title: 'h4',
+    title: 4,
     description: 'body',
     measure: 'max-w-md',
   },
@@ -96,7 +96,7 @@ const sizeConfig: Record<
     padding: 'px-8 py-16',
     gap: 'gap-4',
     icon: '[&>svg]:h-12 [&>svg]:w-12',
-    title: 'h3',
+    title: 3,
     description: 'body-lg',
     measure: 'max-w-lg',
   },

@@ -9,6 +9,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Heading — rebuilt to the full process, not frozen (Typography primitive).**
+  Rebuilt the pre-methodology `<Heading level="h1"..."h5"|"display-1"..."display-3">`
+  (previously bundled with Alert/Icon/Separator/Text) to the full analysis/
+  build/proof process. Answers exactly ONE thing: "this information is a
+  title" — never a layout, a section, a business hierarchy, a navigation
+  position or an action. Not a bigger Text (Text has no place in the document
+  outline; erasing a title into styled prose is a semantic loss, not a size
+  one), not Label/Code/Badge/Button (different axes entirely — naming a
+  field, a verbatim value, a property, an action), not CardHeader/PageHeader
+  (layout composites that USE a Heading), not Hero (a marketing layout
+  section with background/CTA decisions Invariant A1 forbids a base
+  component from making), not "Title" (ambiguous elsewhere; DISCIPLINE names
+  the primitive Heading), not Caption (outside the heading hierarchy). **API
+  change (rebuild): `level` changed from a string enum to a NUMBER 1–6**
+  (`<Heading level={2}>`), decoupled from `as` (the semantic tag) exactly as
+  Primer's `Heading` and Atlassian's `@atlaskit/heading` both do —
+  `<Heading as="div" level={2}>` keeps the h2 visual size while opting out of
+  heading semantics entirely. `display-1/2/3` are dropped from Heading's own
+  scope (a Hero-scale display role is not a document heading). **A reported,
+  not silently patched, conflict:** DISCIPLINE's canonical type scale defines
+  only five heading sizes — there is no `--ds-text-h6` token, and the frozen
+  visual identity forbids inventing one outside a strictly-necessary UX fix.
+  Resolution: `level={6}` renders a real `<h6>` (correct semantic outline)
+  reusing `h5`'s visual size, matching how Material Design 3 and Carbon do
+  not keep inventing an ever-smaller step per level. Zero internal margin,
+  ever — spacing is always the consumer's layout decision. **Consumer
+  migration:** ~48 call sites across 23 dev-demo files migrated
+  `level="hN"` → `level={N}`; the three frozen state primitives (EmptyState/
+  ErrorState/OfflineState) had their internal `title: 'h5'|'h4'|'h3'` config
+  field retyped to `title: 5|4|3` — a pure internal-type change, zero
+  visual/behavioural change, all three still compile and their own frozen
+  public APIs are untouched. Proof `/dev/heading` + `scripts/heading-proof.mjs`
+  (real h1–h6 tags, strictly-decreasing scale, h6→h5 size reuse, level/as
+  decoupling, zero margin, long-heading wrap, correct rendering inside a
+  real Card/Drawer/Modal, responsive tag stability, RTL, no-regression spot
+  check). Awaiting visual validation before any freeze.
+
 - **Code — rebuilt to the full process, not frozen (Data Display primitive).**
   Rebuilt the pre-methodology `<Code variant="inline"|"block">` to the full
   analysis/build/proof process. A Data Display primitive for exactly ONE

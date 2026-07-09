@@ -45,7 +45,7 @@ function Block({
 }) {
   return (
     <section className="mb-12">
-      <Heading as="h2" level="h4" className="mb-5">
+      <Heading as="h2" level={4} className="mb-5">
         {title}
       </Heading>
       <div className="flex flex-wrap items-start gap-4 rounded-lg border border-border bg-surface-raised p-5">
@@ -62,7 +62,7 @@ export function Showcase() {
   return (
     <TooltipProvider delayDuration={150}>
       <main className="mx-auto max-w-container px-5 py-10">
-        <Heading as="h1" level="h2" className="mb-2">
+        <Heading as="h1" level={2} className="mb-2">
           DISCIPLINE — Level 1 Components
         </Heading>
         <Text tone="secondary" className="mb-10">
@@ -239,7 +239,7 @@ export function Showcase() {
 
         <Block title="Typography">
           <div className="flex flex-col gap-2">
-            <Heading as="h3" level="h3">
+            <Heading as="h3" level={3}>
               Heading H3
             </Heading>
             <Text size="body-lg">Body large — intro copy.</Text>
