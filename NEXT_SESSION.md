@@ -1970,6 +1970,59 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
+   **Separator (Layout) : CONSTRUIT au processus complet, NON GELÉ
+   (2026-07-09).** Le composant pré-méthodologie (bundlé avec Alert/Icon)
+   était déjà très proche de la cible (Radix Separator, `orientation`/
+   `decorative`/`className`, token `bg-divider`, épaisseur hairline) — la
+   logique reste inchangée ; analyse, doc-comment étendu, `/dev/separator` et
+   `scripts/separator-proof.mjs` ajoutés. Répond à UNE seule chose : « ces
+   deux groupes de contenu sont visuellement distincts. » Ne crée aucun
+   espacement, aucune section, aucune surface, ne gère aucun layout — il ne
+   fait que matérialiser une frontière ; ne peut jamais porter d'enfants,
+   de label ou d'icône. Pas un `<hr>` nu (bloc uniquement, porte un sens
+   implicite de « rupture thématique » selon la spec HTML5 qui décrit mal
+   un séparateur d'UI, et embarque des marges/bordures par défaut que chaque
+   consommateur devrait réinitialiser — Separator couvre les deux
+   orientations, marge zéro par construction, et expose le vrai contrat
+   ARIA Separator). Pas Divider (nom utilisé ailleurs, ex. Material Design
+   3 — DISCIPLINE nomme ce composant d'après le terme ARIA/WAI-APG que son
+   rôle implémente, `separator`). Pas Border (propriété CSS sur le bord
+   d'un élément existant, pas un contenu autonome avec son propre rôle
+   d'accessibilité). Pas Spacer (crée de l'espace SANS marque visible —
+   responsabilité opposée). Pas Card/GlassCard (une surface structurelle
+   avec padding et fond ; Separator n'a aucune surface, aucun padding,
+   aucun contenu). Pas Section (regroupement de contenu avec des enfants ;
+   Separator est une feuille sans contenu). Pas Stack (arrange les enfants
+   via `gap` — un Stack peut placer des Separators entre ses enfants par
+   commodité, mais l'arrangement reste sa propre responsabilité). Pas Grid
+   (layout pur, aucun sens de frontière sémantique). Pas Heading (signal
+   typographique d'IMPORTANCE ; Separator ne porte aucun contenu ni sens
+   d'importance, seulement l'adjacence). Compose UNIQUEMENT Radix Separator
+   (motif WAI-ARIA Separator : `role="separator"` + `aria-orientation`
+   quand `decorative={false}` ; `role="none"` — retiré explicitement, pas
+   simplement omis, selon la recommandation APG pour les séparateurs
+   purement décoratifs — quand `decorative` vaut true, le défaut) plus le
+   token couleur `bg-divider` et une épaisseur hairline. Aucun
+   GlassSurface/Card/Badge/Button/Tooltip/Popover, aucun
+   shadow/blur/gradient/glow, aucune transition ni animation, aucune
+   icône/label/texte, aucun enfant, aucune logique JS. API : `orientation`
+   (`horizontal` défaut · `vertical`) · `decorative` · `className` (+
+   attributs natifs). Vérifié : zéro enfant sur chaque instance ; le mode
+   décoratif porte `role="none"`, le mode non-décoratif expose
+   `role="separator"` + `aria-orientation` ; rendu correct dans un vrai
+   GlassCard/Drawer/Modal ; suit la largeur de son conteneur en responsive ;
+   RTL sans logique directionnelle ; zéro style interactif/animé sur la
+   page. Aucun consommateur de production n'existait au-delà des démos dev
+   — aucun autre fichier modifié. Preuve `/dev/separator` +
+   `scripts/separator-proof.mjs` verte. **NON GELÉ** — attendre validation
+   visuelle.
+
+   **Text (Typography) : GELÉ (2026-07-09).** Frozen Review complète
+   (composant, captures, preuve Playwright, API, tokens, dépendances) —
+   aucun défaut objectif trouvé, zéro code modifié, gel tel quel. API
+   publique (`as`/`className`/`children`) nécessite désormais un ADR pour
+   être modifiée. Détail de la construction :
+
    **Text (Typography) : CONSTRUIT au processus complet, NON GELÉ
    (2026-07-09).** Le `<Text size="body-lg".."caption" tone="default".."tertiary"
    weight="regular".."semibold">` pré-méthodologie (bundlé avec

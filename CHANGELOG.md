@@ -9,6 +9,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Separator — built to the full process, not frozen (Layout primitive).**
+  Took the pre-methodology component (previously bundled with Alert/Icon) —
+  already Radix Separator with `orientation`/`decorative`/`className` and a
+  `bg-divider` token — through the full analysis/build/proof process; the
+  underlying logic is unchanged, only the doc-comment, demo and proof are
+  new. Answers exactly ONE thing: "these two groups of content are visually
+  distinct." Creates no spacing, no section, no surface, manages no layout —
+  it only materializes a boundary; it can never carry children, a label or
+  an icon. Not a bare `<hr>` (block-only, carries an implicit "thematic
+  break" meaning per the HTML5 spec that misdescribes a UI-level divider,
+  and ships default browser margin/border every consumer would reset by
+  hand — Separator covers both orientations, zero margin by construction,
+  the real WAI-ARIA Separator pattern). Not Divider (the name used
+  elsewhere, e.g. Material Design 3 — DISCIPLINE names this after the
+  ARIA/WAI-APG term its role implements). Not Border/Spacer/Card/Section/
+  Stack/Grid/Heading (a CSS edge property, invisible space, a padded
+  surface, a landmark with children, a gap-based arranger, pure column/row
+  layout, and a typographic importance signal, respectively — none of them
+  materialize a content-less visual boundary). Composes ONLY Radix
+  Separator: `role="separator"` + `aria-orientation` when
+  `decorative={false}`; `role="none"` (explicitly stripped, not merely
+  omitted, per the APG's guidance for purely decorative dividers) when
+  `decorative` is true, the default. No GlassSurface/Card/Badge/Button/
+  Tooltip/Popover, no shadow/blur/gradient/glow, no transition or
+  animation, no icon, no label or text, no children, no JS logic. API:
+  `orientation` · `decorative` · `className` (+ native attributes) — no
+  `color`/`variant`/`size`/`spacing`/`margin`/`padding`/`animated`/
+  `gradient`/`icon`/`label`/`text`/`children`/`shadow`/`glass`. No
+  production consumer existed beyond dev demos; zero other files modified.
+  Proof `/dev/separator` + `scripts/separator-proof.mjs` (orientation, the
+  decorative/semantic ARIA contract, zero content, rendering inside a real
+  Card/Drawer/Modal, responsive width tracking, RTL, no-regression motion/
+  interactivity sweep). Awaiting visual validation before any freeze.
+
+- **Text — frozen (Typography primitive).** Visually validated 2026-07-09
+  after a Frozen Review (component, captures, Playwright proof, API, tokens,
+  dependencies) found no objective defect — zero code changed, the freeze
+  locks it as-is. No functional, visual or architectural change again except
+  an objective bug; the public API (`as`/`className`/`children`) requires an
+  ADR to change.
+
 - **Heading — frozen (Typography primitive).** Visually validated 2026-07-09
   after a Frozen Review (component, captures, Playwright proof, API, tokens,
   dependencies) found no objective defect — zero code changed, the freeze
