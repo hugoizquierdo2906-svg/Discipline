@@ -38,7 +38,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -65,7 +65,7 @@ export function OfflineStateScene() {
           <Heading as="h2" level={3}>
             OfflineState
           </Heading>
-          <Text tone="secondary" className="mt-2">
+          <Text className="text-text-secondary mt-2">
             A momentary inability to reach content because the app has no
             network connection — not a server error, not empty data. Like
             ErrorState it is CONTENT, not a surface: it draws no background,

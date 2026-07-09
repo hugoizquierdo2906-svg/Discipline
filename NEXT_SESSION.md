@@ -1970,8 +1970,48 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
-   **Heading (Typography) : RECONSTRUIT au processus complet, NON GELÉ
-   (2026-07-09).** Le `<Heading level="h1".."h5"|"display-1".."display-3">`
+   **Text (Typography) : CONSTRUIT au processus complet, NON GELÉ
+   (2026-07-09).** Le `<Text size="body-lg".."caption" tone="default".."tertiary"
+   weight="regular".."semibold">` pré-méthodologie (bundlé avec
+   Alert/Icon/Separator) devient un vrai primitif analysé. Répond à UNE seule
+   chose : « ceci est du contenu textuel » — jamais un titre, une action, une
+   propriété, une valeur technique, un nom de champ ou une navigation. Pas un
+   `<span>` nu (aucune relation aux tokens DISCIPLINE — chaque consommateur
+   improviserait sa propre taille/couleur, dérivant à mesure que les tokens
+   évoluent), pas Heading (rôle structurel du plan de titres, un par titre ;
+   Text est le corps non numéroté qui suit), pas Label/Code/Badge (axes
+   différents), pas Paragraph (`<Text as="p">`, le défaut, couvre déjà ce
+   cas), pas Caption (annotation secondaire plus petite, un futur frère), pas
+   Link/Button (interactifs), pas HelperText (lié à un champ via
+   `aria-describedby`, un souci Forms). **Changement d'API (reconstruction) :
+   `size`/`tone`/`weight` sont entièrement supprimés** — Text rend l'unique
+   style de corps canonique (`text-body text-text`) depuis les tokens ; un
+   consommateur ayant besoin d'une autre combinaison de tokens utilise
+   `className`, exactement comme tout autre primitif DISCIPLINE. `as` change
+   uniquement le tag sémantique — `p` (défaut) · `span` · `div` · `strong` ·
+   `em` · `small` — jamais le style visuel (vérifié : chaque tag porte
+   exactement la même taille de police calculée que le paragraphe par
+   défaut). Zéro marge, zéro padding propre (vérifié : `0px` sur tous les
+   côtés). **Migration consommateur (large) :** ~65 sites d'appel sur 23
+   fichiers migrés de `size=`/`tone=`/`weight=` vers `className` — y compris
+   les TROIS bannières Feedback GELÉES (`SuccessBanner`/`ErrorBanner`/
+   `WarningBanner`) et les trois primitifs d'état gelés
+   (`EmptyState`/`ErrorState`/`OfflineState`), dont les champs internes
+   `sizeConfig` ont été retypés de noms de tokens nus vers des classes
+   Tailwind littérales (ex. `'body-sm'` → `'text-body-sm'`) — une migration
+   interne pure, aucun changement visuel/comportemental sur les six
+   composants gelés, vérifié contre des captures fraîches ne montrant aucune
+   régression. Preuve `/dev/text` + `scripts/text-proof.mjs` verte (vrais
+   tags p/span/strong/em/small à taille identique, marge/padding zéro, repli
+   du paragraphe long, rendu dans un vrai Card/Drawer/Modal, parité de taille
+   Text/Code, stabilité responsive, RTL, vérification anti-régression sur
+   les six consommateurs gelés). **NON GELÉ** — attendre validation visuelle.
+
+   **Heading (Typography) : GELÉ (2026-07-09).** Frozen Review complète
+   (composant, captures, preuve Playwright, API, tokens, dépendances) —
+   aucun défaut objectif trouvé, zéro code modifié, gel tel quel. API
+   publique (`level`/`as`/`className`/`children`) nécessite désormais un ADR
+   pour être modifiée. Détail de la reconstruction (2026-07-09) : Le `<Heading level="h1".."h5"|"display-1".."display-3">`
    pré-méthodologie (bundlé avec Alert/Icon/Separator/Text) devient un vrai
    primitif analysé. Répond à UNE seule chose : « cette information est un
    titre » — jamais une mise en page, une section, une hiérarchie métier, une

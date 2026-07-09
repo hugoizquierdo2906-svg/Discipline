@@ -29,7 +29,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -50,7 +50,7 @@ export function CodeScene() {
           <Heading as="h2" level={3}>
             Code
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             A Data Display primitive for a verbatim technical value. It sets no
             font-size of its own, no colour, no surface beyond a discreet
             neutral background — never a Badge, never a Chip, never interactive.
@@ -121,7 +121,7 @@ export function CodeScene() {
             <Code asChild>
               <kbd>⌘K</kbd>
             </Code>
-            <Text size="body-sm" tone="secondary">
+            <Text className="text-body-sm text-text-secondary">
               opens the command palette
             </Text>
           </div>
@@ -136,10 +136,10 @@ export function CodeScene() {
             Run <Code>pnpm build</Code> before every deploy, then confirm{' '}
             <Code>/api/health</Code> returns <Code>200</Code>.
           </Text>
-          <Text size="body-lg">
+          <Text className="text-body-lg">
             Set <Code>RPE 8</Code> and stop two reps short of failure.
           </Text>
-          <Text size="caption" tone="tertiary">
+          <Text className="text-caption text-text-tertiary">
             Default export: <Code>NODE_ENV=production</Code>
           </Text>
         </Section>
@@ -161,7 +161,7 @@ export function CodeScene() {
           description="The same value, unresized — it inherits its size from context at any width."
           data-testid="cd-responsive"
         >
-          <Text size="body-sm">
+          <Text className="text-body-sm">
             Config key: <Code>max_retries</Code>
           </Text>
         </Section>

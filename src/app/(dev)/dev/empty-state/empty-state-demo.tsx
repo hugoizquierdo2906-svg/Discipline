@@ -39,7 +39,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -59,7 +59,7 @@ export function EmptyStateScene() {
         <Heading as="h2" level={3}>
           EmptyState
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           A meaningful absence of content or result, pointing the user at the
           next action — never a loading state, a blocking error, a notification,
           or progress.
@@ -186,15 +186,9 @@ export function EmptyStateScene() {
       >
         <div className="overflow-hidden rounded-md border border-border">
           <div className="flex items-center gap-4 border-b border-border bg-surface px-4 py-2">
-            <Text size="caption" tone="tertiary" className="w-24">
-              Name
-            </Text>
-            <Text size="caption" tone="tertiary" className="w-32">
-              Date
-            </Text>
-            <Text size="caption" tone="tertiary">
-              Status
-            </Text>
+            <Text className="text-caption text-text-tertiary w-24">Name</Text>
+            <Text className="text-caption text-text-tertiary w-32">Date</Text>
+            <Text className="text-caption text-text-tertiary">Status</Text>
           </div>
           <EmptyState
             size="sm"

@@ -33,7 +33,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -54,7 +54,7 @@ export function BadgeScene() {
           <Heading as="h2" level={3}>
             Badge
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             The smallest representation of a property — a compact, static label
             attached to a datum. Cut from DISCIPLINE&apos;s Liquid Glass, it
             almost disappears until you need it: the colour is carried by the
@@ -184,8 +184,8 @@ export function BadgeScene() {
           <GlassCard className="w-full max-w-sm p-4">
             <div className="flex items-center justify-between gap-3">
               <div className="flex flex-col">
-                <Text weight="semibold">Hypertrophy Block 1</Text>
-                <Text size="body-sm" tone="secondary">
+                <Text className="font-semibold">Hypertrophy Block 1</Text>
+                <Text className="text-body-sm text-text-secondary">
                   12 clients · updated today
                 </Text>
               </div>

@@ -72,7 +72,7 @@ const sizeConfig: Record<
     gap: string
     icon: string
     title: 5 | 4 | 3
-    description: 'body-sm' | 'body' | 'body-lg'
+    description: string
     measure: string
   }
 > = {
@@ -81,7 +81,7 @@ const sizeConfig: Record<
     gap: 'gap-2',
     icon: '[&>svg]:h-7 [&>svg]:w-7',
     title: 5,
-    description: 'body-sm',
+    description: 'text-body-sm',
     measure: 'max-w-sm',
   },
   md: {
@@ -89,7 +89,7 @@ const sizeConfig: Record<
     gap: 'gap-3',
     icon: '[&>svg]:h-10 [&>svg]:w-10',
     title: 4,
-    description: 'body',
+    description: 'text-body',
     measure: 'max-w-md',
   },
   lg: {
@@ -97,7 +97,7 @@ const sizeConfig: Record<
     gap: 'gap-4',
     icon: '[&>svg]:h-12 [&>svg]:w-12',
     title: 3,
-    description: 'body-lg',
+    description: 'text-body-lg',
     measure: 'max-w-lg',
   },
 }
@@ -134,9 +134,11 @@ export function EmptyState({
       </Heading>
       {description && (
         <Text
-          size={config.description}
-          tone="secondary"
-          className={config.measure}
+          className={cn(
+            config.description,
+            'text-text-secondary',
+            config.measure,
+          )}
         >
           {description}
         </Text>

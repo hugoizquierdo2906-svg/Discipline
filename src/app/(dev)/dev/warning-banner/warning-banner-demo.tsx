@@ -41,7 +41,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -62,7 +62,7 @@ export function WarningBannerScene() {
           <Heading as="h2" level={3}>
             WarningBanner
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             A persistent, in-flow warning — a situation that needs the
             user&apos;s attention without blocking their work. It lives in the
             page, pushes content, and stays until the risk is resolved or the

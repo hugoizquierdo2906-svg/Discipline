@@ -39,7 +39,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -60,7 +60,7 @@ export function SuccessBannerScene() {
           <Heading as="h2" level={3}>
             SuccessBanner
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             A persistent, in-flow confirmation that an operation succeeded — it
             lives in the page, pushes content, and stays until dismissed or the
             state changes. Not a Toast, not an Alert, not a Dialog. Built only

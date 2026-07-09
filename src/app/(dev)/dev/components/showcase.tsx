@@ -65,7 +65,7 @@ export function Showcase() {
         <Heading as="h1" level={2} className="mb-2">
           DISCIPLINE — Level 1 Components
         </Heading>
-        <Text tone="secondary" className="mb-10">
+        <Text className="text-text-secondary mb-10">
           Every primitive with all of its states. Development surface only.
         </Text>
 
@@ -242,12 +242,12 @@ export function Showcase() {
             <Heading as="h3" level={3}>
               Heading H3
             </Heading>
-            <Text size="body-lg">Body large — intro copy.</Text>
+            <Text className="text-body-lg">Body large — intro copy.</Text>
             <Text>Body — reference size.</Text>
-            <Text size="body-sm" tone="secondary">
+            <Text className="text-body-sm text-text-secondary">
               Body small secondary.
             </Text>
-            <Text size="caption" tone="tertiary">
+            <Text className="text-caption text-text-tertiary">
               Caption tertiary.
             </Text>
             <Text>

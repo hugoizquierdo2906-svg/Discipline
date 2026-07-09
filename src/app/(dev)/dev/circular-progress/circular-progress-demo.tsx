@@ -23,7 +23,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -43,7 +43,7 @@ export function CircularProgressScene() {
         <Heading as="h2" level={3}>
           CircularProgress
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           The same known fraction of completion as Progress, in a compact ring —
           reserved for square/circular spaces (an avatar mid-upload, a sync
           tile, a dashboard KPI), never a general substitute for the linear bar.

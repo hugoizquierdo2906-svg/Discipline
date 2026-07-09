@@ -23,7 +23,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -43,7 +43,7 @@ export function ProgressScene() {
         <Heading as="h2" level={3}>
           Progress
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           The known fraction of completion (0 → max) of one continuous operation
           happening right now — never named steps (Stepper), never a placeholder
           for unknown content (Skeleton), never a pure indeterminate wait with

@@ -30,7 +30,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -69,7 +69,7 @@ export function AvatarScene() {
           <Heading as="h2" level={3}>
             Avatar
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             A foundational Data Display primitive: it reserves a surface, shows
             an image, and guarantees a fallback (image → initials → a generic
             user icon), so it is never empty. It answers only &ldquo;who is this

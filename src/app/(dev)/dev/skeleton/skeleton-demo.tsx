@@ -23,7 +23,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -43,7 +43,7 @@ export function SkeletonScene() {
         <Heading as="h2" level={3}>
           Skeleton
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           A silent layout placeholder — reserves the exact space real content
           will occupy, eliminating layout shift, never signaling activity or a
           fraction.

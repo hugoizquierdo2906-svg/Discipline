@@ -99,30 +99,30 @@ const sizeConfig: Record<
     padding: string
     gap: string
     icon: string
-    titleText: 'body-sm' | 'body' | 'body-lg'
-    description: 'body-sm' | 'body'
+    titleText: string
+    description: string
   }
 > = {
   sm: {
     padding: 'px-3 py-2',
     gap: 'gap-2',
     icon: '[&>svg]:h-4 [&>svg]:w-4',
-    titleText: 'body-sm',
-    description: 'body-sm',
+    titleText: 'text-body-sm',
+    description: 'text-body-sm',
   },
   md: {
     padding: 'px-4 py-3',
     gap: 'gap-3',
     icon: '[&>svg]:h-5 [&>svg]:w-5',
-    titleText: 'body',
-    description: 'body-sm',
+    titleText: 'text-body',
+    description: 'text-body-sm',
   },
   lg: {
     padding: 'px-5 py-4',
     gap: 'gap-3',
     icon: '[&>svg]:h-6 [&>svg]:w-6',
-    titleText: 'body-lg',
-    description: 'body',
+    titleText: 'text-body-lg',
+    description: 'text-body',
   },
 }
 
@@ -165,11 +165,9 @@ export function ErrorBanner({
           align === 'center' && 'items-center text-center',
         )}
       >
-        <Text size={config.titleText} weight="semibold">
-          {title}
-        </Text>
+        <Text className={cn(config.titleText, 'font-semibold')}>{title}</Text>
         {description && (
-          <Text size={config.description} tone="secondary">
+          <Text className={cn(config.description, 'text-text-secondary')}>
             {description}
           </Text>
         )}

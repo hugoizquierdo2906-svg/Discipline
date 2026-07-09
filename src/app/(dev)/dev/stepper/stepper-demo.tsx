@@ -27,7 +27,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -58,8 +58,7 @@ function ClickableDemo() {
         responsive={false}
       />
       <Text
-        size="caption"
-        tone="tertiary"
+        className="text-caption text-text-tertiary"
         data-testid="clickable-external-state"
       >
         Current step (external state): {basicSteps[step]?.label}
@@ -76,7 +75,7 @@ export function StepperScene() {
         <Heading as="h2" level={3}>
           Stepper
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           Progress through a sequence of ordered, semantically different steps
           of one task — never which facet of the same record (Tabs), never a
           navigation hierarchy (Breadcrumb).

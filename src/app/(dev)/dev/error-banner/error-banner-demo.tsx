@@ -41,7 +41,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -62,7 +62,7 @@ export function ErrorBannerScene() {
           <Heading as="h2" level={3}>
             ErrorBanner
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             A persistent, in-flow, non-modal error — an important failure about
             the current context that doesn&apos;t warrant a modal interruption.
             It lives in the page, pushes content, and stays until the error is

@@ -25,7 +25,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -64,7 +64,7 @@ function ControlledDemo() {
           </button>
         ))}
       </div>
-      <Text size="caption" tone="tertiary">
+      <Text className="text-caption text-text-tertiary">
         Current value (external state): {value}
       </Text>
     </div>
@@ -79,7 +79,7 @@ export function TabsScene() {
         <Heading as="h2" level={3}>
           Tabs
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           Switch between a small, named, always-visible set of alternate content
           views for the same record — never a hierarchy position, never a page
           of a sequence.

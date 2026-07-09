@@ -25,7 +25,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -65,7 +65,7 @@ export function PaginationScene() {
         <Heading as="h2" level={3}>
           Pagination
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           Random-access navigation across a flat, ordered collection split into
           fixed-size pages — jump to page 47 of 900 without stepping through the
           46 before it.

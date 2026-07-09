@@ -26,7 +26,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -46,7 +46,7 @@ export function SpinnerScene() {
         <Heading as="h2" level={3}>
           Spinner
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           A purely indeterminate activity indicator — never a value, never a
           percentage, never role=&quot;progressbar&quot;. Signals
           &quot;something is happening, of unknown duration,&quot; nothing more.

@@ -9,6 +9,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Heading — frozen (Typography primitive).** Visually validated 2026-07-09
+  after a Frozen Review (component, captures, Playwright proof, API, tokens,
+  dependencies) found no objective defect — zero code changed, the freeze
+  locks it as-is. No functional, visual or architectural change again except
+  an objective bug; the public API (`level`/`as`/`className`/`children`)
+  requires an ADR to change.
+
+- **Text — built to the full process, not frozen (Typography primitive).**
+  Rebuilt the pre-methodology
+  `<Text size="body-lg"|"body"|"body-sm"|"caption" tone="default"|"secondary"|"tertiary" weight="regular"|"medium"|"semibold">`
+  (previously bundled with Alert/Icon/Separator) to the full analysis/build/
+  proof process. Answers exactly ONE thing: "this is textual content" — never
+  a title, an action, a property, a technical value, a field name or a
+  navigation position. Not a bare `<span>` (no relationship to DISCIPLINE's
+  type tokens — every consumer would hand-roll its own font-size/color and
+  drift as tokens evolve), not Heading (a structural, one-per-title outline
+  role; Text is the un-numbered body that follows), not Label/Code/Badge
+  (different axes — naming a field, a verbatim value, a property), not
+  Paragraph (`<Text as="p">`, the default, already covers it), not Caption (a
+  smaller, secondary annotation Text does not claim — a future sibling), not
+  Link/Button (interactive), not HelperText (a Forms concern tied to a field
+  via `aria-describedby`). **API change (rebuild): `size`/`tone`/`weight` are
+  removed entirely** — Text renders the one canonical body style
+  (`text-body text-text`) from tokens; a consumer needing a different token
+  combination reaches for `className`, exactly like every other DISCIPLINE
+  primitive. `as` selects the semantic tag only — `p` (default) · `span` ·
+  `div` · `strong` · `em` · `small` — never the visual style (verified: every
+  tag carries the identical computed font-size as the default paragraph).
+  Zero margin, zero padding of its own (verified: `0px` on every side).
+  **Consumer migration (large):** ~65 call sites across 23 files migrated
+  from `size=`/`tone=`/`weight=` to `className` — including the THREE FROZEN
+  Feedback banners (`SuccessBanner`/`ErrorBanner`/`WarningBanner`) and the
+  three frozen state primitives (`EmptyState`/`ErrorState`/`OfflineState`),
+  whose internal `sizeConfig` fields were retyped from bare token names to
+  literal Tailwind classes (e.g. `'body-sm'` → `'text-body-sm'`) — a pure
+  internal migration, zero visual/behavioural change to any of the six
+  frozen components, verified against fresh full-page screenshots showing no
+  regression. Proof `/dev/text` + `scripts/text-proof.mjs` (real p/span/
+  strong/em/small tags with identical font-size, zero margin/padding,
+  long-paragraph wrap, rendering inside a real Card/Drawer/Modal, Text/Code
+  size parity, responsive stability, RTL, and a no-regression spot check
+  across all six frozen consumers). Awaiting visual validation before any
+  freeze.
+
 - **Heading — rebuilt to the full process, not frozen (Typography primitive).**
   Rebuilt the pre-methodology `<Heading level="h1"..."h5"|"display-1"..."display-3">`
   (previously bundled with Alert/Icon/Separator/Text) to the full analysis/

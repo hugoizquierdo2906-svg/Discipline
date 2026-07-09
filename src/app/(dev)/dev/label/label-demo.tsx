@@ -31,7 +31,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -52,7 +52,7 @@ export function LabelScene() {
           <Heading as="h2" level={3}>
             Label
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             A Forms accessibility primitive. It answers only &ldquo;what is the
             name of this field?&rdquo; — a real <code>&lt;label&gt;</code> bound
             to its control. It never validates, never shows an error or helper
@@ -156,7 +156,7 @@ export function LabelScene() {
           title="Icon — deliberately rejected"
           data-testid="lb-icon-rejected"
         >
-          <Text size="body-sm" tone="secondary" className="max-w-md">
+          <Text className="text-body-sm text-text-secondary max-w-md">
             A Label&apos;s single job is to NAME a control accessibly. An icon
             inside the <code>&lt;label&gt;</code> adds visual noise, competes
             with the field&apos;s own affordances, and would need{' '}

@@ -26,7 +26,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -67,7 +67,7 @@ export function BreadcrumbScene() {
         <Heading as="h2" level={3}>
           Breadcrumb
         </Heading>
-        <Text tone="secondary">
+        <Text className="text-text-secondary">
           DISCIPLINE&rsquo;s hierarchical position indicator — where am I, never
           where can I go.
         </Text>

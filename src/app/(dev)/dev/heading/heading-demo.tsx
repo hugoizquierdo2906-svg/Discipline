@@ -31,7 +31,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -52,7 +52,7 @@ export function HeadingScene() {
           <Heading as="h2" level={2}>
             Heading
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             A Typography primitive that answers only &ldquo;this information is
             a title.&rdquo; No margin, no colour choice, no layout — the visual
             size (<code>level</code>) is fully decoupled from the semantic tag (
@@ -152,7 +152,7 @@ export function HeadingScene() {
             <Heading as="h3" level={4}>
               Program summary
             </Heading>
-            <Text tone="secondary" className="mt-2">
+            <Text className="text-text-secondary mt-2">
               4 days a week, 45 minutes per session.
             </Text>
           </GlassCard>
@@ -172,7 +172,7 @@ export function HeadingScene() {
             <Heading as="h3" level={4}>
               Session details
             </Heading>
-            <Text tone="secondary" className="mt-2">
+            <Text className="text-text-secondary mt-2">
               Squat, bench press, barbell row.
             </Text>
           </Drawer>
@@ -197,7 +197,7 @@ export function HeadingScene() {
               <Heading as="div" level={4}>
                 Delete this program?
               </Heading>
-              <Text tone="secondary" className="mt-2">
+              <Text className="text-text-secondary mt-2">
                 This cannot be undone.
               </Text>
             </Modal.Content>

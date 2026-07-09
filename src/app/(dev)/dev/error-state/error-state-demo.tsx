@@ -43,7 +43,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -70,7 +70,7 @@ export function ErrorStateScene() {
           <Heading as="h2" level={3}>
             ErrorState
           </Heading>
-          <Text tone="secondary" className="mt-2">
+          <Text className="text-text-secondary mt-2">
             A view or operation that failed to load — the user momentarily
             cannot proceed, and here is how to recover. ErrorState is CONTENT,
             not a surface: it draws no background, shadow, radius or material.

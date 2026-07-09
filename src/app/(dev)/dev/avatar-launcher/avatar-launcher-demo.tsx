@@ -30,7 +30,7 @@ function Section({
           {title}
         </Heading>
         {description && (
-          <Text size="body-sm" tone="secondary">
+          <Text className="text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -54,7 +54,7 @@ export function AvatarLauncherScene() {
           <Heading as="h2" level={3}>
             Avatar Launcher
           </Heading>
-          <Text tone="secondary">
+          <Text className="text-text-secondary">
             The single, calm door to the DISCIPLINE Guide — a stable presence,
             never a chat bubble, never urgency. Composed only from the frozen
             IconButton, Icon, Spinner, Badge, Avatar and Tooltip.
@@ -70,7 +70,10 @@ export function AvatarLauncherScene() {
             state="idle"
             onClick={() => setOpened((n) => n + 1)}
           />
-          <Text size="body-sm" tone="secondary" data-testid="al-open-count">
+          <Text
+            className="text-body-sm text-text-secondary"
+            data-testid="al-open-count"
+          >
             Opened {opened} times
           </Text>
         </Section>
