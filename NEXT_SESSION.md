@@ -1970,6 +1970,20 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
+   **Label (Forms accessibilité) : CONSTRUIT au processus complet, NON GELÉ
+   (2026-07-08).** Primitif d'ACCESSIBILITÉ, pas de présentation : répond
+   seulement « quel est le nom de ce champ ? » via un vrai `<label>` lié par
+   `htmlFor`. Ne valide jamais, n'affiche ni erreur/succès/aide, ne gère aucun
+   état. **Deux défauts objectifs corrigés :** (1) le marqueur `required`
+   n'est plus rouge (rouge = signal d'erreur prématuré) → `text-text-tertiary`
+   discret, `aria-hidden` ; (2) vrai prop `disabled` (atténué, jamais
+   invisible), en gardant `peer-disabled`. Layout inline → long/multiline se
+   replient proprement, marqueur attaché même en RTL. Icône REJETÉE (documenté).
+   API : `htmlFor` · `required` · `disabled` · `className` · `children`. Le
+   changement de couleur de l'astérisque s'applique aux ~28 consommateurs de la
+   famille Input (tous compilent). Preuve `/dev/label` +
+   `scripts/label-proof.mjs` verte. **NON GELÉ** — attendre validation visuelle.
+
    **Sprint 1 — AvatarLauncher : CONSTRUIT, NON GELÉ (2026-07-08).** La porte
    d'entrée unique et calme vers le Guide (`src/components/avatar/avatar-launcher.tsx`)
    — première brique du module Avatar, pas du DS. Compose UNIQUEMENT des

@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Label — built to the full process, not frozen (Forms accessibility
+  primitive).** Took the pre-methodology Label to the full analysis/build/proof
+  process and fixed two objective defects. A Forms ACCESSIBILITY primitive (not
+  a presentation one): it answers only "what is the name of this field?" via a
+  real `<label>` bound with `htmlFor` — never validates, shows an error/helper,
+  manages state, or knows the value. **Fix 1: the required marker is no longer
+  red** — red signalled an error before any error existed; it is now a discreet,
+  token-driven `text-text-tertiary`, still `aria-hidden` (the required semantics
+  live on the control, not the asterisk). **Fix 2: a real `disabled` prop** now
+  reflects the control's disabled state (dimmed, cursor not-allowed, never
+  invisible), alongside the kept `peer-disabled` support. Plain inline layout so
+  long/multiline labels wrap naturally (no strange truncation) and the marker
+  stays attached under `dir="rtl"`. The Icon variant is deliberately rejected
+  (documented). API unchanged in spirit — `htmlFor` · `required` · `disabled`
+  (new) · `className` · `children`; no sub-components, no domain props. The
+  required-asterisk colour change applies across the ~28 Input-family consumers
+  (all still compile). Proof `/dev/label` + `scripts/label-proof.mjs` (real
+  `<label>`, htmlFor binding + click-to-focus + accessible name, non-red
+  aria-hidden marker, disabled dim, long/multiline wrap, responsive, RTL).
+  Awaiting visual validation before any freeze.
+
 - **Avatar — frozen (compound Data Display primitive).** Visually validated
   2026-07-08 after a Frozen-review pass: no dead code, no duplication, no
   unused imports/props, no redundant logic, and no token/size/spacing/radius/
