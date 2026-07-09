@@ -251,6 +251,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Accordion — craft pass, pre-freeze (no new feature/variant/prop).**
+  Fixed three objective inconsistencies found in a Craft Review. The
+  Trigger's hover/focus radius was `rounded-md` on a full-width row —
+  every other row-shaped interactive element in the library (DropdownMenu
+  item, Breadcrumb link) uses `rounded-sm` for this shape; switched to
+  match. The focus ring used `ring-accent` while every other flat
+  primitive (Tabs, Breadcrumb, Pagination, Stepper, BottomNav,
+  SearchInput) uses `ring-accent-accessible`; switched to match. A genuine
+  continuity defect: the Trigger kept all four rounded corners even when
+  open, so its hover/focus highlight rendered as a pill floating above the
+  flat Content below — fixed with `data-[state=open]:rounded-b-none`,
+  verified via a hover screenshot showing one continuous block. Full proof
+  re-run green.
+
 - **Accordion — built, not frozen (Disclosure primitive).** The first
   component in a new Disclosure category. Answers exactly ONE thing: "what
   additional content can I reveal?" — never "where am I" (Navigation), "what

@@ -80,7 +80,7 @@ const AccordionTrigger = forwardRef<
       <AccordionPrimitive.Trigger
         ref={ref}
         className={cn(
-          'group flex flex-1 items-center justify-between gap-4 rounded-md px-4 py-3 text-start text-body font-medium text-text outline-none hover:bg-surface focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-40',
+          'group flex flex-1 items-center justify-between gap-4 rounded-sm px-4 py-3 text-start text-body font-medium text-text outline-none data-[state=open]:rounded-b-none hover:bg-surface focus-visible:ring-2 focus-visible:ring-accent-accessible disabled:cursor-not-allowed disabled:opacity-40',
           className,
         )}
         {...props}
