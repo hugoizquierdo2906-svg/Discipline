@@ -9,6 +9,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Table — built to the full process, not frozen (Data Display primitive).**
+  New compound API: `Table` / `Table.Header` / `Table.Body` / `Table.Footer` /
+  `Table.Row` / `Table.Head` / `Table.Cell` / `Table.Caption`, composing
+  DIRECTLY the native `table`/`thead`/`tbody`/`tfoot`/`tr`/`th`/`td`/`caption`
+  elements — never a `<div>` reimplementing table semantics, so every native
+  ARIA role and screen-reader table navigation behaviour is inherited for
+  free. Answers exactly ONE question: "how do these several objects compare
+  across several properties at once?" Holds no business logic and no
+  interaction state — no pagination, sorting, filtering, editing, resizable
+  columns, drag, selection, virtualization, infinite scroll, loading
+  overlays, column menus or bulk actions; every one of those belongs to a
+  future, separate DataGrid, never to Table. Not DataGrid (Table's own
+  future superset), not List (a single sequence, no aligned multi-property
+  columns), not Card (one object's full detail, doesn't scale to
+  comparison), not TreeView (hierarchical containment, not flat peer
+  comparison), not Timeline (a single chronological axis), not Chart
+  (approximate visual trend vs exact discrete facts), not Accordion
+  (progressive disclosure, not simultaneous comparison), not Tabs (switches
+  a single view; Table shows every row/column at once), not Grid Layout
+  (pure CSS arrangement, no semantic table role). The one necessary
+  concession is a plain `overflow-x-auto` wrapper div (a `<table>` cannot
+  scroll itself) carrying no border, background or padding of its own — on
+  a narrow viewport the table scrolls horizontally and never breaks its
+  columns or reflows into a stack of Cards. `stickyHeader` is purely visual
+  (`position: sticky` + a background, threaded via a small React Context
+  down to `Table.Header` — no scroll-tracking logic). `align`
+  (`start`/`center`/`end`) is a logical, RTL-aware text alignment on
+  `Table.Head`/`Table.Cell`, correctly rendering flush to the physical
+  edge in both LTR and RTL. Styled with only Typography tokens and the
+  `divider` colour token already shared with the frozen Separator: a
+  discreet header (no heavy grey fill), one hairline rule per row, no
+  vertical gridlines, no "spreadsheet" look. Proof `/dev/table` +
+  `scripts/table-proof.mjs` (native semantics, caption, header/footer,
+  numeric alignment in LTR and RTL, mixed content composing Avatar/Badge/
+  Code with zero adaptation, long content wrapping, sticky header,
+  responsive horizontal scroll, RTL, no-regression sweep across Accordion/
+  Collapsible/Separator). Grep clean: zero GlassSurface/blur/backdrop-
+  filter/rgba/shadow/transition/animation and zero hardcoded hex/px/ms
+  outside doc-comment prose. Awaiting visual validation before any freeze.
+
 - **Collapsible — frozen (Disclosure primitive).** Visually validated
   2026-07-09 after a Frozen Review found and fixed one genuine defect:
   `className` passed alongside `asChild` was silently dropped instead of

@@ -2034,6 +2034,58 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **Table (Data Display) : construit selon le processus complet, NON GELÉ
+   (2026-07-10).** Premier composant de la nouvelle catégorie Data Display.
+   Répond à UNE seule question : « comment comparer plusieurs objets selon
+   plusieurs propriétés à la fois ? » N'affiche que des données, aucune
+   logique métier : ni pagination, ni tri, ni filtre, ni édition, ni
+   colonnes redimensionnables, ni glisser-déposer, ni sélection, ni
+   virtualisation, ni scroll infini, ni overlay de chargement, ni menu de
+   colonne, ni action groupée — tout cela appartient à un futur DataGrid
+   séparé, jamais à Table. Pas DataGrid (le futur sur-ensemble de Table).
+   Pas List (une séquence unique, sans colonnes multiples ALIGNÉES). Pas
+   Card (le détail complet d'UN objet, ne passe jamais à l'échelle de la
+   comparaison). Pas TreeView (containment hiérarchique, pas une
+   comparaison de pairs à plat). Pas Timeline (un seul axe chronologique).
+   Pas Chart (une tendance visuelle approximative vs des faits discrets
+   exacts). Pas Accordion (divulgation progressive, pas une comparaison
+   simultanée). Pas Tabs (bascule une seule vue ; Table montre toutes les
+   lignes/colonnes en même temps). Pas Grid Layout (arrangement CSS pur,
+   aucun rôle sémantique de tableau). Compose DIRECTEMENT les éléments
+   natifs `table`/`thead`/`tbody`/`tfoot`/`tr`/`th`/`td`/`caption` — jamais
+   un `<div>` réimplémentant la sémantique d'un tableau, donc chaque rôle
+   ARIA natif et chaque comportement natif (zoom navigateur, sélection de
+   texte, navigation lecteur d'écran) sont hérités gratuitement. La seule
+   concession nécessaire est un simple wrapper `overflow-x-auto` (un
+   `<table>` ne peut pas défiler lui-même), sans bordure/fond/padding
+   propre — sur un écran étroit le tableau défile horizontalement, ne
+   casse jamais ses colonnes et ne se transforme jamais en pile de Cards.
+   `stickyHeader` est PUREMENT visuel (`position: sticky` + un fond,
+   propagé via un React Context vers `Table.Header` — aucune logique de
+   suivi de scroll). `align` (`start`/`center`/`end` sur `Table.Head`/
+   `Table.Cell`) est une alignement logique, correct en RTL — la bonne
+   façon d'aligner une colonne numérique sans coder en dur gauche/droite.
+   Ne compose QUE les tokens Typography et le token couleur `divider` déjà
+   partagé avec Separator gelé — aucun GlassSurface, aucune Card, aucune
+   ombre, aucun quadrillage épais, aucun style « tableur » : l'en-tête est
+   discret (`text-body-sm`/`font-medium`/`text-text-secondary`, un seul
+   filet sous l'en-tête, jamais un fond gris épais), chaque ligne séparée
+   de la suivante par le même filet unique, jamais un quadrillage vertical
+   et horizontal complet. API : `Table` (`stickyHeader`/`className`) ·
+   `Table.Header`/`Table.Body`/`Table.Footer`/`Table.Row` (`className`) ·
+   `Table.Head`/`Table.Cell` (`align`/`className`) · `Table.Caption`
+   (`className`). Preuve `/dev/table` + `scripts/table-proof.mjs` verte
+   (sémantique native, caption, header/footer, alignement numérique
+   vérifié en LTR et RTL à la fois par la valeur logique calculée et la
+   position physique réelle du texte, contenu mixte composant Avatar/
+   Badge/Code gelés sans aucune adaptation, contenu long qui s'enroule,
+   sticky header, scroll horizontal responsive sans jamais devenir une
+   pile de Cards, RTL, vérification anti-régression contre Accordion/
+   Collapsible/Separator gelés). Grep propre (zéro GlassSurface/blur/
+   backdrop-filter/rgba/shadow/transition/animation et zéro hex/px/ms en
+   dur hors prose de doc-comment). **NON GELÉ** — attendre validation
+   visuelle.
+
    **Accordion (Disclosure) : GELÉ (2026-07-09).** Passe de craft
    (pré-gel) corrigeant trois incohérences objectives — rayon du Trigger
    `rounded-md`→`rounded-sm` (aligné sur DropdownMenu.Item/Breadcrumb.Link,
