@@ -2034,8 +2034,11 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
-   **ActivityFeed (Data Display) : construit selon le processus complet,
-   NON GELÉ (2026-07-10).** Compound réel (`ActivityFeed`/
+   **ActivityFeed (Data Display) : GELÉ (2026-07-10).** Une Frozen Review
+   complète (composant, captures, preuve Playwright, API, architecture,
+   tokens, dépendances) n'a trouvé aucun défaut objectif — zéro code
+   changé, gel tel quel. API publique désormais figée (ADR nécessaire pour
+   la modifier). Compound réel (`ActivityFeed`/
    `ActivityFeed.Item`/`ActivityFeed.Avatar`/`ActivityFeed.Icon`/
    `ActivityFeed.Content`/`ActivityFeed.Title`/`ActivityFeed.Description`/
    `ActivityFeed.Meta`/`ActivityFeed.Actions`). Répond à UNE seule

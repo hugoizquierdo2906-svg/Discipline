@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **ActivityFeed — frozen (Data Display primitive).** Visually validated
+  2026-07-10 after a Frozen Review (component, captures, Playwright proof,
+  API, architecture, tokens, dependencies) found no objective defect — zero
+  code changed, the freeze locks it as-is. No functional, visual or
+  architectural change again except an objective bug; the public API
+  (`ActivityFeed`'s `compact`/`align`/`className`, each sub-part's
+  `className` + native attributes) requires an ADR to change.
+
 - **ActivityFeed — built to the full process, not frozen (Data Display
   primitive).** New compound API: `ActivityFeed` / `ActivityFeed.Item` /
   `ActivityFeed.Avatar` / `ActivityFeed.Icon` / `ActivityFeed.Content` /
