@@ -2034,8 +2034,13 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
-   **Timeline (Data Display) : construit selon le processus complet, NON
-   GELÉ (2026-07-10).** Compound réel (`Timeline`/`Timeline.Item`/
+   **Timeline (Data Display) : GELÉ (2026-07-10).** Après le passage Craft
+   Review (ligne de connexion atténuée à `divider/40` ; `Timeline.Dot` uni
+   réduit à un point de 8px à contour fin), une Frozen Review complète
+   (composant, captures, preuve Playwright, API, tokens, architecture,
+   dépendances) n'a trouvé aucun autre défaut objectif — zéro code changé,
+   gel tel quel. API publique désormais figée (ADR nécessaire pour la
+   modifier). Compound réel (`Timeline`/`Timeline.Item`/
    `Timeline.Separator`/`Timeline.Dot`/`Timeline.Content`/`Timeline.Title`/
    `Timeline.Description`/`Timeline.Time`), la même forme que le Timeline
    de MUI. Répond à UNE seule question : « dans quel ordre ces événements

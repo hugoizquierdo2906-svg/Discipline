@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Timeline — frozen (Data Display primitive).** Visually validated
+  2026-07-10 after a Frozen Review (component, captures, Playwright proof,
+  API, tokens, architecture, dependencies) found no objective defect — zero
+  code changed since the Craft Review pass, the freeze locks it as-is. No
+  functional, visual or architectural change again except an objective bug;
+  the public API (`Timeline`'s `orientation`/`align`/`className`, each
+  sub-part's `className` + native attributes) requires an ADR to change.
+
 - **Timeline — Craft Review pass (Data Display primitive, still not
   frozen).** No new feature, variant or prop — visual finish only, ahead
   of freezing. (1) The connecting line faded from full-strength `divider`
