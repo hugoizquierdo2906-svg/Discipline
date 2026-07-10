@@ -2,6 +2,7 @@
 // Generic, stateless, token-driven. No business logic lives here.
 
 export { Accordion } from './accordion'
+export { ActivityFeed } from './activity-feed'
 export { Alert } from './alert'
 export { Avatar, getInitials } from './avatar'
 export { Badge } from './badge'

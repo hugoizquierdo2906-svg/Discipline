@@ -9,6 +9,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **ActivityFeed — built to the full process, not frozen (Data Display
+  primitive).** New compound API: `ActivityFeed` / `ActivityFeed.Item` /
+  `ActivityFeed.Avatar` / `ActivityFeed.Icon` / `ActivityFeed.Content` /
+  `ActivityFeed.Title` / `ActivityFeed.Description` / `ActivityFeed.Meta` /
+  `ActivityFeed.Actions`. Answers exactly ONE question: "what happened
+  recently?" Holds no business logic — no push notifications, real-time,
+  WebSockets, likes, comments, replies, reactions, bookmarks, unread state,
+  selection, pagination, infinite scroll, loading, filtering, grouping,
+  sorting or search; every one of those belongs to the consuming business
+  screen, never to ActivityFeed. Not Timeline (Timeline answers "in what
+  order did these events happen?" — a strict chronological axis drawn as a
+  line between dots; ActivityFeed has no drawn axis at all, just a list of
+  activities read for their own content), not Table (compares aligned
+  properties in columns; ActivityFeed has none), not List (a
+  content-agnostic sequence; ActivityFeed has a specific anatomy: actor/
+  icon, title, description, metadata, actions, always in that order), not
+  Card (isolated full detail with its own surface; an ActivityFeed.Item is
+  a plain row read as part of a list), not Accordion (progressive
+  disclosure; every item is always fully visible), not TreeView
+  (hierarchical containment; ActivityFeed is flat), not a Notification
+  (actionable/stateful, read/unread, dismissible; ActivityFeed has none of
+  that), not an Audit Log (compliance-grade, immutable, filterable
+  machinery ActivityFeed does not implement), not Chat/Comment Thread
+  (two-way conversational content; ActivityFeed is one-way, system-
+  reported), not History (often reversible/undoable, tied to one object;
+  ActivityFeed is cross-object), not a social Feed (Facebook/Twitter/
+  Instagram/LinkedIn/Discord/Slack-style reactions, comments, threads —
+  forbidden absolutely). `ActivityFeed` renders a real `<ul>` (unlike
+  Timeline's `<ol>` — order is not itself the semantic point here) of
+  `ActivityFeed.Item` `<li>`s. `ActivityFeed.Avatar`/`ActivityFeed.Icon`
+  are plain leading-column slots sharing one fixed footprint, so a
+  consumer's real, unmodified `Avatar` or `Icon` lines up identically row
+  after row. Rows are separated by the real, frozen `Separator` (composed
+  directly at a quarter of its usual strength, `divider/40` — identical to
+  Table's own body-row fade — never a custom div), the last item's
+  trailing Separator hidden via a structural `:last-child` selector, never
+  a JS index. `compact` (boolean) tightens row padding; `align`
+  (`start` default/`center`) sets whether the leading slot aligns to the
+  top or vertical center of the row — both pure layout, no business
+  meaning. Composes ONLY Typography tokens, the shared `divider` token and
+  whatever content a consumer places in its slots — no GlassSurface, no
+  Card, no shadow, no gradient, no animation, no decorative element
+  ActivityFeed draws itself. Proof `/dev/activity-feed` +
+  `scripts/activity-feed-proof.mjs` (native `<ul>`/`<li>` structure, the
+  frozen Separator between rows fading and disappearing after the last
+  item, compact/comfortable rhythm, Avatar/Icon/Badge/Button/Code
+  composing with zero adaptation, matching Avatar/Icon slot footprints,
+  `tabular-nums` metadata, long content wrapping without truncation,
+  always-vertical responsive behaviour, RTL, no fabricated live-region/
+  unread/notification role, no-regression sweep across Timeline/Table/
+  Accordion/Separator). Grep clean: zero GlassSurface/blur/backdrop-
+  filter/rgba/shadow/transition/animation and zero hardcoded hex/px/ms
+  outside doc-comment prose. Awaiting visual validation before any
+  freeze.
+
 - **Timeline — frozen (Data Display primitive).** Visually validated
   2026-07-10 after a Frozen Review (component, captures, Playwright proof,
   API, tokens, architecture, dependencies) found no objective defect — zero

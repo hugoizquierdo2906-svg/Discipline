@@ -2034,6 +2034,65 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **ActivityFeed (Data Display) : construit selon le processus complet,
+   NON GELÉ (2026-07-10).** Compound réel (`ActivityFeed`/
+   `ActivityFeed.Item`/`ActivityFeed.Avatar`/`ActivityFeed.Icon`/
+   `ActivityFeed.Content`/`ActivityFeed.Title`/`ActivityFeed.Description`/
+   `ActivityFeed.Meta`/`ActivityFeed.Actions`). Répond à UNE seule
+   question : « qu'est-ce qui s'est passé récemment ? » — à distinguer
+   nettement de Timeline (« dans quel ordre ces événements se sont-ils
+   produits ? », un axe chronologique tracé comme une ligne entre des
+   points ; ActivityFeed ne trace aucun axe, seulement une liste
+   d'activités lues pour leur contenu). Aucune logique métier : ni
+   notifications push, ni temps réel, ni WebSocket, ni likes, ni
+   commentaires, ni réponses, ni réactions, ni favoris, ni état non-lu, ni
+   sélection, ni pagination, ni scroll infini, ni chargement, ni filtre,
+   ni groupe, ni tri, ni recherche — tout cela appartient aux écrans
+   métier. Pas Table (compare des propriétés alignées en colonnes ;
+   ActivityFeed n'en a aucune). Pas List (une séquence générique sans
+   anatomie fixe ; ActivityFeed a une anatomie précise : acteur/icône,
+   titre, description, métadonnées, actions, toujours dans cet ordre).
+   Pas Card (détail complet isolé avec sa propre surface ; un
+   ActivityFeed.Item est une ligne plate lue au sein d'une liste). Pas
+   Accordion (divulgation progressive ; chaque item est toujours visible).
+   Pas TreeView (containment hiérarchique ; ActivityFeed est plat). Pas
+   une Notification (actionnable et à état — lu/non lu, rejetable ;
+   ActivityFeed n'a rien de tout cela). Pas un Audit Log (machinerie de
+   conformité, immuable, filtrable, qu'ActivityFeed n'implémente pas). Pas
+   Chat/Comment Thread (contenu conversationnel à double sens ;
+   ActivityFeed est à sens unique, rapporté par le système). Pas History
+   (souvent réversible/annulable, lié à un seul objet ; ActivityFeed est
+   transversal). Pas un Feed social (Facebook/Twitter/Instagram/LinkedIn/
+   Discord/Slack — réactions, commentaires, fils : interdiction absolue).
+   `ActivityFeed` rend un vrai `<ul>` (contrairement au `<ol>` de
+   Timeline — l'ordre n'est pas ici le point sémantique) de
+   `ActivityFeed.Item` en `<li>`. `ActivityFeed.Avatar`/
+   `ActivityFeed.Icon` sont de simples emplacements de colonne de tête
+   partageant une empreinte fixe identique, pour qu'un `Avatar` ou une
+   `Icon` réel et non modifié s'aligne identiquement ligne après ligne.
+   Les lignes sont séparées par le vrai `Separator` gelé (composé
+   directement, à un quart de sa force habituelle, `divider/40` —
+   identique à l'atténuation déjà utilisée par Table — jamais un div
+   personnalisé) ; le séparateur final du dernier item est masqué via un
+   sélecteur CSS structurel `:last-child`, jamais un index JS. `compact`
+   (booléen) resserre le rythme des lignes ; `align` (`start` par
+   défaut/`center`) définit si l'emplacement de tête s'aligne en haut ou
+   au centre vertical de la ligne — les deux sont de la pure mise en
+   page, sans signification métier. Compose UNIQUEMENT les tokens
+   Typography, le token partagé `divider`, et tout contenu qu'un
+   consommateur place dans ses emplacements — aucun GlassSurface, aucune
+   Card, aucune ombre, aucun dégradé, aucune animation, aucun élément
+   décoratif dessiné par ActivityFeed lui-même. Preuve `/dev/activity-feed`
+   + `scripts/activity-feed-proof.mjs` verte (structure `<ul>`/`<li>`
+   native, Separator atténué et masqué après le dernier item, rythme
+   compact/confortable, Avatar/Icon/Badge/Button/Code composés sans
+   adaptation, empreintes de slots identiques, métadonnées en
+   `tabular-nums`, contenu long qui s'enroule sans troncature,
+   comportement responsive toujours vertical, RTL, aucune région live/
+   état non-lu/rôle de notification fabriqué, vérification
+   anti-régression contre Timeline/Table/Accordion/Separator gelés). Grep
+   propre. **NON GELÉ** — attendre validation visuelle.
+
    **Timeline (Data Display) : GELÉ (2026-07-10).** Après le passage Craft
    Review (ligne de connexion atténuée à `divider/40` ; `Timeline.Dot` uni
    réduit à un point de 8px à contour fin), une Frozen Review complète
