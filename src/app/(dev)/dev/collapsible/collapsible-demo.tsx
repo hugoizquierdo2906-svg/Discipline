@@ -217,7 +217,7 @@ export function CollapsibleScene() {
           data-testid="cl-custom-trigger"
         >
           <Collapsible>
-            <Collapsible.Trigger asChild>
+            <Collapsible.Trigger asChild className="cl-custom-marker">
               <Button
                 variant="secondary"
                 trailingIcon={<ChevronRight size={16} />}

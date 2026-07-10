@@ -70,7 +70,12 @@ const CollapsibleTrigger = forwardRef<
 >(function CollapsibleTrigger({ className, children, asChild, ...props }, ref) {
   if (asChild) {
     return (
-      <CollapsiblePrimitive.Trigger ref={ref} asChild {...props}>
+      <CollapsiblePrimitive.Trigger
+        ref={ref}
+        asChild
+        className={className}
+        {...props}
+      >
         {children}
       </CollapsiblePrimitive.Trigger>
     )

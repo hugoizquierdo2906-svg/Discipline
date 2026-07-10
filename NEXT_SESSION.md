@@ -1970,8 +1970,19 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
-   **Collapsible (Disclosure) : CONSTRUIT au processus complet, NON GELÉ
-   (2026-07-09).** L'atome Disclosure dont Accordion est littéralement
+   **Collapsible (Disclosure) : GELÉ (2026-07-09).** Frozen Review ayant
+   trouvé et corrigé un vrai défaut : `className` passé aux côtés de
+   `asChild` était silencieusement abandonné (la branche `asChild`
+   diffusait `{...props}` sans `className`, déstructuré plus haut) — un
+   consommateur stylant son propre élément trigger personnalisé
+   (`<Collapsible.Trigger asChild className="...">`) aurait vu cette
+   classe disparaître au lieu d'être fusionnée sur son élément via le
+   Slot de Radix. Corrigé en passant `className={className}` aussi dans
+   la branche `asChild` ; vérifié par une nouvelle assertion de preuve
+   (une classe `cl-custom-marker` se retrouve bien sur le `Button`
+   personnalisé). Aucun autre défaut objectif trouvé. API publique
+   nécessite désormais un ADR pour être modifiée. Détail de la
+   construction : l'atome Disclosure dont Accordion est littéralement
    construit : une seule région, un seul état ouvert/fermé, aucune
    logique de groupe, aucune exclusivité, aucune coordination. Répond à
    UNE seule chose : « est-ce que je veux masquer ou révéler CETTE zone

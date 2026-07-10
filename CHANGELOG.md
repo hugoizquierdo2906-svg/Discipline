@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Collapsible — frozen (Disclosure primitive).** Visually validated
+  2026-07-09 after a Frozen Review found and fixed one genuine defect:
+  `className` passed alongside `asChild` was silently dropped instead of
+  merged onto the consumer's own custom trigger element via Radix's
+  Slot — fixed by passing `className` through in the `asChild` branch
+  too, verified by a new proof assertion. No other objective defect
+  found. No functional, visual or architectural change again except an
+  objective bug; the public API requires an ADR to change.
+
 - **Accordion — frozen (Disclosure primitive).** Visually validated
   2026-07-09 after a craft pass (Trigger radius `rounded-md`→`rounded-sm`
   matching the DropdownMenu/Breadcrumb row precedent; focus ring

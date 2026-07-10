@@ -250,6 +250,13 @@ for (const [w, h, suffix] of [
   const chevronCount = await trigger.locator('svg.transition-transform').count()
   if (chevronCount !== 0)
     issues.push('[assert] asChild trigger must not receive the default chevron')
+  const hasMarker = await trigger.evaluate((e) =>
+    e.classList.contains('cl-custom-marker'),
+  )
+  if (!hasMarker)
+    issues.push(
+      "[assert] a className passed alongside asChild must merge onto the consumer's own element, not be dropped",
+    )
   await trigger.click()
   await page.waitForTimeout(150)
   if ((await trigger.getAttribute('aria-expanded')) !== 'true')
