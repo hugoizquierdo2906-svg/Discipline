@@ -9,6 +9,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **DataGrid — built to the full process, not frozen (Data Display
+  primitive).** New compound API: `DataGrid` / `DataGrid.Toolbar` /
+  `DataGrid.Header` / `DataGrid.Body` / `DataGrid.Row` / `DataGrid.Cell` /
+  `DataGrid.Column` / `DataGrid.Footer` / `DataGrid.Empty` /
+  `DataGrid.Pagination`. Answers exactly ONE question: "how do I
+  manipulate a large set of comparable data?" — what the frozen Table
+  becomes once a dataset needs sorting, row selection, pagination and a
+  toolbar on top of plain comparison, while staying a UI orchestration
+  surface, never a data engine: it knows nothing about APIs, backends,
+  SQL, server-side search, permissions, business rules, lazy loading,
+  business-level virtualization, import/export, CSV/Excel or GraphQL, and
+  nothing about any DISCIPLINE domain concept. Sort direction, selected
+  rows and the current page are all CONTROLLED STATE the consumer owns —
+  DataGrid only renders the affordance (a clickable sortable header, a
+  pagination control, a toolbar slot) and forwards the interaction, never
+  reorders, filters or slices the data itself. Not Table (no sort,
+  selection, pagination or toolbar — DataGrid is built BY COMPOSING Table
+  directly, never duplicating its markup: `DataGrid.Header`/`Body`/`Row`/
+  `Cell`/`Footer` ARE `Table.Header`/`Body`/`Row`/`Cell`/`Footer`,
+  re-exported, not reimplemented). Not TreeView (a hierarchy, no
+  parent/child relationship in DataGrid). Not Timeline/ActivityFeed (no
+  time axis, no per-row anatomy — DataGrid rows are arbitrary named-column
+  records). Not a Spreadsheet/Excel (no free-form cell editing, no
+  formulas, no cell-to-cell references — every cell is a fixed, read-only
+  display of one field). Not List/Card (no named columns; one object's
+  isolated detail, respectively). `DataGrid.Column` is the one genuinely
+  new piece over `Table.Head`: an OPTIONAL `sortable` affordance (a
+  clickable header, a chevron indicator, `aria-sort`) — the actual
+  comparator and row re-ordering stay the consumer's job. `DataGrid.Empty`
+  is a valid `<tr>`/`<td>` wrapper (spanning every column) around the
+  frozen `EmptyState`, so "no rows" still renders inside a structurally
+  valid `<tbody>`. `DataGrid.Pagination` is the real, frozen `Pagination`
+  component itself, composed directly beneath the table. `DataGrid` (root)
+  and `DataGrid.Toolbar` are plain flex layout slots with no material of
+  their own — the actual `<Table role="grid">` sits between them as its
+  own element, since a toolbar and a pagination control cannot legally
+  live inside a `<table>`. Setting `role="grid"` on the underlying Table
+  is the ONLY ARIA Grid wiring added by hand: per the HTML-ARIA mapping, a
+  `<td>`'s implicit role already becomes `gridcell` (instead of `cell`)
+  the moment its ancestor `<table>` carries `role="grid"`, and `<th>`/
+  `<tr>` already compute to `columnheader`/`row` regardless — every ARIA
+  Grid role falls out of real HTML semantics, never a hand-authored
+  `role="gridcell"` on every cell. Keyboard navigation is entirely native
+  (every interactive surface is a real `<button>` — no custom grid
+  cell-to-cell arrow-key model, since that is an editable-spreadsheet
+  concern DataGrid explicitly does not have). No GlassSurface, no heavy
+  grid lines, no Excel look — DataGrid inherits Table's own calm hairline
+  rhythm unchanged. Proof `/dev/data-grid` + `scripts/datagrid-proof.mjs`
+  (ARIA Grid roles cascading from `role="grid"`, selection toggling real
+  checked/indeterminate state, sorting toggling `aria-sort` and actually
+  re-ordering consumer-owned rows, the real Pagination changing visible
+  rows, the Toolbar's SearchInput filtering consumer-owned rows, Empty
+  rendering the frozen EmptyState in a valid row, a Loading row composing
+  the frozen Spinner, long content wrapping without truncation, responsive
+  horizontal scroll inherited from Table, disabled Pagination truly
+  disabling its buttons, RTL, keyboard reaching and activating the
+  sortable header via a native button, no-regression sweep across
+  Table/TreeView/ActivityFeed/Timeline). Grep clean: zero GlassSurface/
+  blur/backdrop-filter/rgba/shadow/transition/animation and zero
+  hardcoded hex/px/ms outside doc-comment prose. Awaiting visual
+  validation before any freeze.
+
 - **TreeView — frozen (Data Display primitive).** Visually validated
   2026-07-10 after a Frozen Review (component, captures, Playwright proof,
   API, architecture, tokens, dependencies) found and fixed one genuine

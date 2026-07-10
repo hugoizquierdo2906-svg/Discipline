@@ -2034,6 +2034,73 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **DataGrid (Data Display) : construit selon le processus complet, NON
+   GELÉ (2026-07-10).** Compound (`DataGrid`/`DataGrid.Toolbar`/
+   `DataGrid.Header`/`DataGrid.Body`/`DataGrid.Row`/`DataGrid.Cell`/
+   `DataGrid.Column`/`DataGrid.Footer`/`DataGrid.Empty`/
+   `DataGrid.Pagination`). Répond à UNE seule question : « comment
+   manipuler un grand ensemble de données comparables ? » — ce que devient
+   le Table gelé une fois le dataset assez grand pour avoir besoin de tri,
+   sélection de lignes, pagination et une barre d'outils en plus de la
+   simple comparaison, tout en restant une surface d'orchestration UI,
+   jamais un moteur de données : aucune connaissance d'API, de backend, de
+   SQL, de recherche serveur, de permissions, de règles métier, de
+   chargement différé, de virtualisation métier, d'import/export, de
+   CSV/Excel, de GraphQL, ni d'aucun concept du domaine DISCIPLINE. La
+   direction de tri, les lignes sélectionnées et la page courante sont
+   tous un état CONTRÔLÉ possédé par le consommateur — DataGrid ne fait
+   que rendre l'affordance (un en-tête triable cliquable, un contrôle de
+   pagination, un emplacement de barre d'outils) et transmettre
+   l'interaction, sans jamais réordonner, filtrer ou découper les données
+   lui-même. Pas Table (aucun tri, sélection, pagination ni barre
+   d'outils — DataGrid est construit EN COMPOSANT Table directement,
+   jamais en dupliquant son balisage : `DataGrid.Header`/`Body`/`Row`/
+   `Cell`/`Footer` SONT `Table.Header`/`Body`/`Row`/`Cell`/`Footer`,
+   ré-exportés, jamais réimplémentés). Pas TreeView (une hiérarchie,
+   aucune relation parent/enfant dans DataGrid). Pas Timeline/
+   ActivityFeed (aucun axe temporel, aucune anatomie par ligne — les
+   lignes de DataGrid sont des enregistrements arbitraires à colonnes
+   nommées). Pas un Spreadsheet/Excel (aucune édition de cellule libre,
+   aucune formule, aucune référence cellule-à-cellule — chaque cellule est
+   un affichage fixe et en lecture seule d'un seul champ). Pas List/Card
+   (aucune colonne nommée ; le détail isolé d'un seul objet,
+   respectivement). `DataGrid.Column` est la seule pièce vraiment nouvelle
+   par rapport à `Table.Head` : une affordance `sortable` OPTIONNELLE (un
+   en-tête cliquable, un chevron indicateur, `aria-sort`) — le comparateur
+   réel et le réordonnancement des lignes restent la responsabilité du
+   consommateur. `DataGrid.Empty` est un wrapper `<tr>`/`<td>` valide
+   (couvrant toutes les colonnes) autour du frozen `EmptyState`, pour que
+   « aucune ligne » se rende toujours dans un `<tbody>` structurellement
+   valide. `DataGrid.Pagination` est le vrai composant `Pagination` gelé
+   lui-même, composé directement sous le tableau. `DataGrid` (racine) et
+   `DataGrid.Toolbar` sont de simples emplacements de mise en page flex
+   sans matière propre — le vrai `<Table role="grid">` se trouve entre
+   les deux comme son propre élément, puisqu'une barre d'outils et un
+   contrôle de pagination ne peuvent légalement pas vivre à l'intérieur
+   d'un `<table>`. Définir `role="grid"` sur le Table sous-jacent est la
+   SEULE mise en fil ARIA Grid ajoutée à la main : selon le mapping
+   HTML-ARIA, le rôle implicite d'un `<td>` devient déjà `gridcell` (au
+   lieu de `cell`) dès que son ancêtre `<table>` porte `role="grid"`, et
+   `<th>`/`<tr>` calculent déjà `columnheader`/`row` de toute façon —
+   chaque rôle ARIA Grid découle de la sémantique HTML réelle, jamais un
+   `role="gridcell"` écrit à la main sur chaque cellule. La navigation
+   clavier est entièrement native (chaque surface interactive est un vrai
+   `<button>` — aucun modèle de navigation cellule-à-cellule par flèches,
+   un souci de tableur éditable que DataGrid n'a explicitement pas).
+   Aucun GlassSurface, aucun quadrillage lourd, aucun style Excel —
+   DataGrid hérite du rythme calme de Table sans rien changer. Preuve
+   `/dev/data-grid` + `scripts/datagrid-proof.mjs` verte (rôles ARIA Grid
+   découlant de `role="grid"`, sélection basculant un vrai état coché/
+   indéterminé, tri basculant `aria-sort` et réordonnant réellement les
+   lignes possédées par le consommateur, la vraie Pagination changeant les
+   lignes visibles, la Toolbar du consommateur filtrant ses propres
+   lignes, Empty/Loading rendus dans une ligne valide, contenu long qui
+   s'enroule sans troncature, scroll responsive hérité de Table,
+   Pagination désactivée désactivant réellement ses boutons, RTL, clavier,
+   vérification anti-régression contre Table/TreeView/ActivityFeed/
+   Timeline gelés). Grep propre. **NON GELÉ** — attendre validation
+   visuelle.
+
    **TreeView (Data Display) : GELÉ (2026-07-10).** Une Frozen Review
    complète a trouvé et corrigé un vrai défaut de code mort : le paramètre
    `current` de `focusTreeItem` n'était jamais utilisé (réduit au silence
