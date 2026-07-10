@@ -262,6 +262,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Collapsible — built, not frozen (Disclosure primitive).** The
+  Disclosure atom the frozen Accordion is literally built from: one region,
+  one open/closed state, no group logic, no exclusivity, no coordination.
+  Answers exactly ONE thing: "do I want to hide or reveal THIS region of
+  content?" Not Accordion (a GROUP of Collapsibles with coordinated
+  exclusivity and shared keyboard nav, each trigger wrapped in a heading;
+  Collapsible is the atom, no siblings, no heading wrapper), not Tabs
+  (switches between named views; Collapsible's one region is present or
+  absent, no alternative shown in its place), not TreeView (hierarchical
+  data with selection), not Drawer/BottomSheet (overlay, portaled,
+  scrimmed; Collapsible stays in the page's own flow), not Dialog
+  (blocking), not Popover (anchored, dismissed on outside-click;
+  Collapsible has no positioning logic), not Tooltip (hover-triggered,
+  transient), not NavigationMenu (leads to a different destination). A
+  real compound (`Collapsible`/`Collapsible.Trigger`/`Collapsible.Content`)
+  composing `@radix-ui/react-collapsible@1.1.16` (new pinned dependency)
+  directly — no wrapper. Trigger shares the exact row material already
+  established by the frozen Accordion (radius, hover/focus tokens, chevron
+  transition, the `data-[state=open]:rounded-b-none` continuity fix) so the
+  atom and the group it forms read as one material — but is NOT wrapped in
+  a heading, verified. `asChild` lets a consumer's own element become the
+  trigger verbatim, with no default chevron/className imposed, verified.
+  Content draws no card/surface and never constrains height (no fixed
+  height, no internal scroll, verified). 100% of Radix's ARIA/keyboard
+  (Tab/Enter/Space)/focus behaviour kept as-is. Proof `/dev/collapsible` +
+  `scripts/collapsible-proof.mjs` (controlled/uncontrolled/defaultOpen/
+  disabled state machine, forceMount DOM presence, long-content height,
+  nested independence, chevron rotation timing, the asChild verbatim-
+  trigger contract, RTL, full keyboard, ARIA, no-regression spot check
+  against the frozen Accordion). Awaiting visual validation before any
+  freeze.
+
 - **Accordion — craft pass, pre-freeze (no new feature/variant/prop).**
   Fixed three objective inconsistencies found in a Craft Review. The
   Trigger's hover/focus radius was `rounded-md` on a full-width row —

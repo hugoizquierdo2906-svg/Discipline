@@ -1970,6 +1970,59 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
+   **Collapsible (Disclosure) : CONSTRUIT au processus complet, NON GELÉ
+   (2026-07-09).** L'atome Disclosure dont Accordion est littéralement
+   construit : une seule région, un seul état ouvert/fermé, aucune
+   logique de groupe, aucune exclusivité, aucune coordination. Répond à
+   UNE seule chose : « est-ce que je veux masquer ou révéler CETTE zone
+   de contenu ? ». Pas Accordion (un GROUPE de Collapsibles coordonnés —
+   exclusivité `single`/`multiple`, navigation clavier Arrow/Home/End
+   partagée, chaque trigger enveloppé dans un titre pour le plan du
+   document ; Collapsible est l'atome dont Radix construit littéralement
+   son propre Accordion — une région, aucun frère, aucune règle
+   d'exclusion, aucun wrapper de titre). Pas Tabs (COMMUTE entre plusieurs
+   vues nommées toujours visibles ; Collapsible n'a qu'une région présente
+   ou absente, aucune « autre vue » affichée à sa place). Pas TreeView
+   (données hiérarchiques avec sélection). Pas Drawer/BottomSheet (overlay
+   porté, scrim, dismissible ; Collapsible reste dans le flux de la page).
+   Pas Dialog (bloquant). Pas Popover (ancré, positionné, fermé au clic
+   extérieur ; Collapsible n'a aucune logique de positionnement ni de
+   fermeture au clic extérieur — un simple bouton bascule en ligne). Pas
+   Tooltip (déclenché au survol, transitoire). Pas NavigationMenu (mène
+   vers d'autres destinations). Compose DIRECTEMENT
+   `@radix-ui/react-collapsible` (nouvelle dépendance épinglée `1.1.16`) —
+   aucun wrapper intermédiaire. Le Trigger partage EXACTEMENT la même
+   matière de ligne déjà établie par le Trigger du Accordion gelé (fond
+   hover/focus piloté par tokens, `rounded-sm`, rotation calme du chevron
+   `duration-fast`/`ease-standard`, et le correctif de continuité
+   `data-[state=open]:rounded-b-none` déjà appliqué à Accordion) pour une
+   raison délibérée : Accordion est construit À PARTIR DE Collapsible,
+   donc l'atome et le groupe qu'il forme doivent se lire comme une seule
+   matière, jamais deux. Contrairement au Trigger d'Accordion, celui de
+   Collapsible n'est PAS enveloppé dans un titre — vérifié : le parent du
+   trigger n'est jamais un `h1`–`h6` — puisqu'il n'y a aucun plan de
+   groupe à préserver. `Content` ne dessine aucune carte ni nouvelle
+   surface, ne contraint jamais la hauteur (vérifié : `max-height: none`,
+   jamais de scroll interne). 100 % du comportement Radix conservé tel
+   quel : ARIA, clavier (Tab/Enter/Space, vérifié), focus, `asChild`.
+   Vérifié : `open`/`onOpenChange` pilote l'état en externe (contrôlé) aux
+   côtés du basculement non contrôlé sans prop `open` ; `defaultOpen`
+   démarre révélé ; `disabled` bloque entièrement le trigger ; `forceMount`
+   garde le contenu présent dans le DOM même fermé ; un Collapsible
+   imbriqué dans le contenu d'un autre s'ouvre/ferme indépendamment ;
+   `asChild` rend l'élément propre du consommateur (un `Button`
+   personnalisé) comme trigger tel quel, SANS chevron ni className par
+   défaut imposés ; RTL fonctionnel. API : `Collapsible`
+   (`open`/`defaultOpen`/`onOpenChange`/`disabled`/`className`) ·
+   `Collapsible.Trigger` (`asChild`/`className`) · `Collapsible.Content`
+   (`forceMount`/`className`). Preuve `/dev/collapsible` +
+   `scripts/collapsible-proof.mjs` verte (ARIA, machine d'état contrôlé/
+   non contrôlé/defaultOpen/disabled, présence DOM forceMount, hauteur du
+   contenu long, indépendance imbriquée, timing de rotation du chevron,
+   contrat asChild verbatim, RTL, clavier complet, vérification
+   anti-régression contre Accordion gelé). **NON GELÉ** — attendre
+   validation visuelle.
+
    **Accordion (Disclosure) : GELÉ (2026-07-09).** Passe de craft
    (pré-gel) corrigeant trois incohérences objectives — rayon du Trigger
    `rounded-md`→`rounded-sm` (aligné sur DropdownMenu.Item/Breadcrumb.Link,
