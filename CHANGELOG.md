@@ -9,6 +9,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Timeline — built to the full process, not frozen (Data Display
+  primitive).** New compound API: `Timeline` / `Timeline.Item` /
+  `Timeline.Separator` / `Timeline.Dot` / `Timeline.Content` /
+  `Timeline.Title` / `Timeline.Description` / `Timeline.Time` — the same
+  shape as MUI's own Timeline (Item/Separator/Dot/Content), the closest
+  official precedent. Answers exactly ONE question: "in what order did
+  these events happen?" Holds no business logic — no likes, comments,
+  notifications, pagination, virtualization, real-time updates, filtering,
+  grouping or sorting; every one of those belongs to a future, separate
+  ActivityFeed, never to Timeline. Not ActivityFeed (Timeline's own future
+  superset), not Stepper (a fixed, forward-looking task with a completed/
+  current/pending state machine — Timeline has no "current" and is a
+  read-only record of the past), not Progress (one continuous quantity, no
+  discrete events), not Table (compares several ALIGNED properties across
+  objects; Timeline has one axis, time), not List (arbitrary order vs
+  chronology as the point), not Card (one object's detail vs a sequence),
+  not TreeView (nested containment vs a flat sequence), not Calendar (a
+  spatial grid you schedule INTO vs a linear read-only record), not Chart
+  (an aggregated trend vs discrete legible events), not Accordion
+  (independent disclosure sections, no chronological axis). `Timeline`
+  renders a real `<ol>` of `Timeline.Item` `<li>`s — order is semantic. The
+  connecting line is a plain 1px `divider` hairline (identical strength to
+  the frozen Table's own row hairline), owned by the earlier event's own
+  `Timeline.Separator` and drawn only after its Dot, toward the next one;
+  the last item's trailing line is hidden via a structural `:last-child`
+  CSS selector on the root, never a JS index. `Timeline.Dot` is a small
+  outlined circle (`border-border`, matching the frozen Stepper's own
+  pending-step ring) that grows only enough to fit an optional icon or
+  Avatar child (CSS `has-[>*]`, zero extra prop). `Timeline.Time` uses
+  `tabular-nums` (the same convention as Table's numeric cells). `orientation`
+  (`vertical` default/`horizontal`) is a pure axis switch; `align`
+  (`start` default/`end`) places `Timeline.Content` before or after the
+  axis — both pure layout, RTL-aware via native logical flex-direction, no
+  business meaning. Composes ONLY Typography tokens and the shared
+  `divider`/`border` tokens — no GlassSurface, no Card, no shadow, no
+  gradient, no animation. Proof `/dev/timeline` + `scripts/timeline-proof.mjs`
+  (native `<ol>`/`<li>` structure, vertical/horizontal axis, the aria-hidden
+  connecting line disappearing after the last item, Avatar/Badge/Icon
+  composing into Dot/Content with zero adaptation, Dot growing for an icon
+  child, `tabular-nums` on Time, Dense/Comfortable rhythm, long content
+  wrapping without truncation, responsive, RTL, no-regression sweep across
+  Table/Accordion/Collapsible/Separator). Grep clean: zero GlassSurface/
+  blur/backdrop-filter/rgba/shadow/transition/animation and zero hardcoded
+  hex/px/ms outside doc-comment prose. Awaiting visual validation before
+  any freeze.
+
 - **Table — frozen (Data Display primitive).** Visually validated 2026-07-10
   after a Frozen Review (component, captures, Playwright proof, tokens, API,
   dependencies) found no objective defect — zero code changed since the

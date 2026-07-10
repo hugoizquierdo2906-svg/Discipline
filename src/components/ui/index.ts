@@ -42,6 +42,7 @@ export { Switch } from './switch'
 export { Table } from './table'
 export { Text } from './text'
 export { Textarea } from './textarea'
+export { Timeline } from './timeline'
 export { Toast, ToastProvider, ToastViewport, useToast } from './toast'
 export {
   Tooltip,

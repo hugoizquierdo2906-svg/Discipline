@@ -2034,6 +2034,53 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **Timeline (Data Display) : construit selon le processus complet, NON
+   GELÉ (2026-07-10).** Compound réel (`Timeline`/`Timeline.Item`/
+   `Timeline.Separator`/`Timeline.Dot`/`Timeline.Content`/`Timeline.Title`/
+   `Timeline.Description`/`Timeline.Time`), la même forme que le Timeline
+   de MUI. Répond à UNE seule question : « dans quel ordre ces événements
+   se sont-ils produits ? » Aucune logique métier : ni likes, ni
+   commentaires, ni notifications, ni pagination, ni virtualisation, ni
+   temps réel, ni filtre, ni groupe, ni tri — tout cela appartient à un
+   futur ActivityFeed séparé. Pas ActivityFeed (le futur sur-ensemble de
+   Timeline). Pas Stepper (une tâche fixe et prospective avec une machine
+   d'état completed/current/pending — Timeline n'a aucun « courant », c'est
+   un enregistrement en lecture seule du passé). Pas Progress (une seule
+   quantité continue, aucun événement discret nommé). Pas Table (compare
+   plusieurs propriétés ALIGNÉES entre objets ; Timeline n'a qu'un seul
+   axe, le temps). Pas List (ordre arbitraire vs chronologie qui EST le
+   sujet). Pas Card (le détail complet d'un objet vs une séquence). Pas
+   TreeView (containment hiérarchique vs séquence plate). Pas Calendar (une
+   grille spatiale où l'on planifie DANS des créneaux vs un enregistrement
+   linéaire en lecture seule). Pas Chart (une tendance agrégée vs des
+   événements discrets et lisibles). Pas Accordion (sections de
+   divulgation indépendantes, aucun axe chronologique). `Timeline` rend un
+   vrai `<ol>` de `Timeline.Item` en `<li>` — l'ordre est sémantique. La
+   ligne de connexion est un simple filet `divider` de 1px, possédée par le
+   `Timeline.Separator` de l'événement PRÉCÉDENT et tracée seulement APRÈS
+   son Dot, vers le suivant ; la ligne finale du dernier item est masquée
+   via un sélecteur CSS structurel `:last-child` sur la racine, jamais un
+   index JS. `Timeline.Dot` est un petit cercle à contour discret
+   (`border-border`, comme l'anneau « pending » du Stepper gelé) qui
+   grandit uniquement pour accueillir une icône ou un Avatar enfant (CSS
+   `has-[>*]`, aucune prop supplémentaire). `Timeline.Time` utilise
+   `tabular-nums` (même convention que les cellules numériques de Table).
+   `orientation` (`vertical` par défaut/`horizontal`) est un simple bascule
+   d'axe ; `align` (`start` par défaut/`end`) place `Timeline.Content`
+   avant ou après l'axe — les deux sont de la pure mise en page, RTL-aware
+   via le `flex-direction` logique natif, sans signification métier.
+   Compose UNIQUEMENT les tokens Typography et les tokens partagés
+   `divider`/`border` — aucun GlassSurface, aucune Card, aucune ombre,
+   aucun dégradé, aucune animation. Preuve `/dev/timeline` +
+   `scripts/timeline-proof.mjs` verte (structure `<ol>`/`<li>` native, deux
+   axes, ligne aria-hidden disparaissant après le dernier item, Avatar/
+   Badge/Icon composés dans Dot/Content sans adaptation, Dot qui grandit
+   pour une icône, `tabular-nums` sur Time, rythme dense/confortable,
+   contenu long qui s'enroule sans troncature, responsive, RTL,
+   vérification anti-régression contre Table/Accordion/Collapsible/
+   Separator gelés). Grep propre. **NON GELÉ** — attendre validation
+   visuelle.
+
    **Table (Data Display) : GELÉ (2026-07-10).** Après le passage Craft
    Review (poids du header `font-semibold` ; séparateurs déplacés de
    `Table.Row` vers `Table.Header`/`Table.Body`, limite du header en
