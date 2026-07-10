@@ -51,3 +51,4 @@ export {
   TooltipProvider,
   TooltipTrigger,
 } from './tooltip'
+export { TreeView } from './tree-view'

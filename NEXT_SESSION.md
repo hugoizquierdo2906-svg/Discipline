@@ -2034,6 +2034,68 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **TreeView (Data Display) : construit selon le processus complet, NON
+   GELÉ (2026-07-10).** Compound réel (`TreeView`/`TreeView.Item`/
+   `TreeView.Trigger`/`TreeView.Content`/`TreeView.Icon`/`TreeView.Label`).
+   Répond à UNE seule question : « quelle est la structure hiérarchique de
+   ces éléments ? » Aucune logique métier : ni routing, ni système de
+   fichiers, ni permissions, ni chargement différé, ni glisser-déposer, ni
+   cases à cocher, ni sélection, ni édition, ni renommage, ni menu
+   contextuel, ni recherche, ni filtre, ni virtualisation — tout cela
+   appartient à un futur File Explorer séparé. Pas List (aucune relation
+   parent/enfant). Pas Table (aucune colonne, seulement du containment).
+   Pas Accordion (un groupe plat de sections indépendantes à un seul
+   niveau, jamais de nesting arbitraire). Pas Collapsible (l'atome dont
+   TreeView est construit — une seule région, aucune hiérarchie, aucun
+   niveau, aucun focus roving). Pas Navigation Menu/Sidebar (des
+   destinations vers lesquelles naviguer ; TreeView révèle une structure
+   sur place). Pas Tabs/Timeline/ActivityFeed (aucun concept de
+   containment). Pas un File Explorer (un écran métier qui composerait
+   TreeView comme sa couche d'affichage pure). Construit NATURELLEMENT sur
+   le `Collapsible` gelé — chaque machine d'état ouverture/fermeture
+   (`open`/`defaultOpen`/`onOpenChange`/`disabled`, `aria-expanded`/
+   `aria-controls`, activation Entrée/Espace) est celle de Collapsible,
+   remodelée via `asChild` en une ligne d'arbre (chevron en tête, icône
+   optionnelle, label, indentation de profondeur) au lieu de la forme
+   « ligne FAQ » propre à Collapsible — le mécanisme d'ouverture/fermeture
+   lui-même n'est jamais réimplémenté. Un `TreeView.Item` sans
+   `TreeView.Content` est une FEUILLE : aucun Collapsible, aucun chevron
+   (un espaceur invisible de même largeur garde tous les labels alignés
+   quelle que soit la profondeur), aucun `aria-expanded` — exactement ce
+   qu'exige le pattern WAI-ARIA Tree View pour un treeitem sans enfant. La
+   profondeur est lue depuis un contexte et exprimée UNIQUEMENT par de
+   l'indentation (`calc(var(--ds-space-4) * (level - 1) + var(--ds-space-2))`,
+   un calcul CSS piloté par les tokens, jamais une valeur pixel en dur) et
+   `aria-level` — jamais une ligne verticale de guidage, jamais une boîte,
+   une Card ou un fond gris. Pattern WAI-ARIA Tree View complet : la racine
+   est `role="tree"` ; chaque ligne est `role="treeitem"` portant
+   `aria-level`/`aria-setsize`/`aria-posinset` (calculés structurellement
+   depuis la position parmi les frères, jamais une prop que le
+   consommateur définit) ; chaque `TreeView.Content` est `role="group"`.
+   Le clavier suit exactement le modèle APG, câblé à la main à la racine
+   via un seul gestionnaire `keydown` délégué et des appels `.focus()`
+   littéraux (une exception justifiée, le même précédent déjà utilisé par
+   MultiSelect/TimePicker/DateRangePicker gelés, puisqu'aucun modèle
+   clavier d'arbre packagé n'existe à composer) : ArrowDown/ArrowUp
+   déplacent un `tabIndex` roving à travers chaque treeitem actuellement
+   rendu (le `Collapsible.Content` démonte entièrement une branche fermée,
+   donc « rendu » signifie déjà « visible ») ; Home/End sautent au premier/
+   dernier treeitem ; ArrowRight ouvre une branche fermée ou entre dans son
+   premier enfant ; ArrowLeft ferme une branche ouverte ou remonte vers son
+   parent ; Entrée/Espace n'ont besoin d'aucun gestionnaire puisque chaque
+   ligne est un vrai `<button>`. Compose UNIQUEMENT les tokens Typography
+   et le Collapsible gelé — aucun GlassSurface, aucune Card, aucune ombre,
+   aucun dégradé, aucune ligne décorative, aucune boîte autour d'un nœud.
+   Preuve `/dev/tree-view` + `scripts/tree-view-proof.mjs` verte (structure
+   ARIA, setsize/posinset, absence de ligne de guidage, comportement
+   default-open/contrôlé/non contrôlé/désactivé, Icon/Badge/Avatar composés
+   sans adaptation, troncature des labels longs, responsive, RTL,
+   navigation clavier complète vérifiée de bout en bout, vérification
+   anti-régression contre Collapsible/Accordion/ActivityFeed/Timeline gelés).
+   Grep propre (la seule occurrence de transition-transform est la chaîne
+   de rotation du chevron déjà gelée à l'identique dans Accordion et
+   Collapsible). **NON GELÉ** — attendre validation visuelle.
+
    **ActivityFeed (Data Display) : GELÉ (2026-07-10).** Une Frozen Review
    complète (composant, captures, preuve Playwright, API, architecture,
    tokens, dépendances) n'a trouvé aucun défaut objectif — zéro code

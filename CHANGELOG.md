@@ -9,6 +9,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **TreeView — built to the full process, not frozen (Data Display
+  primitive).** New compound API: `TreeView` / `TreeView.Item` /
+  `TreeView.Trigger` / `TreeView.Content` / `TreeView.Icon` /
+  `TreeView.Label`. Answers exactly ONE question: "what is the
+  hierarchical structure of these items?" Holds no business logic — no
+  routing, filesystem, permissions, lazy loading, remote data, drag & drop,
+  checkboxes, multi-selection, editing, renaming, context menus, search,
+  filter or virtualization; every one of those belongs to a future,
+  separate File Explorer. Not List (no parent/child relationship at all),
+  not Table (no columns, only containment), not Accordion (a flat group of
+  independent sections at one single level, never arbitrary nesting), not
+  Collapsible (the atom TreeView is built FROM — one region, no hierarchy,
+  no levels, no roving focus), not Navigation Menu/Sidebar (destinations
+  to navigate TO; TreeView reveals structure in place), not Tabs/Timeline/
+  ActivityFeed (no containment concept at all), not a File Explorer (a
+  business screen that would compose TreeView as its pure display layer).
+  Built NATURALLY on top of the frozen `Collapsible` — every expand/
+  collapse state machine (`open`/`defaultOpen`/`onOpenChange`/`disabled`,
+  `aria-expanded`/`aria-controls`, Enter/Space activation) is Collapsible's
+  own, reshaped via `asChild` into a tree row (leading chevron, optional
+  icon, label, depth indentation) instead of Collapsible's own FAQ-row
+  shape — the open/close mechanism itself is never reimplemented. A
+  `TreeView.Item` with no `TreeView.Content` child is a leaf: no
+  Collapsible, no chevron (an invisible same-width spacer keeps labels
+  aligned regardless of depth), no `aria-expanded`. Depth is expressed
+  ONLY as indentation (`calc(var(--ds-space-4) * (level - 1) + var(--ds-
+  space-2))`, a token-driven inline calc, never a hardcoded pixel value)
+  and `aria-level` — never a rendered vertical guide line, never a box or
+  a Card. Full WAI-ARIA Tree View pattern: `role="tree"` on the root,
+  `role="treeitem"` with `aria-level`/`aria-setsize`/`aria-posinset`
+  (computed structurally from sibling position, never a consumer prop) on
+  every row, `role="group"` on every nested list. Keyboard follows the APG
+  model exactly, hand-rolled at the root via one delegated `keydown`
+  handler and literal `.focus()` calls (the same justified exception
+  already used by the frozen MultiSelect/TimePicker/DateRangePicker, since
+  no bundled tree keyboard model exists to compose): ArrowDown/ArrowUp
+  move a roving `tabIndex` across every currently rendered treeitem
+  (Collapsible.Content unmounts a closed branch entirely, so "rendered"
+  already means "visible"); Home/End jump to the first/last treeitem;
+  ArrowRight opens a closed branch or moves into its first child; ArrowLeft
+  closes an open branch or moves to its parent; Enter/Space need no
+  handler at all since every row is a real `<button>`. Composes ONLY
+  Typography tokens and the frozen Collapsible — no GlassSurface, no Card,
+  no shadow, no gradient, no decorative line, no box around a node.
+  Proof `/dev/tree-view` + `scripts/tree-view-proof.mjs` (ARIA structure,
+  setsize/posinset, nesting depth without a guide line, default-open/
+  controlled/uncontrolled/disabled behaviour, Icon/Badge/Avatar composing
+  with zero adaptation, long-label truncation, responsive, RTL, full
+  keyboard navigation verified end-to-end, no-regression sweep across
+  Collapsible/Accordion/ActivityFeed/Timeline). Grep clean: zero
+  GlassSurface/blur/backdrop-filter/rgba/shadow/animation and zero
+  hardcoded hex/px/ms outside doc-comment prose (the sole
+  `transition-transform duration-fast ease-standard` occurrence is the
+  identical chevron-rotation string already frozen verbatim in Accordion
+  and Collapsible). Awaiting visual validation before any freeze.
+
 - **ActivityFeed — frozen (Data Display primitive).** Visually validated
   2026-07-10 after a Frozen Review (component, captures, Playwright proof,
   API, architecture, tokens, dependencies) found no objective defect — zero
