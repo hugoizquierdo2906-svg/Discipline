@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Table — Craft Review pass (Data Display primitive, still not frozen).**
+  No new feature, variant or prop — visual hierarchy refinement only, ahead
+  of freezing. (1) Header text weight `font-medium` → `font-semibold` (the
+  same hierarchy weight Modal's title and Heading levels 1–3 already use)
+  so the header reads immediately as column names, purely through
+  contrast/weight — still `text-text-secondary`, no grey fill, no extra
+  height. (2) The row-separator hairline moved off `Table.Row` (which now
+  carries no border of its own) onto `Table.Header`/`Table.Body`: the
+  header's own boundary stays full-strength `divider` (a clear top/bottom
+  frame), while body rows fade to a quarter of that strength
+  (`divider/40`) — the header/body distinction is now structural, and the
+  body's internal rhythm barely registers, guiding the eye down the data
+  instead of the grid. (3) `Table.Cell` gained `tabular-nums` so numeric/
+  date columns share one fixed digit width, keeping them in vertical
+  register for effortless comparison. (4) In the demo composition only,
+  the Avatar–name gap opened from `gap-3` to `gap-4` (Avatar size and row
+  height untouched). Re-verified: `scripts/table-proof.mjs` green (native
+  semantics, RTL-aware alignment, sticky header, responsive scroll, mixed
+  content, empty cells, long content), `pnpm type-check`/`lint`/`build`
+  clean, grep clean. Still awaiting visual validation before any freeze.
+
 - **Table — built to the full process, not frozen (Data Display primitive).**
   New compound API: `Table` / `Table.Header` / `Table.Body` / `Table.Footer` /
   `Table.Row` / `Table.Head` / `Table.Cell` / `Table.Caption`, composing

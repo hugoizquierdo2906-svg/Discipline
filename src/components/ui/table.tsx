@@ -46,10 +46,18 @@ import { cn } from '@/lib/cn'
  * never makes that layout call for its consumer). Composes ONLY Typography
  * tokens and the `divider` colour token already shared with the frozen
  * Separator — no GlassSurface, no Card, no shadow, no thick gridlines, no
- * "spreadsheet" styling: the header is discreet (`text-body-sm`/
- * `font-medium`/`text-text-secondary`, one hairline rule beneath it — never
- * a heavy grey fill), and each row is separated from the next by the same
- * single hairline, never a full grid of vertical and horizontal rules.
+ * "spreadsheet" styling: the header is discreet but identifiable
+ * (`text-body-sm`/`font-semibold`/`text-text-secondary` — weight and
+ * contrast carry the hierarchy, never a heavy grey fill or extra height),
+ * bounded by one full-strength hairline beneath it. Body rows are
+ * separated by that SAME hairline at a quarter of its strength
+ * (`divider/40`) — present enough to guide the eye down the table, faint
+ * enough to never compete with the data itself. `Table.Row` carries no
+ * border of its own; the boundary lives on `Table.Header`/`Table.Body` so
+ * the header/body distinction is structural, not a per-row accident.
+ * Numeric and date content uses `tabular-nums` so digits share one
+ * fixed width, keeping a column's numbers in vertical register for
+ * effortless comparison.
  * `stickyHeader` is PURELY visual (`position: sticky` + a background so
  * scrolling body rows never show through) — it adds no scroll-tracking
  * logic, no shadow-on-scroll effect, nothing beyond that one CSS behaviour.
@@ -110,7 +118,10 @@ const TableBody = forwardRef<
   return (
     <tbody
       ref={ref}
-      className={cn('[&_tr:last-child]:border-0', className)}
+      className={cn(
+        '[&_tr]:border-b [&_tr]:border-divider/40 [&_tr:last-child]:border-0',
+        className,
+      )}
       {...props}
     />
   )
@@ -136,13 +147,7 @@ const TableRow = forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
 >(function TableRow({ className, ...props }, ref) {
-  return (
-    <tr
-      ref={ref}
-      className={cn('border-b border-divider', className)}
-      {...props}
-    />
-  )
+  return <tr ref={ref} className={className} {...props} />
 })
 
 type Align = 'start' | 'center' | 'end'
@@ -165,7 +170,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       <th
         ref={ref}
         className={cn(
-          'px-4 py-3 text-body-sm font-medium text-text-secondary',
+          'px-4 py-3 text-body-sm font-semibold text-text-secondary',
           alignClass[align],
           className,
         )}
@@ -188,7 +193,7 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
       <td
         ref={ref}
         className={cn(
-          'px-4 py-3 text-body text-text',
+          'px-4 py-3 text-body text-text tabular-nums',
           alignClass[align],
           className,
         )}

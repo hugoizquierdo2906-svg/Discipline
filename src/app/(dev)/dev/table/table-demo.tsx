@@ -111,7 +111,7 @@ export function TableScene() {
               {clients.map((c) => (
                 <Table.Row key={c.name}>
                   <Table.Cell>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-4">
                       <Avatar size="sm">
                         <Avatar.Fallback>{getInitials(c.name)}</Avatar.Fallback>
                       </Avatar>
