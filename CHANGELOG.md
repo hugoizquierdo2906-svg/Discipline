@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **TreeView — frozen (Data Display primitive).** Visually validated
+  2026-07-10 after a Frozen Review (component, captures, Playwright proof,
+  API, architecture, tokens, dependencies) found and fixed one genuine
+  dead-code defect: `focusTreeItem`'s `current` parameter was unused
+  (silenced with a `void current` statement) since the function only ever
+  acted on `next` — removed the parameter and updated every call site.
+  No other objective defect found. No functional, visual or architectural
+  change again except an objective bug; the public API (`TreeView.Item`'s
+  `defaultOpen`/`open`/`onOpenChange`/`disabled`/`className`, every other
+  sub-part's `className`) now requires an ADR to change.
+
 - **TreeView — built to the full process, not frozen (Data Display
   primitive).** New compound API: `TreeView` / `TreeView.Item` /
   `TreeView.Trigger` / `TreeView.Content` / `TreeView.Icon` /

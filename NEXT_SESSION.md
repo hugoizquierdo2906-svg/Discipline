@@ -2034,8 +2034,13 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
-   **TreeView (Data Display) : construit selon le processus complet, NON
-   GELÉ (2026-07-10).** Compound réel (`TreeView`/`TreeView.Item`/
+   **TreeView (Data Display) : GELÉ (2026-07-10).** Une Frozen Review
+   complète a trouvé et corrigé un vrai défaut de code mort : le paramètre
+   `current` de `focusTreeItem` n'était jamais utilisé (réduit au silence
+   par un `void current`), puisque la fonction n'agit que sur `next` —
+   supprimé, avec mise à jour de chaque site d'appel. Aucun autre défaut
+   objectif trouvé. API publique désormais figée (ADR nécessaire pour la
+   modifier). Compound réel (`TreeView`/`TreeView.Item`/
    `TreeView.Trigger`/`TreeView.Content`/`TreeView.Icon`/`TreeView.Label`).
    Répond à UNE seule question : « quelle est la structure hiérarchique de
    ces éléments ? » Aucune logique métier : ni routing, ni système de

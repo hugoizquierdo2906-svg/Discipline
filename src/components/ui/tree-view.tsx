@@ -123,18 +123,13 @@ function withPosition(children: React.ReactNode): React.ReactNode {
   )
 }
 
-function focusTreeItem(
-  root: HTMLElement,
-  current: HTMLElement,
-  next: HTMLElement | null,
-) {
+function focusTreeItem(root: HTMLElement, next: HTMLElement | null) {
   if (!next) return
   root.querySelectorAll<HTMLElement>('[role="treeitem"]').forEach((item) => {
     item.tabIndex = -1
   })
   next.tabIndex = 0
   next.focus()
-  void current
 }
 
 export type TreeViewProps = React.HTMLAttributes<HTMLUListElement>
@@ -170,19 +165,19 @@ const TreeViewRootElement = forwardRef<HTMLUListElement, TreeViewProps>(
       switch (event.key) {
         case 'ArrowDown':
           event.preventDefault()
-          focusTreeItem(root, current, items[index + 1] ?? null)
+          focusTreeItem(root, items[index + 1] ?? null)
           break
         case 'ArrowUp':
           event.preventDefault()
-          focusTreeItem(root, current, items[index - 1] ?? null)
+          focusTreeItem(root, items[index - 1] ?? null)
           break
         case 'Home':
           event.preventDefault()
-          focusTreeItem(root, current, items[0] ?? null)
+          focusTreeItem(root, items[0] ?? null)
           break
         case 'End':
           event.preventDefault()
-          focusTreeItem(root, current, items[items.length - 1] ?? null)
+          focusTreeItem(root, items[items.length - 1] ?? null)
           break
         case 'ArrowRight': {
           const expanded = current.getAttribute('aria-expanded')
@@ -196,7 +191,7 @@ const TreeViewRootElement = forwardRef<HTMLUListElement, TreeViewProps>(
               ?.querySelector<HTMLElement>('[role="group"]')
             const firstChild =
               group?.querySelector<HTMLElement>('[role="treeitem"]') ?? null
-            focusTreeItem(root, current, firstChild)
+            focusTreeItem(root, firstChild)
           }
           break
         }
@@ -211,7 +206,7 @@ const TreeViewRootElement = forwardRef<HTMLUListElement, TreeViewProps>(
             const parentLi = currentLi?.parentElement?.closest('li')
             const parentItem =
               parentLi?.querySelector<HTMLElement>('[role="treeitem"]') ?? null
-            focusTreeItem(root, current, parentItem)
+            focusTreeItem(root, parentItem)
           }
           break
         }
