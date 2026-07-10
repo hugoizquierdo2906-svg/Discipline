@@ -2034,8 +2034,15 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
-   **Table (Data Display) : construit selon le processus complet, NON GELÉ
-   (2026-07-10).** Premier composant de la nouvelle catégorie Data Display.
+   **Table (Data Display) : GELÉ (2026-07-10).** Après le passage Craft
+   Review (poids du header `font-semibold` ; séparateurs déplacés de
+   `Table.Row` vers `Table.Header`/`Table.Body`, limite du header en
+   `divider` pleine force, lignes du corps atténuées à `divider/40` ;
+   `tabular-nums` sur les cellules), une Frozen Review complète (composant,
+   captures, preuve Playwright, tokens, API, dépendances) n'a trouvé aucun
+   autre défaut objectif — zéro code changé, gel tel quel. API publique
+   désormais figée (ADR nécessaire pour la modifier). Premier composant de
+   la nouvelle catégorie Data Display.
    Répond à UNE seule question : « comment comparer plusieurs objets selon
    plusieurs propriétés à la fois ? » N'affiche que des données, aucune
    logique métier : ni pagination, ni tri, ni filtre, ni édition, ni
