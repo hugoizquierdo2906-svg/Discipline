@@ -1970,9 +1970,20 @@
    démos). Preuve `/dev/avatar` + `scripts/avatar-proof.mjs` verte. **NON GELÉ**
    — attendre validation visuelle.
 
-   **Accordion (Disclosure) : CONSTRUIT au processus complet, NON GELÉ
-   (2026-07-09).** Première brique de la nouvelle catégorie Disclosure.
-   Répond à UNE seule chose : « quel contenu supplémentaire puis-je
+   **Accordion (Disclosure) : GELÉ (2026-07-09).** Passe de craft
+   (pré-gel) corrigeant trois incohérences objectives — rayon du Trigger
+   `rounded-md`→`rounded-sm` (aligné sur DropdownMenu.Item/Breadcrumb.Link,
+   même forme de ligne pleine largeur) ; anneau de focus
+   `ring-accent`→`ring-accent-accessible` (aligné sur tous les autres
+   primitifs plats) ; `data-[state=open]:rounded-b-none` pour que le
+   surlignage hover/focus du Trigger ouvert se fonde dans le Content au
+   lieu de flotter comme une pilule déconnectée — puis Frozen Review
+   complète (composant, code mort, imports/props/branches inutilisés,
+   captures, preuve Playwright, API, tokens, dépendances) : aucun autre
+   défaut objectif trouvé, gel tel quel. API publique nécessite désormais
+   un ADR pour être modifiée. Détail de la construction : première brique
+   de la nouvelle catégorie Disclosure. Répond à UNE seule chose : « quel
+   contenu supplémentaire puis-je
    révéler ? » — jamais une navigation, un feedback, un overlay, une
    donnée ou une action. Pas Collapsible (une seule section togglable sans
    relation aux frères ; Accordion est un GROUPE de Collapsibles coordonnés

@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Accordion — frozen (Disclosure primitive).** Visually validated
+  2026-07-09 after a craft pass (Trigger radius `rounded-md`→`rounded-sm`
+  matching the DropdownMenu/Breadcrumb row precedent; focus ring
+  `ring-accent`→`ring-accent-accessible` matching every other flat
+  primitive; `data-[state=open]:rounded-b-none` so the open Trigger's
+  hover/focus highlight flows into Content instead of reading as a
+  disconnected pill) followed by a Frozen Review finding no further
+  objective defect — the freeze locks it as-is. No functional, visual or
+  architectural change again except an objective bug; the public API
+  requires an ADR to change.
+
 - **Separator — frozen (Layout primitive).** Visually validated 2026-07-09
   after a Frozen Review (component, dead code, unused imports/props/branches,
   captures, Playwright proof, API, tokens, dependencies) found no objective
