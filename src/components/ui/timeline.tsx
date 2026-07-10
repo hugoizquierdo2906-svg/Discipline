@@ -45,10 +45,14 @@ import { cn } from '@/lib/cn'
  * Typography tokens and the `divider`/`border` colour tokens already shared
  * with the frozen Separator/Stepper — no GlassSurface, no Card, no shadow,
  * no gradient, no animation: the connecting line is a plain 1px `divider`
- * rule (identical strength to Table's own hairline), `Timeline.Dot` is a
- * small outlined circle (`border-border`, matching Stepper's own pending-
- * step ring) that punches through the line via a `bg-bg` fill, growing
- * only enough to fit an optional icon child (`has-[>*]`, zero extra prop).
+ * rule at a QUARTER of its usual strength (`divider/40`, the same fade the
+ * frozen Table applies to its own body-row hairlines) — present enough to
+ * guide the eye down the events, faint enough to never compete with them.
+ * `Timeline.Dot` is a small, thin-ringed circle (`border-border`, a single
+ * hairline weight) that punches through the line via a `bg-bg` fill,
+ * growing only enough to fit an optional icon child (`has-[>*]`, zero
+ * extra prop) — a plain event stays a quiet 8px mark, never the visual
+ * center of the row.
  * The line between two events is owned by the EARLIER event's own
  * `Timeline.Separator` and only ever drawn AFTER its Dot, down toward the
  * next one — the last item's trailing line is hidden via a structural
@@ -154,7 +158,7 @@ const TimelineSeparator = forwardRef<
         data-timeline-line
         aria-hidden="true"
         className={cn(
-          'bg-divider',
+          'bg-divider/40',
           orientation === 'vertical'
             ? 'w-px min-h-6 flex-1'
             : 'h-px min-w-6 flex-1',
@@ -172,7 +176,7 @@ const TimelineDot = forwardRef<
     <span
       ref={ref}
       className={cn(
-        'relative z-[1] grid h-2.5 w-2.5 shrink-0 place-items-center rounded-full border-2 border-border bg-bg text-text-secondary',
+        'relative z-[1] grid h-2 w-2 shrink-0 place-items-center rounded-full border border-border bg-bg text-text-secondary',
         'has-[>*]:h-6 has-[>*]:w-6 has-[>*]:border-0 has-[>*]:bg-accent-subtle has-[>*]:text-accent-accessible [&>svg]:h-3.5 [&>svg]:w-3.5',
         className,
       )}

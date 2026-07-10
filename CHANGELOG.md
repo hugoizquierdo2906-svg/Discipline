@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Timeline — Craft Review pass (Data Display primitive, still not
+  frozen).** No new feature, variant or prop — visual finish only, ahead
+  of freezing. (1) The connecting line faded from full-strength `divider`
+  to a quarter of it (`divider/40`, the same fade the frozen Table already
+  applies to its own body-row hairlines) — present enough to guide the eye
+  down the events, faint enough to stop competing with them. (2) The plain
+  `Timeline.Dot` shrank from a 10px, 2px-ringed circle to an 8px,
+  hairline-ringed one (`h-2 w-2 border` instead of `h-2.5 w-2.5 border-2`)
+  — a quiet mark, never the visual center of the row; the icon/Avatar-
+  bearing Dot (`has-[>*]`) is untouched. Re-verified on screen: Avatar
+  centers naturally on the now-faint line, icons still read as belonging
+  to the Dot, and the horizontal orientation carries the exact same
+  fade/scale so it still reads as "a Timeline turned 90°," never a Stepper
+  or Progress bar. `scripts/timeline-proof.mjs` green, `pnpm type-check`/
+  `lint`/`build` clean, grep clean. Still awaiting visual validation
+  before any freeze.
+
 - **Timeline — built to the full process, not frozen (Data Display
   primitive).** New compound API: `Timeline` / `Timeline.Item` /
   `Timeline.Separator` / `Timeline.Dot` / `Timeline.Content` /
