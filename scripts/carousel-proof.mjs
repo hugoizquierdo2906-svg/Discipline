@@ -143,7 +143,10 @@ for (const [w, h, suffix] of [
   const scene = section(page, 'cr-basic')
   await scene.scrollIntoViewIfNeeded()
   await scene.getByRole('button', { name: 'Go to slide 3' }).click()
-  await page.waitForTimeout(500)
+  // The active segment's width class only flips once the smooth scroll has
+  // settled, then morphs on the token-driven width transition — wait past both
+  // so the elongation is measured at rest, not mid-animation.
+  await page.waitForTimeout(1200)
   const active = await scene
     .locator('[aria-current="true"]')
     .getAttribute('aria-label')

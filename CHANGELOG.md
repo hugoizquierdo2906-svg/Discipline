@@ -63,6 +63,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   doc-comment prose (the one `transition` is the token-driven indicator
   dot). Awaiting visual validation before any freeze.
 
+- **Carousel — Editorial Review pass (still not frozen).** A finishing
+  pass before freeze, no new feature/API/responsibility/a11y/perf change.
+  The one objective improvement: the demo's `Carousel.Previous`/`Next` move
+  from the `secondary` IconButton (visible border + fill at rest) to the
+  frozen `ghost` variant with a quiet `text-text-secondary` chevron, so the
+  controls carry no material at rest and lift it only on hover — they float
+  and all but disappear until needed (the chevron tone overrides ghost's
+  accent tint so a control never competes with the single red accent the
+  content owns). Pure demo composition (ghost is an existing frozen
+  IconButton variant, passed through the primitive's overridable variant;
+  the same `sm` target size and ARIA label are kept) — the primitive is
+  untouched. Also hardened `scripts/carousel-proof.mjs`: the indicator-
+  elongation assertion waited only 500 ms after a jump and could measure
+  the active segment mid-width-morph (the width class flips only once the
+  smooth scroll settles); the wait now clears both so the elongation is
+  read at rest. Validation green: type-check, lint, build, proof, fresh
+  desktop/tablet/mobile/RTL captures.
+
 - **Carousel — Craft Review pass (still not frozen).** Elevated the visual
   finish toward an Apple/Linear "reading experience" without touching the
   API, the responsibilities, the accessibility contract or performance. The

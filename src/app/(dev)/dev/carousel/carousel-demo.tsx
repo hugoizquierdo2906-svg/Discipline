@@ -36,6 +36,13 @@ const rise =
   'translate-y-1 transition-transform duration-standard ease-out ' +
   'group-data-[active]:translate-y-0 motion-reduce:transition-none motion-reduce:translate-y-0'
 
+// Prev/Next are tools, not visual elements: the frozen IconButton's `ghost`
+// glass carries nothing at rest and lifts its material only on hover, so the
+// control floats and all but disappears until the eye needs it. The quiet
+// `text-text-secondary` chevron overrides ghost's accent tint so the control
+// never competes with the single red accent the content owns.
+const control = 'text-text-secondary'
+
 function Section({
   title,
   description,
@@ -134,8 +141,12 @@ export function CarouselScene() {
                 4 chapitres
               </Text>
               <div className="flex gap-2">
-                <Carousel.Previous size="sm" />
-                <Carousel.Next size="sm" />
+                <Carousel.Previous
+                  size="sm"
+                  variant="ghost"
+                  className={control}
+                />
+                <Carousel.Next size="sm" variant="ghost" className={control} />
               </div>
             </div>
 
@@ -187,8 +198,12 @@ export function CarouselScene() {
         >
           <Carousel aria-label="Membres" className="gap-8">
             <div className="flex justify-end gap-2">
-              <Carousel.Previous size="sm" />
-              <Carousel.Next size="sm" />
+              <Carousel.Previous
+                size="sm"
+                variant="ghost"
+                className={control}
+              />
+              <Carousel.Next size="sm" variant="ghost" className={control} />
             </div>
             <Carousel.Content className="gap-5 px-0.5 py-1">
               {clients.map((c) => (
@@ -238,8 +253,12 @@ export function CarouselScene() {
         >
           <Carousel aria-label="Chapitres en boucle" loop className="gap-6">
             <div className="flex justify-end gap-2">
-              <Carousel.Previous size="sm" />
-              <Carousel.Next size="sm" />
+              <Carousel.Previous
+                size="sm"
+                variant="ghost"
+                className={control}
+              />
+              <Carousel.Next size="sm" variant="ghost" className={control} />
             </div>
             <Carousel.Content className="gap-6 px-0.5 py-1">
               {chapters.slice(0, 3).map((c, i) => (
@@ -271,8 +290,12 @@ export function CarouselScene() {
         >
           <Carousel aria-label="Chapitres sans boucle" className="gap-6">
             <div className="flex justify-end gap-2">
-              <Carousel.Previous size="sm" />
-              <Carousel.Next size="sm" />
+              <Carousel.Previous
+                size="sm"
+                variant="ghost"
+                className={control}
+              />
+              <Carousel.Next size="sm" variant="ghost" className={control} />
             </div>
             <Carousel.Content className="gap-6 px-0.5 py-1">
               {chapters.slice(0, 3).map((c, i) => (
@@ -328,8 +351,12 @@ export function CarouselScene() {
                 ))}
               </Carousel.Content>
               <div className="flex flex-col gap-2">
-                <Carousel.Previous size="sm" />
-                <Carousel.Next size="sm" />
+                <Carousel.Previous
+                  size="sm"
+                  variant="ghost"
+                  className={control}
+                />
+                <Carousel.Next size="sm" variant="ghost" className={control} />
               </div>
             </div>
           </Carousel>
@@ -374,8 +401,12 @@ export function CarouselScene() {
           <div dir="rtl">
             <Carousel aria-label="فصول" className="gap-6">
               <div className="flex justify-end gap-2">
-                <Carousel.Previous size="sm" />
-                <Carousel.Next size="sm" />
+                <Carousel.Previous
+                  size="sm"
+                  variant="ghost"
+                  className={control}
+                />
+                <Carousel.Next size="sm" variant="ghost" className={control} />
               </div>
               <Carousel.Content className="gap-5 px-0.5 py-1">
                 {['البرنامج', 'التغذية', 'النوم', 'التعافي'].map((label) => (
