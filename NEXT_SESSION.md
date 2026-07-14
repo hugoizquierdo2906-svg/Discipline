@@ -2034,8 +2034,21 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
-   **Carousel (Data Display) : construit selon le processus complet, NON
-   GELÉ (2026-07-10).** Compound (`Carousel`/`Carousel.Content`/
+   **Carousel (Data Display) : GELÉ (2026-07-14).** Une Frozen Review
+   complète (composant relu de bout en bout, toutes les variantes, la démo,
+   les captures et le proof Playwright ; API/responsabilités/accessibilité/
+   performances ; cohérence avec Card/Drawer/Modal/FullscreenOverlay/
+   GlassCard ; composition avec Avatar/Badge/Heading/Button ; responsive/
+   RTL/animations/scroll-snap/clavier/indicateurs/previews/Hero/Loop/
+   Vertical) n'a trouvé AUCUN défaut objectif — zéro ligne du primitif
+   modifiée, gelé tel quel. API publique (`Carousel`
+   `orientation`/`loop`/`align`/`className` ; `Carousel.Content`/
+   `Carousel.Item` `className` ; `Carousel.Previous`/`Carousel.Next` props
+   IconButton ; `Carousel.Indicators` `className` ; plus le hook CSS
+   `data-active` sur le `Carousel.Item` actif) verrouillée — un ADR est
+   désormais requis pour la changer. Validation verte au gel : type-check,
+   lint, build (75/75), proof, grep propre, captures fraîches. Historique
+   de construction : compound (`Carousel`/`Carousel.Content`/
    `Carousel.Item`/`Carousel.Previous`/`Carousel.Next`/
    `Carousel.Indicators`). Répond à UNE seule question : « comment
    parcourir SÉQUENTIELLEMENT une série d'éléments ? » Aucune logique

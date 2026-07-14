@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Carousel — FROZEN (Data Display primitive).** A full Frozen Review
+  (component re-read end to end, all variants, the demo, the captures and
+  the Playwright proof; API, responsibilities, accessibility, performance,
+  and coherence with Card/Drawer/Modal/FullscreenOverlay/GlassCard; the
+  composition with Avatar/Badge/Heading/Button; responsive, RTL, animations,
+  scroll snapping, keyboard navigation, indicators, previews, Hero, Loop,
+  Vertical) found **no objective defect** — zero primitive code changed,
+  frozen as-is (like Table/ActivityFeed/Separator before it). The public
+  API — `Carousel` (`orientation`/`loop`/`align`/`className`),
+  `Carousel.Content`/`Carousel.Item` (`className`), `Carousel.Previous`/
+  `Carousel.Next` (IconButton props: `label`/`icon`/`variant`/`size`/
+  `className`), `Carousel.Indicators` (`className`), plus the `data-active`
+  styling hook surfaced on the active `Carousel.Item` — now requires an ADR
+  to change. Validation green at freeze: type-check, lint, build (75/75
+  static pages), `scripts/carousel-proof.mjs`, grep clean, fresh desktop/
+  tablet/mobile/RTL captures.
+
 - **Carousel — built to the full process, not frozen (Data Display
   primitive).** New compound API: `Carousel` / `Carousel.Content` /
   `Carousel.Item` / `Carousel.Previous` / `Carousel.Next` /
