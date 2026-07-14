@@ -160,11 +160,15 @@ const ChartContainerTitle = forwardRef<
     registerTitle(true)
     return () => registerTitle(false)
   }, [registerTitle])
+  // Card-title scale (h5 — the canonical token's own "Titre de carte"), not
+  // the larger block-title h4: a chart caption must stay quiet so the
+  // visualization, not the Header, is the focal point. Semantic level stays
+  // h3 for the document outline.
   return (
     <Heading
       ref={ref}
       as="h3"
-      level={4}
+      level={5}
       id={titleId}
       className={className}
       {...props}

@@ -42,7 +42,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   title hierarchy, responsive, RTL, no-regression sweep across Carousel/
   DataGrid/Table/Timeline). Grep clean (no chart-engine/data/axis/series
   string, no hardcoded hex/rgba). Built, not frozen — awaiting visual
-  validation.
+  validation. **Craft Review (2026-07-14, still not frozen):** one objective
+  finish fix — `ChartContainer.Title` dropped from `level={4}` (`--ds-text-h4`
+  32px, the canonical "Titre de bloc") to `level={5}` (`--ds-text-h5` 24px,
+  the token's own "Titre de carte"): a chart caption must stay quiet so the
+  visualization, not the Header, is the focal point (semantic `as="h3"`
+  unchanged). Everything else was analysed and left untouched — Legend
+  already reads secondary/small, Footer tertiary, one accent per card, the
+  gap rhythm matches Card/Table/Carousel. Re-validated green.
 
 - **Carousel — FROZEN (Data Display primitive).** A full Frozen Review
   (component re-read end to end, all variants, the demo, the captures and
