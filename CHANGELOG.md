@@ -63,6 +63,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   doc-comment prose (the one `transition` is the token-driven indicator
   dot). Awaiting visual validation before any freeze.
 
+- **Carousel — final Editorial Review pass, declared freeze-ready (still
+  not frozen).** No new feature/API/responsibility/a11y/perf change. The
+  one objective improvement: the demo's peek treatment deepens its
+  recession — a non-active slide moves from `scale-[0.94] opacity-40` to
+  `scale-[0.9] opacity-30` (blur unchanged, no perf cost), so neighbours
+  read as a distinct back plane ("the next chapter, waiting") instead of a
+  card cut off at the edge — the foreground/background depth the two prior
+  reviews left too flat. Everything else was analysed and deliberately left
+  untouched: making the controls disappear further (opacity-0 until hover)
+  was declined because it would break touch discoverability (an a11y
+  regression), and the card border/shadow belong to the frozen GlassCard
+  and are out of scope. Validation green: type-check, lint, build, proof,
+  fresh desktop/tablet/mobile/RTL captures. Ready for freeze.
+
 - **Carousel — Editorial Review pass (still not frozen).** A finishing
   pass before freeze, no new feature/API/responsibility/a11y/perf change.
   The one objective improvement: the demo's `Carousel.Previous`/`Next` move

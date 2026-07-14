@@ -19,13 +19,16 @@ import { Text } from '@/components/ui/text'
  * the shared capture wallpaper.
  */
 
-// The focus/peek treatment: a non-active slide rests quietly scaled down,
-// dimmed and whisper-blurred; the active one settles to full presence on a
-// calm token-driven transition. Driven purely by the primitive's
-// `data-active` hook — no primitive change, no per-item layout decision.
+// The focus/peek treatment: a non-active slide rests on a clear back plane —
+// scaled down enough to read as depth (not the active card's plane), dimmed
+// to a background weight and whisper-blurred; the active one settles to full
+// presence on a calm token-driven transition. The recession is what turns a
+// neighbour from "a card cut off at the edge" into "the next chapter, waiting."
+// Driven purely by the primitive's `data-active` hook — no primitive change,
+// no per-item layout decision.
 const peekItem =
   'group transition-[transform,opacity,filter] duration-standard ease-out ' +
-  'scale-[0.94] opacity-40 blur-[1.5px] ' +
+  'scale-[0.9] opacity-30 blur-[1.5px] ' +
   'data-[active]:scale-100 data-[active]:opacity-100 data-[active]:blur-0 ' +
   'motion-reduce:transition-none motion-reduce:scale-100 motion-reduce:opacity-100 motion-reduce:blur-0'
 
