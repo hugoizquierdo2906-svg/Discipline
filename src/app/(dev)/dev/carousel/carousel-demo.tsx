@@ -153,20 +153,20 @@ export function CarouselScene() {
               </div>
             </div>
 
-            <Carousel.Content className="gap-6 px-0.5 py-1">
+            <Carousel.Content className="items-start gap-6 px-0.5 py-1 md:items-stretch">
               {chapters.map((c) => (
                 <Carousel.Item
                   key={c.title}
                   className={`basis-[86%] sm:basis-[82%] ${peekItem}`}
                 >
                   <GlassCard className="h-full">
-                    <div className="flex min-h-64 flex-col gap-6 p-8 sm:p-10">
+                    <div className="flex min-h-64 flex-col gap-5 p-6 md:gap-6 md:p-10">
                       <Text
                         className={`text-caption uppercase tracking-[0.16em] text-accent-accessible delay-100 ${rise}`}
                       >
                         {c.eyebrow}
                       </Text>
-                      <div className="flex flex-1 flex-col gap-4">
+                      <div className="flex flex-col gap-4 md:flex-1">
                         <Heading
                           as="h4"
                           level={3}

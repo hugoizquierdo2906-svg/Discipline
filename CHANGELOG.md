@@ -63,6 +63,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   doc-comment prose (the one `transition` is the token-driven indicator
   dot). Awaiting visual validation before any freeze.
 
+- **Carousel — mobile Hero density fix (still not frozen).** A targeted
+  Craft Review of the mobile Hero only; no new feature/API/responsibility/
+  a11y/perf change, primitive untouched. Root cause: this design system's
+  `sm` breakpoint is 390px (not Tailwind's default 640px), so a 390px phone
+  was already inside `sm:` and received the roomy desktop treatment —
+  `sm:p-10` padding and the equal-height `sm:items-stretch` track — which
+  stretched every card to the tallest sibling's height and floated the CTA
+  far below its content. Fix: the compact treatment is now the unprefixed
+  base (phones) and the roomy keynote treatment moves to `md:` (768px+), so
+  the Hero card sizes to its own content on phones (track `items-start`,
+  no `flex-1` spacer, `p-6`/`gap-5`) while tablet and desktop keep the exact
+  `md:` roomy layout. Measured: the active mobile card drops 766px → 654px
+  and the CTA hugs its content, while tablet (528px) and desktop (546px)
+  are pixel-identical to before — zero regression above 768px. Validation
+  green: type-check, lint, build, proof, fresh desktop/tablet/mobile/RTL
+  captures.
+
 - **Carousel — final Editorial Review pass, declared freeze-ready (still
   not frozen).** No new feature/API/responsibility/a11y/perf change. The
   one objective improvement: the demo's peek treatment deepens its
