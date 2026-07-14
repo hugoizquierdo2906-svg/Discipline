@@ -2034,8 +2034,18 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
-   **ChartContainer (Data Display) : construit selon le processus complet,
-   NON GELÉ (2026-07-14).** Compound (`ChartContainer`/`.Header`/`.Title`/
+   **ChartContainer (Data Display) : GELÉ (2026-07-14).** Une Frozen Review
+   complète (composant, slots, responsabilités, props, captures, proof
+   Playwright, accessibilité, performances, tokens, dépendances, imports,
+   code mort) n'a trouvé AUCUN défaut objectif — zéro ligne modifiée, gelé
+   tel quel. API publique (`ChartContainer` `intent`/`className` ;
+   `ChartContainer.Content` `ratio`/`className` ; `ChartContainer.Loading`
+   `label`/`className` ; `ChartContainer.Empty`/`ChartContainer.Error` les
+   props des EmptyState/ErrorState gelés ; `className` sur toutes les autres
+   sous-parts) verrouillée — un ADR est désormais requis. Validation verte
+   au gel : type-check, lint, build (76/76), proof, grep propre, captures
+   fraîches. Historique de construction : compound (`ChartContainer`/
+   `.Header`/`.Title`/
    `.Description`/`.Content`/`.Legend`/`.Footer`/`.Loading`/`.Empty`/
    `.Error`) répondant à UNE seule question : « comment accueillir
    proprement une visualisation de données ? » Il fournit le CONTENANT,

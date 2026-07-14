@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **ChartContainer — FROZEN (Data Display primitive).** A full Frozen Review
+  (component re-read end to end, slots, responsibilities, props, captures,
+  Playwright proof, accessibility, performance, tokens, dependencies,
+  imports, dead code) found **no objective defect** — zero code changed,
+  frozen as-is (like Carousel/Table/ActivityFeed/Separator before it). The
+  public API — `ChartContainer` (`intent`/`className`), `ChartContainer.Content`
+  (`ratio`/`className`), `ChartContainer.Loading` (`label`/`className`),
+  `ChartContainer.Empty`/`ChartContainer.Error` (the frozen EmptyState/
+  ErrorState props), and every other sub-part's `className` — now requires an
+  ADR to change. Validation green at freeze: type-check, lint, build (76/76
+  static pages, route registered), `scripts/chart-container-proof.mjs`, grep
+  clean (no chart-engine/data/axis/series string, no hardcoded hex/rgba),
+  fresh desktop/tablet/mobile/RTL captures.
+
 - **ChartContainer — built to the full process, not frozen (Data Display
   primitive).** New compound API: `ChartContainer` / `ChartContainer.Header`
   / `ChartContainer.Title` / `ChartContainer.Description` /
