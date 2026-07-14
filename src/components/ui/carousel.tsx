@@ -70,11 +70,20 @@ import { IconButton, type IconButtonProps } from './icon-button'
  * viewport's centre — direction- and orientation-agnostic), never a prop
  * a consumer must feed. `Carousel.Previous`/`Carousel.Next` compose the
  * frozen `IconButton` verbatim (never a redrawn button) and disable
- * themselves at the ends unless `loop`. `Carousel.Indicators` renders one
- * position dot per item, the active one gently elongated — a token-driven
- * `duration-standard`/`ease-out` width+colour transition, the same calm,
- * discreet motion budget the frozen Accordion/Collapsible chevrons
- * already use, never a flashy effect. Full WAI-ARIA Carousel pattern:
+ * themselves at the ends unless `loop`. `Carousel.Indicators` is a thin
+ * segmented progress bar — every step a short muted segment, the current
+ * one a long accent capsule that morphs its width on a token-driven
+ * `duration-standard`/`ease-out` transition (the same calm, discreet
+ * motion budget the frozen Accordion/Collapsible chevrons use), never a
+ * Material dot row or a flashy effect; each segment is a real button with
+ * an enlarged invisible hit target. `Carousel.Item` carries `data-active`
+ * on the current slide — a pure CSS styling HOOK (the Radix `data-state`
+ * idiom, surfacing the index the component already tracks; not a prop, not
+ * a new responsibility) so a consumer can compose a focus/peek treatment
+ * (a bright centred slide, its neighbours quietly scaled/dimmed) entirely
+ * in its own CSS, while the primitive itself still draws nothing and makes
+ * no per-item layout decision (Invariant A1). Full WAI-ARIA Carousel
+ * pattern:
  * the root is `aria-roledescription="carousel"` + `aria-label`, the track
  * is a `role="group"` with `aria-live="polite"` (manual carousel, no
  * autoplay to switch it off for), each item is
@@ -300,7 +309,7 @@ const CarouselContent = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(function CarouselContent({ className, children, ...props }, ref) {
-  const { orientation, contentId, contentRef } = useCarousel()
+  const { orientation, contentId, contentRef, activeIndex } = useCarousel()
   const items = Children.toArray(children).filter(isValidElement)
   const total = items.length
   return (
@@ -322,12 +331,23 @@ const CarouselContent = forwardRef<
       )}
       {...props}
     >
-      {items.map((child, index) =>
-        isValidElement<{ 'aria-label'?: string }>(child) &&
-        child.props['aria-label'] === undefined
-          ? cloneElement(child, { 'aria-label': `${index + 1} of ${total}` })
-          : child,
-      )}
+      {items.map((child, index) => {
+        if (
+          !isValidElement<{ 'aria-label'?: string; 'data-active'?: string }>(
+            child,
+          )
+        )
+          return child
+        // `data-active` surfaces the already-computed active index as a pure
+        // CSS styling hook (Radix `data-state` idiom) so a consumer can build
+        // a focus/peek treatment — the primitive itself still draws nothing
+        // and makes no per-item layout decision (Invariant A1).
+        const needsLabel = child.props['aria-label'] === undefined
+        return cloneElement(child, {
+          ...(needsLabel ? { 'aria-label': `${index + 1} of ${total}` } : null),
+          'data-active': index === activeIndex ? '' : undefined,
+        })
+      })}
     </div>
   )
 })
@@ -411,6 +431,11 @@ const CarouselIndicators = forwardRef<
       {...props}
     >
       {Array.from({ length: count }).map((_, i) => (
+        // A thin segmented progress bar, not a Material dot row: every step is
+        // a short muted segment, the current one a long accent capsule that
+        // morphs its width on a calm token-driven transition. The visible bar
+        // is only 4px tall; an invisible `::after` widens the hit target well
+        // past the 24px minimum so the elegance never costs usability.
         <button
           key={i}
           type="button"
@@ -418,10 +443,10 @@ const CarouselIndicators = forwardRef<
           aria-current={i === activeIndex ? 'true' : undefined}
           onClick={() => scrollTo(i)}
           className={cn(
-            'h-2 rounded-pill outline-none transition-[width,background-color] duration-standard ease-out focus-visible:ring-2 focus-visible:ring-accent-accessible',
+            "relative h-1 rounded-pill outline-none transition-[width,background-color] duration-standard ease-out after:absolute after:-inset-x-1 after:-inset-y-3 after:content-[''] focus-visible:ring-2 focus-visible:ring-accent-accessible",
             i === activeIndex
-              ? 'w-5 bg-accent-accessible'
-              : 'w-2 bg-border hover:bg-border-strong',
+              ? 'w-8 bg-accent-accessible'
+              : 'w-4 bg-border hover:bg-border-strong',
           )}
         />
       ))}

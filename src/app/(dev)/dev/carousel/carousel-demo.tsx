@@ -1,32 +1,41 @@
 'use client'
 
-import {
-  Activity,
-  Dumbbell,
-  HeartPulse,
-  Image as ImageIcon,
-  Moon,
-  Utensils,
-} from 'lucide-react'
-
 import { Avatar, getInitials } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Carousel } from '@/components/ui/carousel'
 import { GlassCard } from '@/components/ui/glass-card'
 import { Heading } from '@/components/ui/heading'
-import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 
 /**
  * Carousel is a Data Display primitive: a scroll-snapping track the user
- * steps through one region at a time — "how do I browse sequentially?" No
- * lightbox, zoom, fullscreen, autoplay, infinite scroll, virtualization or
- * drag logic; those belong to higher components. It composes only frozen
- * primitives (IconButton/Icon and whatever a consumer places in each Item —
- * Card, Avatar, Badge, Heading, Text, Button) with zero adaptation. The
- * scene sits on the shared capture wallpaper.
+ * steps through one region at a time. This scene composes the PREMIUM
+ * "focus reading" pattern ON TOP of the unchanged primitive — a bright
+ * current chapter, its neighbours quietly scaled/dimmed/blurred, and a
+ * gentle staggered settle — entirely from the consumer's own CSS driven by
+ * the `data-active` hook the primitive exposes. The primitive itself still
+ * draws nothing and makes no per-item layout decision. The scene sits on
+ * the shared capture wallpaper.
  */
+
+// The focus/peek treatment: a non-active slide rests quietly scaled down,
+// dimmed and whisper-blurred; the active one settles to full presence on a
+// calm token-driven transition. Driven purely by the primitive's
+// `data-active` hook — no primitive change, no per-item layout decision.
+const peekItem =
+  'group transition-[transform,opacity,filter] duration-standard ease-out ' +
+  'scale-[0.94] opacity-40 blur-[1.5px] ' +
+  'data-[active]:scale-100 data-[active]:opacity-100 data-[active]:blur-0 ' +
+  'motion-reduce:transition-none motion-reduce:scale-100 motion-reduce:opacity-100 motion-reduce:blur-0'
+
+// Content choreography: on becoming active, each element settles up in a
+// subtle staggered cascade (title → body → meta → cta). Reduced motion
+// removes the movement entirely.
+const rise =
+  'translate-y-1 transition-transform duration-standard ease-out ' +
+  'group-data-[active]:translate-y-0 motion-reduce:transition-none motion-reduce:translate-y-0'
+
 function Section({
   title,
   description,
@@ -39,13 +48,13 @@ function Section({
   'data-testid'?: string
 }) {
   return (
-    <section className="flex flex-col gap-3" data-testid={dataTestId}>
-      <div className="flex flex-col gap-1">
+    <section className="flex flex-col gap-4" data-testid={dataTestId}>
+      <div className="flex flex-col gap-1.5">
         <Heading as="h3" level={5}>
           {title}
         </Heading>
         {description && (
-          <Text className="text-body-sm text-text-secondary">
+          <Text className="max-w-prose text-body-sm text-text-secondary">
             {description}
           </Text>
         )}
@@ -55,12 +64,31 @@ function Section({
   )
 }
 
-const programmes = [
-  { name: 'Hypertrophy', focus: 'Muscle gain', weeks: '12 weeks' },
-  { name: 'Strength', focus: 'Max force', weeks: '8 weeks' },
-  { name: 'Mobility', focus: 'Range of motion', weeks: '6 weeks' },
-  { name: 'Nutrition', focus: 'Body recomposition', weeks: 'Ongoing' },
-  { name: 'Recovery', focus: 'Sleep & deload', weeks: '2 weeks' },
+const chapters = [
+  {
+    eyebrow: 'Aujourd’hui',
+    title: 'Ta séance du jour',
+    body: 'Un bloc de force sur le haut du corps. Commence par comprendre l’intention avant de soulever : progresser, pas seulement s’entraîner.',
+    cta: 'Commencer',
+  },
+  {
+    eyebrow: 'Nutrition',
+    title: 'Ce que ton corps attend',
+    body: 'Ta fenêtre protéique est ouverte. Rien de compliqué — un repas simple, aligné sur l’effort d’aujourd’hui.',
+    cta: 'Voir le repas',
+  },
+  {
+    eyebrow: 'Récupération',
+    title: 'Le sommeil compte autant',
+    body: 'La progression se construit au repos. Ta nuit dernière était courte : allège la charge mentale ce soir.',
+    cta: 'Planifier',
+  },
+  {
+    eyebrow: 'Progression',
+    title: 'Où tu en es',
+    body: 'Douze semaines, une direction. Regarde le chemin parcouru avant de penser à la prochaine étape.',
+    cta: 'Voir la courbe',
+  },
 ]
 
 const clients = [
@@ -76,139 +104,121 @@ const statusVariant = {
   Archived: 'neutral',
 } as const
 
-const library = [
-  { name: 'Nutrition', icon: Utensils },
-  { name: 'Training', icon: Dumbbell },
-  { name: 'Sleep', icon: Moon },
-  { name: 'Recovery', icon: HeartPulse },
-  { name: 'Cardio', icon: Activity },
-]
-
-const exercises = ['Bench Press', 'Row', 'Squat', 'Deadlift', 'Overhead Press']
-
 export function CarouselScene() {
   return (
     <div
       className="min-h-screen w-full bg-cover bg-fixed bg-center"
       style={{ backgroundImage: "url('/backgrounds/capture-bg.png')" }}
     >
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-12 px-6 py-12">
-        <div className="flex flex-col gap-2">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-20 px-6 py-16">
+        <div className="flex flex-col gap-3">
           <Heading as="h2" level={2}>
             Carousel
           </Heading>
-          <Text className="text-text-secondary">
-            A Data Display primitive that answers only &ldquo;how do I browse
-            sequentially through a series of items?&rdquo; — never a lightbox,
-            never autoplay, never a gallery grid. Native scroll-snap, calm
-            smooth motion.
+          <Text className="max-w-prose text-text-secondary">
+            Le membre ne fait pas défiler un carousel. Il avance dans une idée.
+            Le chapitre courant est lumineux ; les suivants attendent, calmes,
+            en retrait.
           </Text>
         </div>
 
+        {/* HERO — focus reading carousel */}
         <Section
-          title="Basic"
-          description="One item per view, horizontal (default). Prev/Next step; native smooth scroll."
+          title="Que dois-je comprendre aujourd’hui ?"
+          description="Le chapitre courant occupe l’espace ; le suivant se devine à droite, plus discret. Aucun bouton ne domine, aucun mouvement ne surprend."
           data-testid="cr-basic"
         >
-          <Carousel aria-label="Basic slides">
-            <div className="flex items-center justify-between gap-4">
-              <Text className="text-body-sm text-text-secondary">
-                Step through the slides
+          <Carousel aria-label="Chapitres du jour" className="gap-8">
+            <div className="flex items-center justify-between gap-6">
+              <Text className="text-caption uppercase tracking-[0.14em] text-text-tertiary">
+                4 chapitres
               </Text>
               <div className="flex gap-2">
                 <Carousel.Previous size="sm" />
                 <Carousel.Next size="sm" />
               </div>
             </div>
-            <Carousel.Content>
-              {[1, 2, 3, 4].map((n) => (
-                <Carousel.Item key={n} className="basis-full px-1">
-                  <div className="flex h-40 items-center justify-center rounded-lg border border-divider bg-surface">
-                    <Heading as="span" level={3}>
-                      Slide {n}
-                    </Heading>
-                  </div>
-                </Carousel.Item>
-              ))}
-            </Carousel.Content>
-            <Carousel.Indicators />
-          </Carousel>
-        </Section>
 
-        <Section
-          title="Programmes — Cards"
-          description="Each slide is a real GlassCard, several visible at once (basis narrows the item)."
-          data-testid="cr-programmes"
-        >
-          <Carousel aria-label="Programmes">
-            <div className="flex items-center justify-end gap-2">
-              <Carousel.Previous size="sm" />
-              <Carousel.Next size="sm" />
-            </div>
-            <Carousel.Content className="gap-4">
-              {programmes.map((p) => (
+            <Carousel.Content className="gap-6 px-0.5 py-1">
+              {chapters.map((c) => (
                 <Carousel.Item
-                  key={p.name}
-                  className="basis-[70%] sm:basis-1/2 lg:basis-1/3"
+                  key={c.title}
+                  className={`basis-[86%] sm:basis-[82%] ${peekItem}`}
                 >
                   <GlassCard className="h-full">
-                    <div className="flex flex-col gap-1 p-5">
-                      <Heading as="h4" level={5}>
-                        {p.name}
-                      </Heading>
-                      <Text className="text-body-sm text-text-secondary">
-                        {p.focus}
+                    <div className="flex min-h-64 flex-col gap-6 p-8 sm:p-10">
+                      <Text
+                        className={`text-caption uppercase tracking-[0.16em] text-accent-accessible delay-100 ${rise}`}
+                      >
+                        {c.eyebrow}
                       </Text>
-                      <Text className="text-caption text-text-tertiary">
-                        {p.weeks}
-                      </Text>
+                      <div className="flex flex-1 flex-col gap-4">
+                        <Heading
+                          as="h4"
+                          level={3}
+                          className={`delay-150 ${rise}`}
+                        >
+                          {c.title}
+                        </Heading>
+                        <Text
+                          className={`max-w-prose text-body-lg leading-relaxed text-text-secondary delay-200 ${rise}`}
+                        >
+                          {c.body}
+                        </Text>
+                      </div>
+                      <div className={`delay-300 ${rise}`}>
+                        <Button size="lg">{c.cta}</Button>
+                      </div>
                     </div>
                   </GlassCard>
                 </Carousel.Item>
               ))}
             </Carousel.Content>
+
+            <Carousel.Indicators className="pt-1" />
           </Carousel>
         </Section>
 
+        {/* Clients — the same focus treatment on compact cards */}
         <Section
-          title="Clients — mixed content"
-          description="Avatar, Heading, Text, Badge and Button composed inside a slide with zero adaptation."
+          title="Tes membres"
+          description="Le même langage appliqué à des cartes plus compactes : un membre au centre de l’attention, les autres en attente."
           data-testid="cr-clients"
         >
-          <Carousel aria-label="Clients">
-            <div className="flex items-center justify-end gap-2">
+          <Carousel aria-label="Membres" className="gap-8">
+            <div className="flex justify-end gap-2">
               <Carousel.Previous size="sm" />
               <Carousel.Next size="sm" />
             </div>
-            <Carousel.Content className="gap-4">
+            <Carousel.Content className="gap-5 px-0.5 py-1">
               {clients.map((c) => (
                 <Carousel.Item
                   key={c.name}
-                  className="basis-[75%] sm:basis-1/2"
+                  className={`basis-[78%] sm:basis-1/2 ${peekItem}`}
                 >
                   <GlassCard className="h-full">
-                    <div className="flex flex-col gap-3 p-5">
-                      <div className="flex items-center gap-3">
-                        <Avatar size="md">
+                    <div className="flex flex-col gap-5 p-6">
+                      <div className="flex items-center gap-4">
+                        <Avatar size="lg">
                           <Avatar.Fallback>
                             {getInitials(c.name)}
                           </Avatar.Fallback>
                         </Avatar>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col gap-0.5">
                           <Heading as="h4" level={5}>
                             {c.name}
                           </Heading>
-                          <Text className="text-caption text-text-tertiary">
-                            {c.progress} complete
+                          <Text className="text-caption tabular-nums text-text-tertiary">
+                            {c.progress} du programme
                           </Text>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center justify-between gap-3">
                         <Badge variant={statusVariant[c.status]}>
                           {c.status}
                         </Badge>
                         <Button variant="ghost" size="sm">
-                          Open
+                          Ouvrir
                         </Button>
                       </div>
                     </div>
@@ -216,90 +226,104 @@ export function CarouselScene() {
                 </Carousel.Item>
               ))}
             </Carousel.Content>
+            <Carousel.Indicators className="pt-1" />
           </Carousel>
         </Section>
 
+        {/* Loop */}
         <Section
-          title="Images"
-          description="Aspect-ratio slides — a Carousel never owns image loading, it only lays the track."
-          data-testid="cr-images"
+          title="Loop"
+          description="Le pas s’enroule : après le dernier chapitre, le premier revient. Les contrôles restent actifs aux extrémités."
+          data-testid="cr-loop"
         >
-          <Carousel aria-label="Images" align="center">
-            <Carousel.Content className="gap-4">
-              {['Front', 'Side', 'Back', 'Progress'].map((label) => (
-                <Carousel.Item key={label} className="basis-[80%] sm:basis-2/3">
-                  <div className="flex aspect-video items-center justify-center rounded-lg bg-surface-raised">
-                    <div className="flex flex-col items-center gap-2 text-text-tertiary">
-                      <Icon icon={ImageIcon} size="lg" />
-                      <Text className="text-body-sm text-text-tertiary">
-                        {label}
-                      </Text>
-                    </div>
-                  </div>
-                </Carousel.Item>
-              ))}
-            </Carousel.Content>
-            <Carousel.Indicators />
-          </Carousel>
-        </Section>
-
-        <Section
-          title="Library — without controls"
-          description="No Prev/Next rendered — the track still scrolls and snaps; indicators alone can drive it."
-          data-testid="cr-no-controls"
-        >
-          <Carousel aria-label="Library">
-            <Carousel.Content className="gap-3">
-              {library.map((l) => (
+          <Carousel aria-label="Chapitres en boucle" loop className="gap-6">
+            <div className="flex justify-end gap-2">
+              <Carousel.Previous size="sm" />
+              <Carousel.Next size="sm" />
+            </div>
+            <Carousel.Content className="gap-6 px-0.5 py-1">
+              {chapters.slice(0, 3).map((c, i) => (
                 <Carousel.Item
-                  key={l.name}
-                  className="basis-[45%] sm:basis-1/3"
+                  key={c.title}
+                  className={`basis-[88%] ${peekItem}`}
                 >
-                  <div className="flex h-28 flex-col items-center justify-center gap-2 rounded-lg border border-divider bg-surface">
-                    <Icon icon={l.icon} size="lg" />
-                    <Text className="text-body-sm">{l.name}</Text>
-                  </div>
-                </Carousel.Item>
-              ))}
-            </Carousel.Content>
-            <Carousel.Indicators />
-          </Carousel>
-        </Section>
-
-        <Section
-          title="Exercises — with indicators"
-          description="Position dots; the active one gently elongates. Click a dot to jump."
-          data-testid="cr-indicators"
-        >
-          <Carousel aria-label="Exercises">
-            <Carousel.Content className="gap-3">
-              {exercises.map((e) => (
-                <Carousel.Item key={e} className="basis-[60%] sm:basis-1/2">
-                  <div className="flex h-24 items-center justify-center rounded-lg border border-divider bg-surface">
-                    <Text className="font-medium">{e}</Text>
-                  </div>
-                </Carousel.Item>
-              ))}
-            </Carousel.Content>
-            <Carousel.Indicators />
-          </Carousel>
-        </Section>
-
-        <Section
-          title="Vertical"
-          description='orientation="vertical" — the track scrolls top to bottom; Arrow Up/Down step.'
-          data-testid="cr-vertical"
-        >
-          <Carousel aria-label="Vertical slides" orientation="vertical">
-            <div className="flex items-start gap-4">
-              <Carousel.Content className="h-48 gap-3">
-                {[1, 2, 3, 4].map((n) => (
-                  <Carousel.Item key={n} className="basis-full">
-                    <div className="flex h-48 items-center justify-center rounded-lg border border-divider bg-surface">
-                      <Heading as="span" level={4}>
-                        Row {n}
+                  <GlassCard className="h-full">
+                    <div className="flex h-40 flex-col justify-center gap-2 p-8">
+                      <Text className="text-caption uppercase tracking-[0.16em] text-text-tertiary">
+                        Chapitre {i + 1}
+                      </Text>
+                      <Heading as="h4" level={4}>
+                        {c.title}
                       </Heading>
                     </div>
+                  </GlassCard>
+                </Carousel.Item>
+              ))}
+            </Carousel.Content>
+          </Carousel>
+        </Section>
+
+        {/* Non-loop — disabled controls at the edge */}
+        <Section
+          title="Sans boucle"
+          description="Aux extrémités, le contrôle correspondant s’efface simplement : rien ne clignote, rien n’alerte."
+          data-testid="cr-non-loop"
+        >
+          <Carousel aria-label="Chapitres sans boucle" className="gap-6">
+            <div className="flex justify-end gap-2">
+              <Carousel.Previous size="sm" />
+              <Carousel.Next size="sm" />
+            </div>
+            <Carousel.Content className="gap-6 px-0.5 py-1">
+              {chapters.slice(0, 3).map((c, i) => (
+                <Carousel.Item
+                  key={c.title}
+                  className={`basis-[88%] ${peekItem}`}
+                >
+                  <GlassCard className="h-full">
+                    <div className="flex h-40 flex-col justify-center gap-2 p-8">
+                      <Text className="text-caption uppercase tracking-[0.16em] text-text-tertiary">
+                        Chapitre {i + 1}
+                      </Text>
+                      <Heading as="h4" level={4}>
+                        {c.title}
+                      </Heading>
+                    </div>
+                  </GlassCard>
+                </Carousel.Item>
+              ))}
+            </Carousel.Content>
+          </Carousel>
+        </Section>
+
+        {/* Vertical */}
+        <Section
+          title="Vertical"
+          description="La même lecture, sur l’axe vertical : on descend dans l’idée. Flèche Haut / Bas."
+          data-testid="cr-vertical"
+        >
+          <Carousel
+            aria-label="Chapitres verticaux"
+            orientation="vertical"
+            className="gap-6"
+          >
+            <div className="flex items-start gap-5">
+              <Carousel.Content className="h-64 gap-5 px-1 py-0.5">
+                {chapters.map((c) => (
+                  <Carousel.Item
+                    key={c.title}
+                    className={`basis-full ${peekItem}`}
+                  >
+                    <GlassCard className="h-full">
+                      <div className="flex h-64 flex-col justify-center gap-2 p-8">
+                        <Text className="text-caption uppercase tracking-[0.16em] text-text-tertiary">
+                          {c.eyebrow}
+                        </Text>
+                        <Heading as="h4" level={4}>
+                          {c.title}
+                        </Heading>
+                      </div>
+                    </GlassCard>
                   </Carousel.Item>
                 ))}
               </Carousel.Content>
@@ -311,109 +335,79 @@ export function CarouselScene() {
           </Carousel>
         </Section>
 
-        <Section
-          title="Loop"
-          description="loop — Next past the last wraps to the first; controls stay enabled at the ends."
-          data-testid="cr-loop"
-        >
-          <Carousel aria-label="Looping slides" loop>
-            <div className="flex items-center justify-end gap-2">
-              <Carousel.Previous size="sm" />
-              <Carousel.Next size="sm" />
-            </div>
-            <Carousel.Content>
-              {[1, 2, 3].map((n) => (
-                <Carousel.Item key={n} className="basis-full px-1">
-                  <div className="flex h-32 items-center justify-center rounded-lg border border-divider bg-surface">
-                    <Text>Looping slide {n}</Text>
-                  </div>
-                </Carousel.Item>
-              ))}
-            </Carousel.Content>
-          </Carousel>
-        </Section>
-
-        <Section
-          title="Non loop — disabled controls at the edge"
-          description="Without loop, Previous is disabled at the start and Next at the end (real disabled IconButtons)."
-          data-testid="cr-non-loop"
-        >
-          <Carousel aria-label="Non-looping slides">
-            <div className="flex items-center justify-end gap-2">
-              <Carousel.Previous size="sm" />
-              <Carousel.Next size="sm" />
-            </div>
-            <Carousel.Content>
-              {[1, 2, 3].map((n) => (
-                <Carousel.Item key={n} className="basis-full px-1">
-                  <div className="flex h-32 items-center justify-center rounded-lg border border-divider bg-surface">
-                    <Text>Slide {n}</Text>
-                  </div>
-                </Carousel.Item>
-              ))}
-            </Carousel.Content>
-          </Carousel>
-        </Section>
-
+        {/* Responsive */}
         <Section
           title="Responsive"
-          description="basis breakpoints show more items on wider viewports — the track logic is unchanged."
+          description="Sur écran large, la suite se devine davantage ; la logique de lecture ne change pas."
           data-testid="cr-responsive"
         >
-          <Carousel aria-label="Responsive slides">
-            <Carousel.Content className="gap-3">
-              {programmes.map((p) => (
+          <Carousel aria-label="Chapitres responsive" className="gap-6">
+            <Carousel.Content className="gap-5 px-0.5 py-1">
+              {chapters.map((c) => (
                 <Carousel.Item
-                  key={p.name}
-                  className="basis-[80%] sm:basis-1/2 lg:basis-1/4"
+                  key={c.title}
+                  className={`basis-[80%] sm:basis-1/2 lg:basis-1/3 ${peekItem}`}
                 >
-                  <div className="flex h-24 items-center justify-center rounded-lg border border-divider bg-surface">
-                    <Text className="font-medium">{p.name}</Text>
-                  </div>
+                  <GlassCard className="h-full">
+                    <div className="flex h-32 flex-col justify-center gap-2 p-6">
+                      <Text className="text-caption uppercase tracking-[0.16em] text-text-tertiary">
+                        {c.eyebrow}
+                      </Text>
+                      <Heading as="h4" level={5}>
+                        {c.title}
+                      </Heading>
+                    </div>
+                  </GlassCard>
                 </Carousel.Item>
               ))}
             </Carousel.Content>
-            <Carousel.Indicators />
+            <Carousel.Indicators className="pt-1" />
           </Carousel>
         </Section>
 
+        {/* RTL */}
         <Section
           title="RTL"
-          description='dir="rtl" — the track, snapping, indicators and Arrow keys all mirror correctly.'
+          description="Piste, snapping, indicateurs et flèches se reflètent naturellement."
           data-testid="cr-rtl"
         >
           <div dir="rtl">
-            <Carousel aria-label="شرائح">
-              <div className="flex items-center justify-end gap-2">
+            <Carousel aria-label="فصول" className="gap-6">
+              <div className="flex justify-end gap-2">
                 <Carousel.Previous size="sm" />
                 <Carousel.Next size="sm" />
               </div>
-              <Carousel.Content className="gap-3">
+              <Carousel.Content className="gap-5 px-0.5 py-1">
                 {['البرنامج', 'التغذية', 'النوم', 'التعافي'].map((label) => (
                   <Carousel.Item
                     key={label}
-                    className="basis-[70%] sm:basis-1/2"
+                    className={`basis-[80%] sm:basis-1/2 ${peekItem}`}
                   >
-                    <div className="flex h-28 items-center justify-center rounded-lg border border-divider bg-surface">
-                      <Text className="font-medium">{label}</Text>
-                    </div>
+                    <GlassCard className="h-full">
+                      <div className="flex h-28 items-center p-6">
+                        <Heading as="h4" level={5}>
+                          {label}
+                        </Heading>
+                      </div>
+                    </GlassCard>
                   </Carousel.Item>
                 ))}
               </Carousel.Content>
-              <Carousel.Indicators />
+              <Carousel.Indicators className="pt-1" />
             </Carousel>
           </div>
         </Section>
 
+        {/* Empty */}
         <Section
-          title="Empty"
-          description="No items is content, not a Carousel concern — the consumer decides what to render."
+          title="Vide"
+          description="Aucun élément relève du contenu, pas du Carousel — le consommateur décide de ce qu’il affiche."
           data-testid="cr-empty"
         >
-          <Carousel aria-label="Empty carousel">
+          <Carousel aria-label="Carousel vide">
             <Carousel.Content />
             <Text className="text-body-sm text-text-tertiary">
-              No items yet.
+              Rien à lire pour l’instant.
             </Text>
           </Carousel>
         </Section>

@@ -63,6 +63,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   doc-comment prose (the one `transition` is the token-driven indicator
   dot). Awaiting visual validation before any freeze.
 
+- **Carousel — Craft Review pass (still not frozen).** Elevated the visual
+  finish toward an Apple/Linear "reading experience" without touching the
+  API, the responsibilities, the accessibility contract or performance. The
+  primitive gains only a pure CSS styling HOOK: `Carousel.Content` surfaces
+  its already-computed active index as `data-active` on the current
+  `Carousel.Item` (the Radix `data-state` idiom — no new prop, no new
+  responsibility), and `Carousel.Indicators` is redesigned from position
+  dots into a thin segmented progress bar (the active segment widens and
+  takes the single accent, inactive segments stay neutral; invisible
+  `after` hit-area preserves the a11y target size). All the premium
+  composition — one dominant central card, dimmed/scaled/blurred side
+  previews reading as "next chapters," staggered content reveal
+  (eyebrow → title → body → CTA), floating controls, generous air — lives
+  in the DEMO on top of the unchanged primitive, because baking focus/peek/
+  choreography into a generic Data Display primitive would violate
+  Invariant A1 (base components make no layout decisions). Validation green:
+  type-check, lint, `scripts/carousel-proof.mjs` (ARIA, native snap,
+  stepping, indicators active-wider-than-inactive, non-loop disable, loop
+  wrap, vertical, keyboard, responsive, RTL, no-regression sweep), grep
+  clean, fresh desktop/tablet/mobile/RTL captures.
+
 - **DataGrid — frozen (Data Display primitive).** Visually validated
   2026-07-10 after a Frozen Review (component, captures, Playwright proof,
   API, architecture, tokens, dependencies) found and fixed one genuine

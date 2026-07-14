@@ -2090,7 +2090,23 @@
    l'actif, désactivation aux bords sans loop, enroulement avec loop, axe
    vertical, clavier Flèche/Home/End, composition IconButton, responsive,
    RTL, vérification anti-régression). Grep propre. **NON GELÉ** —
-   attendre validation visuelle.
+   attendre validation visuelle. **Craft Review (2026-07-14, toujours NON
+   GELÉ) :** le fini visuel a été élevé vers une expérience de lecture
+   Apple/Linear, API/responsabilités/accessibilité/performances toutes
+   inchangées. Le primitif ne gagne qu'un HOOK CSS pur — `Carousel.Content`
+   expose son index actif via `data-active` sur le `Carousel.Item` courant
+   (idiome Radix `data-state`, aucune nouvelle prop) — et
+   `Carousel.Indicators` passe des points de position à une fine barre de
+   progression segmentée (le segment actif s'élargit et prend l'unique
+   accent ; zone de clic invisible `after` préservant la taille de cible
+   a11y). Toute la composition premium (une carte centrale dominante,
+   aperçus latéraux atténués/réduits/floutés lus comme les « chapitres
+   suivants », révélation échelonnée du contenu, contrôles flottants,
+   beaucoup d'air) vit ENTIÈREMENT dans la démo au-dessus du primitif
+   inchangé, car mettre focus/peek/chorégraphie dans un primitif Data
+   Display générique violerait l'Invariant A1. Re-validé vert (type-check,
+   lint, preuve actif-plus-large-qu'inactif + balayage complet, grep propre,
+   captures fraîches desktop/tablet/mobile/RTL).
 
    **DataGrid (Data Display) : GELÉ (2026-07-10).** Une Frozen Review a
    trouvé et corrigé un vrai défaut objectif : une `DataGrid.Column`
