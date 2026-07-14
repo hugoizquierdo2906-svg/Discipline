@@ -9,6 +9,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Stack — built to the full process, not frozen (Layout primitive).** New
+  API: `Stack` with `direction` (`vertical` default · `horizontal`), `gap`
+  (`none`/`xs`/`sm`/`md`/`lg`/`xl` → the shared `--ds-space` scale
+  0/4/8/16/24/32, default `md`), `align` (`start`/`center`/`end`/`stretch`/
+  `baseline`), `justify` (`start`/`center`/`end`/`between`), `wrap`, `reverse`
+  and `as` (polymorphic element). Answers exactly ONE question: "how do I
+  distribute a set of elements along a SINGLE axis with consistent spacing?"
+  — the typed, enforced replacement for the hundreds of
+  `<div className="flex flex-col gap-4">` across the app, so vertical rhythm
+  is chosen from one ladder instead of re-decided by hand at every call site.
+  It knows no business, data, design, animation, breakpoint or children; it
+  renders a single flex element and nothing else — no wrapper, no context, no
+  child manipulation, no surface/colour/material/motion. Not Flex (the raw
+  two-axis escape hatch — Stack is the opinionated single-axis 95% case), not
+  Grid (2-D placement), not a Container (page max-width), not a Spacer (one
+  gap, not a distributor), not Split/Columns (fractional panes), not
+  Cluster/Inline (covered by `wrap`), not a Card/Section (a drawn surface),
+  not a List (Stack can render AS a `<ul>` via `as` but never adds list
+  semantics), not bare gap utilities (untyped — the inconsistency Stack
+  removes). Deliberately NO `divider` prop (a divided stack is the consumer
+  composing the frozen Separator — inserting it would couple Stack to child
+  manipulation) and NO responsive/breakpoint props (responsive is the
+  consumer's own `className`, e.g. `className="sm:flex-row"`, merged over
+  Stack's base by `cn`). Accessibility: renders in source order so DOM/tab/
+  screen-reader order always match the markup; `reverse` flips only the
+  VISUAL order (documented flex tradeoff, DOM untouched); `direction`/`align`/
+  `justify` are flexbox-native and RTL-correct with no directional code.
+  Proof `/dev/stack` + `scripts/stack-proof.mjs` green (direction, the gap
+  scale mapped to `--ds-space` px-for-px, align/justify, wrap, reverse with
+  DOM order preserved, responsive via consumer className, semantic `as="ul"`,
+  RTL first-item-on-the-right, composition with the real GlassCard/Input/
+  Separator/Avatar/Badge/Button/ChartContainer/Table, no-regression sweep).
+  Grep clean (only flex/gap/items/justify layout utilities — no colour,
+  material, motion, hex or px). Built, not frozen — awaiting visual
+  validation.
+
 - **ChartContainer — FROZEN (Data Display primitive).** A full Frozen Review
   (component re-read end to end, slots, responsibilities, props, captures,
   Playwright proof, accessibility, performance, tokens, dependencies,

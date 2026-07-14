@@ -2034,6 +2034,27 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **Stack (Layout) : construit selon le processus complet, NON GELÉ
+   (2026-07-14).** Premier composant de la catégorie Layout, répondant à UNE
+   seule question : « comment distribuer un ensemble d’éléments sur un SEUL
+   axe avec un espacement cohérent ? » — le remplacement typé et imposé des
+   centaines de `<div className="flex flex-col gap-4">`. Rend un unique
+   élément flex et rien d’autre : `direction` (vertical défaut/horizontal),
+   `gap` (none/xs/sm/md/lg/xl → l’échelle `--ds-space` 0/4/8/16/24/32, défaut
+   md), `align`, `justify`, `wrap`, `reverse`, `as` (polymorphe). Aucune
+   connaissance métier/données/design/animation/breakpoint/enfants ; aucune
+   surface/couleur/matière/mouvement. Volontairement PAS de prop `divider`
+   (une pile divisée = le consommateur compose le Separator gelé) ni de props
+   responsive (le `className` du consommateur, ex. `sm:flex-row`, fusionné par
+   `cn`). Ordre du DOM = ordre source (clavier/lecteur d’écran conformes) ;
+   `reverse` n’inverse que l’ordre visuel ; RTL correct via les natifs
+   flexbox. Preuve `/dev/stack` + `scripts/stack-proof.mjs` verte (direction,
+   échelle de gap au pixel près, align/justify, wrap, reverse ordre-DOM-
+   préservé, responsive via className, `as="ul"`, RTL, composition avec
+   GlassCard/Input/Separator/Avatar/Badge/Button/ChartContainer/Table,
+   balayage anti-régression). Grep propre (uniquement des utilitaires de
+   layout). **NON GELÉ** — attendre validation visuelle.
+
    **ChartContainer (Data Display) : GELÉ (2026-07-14).** Une Frozen Review
    complète (composant, slots, responsabilités, props, captures, proof
    Playwright, accessibilité, performances, tokens, dépendances, imports,
