@@ -9,6 +9,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Carousel — built to the full process, not frozen (Data Display
+  primitive).** New compound API: `Carousel` / `Carousel.Content` /
+  `Carousel.Item` / `Carousel.Previous` / `Carousel.Next` /
+  `Carousel.Indicators`. Answers exactly ONE question: "how do I browse
+  SEQUENTIALLY through a series of items?" Holds no business logic and no
+  domain knowledge — no images/products/articles concept, no lightbox,
+  zoom, fullscreen, infinite/virtualized scroll, drag-reorder, masonry/
+  grid, autoplay/slideshow timer, lazy loading, analytics or swipe
+  business logic; every one of those belongs to a higher component that
+  would COMPOSE a Carousel. Not ScrollArea (a generic scroll surface with
+  no discrete slides, snapping, stepping or active index), not Tabs
+  (switches mutually-exclusive named panels where only one is mounted;
+  a Carousel slides across one continuous track with adjacent items partly
+  visible), not Pagination (random access to numbered pages that replace
+  the view; a Carousel is continuous sequential travel and its dots
+  indicate position, not page numbers), not a Gallery grid (2-D grid read
+  at once vs 1-D sequence read one region at a time), not Card (the thing
+  an Item commonly wraps), not List/Timeline/ActivityFeed (no swept snap
+  track). Built on a NATIVE CSS scroll-snap track — no carousel-engine
+  dependency, no JS transform animation: stepping calls the browser's own
+  `scrollIntoView`, which honours the container's `scroll-behavior: smooth`
+  and degrades to an instant jump under `prefers-reduced-motion` (via
+  `motion-reduce:scroll-auto`). Direction is fully native — a horizontal
+  track and the logical `scroll-snap-align` (`start`/`center`/`end`)
+  mirror correctly under `dir="rtl"`, and the Arrow keys mirror with it.
+  The active index is read from geometry (the item whose centre is nearest
+  the viewport centre — direction/orientation-agnostic), never a consumer
+  prop. `Carousel.Previous`/`Carousel.Next` compose the frozen `IconButton`
+  verbatim and disable at the ends unless `loop` (matching the frozen
+  Pagination's own edge-disable). `Carousel.Indicators` renders one
+  position dot per item, the active one gently elongated via a token-driven
+  `duration-standard`/`ease-out` width+colour transition (the same calm
+  motion budget the frozen Accordion/Collapsible chevrons use). Full
+  WAI-ARIA Carousel pattern: root `aria-roledescription="carousel"` +
+  `aria-label`, track `role="group"` + `aria-live="polite"`, each item
+  `aria-roledescription="slide"` + `aria-label="N of M"` (injected
+  structurally), controls `aria-controls` the track. Keyboard: Arrow
+  Left/Right (horizontal, RTL-mirrored) or Up/Down (vertical) step,
+  Home/End jump to first/last, Tab/Shift+Tab move through the real
+  focusable controls. `orientation` (`horizontal` default/`vertical`),
+  `loop` (default false — wrap the STEP, never cloned-slide infinite
+  marquee) and `align` (`start` default/`center`/`end` snap alignment) are
+  the only props; item width/height stays the consumer's layout decision
+  (Invariant A1). Composes ONLY Typography/`border`/`accent` tokens and the
+  frozen IconButton/Icon — no GlassSurface, no shadow, no gradient, no
+  tilt, no coverflow. Proof `/dev/carousel` + `scripts/carousel-proof.mjs`
+  (ARIA structure, native snap track, basic stepping, indicators + active
+  elongation, non-loop edge-disable, loop wrap-around, vertical axis,
+  keyboard Arrow/Home/End, IconButton composition, responsive, RTL,
+  no-regression sweep). Grep clean: zero GlassSurface/blur/backdrop-filter/
+  rgba/shadow/coverflow/animation and zero hardcoded hex/px/ms outside
+  doc-comment prose (the one `transition` is the token-driven indicator
+  dot). Awaiting visual validation before any freeze.
+
 - **DataGrid — frozen (Data Display primitive).** Visually validated
   2026-07-10 after a Frozen Review (component, captures, Playwright proof,
   API, architecture, tokens, dependencies) found and fixed one genuine

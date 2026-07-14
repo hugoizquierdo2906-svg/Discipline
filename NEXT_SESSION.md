@@ -2034,6 +2034,64 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **Carousel (Data Display) : construit selon le processus complet, NON
+   GELÉ (2026-07-10).** Compound (`Carousel`/`Carousel.Content`/
+   `Carousel.Item`/`Carousel.Previous`/`Carousel.Next`/
+   `Carousel.Indicators`). Répond à UNE seule question : « comment
+   parcourir SÉQUENTIELLEMENT une série d'éléments ? » Aucune logique
+   métier ni connaissance de domaine : ni images/produits/articles, ni
+   lightbox, ni zoom, ni plein écran, ni scroll infini/virtualisé, ni
+   drag, ni masonry/grille, ni autoplay/diaporama, ni chargement différé,
+   ni analytics, ni « swipe business logic » — tout cela appartient à un
+   composant supérieur qui COMPOSERAIT un Carousel. Pas ScrollArea (une
+   surface de défilement générique sans slides discrets, sans snapping,
+   sans stepping, sans index actif). Pas Tabs (COMMUTE des panneaux nommés
+   mutuellement exclusifs dont un seul est monté ; un Carousel glisse le
+   long d'une piste continue, les éléments adjacents partiellement
+   visibles). Pas Pagination (accès aléatoire à des pages numérotées qui
+   REMPLACENT la vue ; un Carousel est un voyage séquentiel continu, ses
+   points indiquent la position, pas des numéros de page). Pas une Gallery
+   (grille 2-D lue d'un coup vs séquence 1-D lue une région à la fois).
+   Pas Card (ce qu'un Item enveloppe couramment). Pas List/Timeline/
+   ActivityFeed (aucune piste balayée à snap). Construit sur une piste
+   scroll-snap CSS NATIVE — aucune dépendance de moteur de carousel,
+   aucune animation JS de transform : le stepping appelle le
+   `scrollIntoView` du navigateur, qui respecte `scroll-behavior: smooth`
+   et se dégrade en saut instantané sous `prefers-reduced-motion` (via
+   `motion-reduce:scroll-auto`). Direction entièrement native — une piste
+   horizontale et les valeurs logiques `scroll-snap-align`
+   (`start`/`center`/`end`) se reflètent correctement sous `dir="rtl"`, et
+   les flèches se reflètent avec. L'index actif est lu depuis la géométrie
+   (l'élément dont le centre est le plus proche du centre de la fenêtre —
+   agnostique à la direction/orientation), jamais une prop du
+   consommateur. `Carousel.Previous`/`Carousel.Next` composent l'IconButton
+   gelé verbatim et se désactivent aux extrémités sauf si `loop` (comme la
+   désactivation aux bords de la Pagination gelée). `Carousel.Indicators`
+   rend un point de position par élément, l'actif doucement allongé via une
+   transition largeur+couleur `duration-standard`/`ease-out` pilotée par
+   les tokens (le même budget de mouvement calme que les chevrons Accordion/
+   Collapsible gelés). Pattern WAI-ARIA Carousel complet : racine
+   `aria-roledescription="carousel"` + `aria-label`, piste `role="group"` +
+   `aria-live="polite"`, chaque item `aria-roledescription="slide"` +
+   `aria-label="N of M"` (injecté structurellement), contrôles
+   `aria-controls` vers la piste. Clavier : Flèche Gauche/Droite
+   (horizontal, reflété en RTL) ou Haut/Bas (vertical) pour avancer,
+   Home/End vers le premier/dernier, Tab/Shift+Tab à travers les vrais
+   contrôles focusables. `orientation` (`horizontal` par défaut/
+   `vertical`), `loop` (par défaut false — enroule le PAS, jamais un
+   marquee infini à slides clonés) et `align` (`start` par défaut/
+   `center`/`end`, l'alignement de snap) sont les seules props ; la
+   largeur/hauteur d'un item reste la décision de mise en page du
+   consommateur (Invariant A1). Compose UNIQUEMENT les tokens Typography/
+   `border`/`accent` et l'IconButton/Icon gelés — aucun GlassSurface,
+   aucune ombre, aucun dégradé, aucune inclinaison, aucun coverflow.
+   Preuve `/dev/carousel` + `scripts/carousel-proof.mjs` verte (structure
+   ARIA, piste snap native, stepping de base, indicateurs + allongement de
+   l'actif, désactivation aux bords sans loop, enroulement avec loop, axe
+   vertical, clavier Flèche/Home/End, composition IconButton, responsive,
+   RTL, vérification anti-régression). Grep propre. **NON GELÉ** —
+   attendre validation visuelle.
+
    **DataGrid (Data Display) : GELÉ (2026-07-10).** Une Frozen Review a
    trouvé et corrigé un vrai défaut objectif : une `DataGrid.Column`
    triable (`sortable`) avec `align="center"`/`"end"` n'alignait pas
