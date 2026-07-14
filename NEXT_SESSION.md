@@ -2034,6 +2034,30 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **Grid (Layout) : construit selon le processus complet, NON GELÉ
+   (2026-07-14).** Deuxième composant Layout, répondant à UNE seule
+   question : « comment placer des éléments dans une grille 2D — lignes ET
+   colonnes alignées — avec un espacement cohérent ? » — le pendant 2D du
+   Stack gelé. Rend un unique élément `display:grid` et rien d’autre :
+   `columns` (pistes égales, défaut 2), `minColumnWidth` (colonnes
+   responsives sans media query via `repeat(auto-fit/fill, minmax(min,1fr))`,
+   remplace columns), `fill` (fit/fill), `gap` (l’échelle `--ds-space` de
+   Stack), `align` (align-items), `justify` (justify-items), `as`
+   (polymorphe). Aucune connaissance métier/données/design/breakpoint/
+   enfants ; aucune surface/couleur/matière/mouvement. Les colonnes fixes
+   sont émises en vraies classes `grid-cols-N` pour que le
+   `className="sm:grid-cols-3"` du consommateur puisse surcharger la base
+   (un style inline l’en empêcherait) ; seul `minColumnWidth` utilise un
+   template inline. Volontairement PAS de `rows`/`flow`/`areas` (className du
+   consommateur) ni de `reverse` (ordre DOM = ordre visuel). Ordre DOM
+   source, RTL natif (pistes en direction inline). Preuve `/dev/grid` +
+   `scripts/grid-proof.mjs` verte (display:grid, colonnes 2/3/4, reflux
+   auto-fit, pistes réservées auto-fill, échelle de gap, align/justify,
+   Grid imbriquée ordre-DOM-préservé, responsive via surcharge className,
+   RTL première cellule à droite, composition avec GlassCard/ChartContainer/
+   Table/Input/Badge, balayage anti-régression). Grep propre (uniquement des
+   utilitaires de layout). **NON GELÉ** — attendre validation visuelle.
+
    **Stack (Layout) : GELÉ (2026-07-14).** Une Frozen Review complète
    (composant, API, architecture, responsabilités, accessibilité,
    performances, responsive, RTL, proof Playwright, captures, imports, code

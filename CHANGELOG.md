@@ -9,6 +9,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Grid — built to the full process, not frozen (Layout primitive).** New
+  API: `Grid` with `columns` (fixed equal tracks, default 2), `minColumnWidth`
+  (a length that switches to breakpoint-free responsive columns —
+  `repeat(auto-fit, minmax(minColumnWidth, 1fr))`, overrides `columns`),
+  `fill` (`fit`/`fill` — collapse or keep empty tracks), `gap` (the same
+  `--ds-space` scale as Stack), `align` (align-items), `justify`
+  (justify-items) and `as` (polymorphic). Answers exactly ONE question: "how
+  do I place elements in a TWO-DIMENSIONAL grid — aligned rows AND columns —
+  with consistent spacing?" — the 2-D counterpart to the frozen Stack (Stack
+  is a single-axis flow whose `wrap` gives ragged rows; Grid lays a real
+  matrix whose column tracks line up across every row). It knows no business,
+  data, design, breakpoint or children; it renders a single `display:grid`
+  element and nothing else — no surface, colour, material or motion. Not
+  Stack/Flex (1-D), not a Container (page max-width), not Split/Columns
+  (resizable panes), not a Table/DataGrid (those carry tabular DATA semantics
+  — caption, header cells, `role="grid"`; Grid is pure visual layout with
+  zero semantics), not Bootstrap/MUI Grid (12-column breakpoint-array systems
+  — Grid has NO breakpoint props; a responsive column count is the consumer's
+  own `className` or, breakpoint-free, `minColumnWidth` + auto-fit). Fixed
+  column counts are emitted as real `grid-cols-N` classes (each is exactly
+  `repeat(N, minmax(0,1fr))`) so a consumer's `className="sm:grid-cols-3"`
+  actually overrides the base via `cn`/tailwind-merge (an inline style would
+  out-specify it); only the arbitrary `minColumnWidth` track list uses an
+  inline template. Deliberately NO `rows`/`flow`/`areas` props (advanced
+  CSS-Grid needs a consumer expresses via `className`) and NO `reverse` (a
+  grid has no meaningful reversal — DOM order always equals visual order).
+  Accessibility: source-order DOM (tab/SR order matches markup), columns run
+  inline-direction-aware so RTL flows right-to-left with no directional code.
+  Proof `/dev/grid` + `scripts/grid-proof.mjs` green (display:grid, fixed
+  2/3/4 column counts, auto-fit reflowing more tracks when wider, auto-fill
+  reserving empty tracks, the gap scale mapped to `--ds-space`, align/justify,
+  a nested Grid with DOM order preserved, responsive via consumer className
+  overriding the base, RTL first-cell-on-the-right, composition with the real
+  GlassCard/ChartContainer/Table/Input/Badge, no-regression sweep). Grep
+  clean (only grid/gap/items/justify layout utilities — no colour, material,
+  motion, hex or px). Built, not frozen — awaiting visual validation.
+
 - **Stack — FROZEN (Layout primitive).** A full Frozen Review (component,
   API, architecture, responsibilities, accessibility, performance,
   responsive, RTL, Playwright proof, captures, imports, dead code, hardcoded
