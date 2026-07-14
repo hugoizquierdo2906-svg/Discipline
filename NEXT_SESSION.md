@@ -2034,8 +2034,16 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
-   **Stack (Layout) : construit selon le processus complet, NON GELÉ
-   (2026-07-14).** Premier composant de la catégorie Layout, répondant à UNE
+   **Stack (Layout) : GELÉ (2026-07-14).** Une Frozen Review complète
+   (composant, API, architecture, responsabilités, accessibilité,
+   performances, responsive, RTL, proof Playwright, captures, imports, code
+   mort, tokens hardcodés, couleur, animation, logique métier, dépendances)
+   n'a trouvé AUCUN défaut objectif — zéro ligne modifiée, gelé tel quel.
+   API publique (`Stack` `direction`/`gap`/`align`/`justify`/`wrap`/
+   `reverse`/`as`/`className`) verrouillée — un ADR est désormais requis.
+   Validation verte au gel : type-check, lint, build (77/77), proof, grep
+   propre, captures fraîches. Historique : premier composant de la catégorie
+   Layout, répondant à UNE
    seule question : « comment distribuer un ensemble d’éléments sur un SEUL
    axe avec un espacement cohérent ? » — le remplacement typé et imposé des
    centaines de `<div className="flex flex-col gap-4">`. Rend un unique

@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Stack — FROZEN (Layout primitive).** A full Frozen Review (component,
+  API, architecture, responsibilities, accessibility, performance,
+  responsive, RTL, Playwright proof, captures, imports, dead code, hardcoded
+  tokens, colour, animation, business logic, dependencies) found **no
+  objective defect** — zero code changed, frozen as-is. The public API —
+  `Stack` (`direction`/`gap`/`align`/`justify`/`wrap`/`reverse`/`as`/
+  `className`) — now requires an ADR to change. Validation green at freeze:
+  type-check, lint, build (77/77 static pages, route registered),
+  `scripts/stack-proof.mjs`, grep clean (only flex/gap/items/justify layout
+  utilities), fresh desktop/tablet/mobile/RTL captures.
+
 - **Stack — built to the full process, not frozen (Layout primitive).** New
   API: `Stack` with `direction` (`vertical` default · `horizontal`), `gap`
   (`none`/`xs`/`sm`/`md`/`lg`/`xl` → the shared `--ds-space` scale
