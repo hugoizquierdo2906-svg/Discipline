@@ -2034,8 +2034,23 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
-   **DataGrid (Data Display) : construit selon le processus complet, NON
-   GELÉ (2026-07-10).** Compound (`DataGrid`/`DataGrid.Toolbar`/
+   **DataGrid (Data Display) : GELÉ (2026-07-10).** Une Frozen Review a
+   trouvé et corrigé un vrai défaut objectif : une `DataGrid.Column`
+   triable (`sortable`) avec `align="center"`/`"end"` n'alignait pas
+   réellement son en-tête (le `<span>` du label était toujours `flex-1`,
+   ce qui absorbe tout l'espace libre — rendant `justify-center` inerte
+   (code mort) et `flex-row-reverse` inversait le label et le chevron au
+   lieu de pousser le groupe vers le bord de fin ; seul `start`, le seul
+   chemin exercé par la démo, se rendait correctement). Corrigé en ne
+   faisant grandir le label que pour `start` (apparence validée
+   inchangée, chevron toujours épinglé au bord de fin de la colonne) et,
+   pour `center`/`end`, en gardant le label + chevron ensemble comme un
+   groupe positionné par le `justify-center`/`justify-end` RTL-aware du
+   conteneur flex ; `flex-row-reverse` supprimé. Couvert par une nouvelle
+   colonne de démo (« Progress » triable `align="end"`) et une nouvelle
+   assertion de preuve. Aucun autre défaut objectif trouvé. API publique
+   désormais figée (ADR nécessaire pour la modifier). Compound
+   (`DataGrid`/`DataGrid.Toolbar`/
    `DataGrid.Header`/`DataGrid.Body`/`DataGrid.Row`/`DataGrid.Cell`/
    `DataGrid.Column`/`DataGrid.Footer`/`DataGrid.Empty`/
    `DataGrid.Pagination`). Répond à UNE seule question : « comment

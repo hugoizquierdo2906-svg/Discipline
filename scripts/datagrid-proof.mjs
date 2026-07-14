@@ -153,6 +153,30 @@ for (const [w, h, suffix] of [
     issues.push(
       `[assert] ascending sort by name should put "Hugo Izquierdo" first, got "${firstRowName}"`,
     )
+  // Alignment: a `start` sortable column grows its label so the chevron
+  // pins to the column's far edge; an `end` sortable column groups the
+  // label + chevron together and pushes them to the end (justify-end, no
+  // grow) — not the inert flex-1 fill a `justify-*` could never override.
+  const align = await scene.evaluate(() => {
+    const cols = document.querySelectorAll(
+      '[data-testid="dg-sorting"] th button',
+    )
+    const grow = (btn) => getComputedStyle(btn.querySelector('span')).flexGrow
+    return {
+      startGrow: grow(cols[0]),
+      startJustify: getComputedStyle(cols[0]).justifyContent,
+      endGrow: grow(cols[1]),
+      endJustify: getComputedStyle(cols[1]).justifyContent,
+    }
+  })
+  if (align.startGrow !== '1')
+    issues.push(
+      `[assert] a start-aligned sortable label should grow so the chevron pins to the edge, got flex-grow=${align.startGrow}`,
+    )
+  if (align.endJustify !== 'flex-end' || align.endGrow !== '0')
+    issues.push(
+      `[assert] an end-aligned sortable header should group label+chevron via justify-end with no grow, got justify=${align.endJustify} grow=${align.endGrow}`,
+    )
   await context.close()
 }
 

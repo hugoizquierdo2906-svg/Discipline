@@ -106,26 +106,33 @@ const statusVariant = {
   Archived: 'neutral',
 } as const
 
-function SortingDemo() {
-  const [sortDirection, setSortDirection] = useState<
-    'asc' | 'desc' | undefined
-  >(undefined)
-  const sorted = useMemo(() => {
-    if (!sortDirection) return clients
-    const copy = [...clients]
-    copy.sort((a, b) =>
-      sortDirection === 'asc'
-        ? a.name.localeCompare(b.name)
-        : b.name.localeCompare(a.name),
-    )
-    return copy
-  }, [sortDirection])
+type Sort = { column: 'name' | 'progress'; direction: 'asc' | 'desc' } | null
 
-  function toggleSort() {
-    setSortDirection((current) =>
-      current === undefined ? 'asc' : current === 'asc' ? 'desc' : undefined,
-    )
+function SortingDemo() {
+  const [sort, setSort] = useState<Sort>(null)
+  const sorted = useMemo(() => {
+    if (!sort) return clients
+    const copy = [...clients]
+    copy.sort((a, b) => {
+      const cmp =
+        sort.column === 'name'
+          ? a.name.localeCompare(b.name)
+          : parseInt(a.progress) - parseInt(b.progress)
+      return sort.direction === 'asc' ? cmp : -cmp
+    })
+    return copy
+  }, [sort])
+
+  function toggle(column: 'name' | 'progress') {
+    setSort((current) => {
+      if (current?.column !== column) return { column, direction: 'asc' }
+      if (current.direction === 'asc') return { column, direction: 'desc' }
+      return null
+    })
   }
+
+  const dir = (column: 'name' | 'progress') =>
+    sort?.column === column ? sort.direction : undefined
 
   return (
     <DataGrid>
@@ -134,19 +141,26 @@ function SortingDemo() {
           <DataGrid.Row>
             <DataGrid.Column
               sortable
-              sortDirection={sortDirection}
-              onSort={toggleSort}
+              sortDirection={dir('name')}
+              onSort={() => toggle('name')}
             >
               Client
             </DataGrid.Column>
-            <DataGrid.Column>Program</DataGrid.Column>
+            <DataGrid.Column
+              sortable
+              align="end"
+              sortDirection={dir('progress')}
+              onSort={() => toggle('progress')}
+            >
+              Progress
+            </DataGrid.Column>
           </DataGrid.Row>
         </DataGrid.Header>
         <DataGrid.Body>
           {sorted.map((c) => (
             <DataGrid.Row key={c.name}>
               <DataGrid.Cell>{c.name}</DataGrid.Cell>
-              <DataGrid.Cell>{c.program}</DataGrid.Cell>
+              <DataGrid.Cell align="end">{c.progress}</DataGrid.Cell>
             </DataGrid.Row>
           ))}
         </DataGrid.Body>

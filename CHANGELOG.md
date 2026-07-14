@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **DataGrid — frozen (Data Display primitive).** Visually validated
+  2026-07-10 after a Frozen Review (component, captures, Playwright proof,
+  API, architecture, tokens, dependencies) found and fixed one genuine
+  objective defect: a **sortable** `DataGrid.Column` with `align="center"`
+  or `align="end"` did not actually align its header. The label `<span>`
+  was always `flex-1`, which absorbs every bit of free space — so the
+  `justify-center` class was inert dead code, and the `flex-row-reverse`
+  used for `end` mis-ordered the label and chevron rather than pushing the
+  group to the end edge (only the default `start` alignment, the sole path
+  the demo exercised, rendered correctly). Fixed by growing the label only
+  for `start` (preserving that validated look byte-identically — the
+  chevron still pins to the column's far edge) and, for `center`/`end`,
+  keeping the label + chevron together as one group positioned by the
+  flex container's RTL-aware `justify-center`/`justify-end`; the broken
+  `flex-row-reverse` was removed. Covered by a new demo column (an
+  `align="end"` sortable "Progress" column) and a new proof assertion. No
+  other objective defect found. No functional, visual or architectural
+  change again except an objective bug; the public API (`DataGrid`'s
+  `className`, `DataGrid.Column`'s `align`/`sortable`/`sortDirection`/
+  `onSort`/`className`, `DataGrid.Empty`'s `colSpan`/`className`, and the
+  re-exported Table/Pagination parts' own APIs) requires an ADR to change.
+
 - **DataGrid — built to the full process, not frozen (Data Display
   primitive).** New compound API: `DataGrid` / `DataGrid.Toolbar` /
   `DataGrid.Header` / `DataGrid.Body` / `DataGrid.Row` / `DataGrid.Cell` /

@@ -142,6 +142,13 @@ const DataGridColumn = forwardRef<HTMLTableCellElement, DataGridColumnProps>(
           ? ('descending' as const)
           : ('none' as const)
 
+    // For the default `start` alignment the label grows to fill the header
+    // so the sort chevron pins to the column's own end edge. For `center`/
+    // `end` the label + chevron travel together as one group, positioned by
+    // the flex container (RTL-aware `justify-*`) — never a `flex-1` fill that
+    // would leave `justify-*` inert.
+    const grouped = align === 'center' || align === 'end'
+
     return (
       <Table.Head
         ref={ref}
@@ -155,11 +162,11 @@ const DataGridColumn = forwardRef<HTMLTableCellElement, DataGridColumnProps>(
           onClick={onSort}
           className={cn(
             'flex w-full items-center gap-1.5 px-4 py-3 text-start outline-none hover:bg-surface focus-visible:ring-2 focus-visible:ring-accent-accessible',
-            align === 'end' && 'flex-row-reverse',
             align === 'center' && 'justify-center',
+            align === 'end' && 'justify-end',
           )}
         >
-          <span className="flex-1">{children}</span>
+          <span className={grouped ? undefined : 'flex-1'}>{children}</span>
           {sortDirection === 'asc' ? (
             <ChevronUp
               aria-hidden
