@@ -2034,6 +2034,33 @@
    anti-régression contre Accordion gelé). **NON GELÉ** — attendre
    validation visuelle.
 
+   **ChartContainer (Data Display) : construit selon le processus complet,
+   NON GELÉ (2026-07-14).** Compound (`ChartContainer`/`.Header`/`.Title`/
+   `.Description`/`.Content`/`.Legend`/`.Footer`/`.Loading`/`.Empty`/
+   `.Error`) répondant à UNE seule question : « comment accueillir
+   proprement une visualisation de données ? » Il fournit le CONTENANT,
+   jamais le contenu — aucune connaissance des données, axes, séries,
+   échelles, couleurs ou type de graphique, et il ne dessine aucune marque ;
+   ce qui se rend dans la zone de rendu (SVG, canvas, img, Recharts/Chart.js/
+   D3, un simple div) appartient au consommateur, donc un seul conteneur
+   accueille n'importe quelle technologie de visualisation pendant dix ans
+   sans réécriture. Racine = le GlassCard gelé rendu en `<figure>`, nommée
+   par son `Title` (`aria-labelledby`) et décrite par sa `Description`
+   (`aria-describedby`), câblage via contexte + enregistrement au montage
+   pour que les références ne pendent jamais quand un slot est omis.
+   `Content` porte un `ratio` optionnel (toute valeur CSS `aspect-ratio` —
+   layout pur, Invariant A1). `Loading`/`Empty`/`Error` composent le
+   Spinner/EmptyState/ErrorState gelés dans une zone de rendu centrée. Props:
+   `intent` sur la racine, `ratio` sur Content — aucune prop de données,
+   aucune échelle, aucun axe. Preuve `/dev/chart-container` +
+   `scripts/chart-container-proof.mjs` verte (sémantique figure, câblage
+   labelledby/describedby sans référence pendante, header/légende/pied,
+   ratio de la zone de rendu, loading role=status, empty/erreur composant
+   les états gelés, hiérarchie h3, responsive, RTL, balayage anti-
+   régression). Toutes les visualisations de la démo ne sont que des
+   placeholders SVG à base de tokens — aucune librairie de graphique.
+   **NON GELÉ** — attendre validation visuelle.
+
    **Carousel (Data Display) : GELÉ (2026-07-14).** Une Frozen Review
    complète (composant relu de bout en bout, toutes les variantes, la démo,
    les captures et le proof Playwright ; API/responsabilités/accessibilité/

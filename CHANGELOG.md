@@ -9,6 +9,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **ChartContainer — built to the full process, not frozen (Data Display
+  primitive).** New compound API: `ChartContainer` / `ChartContainer.Header`
+  / `ChartContainer.Title` / `ChartContainer.Description` /
+  `ChartContainer.Content` / `ChartContainer.Legend` /
+  `ChartContainer.Footer` / `ChartContainer.Loading` / `ChartContainer.Empty`
+  / `ChartContainer.Error`. Answers exactly ONE question: "how do I host a
+  data visualization CLEANLY?" It provides the CONTAINER, never the content
+  — it never knows the data, axes, series, scales, colours or chart type,
+  and draws no mark of its own; whatever renders in the render zone (an SVG,
+  a `<canvas>`, an `<img>`, a Recharts/Chart.js/D3/ECharts tree, a bare div)
+  is the consumer's, so the same container hosts any visualization
+  technology for a decade without a rewrite. Not a chart or a chart library
+  (the frame, not the drawing), not a Card/GlassCard (it COMPOSES the frozen
+  GlassCard as its surface and adds only the viz-hosting rhythm), not a
+  Table/DataGrid (exact values vs. shape/trend), not a Metric/Stat tile (a
+  formatted number), not a Dashboard (a screen that ARRANGES many
+  containers). The root is the frozen GlassCard rendered as a `<figure>`,
+  labelled by its `Title` (`aria-labelledby`) and described by its
+  `Description` (`aria-describedby`) — wired structurally via context + a
+  mount-time registration so the references are never dangling when a slot
+  is omitted. `Content` is the render zone with an optional `ratio` (any CSS
+  `aspect-ratio` value — pure layout, Invariant A1). `Loading`/`Empty`/
+  `Error` compose the frozen Spinner/EmptyState/ErrorState in a centred
+  render-zone box, reimplementing none of them. Props: `intent`
+  (`neutral`/`primary`, forwarded to GlassCard) on the root and `ratio` on
+  `Content` — no data prop, no colour scale, no axis, ever. Proof
+  `/dev/chart-container` + `scripts/chart-container-proof.mjs` green (figure
+  semantics + labelledby/describedby wiring, no dangling refs on a bare
+  container, header/legend/footer, render-zone aspect ratio, loading
+  `role=status`, empty/error composing the frozen states with actions, `h3`
+  title hierarchy, responsive, RTL, no-regression sweep across Carousel/
+  DataGrid/Table/Timeline). Grep clean (no chart-engine/data/axis/series
+  string, no hardcoded hex/rgba). Built, not frozen — awaiting visual
+  validation.
+
 - **Carousel — FROZEN (Data Display primitive).** A full Frozen Review
   (component re-read end to end, all variants, the demo, the captures and
   the Playwright proof; API, responsibilities, accessibility, performance,
