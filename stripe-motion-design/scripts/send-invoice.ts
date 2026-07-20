@@ -23,6 +23,9 @@ const invoice: CreateInvoiceInput = {
     // taxId: { type: "eu_vat", value: "FR12345678901" },
   },
   reference: "PROJ-2026-014", // your project / PO reference (optional)
+  // Protects against double-billing if the run is retried after a network
+  // failure. Use one unique key per billing action (project + milestone).
+  idempotencyKey: "PROJ-2026-014-solde",
   memo: "Merci pour votre confiance. Détail des prestations ci-dessous.",
   lines: [
     { description: "Motion design — habillage de marque (boucle 15s)", unitAmount: 2400 },

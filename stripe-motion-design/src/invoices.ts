@@ -39,6 +39,14 @@ export interface CreateInvoiceInput {
   reference?: string;
   /** If true, finalize + email immediately. If false, leave as an editable draft. */
   send?: boolean;
+  /**
+   * Unique key for this billing action (e.g. "PROJ-2026-014-final"). Stripe's
+   * official integration guidance calls idempotency keys mandatory for API
+   * invoicing: if a request is retried after a network failure, the same key
+   * guarantees the client is not invoiced twice. Defaults to none (no retry
+   * protection).
+   */
+  idempotencyKey?: string;
 }
 
 export interface InvoiceResult {
@@ -69,37 +77,49 @@ export async function createInvoice(
 
   const customer = await findOrCreateCustomer(input.company);
   const currency = config.business.currency;
+  // Derive one idempotency key per API call from the caller's key, so a
+  // retried run replays the exact same sequence instead of duplicating it.
+  const idem = (suffix: string) =>
+    input.idempotencyKey
+      ? { idempotencyKey: `${input.idempotencyKey}-${suffix}` }
+      : undefined;
 
   // 1. Draft invoice. auto_advance:false keeps Stripe from finalizing on its
   //    own timer — we drive the lifecycle explicitly below.
-  const draft = await stripe.invoices.create({
-    customer: customer.id,
-    collection_method: "send_invoice",
-    days_until_due: input.daysUntilDue ?? config.business.invoiceDaysUntilDue,
-    currency,
-    description: input.memo,
-    footer: config.business.invoiceFooter,
-    auto_advance: false,
-    pending_invoice_items_behavior: "exclude",
-    custom_fields: input.reference
-      ? [{ name: "Référence", value: input.reference }]
-      : undefined,
-  });
+  const draft = await stripe.invoices.create(
+    {
+      customer: customer.id,
+      collection_method: "send_invoice",
+      days_until_due: input.daysUntilDue ?? config.business.invoiceDaysUntilDue,
+      currency,
+      description: input.memo,
+      footer: config.business.invoiceFooter,
+      auto_advance: false,
+      pending_invoice_items_behavior: "exclude",
+      custom_fields: input.reference
+        ? [{ name: "Référence", value: input.reference }]
+        : undefined,
+    },
+    idem("invoice"),
+  );
 
   // 2. Attach each line to THIS invoice. We set the line total via `amount`
   //    (unit price × quantity) and note the quantity in the label — simple and
   //    robust. Switch to price-based items if you need unit/qty columns.
-  for (const line of input.lines) {
+  for (const [index, line] of input.lines.entries()) {
     const quantity = line.quantity ?? 1;
     const label =
       quantity > 1 ? `${line.description} (×${quantity})` : line.description;
-    await stripe.invoiceItems.create({
-      customer: customer.id,
-      invoice: draft.id,
-      currency,
-      description: label,
-      amount: toMinorUnits(line.unitAmount) * quantity,
-    });
+    await stripe.invoiceItems.create(
+      {
+        customer: customer.id,
+        invoice: draft.id,
+        currency,
+        description: label,
+        amount: toMinorUnits(line.unitAmount) * quantity,
+      },
+      idem(`item-${index}`),
+    );
   }
 
   if (input.send === false) {
@@ -108,9 +128,9 @@ export async function createInvoice(
   }
 
   // 3. Finalize (locks it, assigns a number, builds PDF + hosted page)...
-  await stripe.invoices.finalizeInvoice(draft.id);
+  await stripe.invoices.finalizeInvoice(draft.id, undefined, idem("finalize"));
   // 4. ...then email the client the payment link.
-  const sent = await stripe.invoices.sendInvoice(draft.id);
+  const sent = await stripe.invoices.sendInvoice(draft.id, undefined, idem("send"));
 
   return toResult(sent, customer.id);
 }
