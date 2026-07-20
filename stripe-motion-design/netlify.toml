@@ -1,0 +1,10 @@
+# Netlify configuration for the Stripe functions.
+# Only needed if you deploy the serverless functions to your Netlify site.
+# The functions declare their own routes via `export const config = { path }`,
+# so no manual redirects are required.
+
+[build]
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
