@@ -16,21 +16,22 @@ import { formatAmount } from "../src/money.js";
 // ─────────────────────────────────────────────────────────────────────────
 const invoice: CreateInvoiceInput = {
   company: {
-    name: "Studio Exemple SARL",
-    email: "compta@exemple.com",
+    name: "CLIENT NAME (edit me)", // company or contact name, as shown on the invoice
+    email: "client@example.com", //   ← the invoice is emailed here
+    locale: "en", // "en" for a US client, "fr" for a French one
     // Optional — uncomment to print an address / attach an EU VAT number:
     // address: { line1: "10 rue de la Création", postal_code: "75011", city: "Paris", country: "FR" },
     // taxId: { type: "eu_vat", value: "FR12345678901" },
   },
-  reference: "PROJ-2026-014", // your project / PO reference (optional)
+  reference: "CAMPAIGN-2026-001", // your project / PO reference (optional)
   // Protects against double-billing if the run is retried after a network
   // failure. Use one unique key per billing action (project + milestone).
-  idempotencyKey: "PROJ-2026-014-solde",
-  memo: "Merci pour votre confiance. Détail des prestations ci-dessous.",
+  idempotencyKey: "CAMPAIGN-2026-001-full",
+  memo: "Thank you for your business. Payment due within 30 days.",
   lines: [
-    { description: "Motion design — habillage de marque (boucle 15s)", unitAmount: 2400 },
-    { description: "Déclinaisons réseaux sociaux (3 formats)", unitAmount: 600, quantity: 3 },
-    { description: "Poster print A1 — création + fichiers HD", unitAmount: 900 },
+    { description: 'Motion design — "Campaign" pack', unitAmount: 1490 },
+    { description: "Additional product flavor variants", unitAmount: 90, quantity: 3 },
+    { description: "Extra revision rounds", unitAmount: 50, quantity: 2 },
   ],
   send: true, // false = create an editable draft instead of sending
 };

@@ -22,6 +22,11 @@ export interface CompanyInput {
    * See https://docs.stripe.com/invoicing/customer/tax-ids for valid types.
    */
   taxId?: { type: Stripe.TaxIdCreateParams.Type; value: string };
+  /**
+   * Language for this client's invoice emails, hosted page and PDF
+   * (e.g. "en" for a US client). Defaults to "fr".
+   */
+  locale?: string;
 }
 
 /** Find a customer by exact email, or create one if none exists. */
@@ -39,7 +44,7 @@ export async function findOrCreateCustomer(
     name: input.name,
     address: input.address,
     phone: input.phone,
-    preferred_locales: ["fr"],
+    preferred_locales: [input.locale ?? "fr"],
   });
 
   if (input.taxId) {
